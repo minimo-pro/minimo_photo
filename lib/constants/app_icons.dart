@@ -1,0 +1,20 @@
+abstract final class AppIcons {
+  static const arrowBack = 'assets/icons/arrow_back.svg';
+  static const arrowForward = 'assets/icons/arrow_forward.svg';
+  static const check = 'assets/icons/check.svg';
+  static const checkboxEmpty = 'assets/icons/checkbox_empty.svg';
+  static const checkboxFull = 'assets/icons/checkbox_full.svg';
+  static const close = 'assets/icons/close.svg';
+  static const info = 'assets/icons/info.svg';
+  static const pause = 'assets/icons/pause.svg';
+  static const play = 'assets/icons/play.svg';
+  static const plus = 'assets/icons/plus.svg';
+  static const share = 'assets/icons/share.svg';
+  static const settings = 'assets/icons/settings.svg';
+  static const photo = 'assets/icons/photo.svg';
+  static const x = 'assets/icons/x.svg';
+  static const website = 'assets/icons/website.svg';
+  static const mail = 'assets/icons/mail.svg';
+  static const code = 'assets/icons/code.svg';
+  static const warning = 'assets/icons/warning.svg';
+}

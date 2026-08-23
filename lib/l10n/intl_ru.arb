@@ -1,0 +1,257 @@
+{
+  "@@locale": "ru",
+  "appName": "minimo (photo)",
+  "madeByKhlebobul": "by khlebobul",
+  "skip": "пропустить",
+  "next": "далее",
+  "getStarted": "начать",
+  "onboardingPickTitle": "выберите фото",
+  "onboardingPickDescription": "выберите одно или несколько фото. minimo работает с локальными файлами и не трогает оригиналы",
+  "onboardingQualityTitle": "выберите, что менять",
+  "onboardingQualityDescription": "выберите готовый уровень качества или настройте размер и метаданные вручную",
+  "onboardingSaveTitle": "приватно по умолчанию",
+  "onboardingSaveDescription": "сжатие происходит на устройстве. фото никуда не загружаются; сохраните меньшую копию, когда результат устроит",
+  "todo": "В разработке",
+  "about": "о приложении",
+  "aboutStory": "minimo (photo) появился из простой проблемы.\n\nэтот проект даёт каждому удобную и бесплатную возможность сжимать фото прямо на мобильном устройстве, экономить память и сохранять важные моменты.",
+  "howCompressionWorksTitle": "за счёт чего фото становится меньше",
+  "howCompressionWorksBody": "minimo создаёт новую копию фото и сохраняет её компактнее. приложение может снизить качество изображения или уменьшить его размеры.\n\nпри меньшем качестве сохраняется меньше мелких деталей, которые обычно сложно заметить. меньшее разрешение означает меньше пикселей. так файл занимает меньше места.\n\nоригинал не меняется, а сжатие происходит на вашем устройстве.",
+  "openSourceNote": "minimo (photo) — проект с открытым исходным кодом. посмотрите код, следите за проектом или свяжитесь со мной",
+  "rateTheApp": "оценить приложение",
+  "shareWithFriends": "поделиться с друзьями",
+  "shareAppText": "попробуй minimo (photo) — простое приложение, чтобы сжимать фото прямо на телефоне: {url}",
+  "@shareAppText": {
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "changelogTitle": "что нового в {version}",
+  "@changelogTitle": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "changelogSubtitle": "изменения из обновлений, которые вы ещё не видели",
+  "changelogDone": "понятно",
+  "projectWebsite": "сайт проекта",
+  "githubRepository": "репозиторий github",
+  "xTwitter": "x (twitter)",
+  "myWebsite": "мой сайт",
+  "myOtherApps": "другие мои приложения",
+  "emailCopied": "почта скопирована",
+  "settings": "настройки",
+  "addPrefix": "добавлять префикс \"{prefix}\"",
+  "@addPrefix": {
+    "placeholders": {
+      "prefix": {
+        "type": "String"
+      }
+    }
+  },
+  "addPrefixDescription": "добавляет \"{prefix}\" перед исходным именем файла. если выключить, имя останется исходным",
+  "@addPrefixDescription": {
+    "placeholders": {
+      "prefix": {
+        "type": "String"
+      }
+    }
+  },
+  "showOverheatWarning": "показывать предупреждение о перегреве",
+  "showOverheatWarningDescription": "показывает небольшой баннер во время сжатия, когда устройство может замедлиться",
+  "savePhotosToAlbum": "сохранять фото в альбом",
+  "savePhotosToAlbumDescription": "сохраняет сжатые фото в альбом {album} вместо недавних сохранений",
+  "@savePhotosToAlbumDescription": {
+    "placeholders": {
+      "album": {
+        "type": "String"
+      }
+    }
+  },
+  "saveOptionsTitle": "как сохранить",
+  "saveAsNew": "сохранить как новое",
+  "saveAsNewDescription": "оставить оригинал и сохранить новое фото в галерею",
+  "saveBesideOriginal": "сохранить рядом с оригиналом",
+  "saveBesideOriginalDescription": "оставить оригинал и перенести его дату и метаданные",
+  "replaceOriginal": "заменить оригинал",
+  "replaceOriginalDescription": "сохранить с метаданными, затем запросить удаление оригинала",
+  "preventScreenSleep": "не выключать экран",
+  "preventScreenSleepDescription": "не даёт экрану уснуть, пока фото сжимаются",
+  "clearCache": "очистка кеша",
+  "clearCacheDescription": "удаляет временные файлы приложения. фото в галерее останутся",
+  "holdToClearCache": "удерживайте кнопку, чтобы очистить кеш",
+  "cacheCleared": "кеш очищен",
+  "cacheClearFailed": "не удалось очистить кеш",
+  "language": "язык",
+  "languageDescription": "выберите язык приложения",
+  "darkTheme": "темная тема",
+  "darkThemeDescription": "использовать темное оформление",
+  "system": "система",
+  "english": "english",
+  "russian": "русский",
+  "overheatWarning": "сжатие может замедлиться, если устройство нагреется",
+  "iosBackgroundCompressionWarning": "не сворачивайте minimo во время сжатия. иначе текущий фото начнёт сжиматься заново после возвращения",
+  "quality": "качество",
+  "resolution": "разрешение",
+  "high": "высокое",
+  "good": "хорошее",
+  "medium": "среднее",
+  "low": "низкое",
+  "small": "маленький",
+  "resolutionDescription": "уменьшение разрешения сильнее всего сокращает размер",
+  "detailLevel": "качество фото",
+  "detailLevelDescription": "задайте целевой качество или доверьте выбор профилю качества",
+  "automatic": "авто",
+  "resize": "размер изображения",
+  "resizeDescription": "ограничивает число кадров в секунду; меньшая частота источника не повышается",
+  "outputFormat": "кодек",
+  "outputFormatDescription": "JPEG совместим везде; HEIC может быть компактнее, но иногда заменяется на JPEG",
+  "metadataMode": "звук",
+  "metadataModeDescription": "сохраните исходный звук или удалите его для меньшего размера",
+  "stereo": "с метаданными",
+  "stripMetadata": "без метаданных",
+  "original": "оригинал",
+  "compressed": "сжатое",
+  "simpleOptions": "простой",
+  "advancedOptions": "расширенный",
+  "qualityReducedDescription": "качество будет уменьшен для экономии места",
+  "resolutionReducedHdDescription": "разрешение будет уменьшено до hd",
+  "resolutionReducedSdDescription": "разрешение будет уменьшено до sd",
+  "better": "лучше",
+  "smaller": "меньше",
+  "noSavingsHint": "попробуйте другой режим — размер почти не изменится",
+  "compress": "сжать",
+  "compressing": "сжатие...",
+  "cancel": "отмена",
+  "holdToCancelCompression": "удерживайте кнопку, чтобы отменить сжатие",
+  "compressionCancelled": "сжатие отменено",
+  "estimatingTimeRemaining": "оцениваем оставшееся время...",
+  "secondsRemaining": "{count, plural, =1{осталась примерно 1 секунда} one{осталась примерно {count} секунда} few{осталось примерно {count} секунды} many{осталось примерно {count} секунд} other{осталось примерно {count} секунды}}",
+  "@secondsRemaining": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "minutesRemaining": "{count, plural, =1{осталась примерно 1 минута} one{осталась примерно {count} минута} few{осталось примерно {count} минуты} many{осталось примерно {count} минут} other{осталось примерно {count} минуты}}",
+  "@minutesRemaining": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "pickFromGallery": "из галереи",
+  "pickFromFiles": "из файлов",
+  "loadingPhotos": "загрузка фото...",
+  "loadingManyPhotosHint": "загрузка большого количества или крупных файлов может занять больше времени",
+  "failedToPickPhotos": "выберите фотографию",
+  "compressionComplete": "сжатие завершено",
+  "compressionCompleted": "сжатие завершено",
+  "compressionFailed": "не удалось сжать фото",
+  "compressionFailedDescription": "попробуйте ещё раз или выберите другое фото.",
+  "alreadyOptimized": "уже оптимизировано",
+  "alreadyOptimizedDescription": "это фото уже маленькое. попробуйте снизить качество или выберите другое фото.",
+  "tryAgain": "попробовать снова",
+  "youSavedSize": "экономия {size}",
+  "@youSavedSize": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "share": "поделиться",
+  "shareOrSave": "поделиться или сохранить в…",
+  "comparePhotos": "сравнить",
+  "originalPhoto": "было",
+  "compressedPhoto": "стало",
+  "formatFallbackNotice": "HEIC недоступен — фото сохранено в JPEG",
+  "photoPreviewUnavailable": "предпросмотр недоступен",
+  "save": "сохранить",
+  "holdToDeleteOriginals": "удерживайте кнопку, чтобы удалить оригиналы",
+  "failedToShare": "не удалось поделиться фото. попробуйте ещё раз",
+  "savedPhotosAndDeletedOriginals": "сохранено фото: {saved}, удалено оригиналов: {deleted}",
+  "@savedPhotosAndDeletedOriginals": {
+    "placeholders": {
+      "saved": {
+        "type": "int"
+      },
+      "deleted": {
+        "type": "int"
+      }
+    }
+  },
+  "savedButOriginalsNotDeleted": "фото сохранены, но некоторые оригиналы удалить не удалось: {error}",
+  "@savedButOriginalsNotDeleted": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "savedWithWarnings": "фото сохранены с замечаниями: {error}",
+  "@savedWithWarnings": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "metadataPreservationIncomplete": "некоторые метаданные галереи перенести не удалось",
+  "originalDeletionFailed": "некоторые оригиналы удалить не удалось",
+  "waiting": "ожидает",
+  "failed": "ошибка",
+  "photoProgress": "фото {current} из {total}",
+  "@photoProgress": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "photosCompressed": "сжато фото: {completed} из {total}",
+  "@photosCompressed": {
+    "placeholders": {
+      "completed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "savePhotos": "{count, plural, =1{сохранить 1 фото} one{сохранить {count} фото} few{сохранить {count} фото} many{сохранить {count} фото} other{сохранить {count} фото}}",
+  "@savePhotos": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "savedPhotosToGallery": "{count, plural, =1{1 фото сохранено в галерею} one{{count} фото сохранено в галерею} few{{count} фото сохранено в галерею} many{{count} фото сохранено в галерею} other{{count} фото сохранено в галерею}}",
+  "@savedPhotosToGallery": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "failedToSave": "не удалось сохранить фото. попробуйте ещё раз",
+  "photoQualityHighDescription": "сохранить детали и исходное разрешение",
+  "photoQualityMediumDescription": "баланс качества и размера файла",
+  "photoQualityLowDescription": "маленькие файлы для отправки",
+  "photoQualityDescription": "чем выше качество, тем больше деталей и размер файла",
+  "maximumDimension": "максимальная сторона",
+  "maximumDimensionDescription": "ограничьте длинную сторону изображения для меньшего файла",
+  "keepMetadata": "метаданные",
+  "keepMetadataDescription": "сохранять данные камеры и EXIF, когда формат это поддерживает",
+  "keepExif": "сохранять EXIF"
+}
