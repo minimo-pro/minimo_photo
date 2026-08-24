@@ -11,7 +11,7 @@
   "onboardingQualityDescription": "выберите готовый уровень качества или настройте размер и метаданные вручную",
   "onboardingSaveTitle": "приватно по умолчанию",
   "onboardingSaveDescription": "сжатие происходит на устройстве. фото никуда не загружаются; сохраните меньшую копию, когда результат устроит",
-  "todo": "В разработке",
+  "todo": "в разработке",
   "about": "о приложении",
   "aboutStory": "minimo (photo) появился из простой проблемы.\n\nэтот проект даёт каждому удобную и бесплатную возможность сжимать фото прямо на мобильном устройстве, экономить память и сохранять важные моменты.",
   "howCompressionWorksTitle": "за счёт чего фото становится меньше",
@@ -108,7 +108,7 @@
   "resize": "размер изображения",
   "resizeDescription": "ограничивает число кадров в секунду; меньшая частота источника не повышается",
   "outputFormat": "кодек",
-  "outputFormatDescription": "JPEG совместим везде; HEIC может быть компактнее, но иногда заменяется на JPEG",
+  "outputFormatDescription": "jpeg совместим везде; heic может быть компактнее, но иногда заменяется на jpeg",
   "metadataMode": "звук",
   "metadataModeDescription": "сохраните исходный звук или удалите его для меньшего размера",
   "stereo": "с метаданными",
@@ -170,7 +170,7 @@
   "comparePhotos": "сравнить",
   "originalPhoto": "было",
   "compressedPhoto": "стало",
-  "formatFallbackNotice": "HEIC недоступен — фото сохранено в JPEG",
+  "formatFallbackNotice": "heic недоступен — фото сохранено в jpeg",
   "photoPreviewUnavailable": "предпросмотр недоступен",
   "save": "сохранить",
   "holdToDeleteOriginals": "удерживайте кнопку, чтобы удалить оригиналы",
@@ -252,6 +252,6 @@
   "maximumDimension": "максимальная сторона",
   "maximumDimensionDescription": "ограничьте длинную сторону изображения для меньшего файла",
   "keepMetadata": "метаданные",
-  "keepMetadataDescription": "сохранять данные камеры и EXIF, когда формат это поддерживает",
-  "keepExif": "сохранять EXIF"
+  "keepMetadataDescription": "сохранять данные камеры и exif, когда формат это поддерживает",
+  "keepExif": "сохранять exif"
 }

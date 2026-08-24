@@ -135,7 +135,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "не удалось поделиться фото. попробуйте ещё раз",
     ),
     "formatFallbackNotice": MessageLookupByLibrary.simpleMessage(
-      "HEIC недоступен — фото сохранено в JPEG",
+      "heic недоступен — фото сохранено в jpeg",
     ),
     "getStarted": MessageLookupByLibrary.simpleMessage("начать"),
     "githubRepository": MessageLookupByLibrary.simpleMessage(
@@ -161,10 +161,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "iosBackgroundCompressionWarning": MessageLookupByLibrary.simpleMessage(
       "не сворачивайте minimo во время сжатия. иначе текущий фото начнёт сжиматься заново после возвращения",
     ),
-    "keepExif": MessageLookupByLibrary.simpleMessage("сохранять EXIF"),
+    "keepExif": MessageLookupByLibrary.simpleMessage("сохранять exif"),
     "keepMetadata": MessageLookupByLibrary.simpleMessage("метаданные"),
     "keepMetadataDescription": MessageLookupByLibrary.simpleMessage(
-      "сохранять данные камеры и EXIF, когда формат это поддерживает",
+      "сохранять данные камеры и exif, когда формат это поддерживает",
     ),
     "language": MessageLookupByLibrary.simpleMessage("язык"),
     "languageDescription": MessageLookupByLibrary.simpleMessage(
@@ -227,7 +227,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "originalPhoto": MessageLookupByLibrary.simpleMessage("было"),
     "outputFormat": MessageLookupByLibrary.simpleMessage("кодек"),
     "outputFormatDescription": MessageLookupByLibrary.simpleMessage(
-      "JPEG совместим везде; HEIC может быть компактнее, но иногда заменяется на JPEG",
+      "jpeg совместим везде; heic может быть компактнее, но иногда заменяется на jpeg",
     ),
     "overheatWarning": MessageLookupByLibrary.simpleMessage(
       "сжатие может замедлиться, если устройство нагреется",
@@ -327,7 +327,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "smaller": MessageLookupByLibrary.simpleMessage("меньше"),
     "stripMetadata": MessageLookupByLibrary.simpleMessage("без метаданных"),
     "system": MessageLookupByLibrary.simpleMessage("система"),
-    "todo": MessageLookupByLibrary.simpleMessage("В разработке"),
+    "todo": MessageLookupByLibrary.simpleMessage("в разработке"),
     "tryAgain": MessageLookupByLibrary.simpleMessage("попробовать снова"),
     "waiting": MessageLookupByLibrary.simpleMessage("ожидает"),
     "xTwitter": MessageLookupByLibrary.simpleMessage("x (twitter)"),

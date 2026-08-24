@@ -144,9 +144,9 @@ class S {
     );
   }
 
-  /// `TODO`
+  /// `todo`
   String get todo {
-    return Intl.message('TODO', name: 'todo', desc: '', args: []);
+    return Intl.message('todo', name: 'todo', desc: '', args: []);
   }
 
   /// `about`
@@ -639,30 +639,30 @@ class S {
     );
   }
 
-  /// `outputFormat`
+  /// `outputformat`
   String get outputFormat {
     return Intl.message(
-      'outputFormat',
+      'outputformat',
       name: 'outputFormat',
       desc: '',
       args: [],
     );
   }
 
-  /// `JPEG works everywhere; HEIC can be smaller but may fall back to JPEG`
+  /// `jpeg works everywhere; heic can be smaller but may fall back to jpeg`
   String get outputFormatDescription {
     return Intl.message(
-      'JPEG works everywhere; HEIC can be smaller but may fall back to JPEG',
+      'jpeg works everywhere; heic can be smaller but may fall back to jpeg',
       name: 'outputFormatDescription',
       desc: '',
       args: [],
     );
   }
 
-  /// `metadataMode`
+  /// `metadatamode`
   String get metadataMode {
     return Intl.message(
-      'metadataMode',
+      'metadatamode',
       name: 'metadataMode',
       desc: '',
       args: [],
@@ -1003,10 +1003,10 @@ class S {
     return Intl.message('after', name: 'compressedPhoto', desc: '', args: []);
   }
 
-  /// `HEIC wasn't available, so this photo was saved as JPEG`
+  /// `heic wasn't available, so this photo was saved as jpeg`
   String get formatFallbackNotice {
     return Intl.message(
-      'HEIC wasn\'t available, so this photo was saved as JPEG',
+      'heic wasn\'t available, so this photo was saved as jpeg',
       name: 'formatFallbackNotice',
       desc: '',
       args: [],
@@ -1227,20 +1227,20 @@ class S {
     return Intl.message('metadata', name: 'keepMetadata', desc: '', args: []);
   }
 
-  /// `preserve camera and EXIF information when supported`
+  /// `preserve camera and exif information when supported`
   String get keepMetadataDescription {
     return Intl.message(
-      'preserve camera and EXIF information when supported',
+      'preserve camera and exif information when supported',
       name: 'keepMetadataDescription',
       desc: '',
       args: [],
     );
   }
 
-  /// `keep EXIF metadata`
+  /// `keep exif metadata`
   String get keepExif {
     return Intl.message(
-      'keep EXIF metadata',
+      'keep exif metadata',
       name: 'keepExif',
       desc: '',
       args: [],

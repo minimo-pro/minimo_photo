@@ -136,7 +136,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "couldn\'t share the photos. try again",
     ),
     "formatFallbackNotice": MessageLookupByLibrary.simpleMessage(
-      "HEIC wasn\'t available, so this photo was saved as JPEG",
+      "heic wasn\'t available, so this photo was saved as jpeg",
     ),
     "getStarted": MessageLookupByLibrary.simpleMessage("get started"),
     "githubRepository": MessageLookupByLibrary.simpleMessage(
@@ -162,10 +162,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "iosBackgroundCompressionWarning": MessageLookupByLibrary.simpleMessage(
       "keep minimo open during compression. if you leave, the current photo restarts when you return",
     ),
-    "keepExif": MessageLookupByLibrary.simpleMessage("keep EXIF metadata"),
+    "keepExif": MessageLookupByLibrary.simpleMessage("keep exif metadata"),
     "keepMetadata": MessageLookupByLibrary.simpleMessage("metadata"),
     "keepMetadataDescription": MessageLookupByLibrary.simpleMessage(
-      "preserve camera and EXIF information when supported",
+      "preserve camera and exif information when supported",
     ),
     "keepMetadataLegacy": MessageLookupByLibrary.simpleMessage("keep metadata"),
     "language": MessageLookupByLibrary.simpleMessage("language"),
@@ -185,7 +185,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "limit the longest image side; smaller values save more space",
     ),
     "medium": MessageLookupByLibrary.simpleMessage("medium"),
-    "metadataMode": MessageLookupByLibrary.simpleMessage("metadataMode"),
+    "metadataMode": MessageLookupByLibrary.simpleMessage("metadatamode"),
     "metadataModeDescription": MessageLookupByLibrary.simpleMessage(
       "keep the original audio or strip it to save more space",
     ),
@@ -223,9 +223,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "some originals could not be deleted",
     ),
     "originalPhoto": MessageLookupByLibrary.simpleMessage("before"),
-    "outputFormat": MessageLookupByLibrary.simpleMessage("outputFormat"),
+    "outputFormat": MessageLookupByLibrary.simpleMessage("outputformat"),
     "outputFormatDescription": MessageLookupByLibrary.simpleMessage(
-      "JPEG works everywhere; HEIC can be smaller but may fall back to JPEG",
+      "jpeg works everywhere; heic can be smaller but may fall back to jpeg",
     ),
     "overheatWarning": MessageLookupByLibrary.simpleMessage(
       "compression can slow down if your device gets hot",
@@ -321,7 +321,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "smaller": MessageLookupByLibrary.simpleMessage("smaller"),
     "stripMetadata": MessageLookupByLibrary.simpleMessage("strip metadata"),
     "system": MessageLookupByLibrary.simpleMessage("system"),
-    "todo": MessageLookupByLibrary.simpleMessage("TODO"),
+    "todo": MessageLookupByLibrary.simpleMessage("todo"),
     "tryAgain": MessageLookupByLibrary.simpleMessage("try again"),
     "waiting": MessageLookupByLibrary.simpleMessage("waiting"),
     "xTwitter": MessageLookupByLibrary.simpleMessage("x (twitter)"),
