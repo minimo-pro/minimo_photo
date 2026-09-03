@@ -35,7 +35,8 @@ When rendering icons inside `AppActionButton`, the SVG is wrapped in a fixed `Si
 |---|---|
 | `Pressable` | Platform-aware spring scale feedback |
 | `HoldToConfirmButton` | 1.5-second hold confirmation with red fill; optional `fontSize` for action-style labels |
-| `AppActionButton` | Primary/secondary screen actions (`filled`, `outlined`, `text`) |
+| `AppActionButton` | Primary/secondary actions with shared loading and disabled states |
+| `MinimoLoader` | Hand-drawn rotating loader, including compact button progress |
 | `AppSnackBar` | Success, error, and instruction messages |
 | `FadedScrollView` | Clamped scroll with static alpha-only edge fading |
 | `showAppSheet` / `showAppContentSheet` | Modal sheets with shared drag handle and scroll-to-drag dismissal |
@@ -47,7 +48,9 @@ When rendering icons inside `AppActionButton`, the SVG is wrapped in a fixed `Si
 ## Motion Rules
 
 - Respect `MediaQuery.disableAnimations` where applicable.
+- The simple/advanced switch uses a red selected segment, spring movement, and explicit selected semantics.
 - `RollingCounterText` animates only when its formatted text changes. Counter rolls use a short, low-bounce curve; equal rounded values remain static.
+- Disabled action labels and icons keep a readable `onSurface` foreground over the shared gray background.
 - Current photo progress is static red text, not a pulsing indicator.
 - Hold progress fills left-to-right while the whole button uses `Pressable` scaling.
 - Duplicate `AppSnackBar` messages shake the existing snackbar, bring it to the front, and reset its timer instead of adding another copy.

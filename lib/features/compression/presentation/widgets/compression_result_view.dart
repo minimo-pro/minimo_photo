@@ -30,8 +30,8 @@ class CompressionResultView extends StatelessWidget {
   Widget build(BuildContext context) {
     final strings = S.of(context);
     final successes = state.successResults;
-    final failed = successes.isEmpty;
-    final compressionFailed = failed && state.compressionError != null;
+    final allFailed = successes.isEmpty;
+    final alreadyOptimized = allFailed && state.compressionError == null;
     final originalSize = successes.fold<int>(
       0,
       (sum, item) => sum + (item.result.originalSize ?? item.source.size),
@@ -41,91 +41,136 @@ class CompressionResultView extends StatelessWidget {
     return Column(
       children: [
         Expanded(
-          child: Column(
-            children: [
-              SelectedPhotosPreview(
-                selectedCount: state.photos.length,
-                thumbnailPaths: state.thumbnailPaths,
-                scale: 1.55,
-              ),
-              const SizedBox(height: 12),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final compact = constraints.maxHeight < 520;
+              return Column(
                 children: [
-                  DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: failed
-                          ? CompressionUiColors.red
-                          : CompressionUiColors.green,
-                      shape: BoxShape.circle,
-                    ),
-                    child: const SizedBox.square(dimension: 12),
+                  SelectedPhotosPreview(
+                    selectedCount: state.photos.length,
+                    thumbnailPaths: state.thumbnailPaths,
+                    scale: compact ? 1.32 : 1.72,
                   ),
-                  const SizedBox(width: 9),
-                  Text(
-                    failed
-                        ? compressionFailed
-                              ? strings.compressionFailed
-                              : strings.alreadyOptimized
-                        : strings.compressionCompleted,
-                    style: const TextStyle(fontSize: 24),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8),
-              Text(
-                failed
-                    ? compressionFailed
-                          ? strings.compressionFailedDescription
-                          : strings.alreadyOptimizedDescription
-                    : strings.youSavedSize(
-                        Utils.formatSize(saved).toLowerCase(),
+                  SizedBox(height: compact ? 7 : 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: allFailed
+                              ? CompressionUiColors.red
+                              : CompressionUiColors.green,
+                          shape: BoxShape.circle,
+                        ),
+                        child: SizedBox.square(dimension: compact ? 10 : 12),
                       ),
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  fontSize: 18,
-                ),
-              ),
-              const SizedBox(height: 14),
-              Expanded(child: PhotoStatusList(state: state)),
-            ],
+                      const SizedBox(width: 9),
+                      Flexible(
+                        child: Text(
+                          allFailed
+                              ? alreadyOptimized
+                                    ? strings.alreadyOptimized
+                                    : strings.compressionFailed
+                              : successes.length == state.results.length
+                              ? strings.compressionCompleted
+                              : strings.photosCompressed(
+                                  successes.length,
+                                  state.results.length,
+                                ),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onSurface,
+                            fontSize: compact ? 21 : 25,
+                            height: 1,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: compact ? 6 : 8),
+                  Text(
+                    allFailed
+                        ? alreadyOptimized
+                              ? strings.alreadyOptimizedDescription
+                              : strings.compressionFailedDescription
+                        : strings.youSavedSize(
+                            Utils.formatSize(saved).toLowerCase(),
+                          ),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      fontSize: compact ? 16 : 19,
+                      height: compact ? 1.1 : 1,
+                    ),
+                  ),
+                  SizedBox(height: compact ? 8 : 12),
+                  Flexible(
+                    fit: FlexFit.loose,
+                    child: PhotoStatusList(state: state),
+                  ),
+                  SizedBox(height: compact ? 4 : 8),
+                ],
+              );
+            },
           ),
         ),
-        const SizedBox(height: 12),
-        Row(
-          children: [
-            AppActionButton(
-              width: 47,
-              label: 'VS',
-              onPressed: failed ? null : () => _compare(context),
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: AppActionButton(
-                width: double.infinity,
-                label: failed ? strings.tryAgain : strings.save,
-                variant: AppActionButtonVariant.filled,
-                onPressed: state.isSaving
-                    ? null
-                    : failed
-                    ? onTryAgain
-                    : () => context.read<CompressBloc>().add(
-                        const CompressResultsSaved(),
+        LayoutBuilder(
+          builder: (context, _) {
+            final compact = MediaQuery.sizeOf(context).height < 720;
+            final gap = compact ? 8.0 : 10.0;
+            return Column(
+              children: [
+                SizedBox(height: compact ? 8 : 12),
+                Row(
+                  children: [
+                    Tooltip(
+                      message: strings.comparePhotos,
+                      child: AppActionButton(
+                        width: 47,
+                        label: 'VS',
+                        fontSize: 16,
+                        padding: EdgeInsets.zero,
+                        onPressed: allFailed ? null : () => _compare(context),
                       ),
-              ),
-            ),
-            if (!failed) ...[
-              const SizedBox(width: 10),
-              AppActionButton(
-                width: 47,
-                icon: AppIcons.share,
-                iconWidth: 22,
-                iconHeight: 22,
-                onPressed: () => _share(context),
-              ),
-            ],
-          ],
+                    ),
+                    SizedBox(width: gap),
+                    if (!alreadyOptimized)
+                      Expanded(
+                        child: AppActionButton(
+                          width: double.infinity,
+                          label: allFailed ? strings.tryAgain : strings.save,
+                          loading: state.isSaving,
+                          fontSize: 20,
+                          variant: AppActionButtonVariant.filled,
+                          onPressed: state.isSaving
+                              ? null
+                              : allFailed
+                              ? onTryAgain
+                              : () => context.read<CompressBloc>().add(
+                                  const CompressResultsSaved(),
+                                ),
+                        ),
+                      )
+                    else
+                      const Spacer(),
+                    if (!allFailed) ...[
+                      SizedBox(width: gap),
+                      Tooltip(
+                        message: strings.shareOrSave,
+                        child: AppActionButton(
+                          width: 47,
+                          icon: AppIcons.share,
+                          iconWidth: 22,
+                          iconHeight: 22,
+                          onPressed: () => _share(context),
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+              ],
+            );
+          },
         ),
       ],
     );

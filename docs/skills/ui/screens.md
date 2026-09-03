@@ -11,12 +11,13 @@
 
 `CompressRoute` has three BLoC-driven views:
 
-1. **Ready:** stacked photo preview, estimated size, simple/advanced switch,
-   add-more and compress actions.
-2. **Processing:** weighted progress, per-photo status list, hold-to-cancel.
-3. **Done:** saved-space result, statuses, compare, save, and share.
+1. **Ready:** responsive stacked-photo summary, estimated size,
+   simple/advanced switch, add-more, and compress actions. Scrolling pins a
+   compact size summary beside the back button.
+2. **Processing:** responsive size comparison, weighted progress, remaining
+   time, per-photo status list, and hold-to-cancel.
+3. **Done:** responsive saved-space result, statuses, compare, save, and share.
 
 Shared controls, colors, spacing, sheets, animation, and typography remain the
 same as `minimo_video`; media-specific controls live inside compression feature
 widgets.
-
