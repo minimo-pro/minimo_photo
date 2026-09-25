@@ -253,5 +253,9 @@
   "maximumDimensionDescription": "limit the longest image side; smaller values save more space",
   "keepMetadata": "metadata",
   "keepMetadataDescription": "preserve camera and exif information when supported",
-  "keepExif": "keep exif metadata"
+  "keepExif": "keep exif metadata",
+  "statistics": "statistics",
+  "photosCompressedStat": "photos compressed",
+  "spaceSavedStat": "space saved",
+  "statisticsSinceVersion": "statistics are stored locally on this device."
 }

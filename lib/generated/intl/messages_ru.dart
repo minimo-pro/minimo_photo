@@ -249,6 +249,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "баланс качества и размера файла",
     ),
     "photosCompressed": m5,
+    "photosCompressedStat": MessageLookupByLibrary.simpleMessage("фото сжато"),
     "pickFromFiles": MessageLookupByLibrary.simpleMessage("из файлов"),
     "pickFromGallery": MessageLookupByLibrary.simpleMessage("из галереи"),
     "preventScreenSleep": MessageLookupByLibrary.simpleMessage(
@@ -325,6 +326,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "skip": MessageLookupByLibrary.simpleMessage("пропустить"),
     "small": MessageLookupByLibrary.simpleMessage("маленький"),
     "smaller": MessageLookupByLibrary.simpleMessage("меньше"),
+    "spaceSavedStat": MessageLookupByLibrary.simpleMessage("места сэкономлено"),
+    "statistics": MessageLookupByLibrary.simpleMessage("статистика"),
+    "statisticsSinceVersion": MessageLookupByLibrary.simpleMessage(
+      "статистика хранится локально на этом устройстве.",
+    ),
     "stripMetadata": MessageLookupByLibrary.simpleMessage("без метаданных"),
     "system": MessageLookupByLibrary.simpleMessage("система"),
     "todo": MessageLookupByLibrary.simpleMessage("в разработке"),

@@ -1246,6 +1246,41 @@ class S {
       args: [],
     );
   }
+
+  /// `statistics`
+  String get statistics {
+    return Intl.message('statistics', name: 'statistics', desc: '', args: []);
+  }
+
+  /// `photos compressed`
+  String get photosCompressedStat {
+    return Intl.message(
+      'photos compressed',
+      name: 'photosCompressedStat',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `space saved`
+  String get spaceSavedStat {
+    return Intl.message(
+      'space saved',
+      name: 'spaceSavedStat',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `statistics are stored locally on this device.`
+  String get statisticsSinceVersion {
+    return Intl.message(
+      'statistics are stored locally on this device.',
+      name: 'statisticsSinceVersion',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

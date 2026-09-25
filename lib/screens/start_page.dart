@@ -59,15 +59,7 @@ class _StartPageState extends State<StartPage> {
       if (photos.isNotEmpty && mounted) {
         context.pushRoute(CompressRoute(initialPhotos: photos));
       }
-    } catch (_) {
-      if (mounted) {
-        AppSnackBar.show(
-          context,
-          message: S.of(context).failedToPickPhotos,
-          type: AppSnackBarType.error,
-        );
-      }
-    }
+    } catch (_) {}
   }
 
   void _completeUpgradeFlow() {

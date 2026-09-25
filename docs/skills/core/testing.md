@@ -8,7 +8,8 @@ flutter test
 ```
 
 Unit tests cover preset/estimate behavior, minimum useful savings, cache
-cleanup, shared controls, result statuses, and picker sheet behavior.
+cleanup, local statistics, shared controls, result statuses, and picker sheet
+behavior including duplicate-request protection.
 
 Before release, verify on physical Android and iOS devices:
 
@@ -19,4 +20,3 @@ Before release, verify on physical Android and iOS devices:
 - batch cancel leaves no partial output offered for saving
 - gallery save and share sheet
 - low-storage and permission-denied errors
-

@@ -23,6 +23,9 @@ enum Language {
 
 typedef Changelog = Map<String, Map<Language, List<String>>>;
 
+const _remoteChangelogUrl =
+    'https://raw.githubusercontent.com/minimo-pro/minimo_photo/main/changelog.json';
+
 const Changelog _changelog = {
   // TODO: Add one entry per app version before every release.
   '1.0.1': {

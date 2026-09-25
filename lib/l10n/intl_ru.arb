@@ -253,5 +253,9 @@
   "maximumDimensionDescription": "ограничьте длинную сторону изображения для меньшего файла",
   "keepMetadata": "метаданные",
   "keepMetadataDescription": "сохранять данные камеры и exif, когда формат это поддерживает",
-  "keepExif": "сохранять exif"
+  "keepExif": "сохранять exif",
+  "statistics": "статистика",
+  "photosCompressedStat": "фото сжато",
+  "spaceSavedStat": "места сэкономлено",
+  "statisticsSinceVersion": "статистика хранится локально на этом устройстве."
 }

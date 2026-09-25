@@ -116,7 +116,8 @@ class _CompressViewState extends State<_CompressView> {
                       child: AppActionButton(
                         width: 47,
                         icon: AppIcons.arrowBack,
-                        variant: AppActionButtonVariant.text,
+                        iconWidth: 22,
+                        iconHeight: 22,
                         onPressed: () =>
                             context.router.replaceAll([const StartRoute()]),
                       ),

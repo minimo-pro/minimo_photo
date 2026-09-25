@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../services/app_settings_service.dart';
+import '../../../services/app_stats_service.dart';
 import '../data/photo_compressor_adapter.dart';
 import '../data/photo_file_adapter.dart';
 import '../domain/compression_result.dart';
@@ -234,6 +235,23 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
       );
     }
     stopwatch.stop();
+    final successfulResults = results
+        .where((item) => item.result.success)
+        .toList();
+    if (successfulResults.isNotEmpty) {
+      final originalSize = successfulResults.fold<int>(
+        0,
+        (sum, item) => sum + (item.result.originalSize ?? item.source.size),
+      );
+      final compressedSize = successfulResults.fold<int>(
+        0,
+        (sum, item) => sum + (item.result.outputSize ?? 0),
+      );
+      await AppStatsService.recordCompressions(
+        photoCount: successfulResults.length,
+        savedBytes: originalSize - compressedSize,
+      ).onError((_, _) {});
+    }
     emit(state.copyWith(status: CompressStatus.done, progress: 1));
   }
 
