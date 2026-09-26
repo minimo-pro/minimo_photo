@@ -302,6 +302,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "сохранять фото в альбом",
     ),
     "savePhotosToAlbumDescription": m7,
+    "saved": MessageLookupByLibrary.simpleMessage("сохранено"),
     "savedButOriginalsNotDeleted": m8,
     "savedPhotosAndDeletedOriginals": m9,
     "savedPhotosToGallery": m10,

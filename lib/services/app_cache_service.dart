@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 
 class AppCacheService {
-  static const _directoryNames = ['minimo_photo'];
+  static const _directoryNames = ['picked_photos', 'minimo_photo'];
 
   static Future<int> size({Directory? root}) async {
     final directories = await _directories(root);

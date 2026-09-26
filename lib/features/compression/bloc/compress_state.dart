@@ -27,8 +27,12 @@ class CompressState {
   final CompressionSettings settings;
   final int? estimatedSize;
   final bool isSaving;
+  final bool isSaved;
   final int? savedPhotoCount;
+  final int? deletedOriginalCount;
   final Object? saveError;
+  final Object? deleteError;
+  final Object? metadataError;
   final Object? compressionError;
 
   const CompressState({
@@ -45,8 +49,12 @@ class CompressState {
     required this.settings,
     this.estimatedSize,
     required this.isSaving,
+    this.isSaved = false,
     this.savedPhotoCount,
+    this.deletedOriginalCount,
     this.saveError,
+    this.deleteError,
+    this.metadataError,
     this.compressionError,
   });
 
@@ -85,6 +93,8 @@ class CompressState {
       .whereType<String>()
       .toList();
   bool get usedCodecFallback => false;
+  bool get hasUnsavedResults =>
+      status == CompressStatus.done && successResults.isNotEmpty && !isSaved;
 
   CompressState copyWith({
     CompressStatus? status,
@@ -100,8 +110,12 @@ class CompressState {
     CompressionSettings? settings,
     int? estimatedSize,
     bool? isSaving,
+    bool? isSaved,
     int? savedPhotoCount,
+    int? deletedOriginalCount,
     Object? saveError,
+    Object? deleteError,
+    Object? metadataError,
     Object? compressionError,
     bool clearSaveNotification = false,
     bool clearCompressionError = false,
@@ -122,10 +136,20 @@ class CompressState {
         ? estimatedSize
         : estimatedSize ?? this.estimatedSize,
     isSaving: isSaving ?? this.isSaving,
+    isSaved: isSaved ?? this.isSaved,
     savedPhotoCount: clearSaveNotification
         ? savedPhotoCount
         : savedPhotoCount ?? this.savedPhotoCount,
+    deletedOriginalCount: clearSaveNotification
+        ? deletedOriginalCount
+        : deletedOriginalCount ?? this.deletedOriginalCount,
     saveError: clearSaveNotification ? saveError : saveError ?? this.saveError,
+    deleteError: clearSaveNotification
+        ? deleteError
+        : deleteError ?? this.deleteError,
+    metadataError: clearSaveNotification
+        ? metadataError
+        : metadataError ?? this.metadataError,
     compressionError: clearCompressionError
         ? compressionError
         : compressionError ?? this.compressionError,

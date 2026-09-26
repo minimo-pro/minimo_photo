@@ -21,6 +21,9 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
   int _compressionRunId = 0;
   int _estimateRunId = 0;
   Timer? _estimateDebounce;
+  final _savedOutputPaths = <String>{};
+  final _replacementSourceIdentifiers = <String>{};
+  final _deletedSourceIdentifiers = <String>{};
 
   CompressBloc({
     List<PickedPhoto> initialPhotos = const [],
@@ -151,6 +154,9 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
     Emitter<CompressState> emit,
   ) async {
     if (state.photos.isEmpty) return;
+    _savedOutputPaths.clear();
+    _replacementSourceIdentifiers.clear();
+    _deletedSourceIdentifiers.clear();
     _cancelRequested = false;
     final runId = ++_compressionRunId;
     final stopwatch = Stopwatch()..start();
@@ -300,22 +306,119 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
     CompressResultsSaved event,
     Emitter<CompressState> emit,
   ) async {
-    if (state.isSaving || state.successfulOutputPaths.isEmpty) return;
+    if (state.isSaving) return;
+    final successfulResults = state.successResults
+        .where((item) => item.result.outputPath != null)
+        .toList();
+    if (successfulResults.isEmpty) return;
+    final allowAdditionalCopy =
+        state.isSaved &&
+        event.preserveMetadataSourceIdentifiers.isEmpty &&
+        event.deleteSourceIdentifiers.isEmpty;
+
     emit(state.copyWith(isSaving: true, clearSaveNotification: true));
     try {
+      final metadataIdentifiers = event.preserveMetadataSourceIdentifiers;
+      final deleteIdentifiers = event.deleteSourceIdentifiers;
       final album = _appSettings.savePhotosToAlbum
           ? AppSettingsService.albumName
           : null;
-      for (final path in state.successfulOutputPaths) {
-        await _photoFileAdapter.saveToGallery(path, album: album);
+      final metadataWarnings = <String>[];
+      var savedAnyPhoto = false;
+
+      for (final item in successfulResults) {
+        final outputPath = item.result.outputPath;
+        if (outputPath == null) continue;
+        final sourceIdentifier = item.source.sourceIdentifier;
+        if (sourceIdentifier != null &&
+            metadataIdentifiers.contains(sourceIdentifier)) {
+          if (_replacementSourceIdentifiers.contains(sourceIdentifier)) {
+            continue;
+          }
+          final save = await _photoFileAdapter.saveReplacement(
+            outputPath,
+            sourceIdentifier,
+            album: album,
+            captureDate: item.source.captureDate,
+            latitude: item.source.latitude,
+            longitude: item.source.longitude,
+          );
+          _replacementSourceIdentifiers.add(sourceIdentifier);
+          _savedOutputPaths.add(outputPath);
+          savedAnyPhoto = true;
+          metadataWarnings.addAll(save.warnings);
+        } else {
+          if (_savedOutputPaths.contains(outputPath) && !allowAdditionalCopy) {
+            continue;
+          }
+          await _photoFileAdapter.saveToGallery(outputPath, album: album);
+          _savedOutputPaths.add(outputPath);
+          savedAnyPhoto = true;
+        }
       }
-      emit(
-        state.copyWith(
-          isSaving: false,
-          savedPhotoCount: state.successfulOutputPaths.length,
-          clearSaveNotification: true,
-        ),
-      );
+
+      if (deleteIdentifiers.isEmpty) {
+        if (!savedAnyPhoto) {
+          emit(state.copyWith(isSaving: false, clearSaveNotification: true));
+          return;
+        }
+        emit(
+          state.copyWith(
+            isSaving: false,
+            isSaved: true,
+            savedPhotoCount: successfulResults.length,
+            deletedOriginalCount: 0,
+            metadataError: metadataWarnings.isEmpty
+                ? null
+                : metadataWarnings.join('; '),
+            clearSaveNotification: true,
+          ),
+        );
+        return;
+      }
+
+      var deletedOriginalCount = 0;
+      try {
+        final pendingIdentifiers = deleteIdentifiers.difference(
+          _deletedSourceIdentifiers,
+        );
+        if (pendingIdentifiers.isEmpty) {
+          emit(state.copyWith(isSaving: false, clearSaveNotification: true));
+          return;
+        }
+        deletedOriginalCount = await _photoFileAdapter.deleteOriginals(
+          pendingIdentifiers,
+        );
+        if (deletedOriginalCount == pendingIdentifiers.length) {
+          _deletedSourceIdentifiers.addAll(pendingIdentifiers);
+        }
+        emit(
+          state.copyWith(
+            isSaving: false,
+            isSaved: true,
+            savedPhotoCount: successfulResults.length,
+            deletedOriginalCount: deletedOriginalCount,
+            metadataError: metadataWarnings.isEmpty
+                ? null
+                : metadataWarnings.join('; '),
+            clearSaveNotification: true,
+          ),
+        );
+      } catch (error) {
+        emit(
+          state.copyWith(
+            isSaving: false,
+            isSaved: true,
+            savedPhotoCount: successfulResults.length,
+            deletedOriginalCount: deletedOriginalCount,
+            deleteError: error,
+            metadataError: metadataWarnings.isEmpty
+                ? null
+                : metadataWarnings.join('; '),
+            clearSaveNotification: true,
+          ),
+        );
+      }
     } catch (error) {
       emit(
         state.copyWith(

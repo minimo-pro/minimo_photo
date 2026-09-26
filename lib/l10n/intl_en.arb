@@ -173,6 +173,7 @@
   "formatFallbackNotice": "heic wasn't available, so this photo was saved as jpeg",
   "photoPreviewUnavailable": "preview unavailable",
   "save": "save",
+  "saved": "saved",
   "holdToDeleteOriginals": "hold the button to delete originals",
   "failedToShare": "couldn't share the photos. try again",
   "savedPhotosAndDeletedOriginals": "saved {saved} photo(s) and deleted {deleted} original(s)",

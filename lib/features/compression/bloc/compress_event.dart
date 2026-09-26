@@ -62,7 +62,13 @@ class CompressForegroundResumed extends CompressEvent {
 }
 
 class CompressResultsSaved extends CompressEvent {
-  const CompressResultsSaved();
+  final Set<String> preserveMetadataSourceIdentifiers;
+  final Set<String> deleteSourceIdentifiers;
+
+  const CompressResultsSaved({
+    this.preserveMetadataSourceIdentifiers = const {},
+    this.deleteSourceIdentifiers = const {},
+  });
 }
 
 class CompressMessagesCleared extends CompressEvent {

@@ -173,6 +173,7 @@
   "formatFallbackNotice": "heic недоступен — фото сохранено в jpeg",
   "photoPreviewUnavailable": "предпросмотр недоступен",
   "save": "сохранить",
+  "saved": "сохранено",
   "holdToDeleteOriginals": "удерживайте кнопку, чтобы удалить оригиналы",
   "failedToShare": "не удалось поделиться фото. попробуйте ещё раз",
   "savedPhotosAndDeletedOriginals": "сохранено фото: {saved}, удалено оригиналов: {deleted}",

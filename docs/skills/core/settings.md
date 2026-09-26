@@ -14,7 +14,7 @@ Persistent app settings live in `AppSettingsService`.
 Compression settings are per batch and not persisted: `quality`, optional
 `maxDimension`, and `keepExif`.
 
-Temporary compressed outputs use the `minimo_photo` cache directory. Cache
-cleanup never touches gallery photos.
+Picker copies use `picked_photos`; compressed outputs use `minimo_photo`.
+Cache cleanup never touches gallery photos.
 Compression statistics stay on-device in `shared_preferences`; skipped and
 failed results are not counted.

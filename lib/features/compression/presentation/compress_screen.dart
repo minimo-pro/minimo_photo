@@ -79,15 +79,35 @@ class _CompressViewState extends State<_CompressView> {
   Widget build(BuildContext context) {
     return BlocConsumer<CompressBloc, CompressState>(
       listener: (context, state) {
-        if (state.savedPhotoCount != null || state.saveError != null) {
+        final strings = S.of(context);
+        final partialErrors = [
+          if (state.metadataError != null)
+            strings.metadataPreservationIncomplete,
+          if (state.deleteError != null) strings.originalDeletionFailed,
+        ];
+        final message = partialErrors.isNotEmpty
+            ? strings.savedWithWarnings(partialErrors.join('; '))
+            : state.savedPhotoCount != null &&
+                  (state.deletedOriginalCount ?? 0) > 0
+            ? strings.savedPhotosAndDeletedOriginals(
+                state.savedPhotoCount!,
+                state.deletedOriginalCount!,
+              )
+            : state.savedPhotoCount != null
+            ? strings.savedPhotosToGallery(state.savedPhotoCount!)
+            : state.saveError != null
+            ? strings.failedToSave
+            : null;
+        if (message != null) {
           AppSnackBar.show(
             context,
-            message: state.savedPhotoCount != null
-                ? S.of(context).savedPhotosToGallery(state.savedPhotoCount!)
-                : S.of(context).failedToSave,
-            type: state.saveError == null
-                ? AppSnackBarType.success
-                : AppSnackBarType.error,
+            message: message,
+            type:
+                state.deleteError != null ||
+                    state.metadataError != null ||
+                    state.saveError != null
+                ? AppSnackBarType.error
+                : AppSnackBarType.success,
           );
           context.read<CompressBloc>().add(const CompressMessagesCleared());
         }

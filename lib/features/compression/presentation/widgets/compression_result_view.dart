@@ -6,6 +6,7 @@ import '../../../../constants/app_icons.dart';
 import '../../../../generated/l10n.dart';
 import '../../../../services/utils.dart';
 import '../../../../theme/app_colors.dart';
+import '../../../../widgets/animated_asset_checkbox.dart';
 import '../../../../widgets/app_action_button.dart';
 import '../../../../widgets/app_sheet.dart';
 import '../../../../widgets/app_snack_bar.dart';
@@ -138,7 +139,12 @@ class CompressionResultView extends StatelessWidget {
                       Expanded(
                         child: AppActionButton(
                           width: double.infinity,
-                          label: allFailed ? strings.tryAgain : strings.save,
+                          label: allFailed
+                              ? strings.tryAgain
+                              : state.isSaved
+                              ? strings.saved
+                              : strings.save,
+                          icon: state.isSaved ? AppIcons.check : null,
                           loading: state.isSaving,
                           fontSize: 20,
                           variant: AppActionButtonVariant.filled,
@@ -146,9 +152,7 @@ class CompressionResultView extends StatelessWidget {
                               ? null
                               : allFailed
                               ? onTryAgain
-                              : () => context.read<CompressBloc>().add(
-                                  const CompressResultsSaved(),
-                                ),
+                              : () => _showSaveOptions(context),
                         ),
                       )
                     else
@@ -207,4 +211,155 @@ class CompressionResultView extends StatelessWidget {
       );
     }
   }
+
+  Future<void> _showSaveOptions(BuildContext context) async {
+    if (Theme.of(context).platform == TargetPlatform.android) {
+      context.read<CompressBloc>().add(const CompressResultsSaved());
+      return;
+    }
+    final metadataIdentifiers = state.successResults
+        .where((item) => item.source.canPreserveMetadata)
+        .map((item) => item.source.sourceIdentifier)
+        .whereType<String>()
+        .toSet();
+    final deletableIdentifiers = state.successResults
+        .where((item) => item.source.canDeleteOriginal)
+        .map((item) => item.source.sourceIdentifier)
+        .whereType<String>()
+        .toSet();
+    final metadataAvailable = metadataIdentifiers.isNotEmpty;
+    final replaceAvailable =
+        state.successResults.isNotEmpty &&
+        state.successResults.every(
+          (item) =>
+              item.source.canDeleteOriginal &&
+              item.source.sourceIdentifier != null,
+        );
+    var selectedMode = _GallerySaveMode.copy;
+    final mode = await showAppSheet<_GallerySaveMode>(
+      context: context,
+      heightFraction: 0.62,
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      child: StatefulBuilder(
+        builder: (sheetContext, setSheetState) {
+          final strings = S.of(sheetContext);
+          Widget option(
+            _GallerySaveMode mode,
+            String title,
+            String description, {
+            bool enabled = true,
+          }) {
+            final selected = selectedMode == mode;
+            return Opacity(
+              key: ValueKey('gallery-save-mode-${mode.name}'),
+              opacity: enabled ? 1 : 0.38,
+              child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: enabled
+                    ? () => setSheetState(() => selectedMode = mode)
+                    : null,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      IgnorePointer(
+                        child: AnimatedAssetCheckbox(
+                          value: selected,
+                          onChanged: (_) {},
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              title,
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            ),
+                            const SizedBox(height: 3),
+                            Text(
+                              description,
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          }
+
+          return SafeArea(
+            top: false,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(22, 20, 22, 14),
+              child: Column(
+                children: [
+                  Text(
+                    strings.saveOptionsTitle,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const SizedBox(height: 14),
+                  Expanded(
+                    child: ListView(
+                      padding: EdgeInsets.zero,
+                      children: [
+                        option(
+                          _GallerySaveMode.copy,
+                          strings.saveAsNew,
+                          strings.saveAsNewDescription,
+                        ),
+                        option(
+                          _GallerySaveMode.besideOriginal,
+                          strings.saveBesideOriginal,
+                          strings.saveBesideOriginalDescription,
+                          enabled: metadataAvailable,
+                        ),
+                        option(
+                          _GallerySaveMode.replaceOriginal,
+                          strings.replaceOriginal,
+                          strings.replaceOriginalDescription,
+                          enabled: replaceAvailable,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 14),
+                  AppActionButton(
+                    width: double.infinity,
+                    label: strings.save,
+                    variant: AppActionButtonVariant.filled,
+                    fontSize: 20,
+                    onPressed: state.isSaving
+                        ? null
+                        : () => Navigator.of(sheetContext).pop(selectedMode),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+
+    if (!context.mounted || mode == null) return;
+    final preserveMetadata = mode == _GallerySaveMode.copy
+        ? const <String>{}
+        : metadataIdentifiers;
+    final deleteOriginals = mode == _GallerySaveMode.replaceOriginal
+        ? deletableIdentifiers
+        : const <String>{};
+    context.read<CompressBloc>().add(
+      CompressResultsSaved(
+        preserveMetadataSourceIdentifiers: preserveMetadata,
+        deleteSourceIdentifiers: deleteOriginals,
+      ),
+    );
+  }
 }
+
+enum _GallerySaveMode { copy, besideOriginal, replaceOriginal }
