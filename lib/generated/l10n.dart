@@ -878,10 +878,10 @@ class S {
     );
   }
 
-  /// `large or numerous files may take longer to load`
+  /// `downloading from cloud storage or copying large files may take longer`
   String get loadingManyPhotosHint {
     return Intl.message(
-      'large or numerous files may take longer to load',
+      'downloading from cloud storage or copying large files may take longer',
       name: 'loadingManyPhotosHint',
       desc: '',
       args: [],
@@ -938,20 +938,20 @@ class S {
     );
   }
 
-  /// `already optimized`
+  /// `no useful savings`
   String get alreadyOptimized {
     return Intl.message(
-      'already optimized',
+      'no useful savings',
       name: 'alreadyOptimized',
       desc: '',
       args: [],
     );
   }
 
-  /// `this photo is already small. try lower quality or choose another one.`
+  /// `these settings did not reduce the file by at least 10%. try lower quality or dimensions.`
   String get alreadyOptimizedDescription {
     return Intl.message(
-      'this photo is already small. try lower quality or choose another one.',
+      'these settings did not reduce the file by at least 10%. try lower quality or dimensions.',
       name: 'alreadyOptimizedDescription',
       desc: '',
       args: [],

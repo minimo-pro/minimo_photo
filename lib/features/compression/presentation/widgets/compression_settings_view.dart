@@ -19,7 +19,6 @@ import '../../bloc/compress_bloc.dart';
 import '../../bloc/compress_event.dart';
 import '../../bloc/compress_state.dart';
 import '../../domain/compression_settings.dart';
-import '../utils/compression_estimate.dart';
 import 'compression_bottom_actions.dart';
 import 'compression_mode_switch.dart';
 import 'selected_photos_summary.dart';
@@ -87,14 +86,9 @@ class _CompressionSettingsViewState extends State<CompressionSettingsView> {
   @override
   Widget build(BuildContext context) {
     final state = widget.state;
-    final estimatedSize =
-        state.estimatedSize ??
-        CompressionEstimate.compressedSize(
-          originalSize: state.totalOriginalSize,
-          settings: state.settings,
-        );
-    final savingsPercent = state.totalOriginalSize == 0
-        ? 0
+    final estimatedSize = state.estimatedSize;
+    final savingsPercent = estimatedSize == null || state.totalOriginalSize == 0
+        ? null
         : ((1 - estimatedSize / state.totalOriginalSize) * 100)
               .clamp(0, 99)
               .round();
@@ -125,6 +119,7 @@ class _CompressionSettingsViewState extends State<CompressionSettingsView> {
                               thumbnailPaths: state.thumbnailPaths,
                               originalSize: state.totalOriginalSize,
                               estimatedSize: estimatedSize,
+                              isEstimating: state.isEstimating,
                               savingsPercent: savingsPercent,
                               compact: compact,
                             ),
@@ -173,6 +168,7 @@ class _CompressionSettingsViewState extends State<CompressionSettingsView> {
                             child: _PinnedSizeSummary(
                               originalSize: state.totalOriginalSize,
                               estimatedSize: estimatedSize,
+                              isEstimating: state.isEstimating,
                               savingsPercent: savingsPercent,
                             ),
                           ),
@@ -188,7 +184,7 @@ class _CompressionSettingsViewState extends State<CompressionSettingsView> {
         const SizedBox(height: 12),
         CompressionBottomActions(
           onAdd: widget.onAddPhotos,
-          onCompress: savingsPercent == 0
+          onCompress: state.isEstimating || savingsPercent == 0
               ? null
               : () => context.read<CompressBloc>().add(const CompressStarted()),
         ),
@@ -199,13 +195,15 @@ class _CompressionSettingsViewState extends State<CompressionSettingsView> {
 
 class _PinnedSizeSummary extends StatelessWidget {
   final int originalSize;
-  final int estimatedSize;
-  final int savingsPercent;
+  final int? estimatedSize;
+  final int? savingsPercent;
+  final bool isEstimating;
 
   const _PinnedSizeSummary({
     required this.originalSize,
     required this.estimatedSize,
     required this.savingsPercent,
+    required this.isEstimating,
   });
 
   @override
@@ -262,14 +260,32 @@ class _PinnedSizeSummary extends StatelessWidget {
                               ),
                             ),
                           ),
-                          RollingCounterText(
-                            value: estimatedSize,
-                            formatter: (value) =>
-                                Utils.formatSize(value.toInt()).toLowerCase(),
-                            style: const TextStyle(
-                              color: CompressionUiColors.red,
-                              fontSize: 20,
-                              height: 1,
+                          SizedBox(
+                            height: 36,
+                            child: AnimatedOpacity(
+                              opacity: isEstimating ? 0.45 : 1,
+                              duration: const Duration(milliseconds: 180),
+                              child: estimatedSize == null
+                                  ? Center(
+                                      child: Text(
+                                        isEstimating ? '…' : '—',
+                                        style: const TextStyle(
+                                          color: CompressionUiColors.red,
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                    )
+                                  : RollingCounterText(
+                                      value: estimatedSize!,
+                                      formatter: (value) => Utils.formatSize(
+                                        value.toInt(),
+                                      ).toLowerCase(),
+                                      style: const TextStyle(
+                                        color: CompressionUiColors.red,
+                                        fontSize: 20,
+                                        height: 1,
+                                      ),
+                                    ),
                             ),
                           ),
                         ],
@@ -281,7 +297,9 @@ class _PinnedSizeSummary extends StatelessWidget {
                 Flexible(
                   child: Align(
                     alignment: Alignment.centerRight,
-                    child: savingsPercent == 0
+                    child: savingsPercent == null
+                        ? const Text('—')
+                        : savingsPercent == 0
                         ? Text(
                             strings.noSavingsHint,
                             maxLines: 2,
@@ -294,7 +312,7 @@ class _PinnedSizeSummary extends StatelessWidget {
                             ),
                           )
                         : RollingCounterText(
-                            value: savingsPercent,
+                            value: savingsPercent!,
                             formatter: (value) => '${value.toInt()}%',
                             style: const TextStyle(
                               color: CompressionUiColors.red,

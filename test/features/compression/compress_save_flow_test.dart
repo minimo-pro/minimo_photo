@@ -30,7 +30,9 @@ void main() {
     addTearDown(bloc.close);
 
     bloc.add(const CompressStarted());
-    await bloc.stream.firstWhere((state) => state.status == CompressStatus.done);
+    await bloc.stream.firstWhere(
+      (state) => state.status == CompressStatus.done,
+    );
 
     bloc.add(
       const CompressResultsSaved(
@@ -68,9 +70,10 @@ class _SuccessfulCompressor extends PhotoCompressorAdapter {
 
   @override
   Future<int?> estimateCompressedSize(
-    Iterable<String> inputPaths,
-    CompressionSettings settings,
-  ) async => 50;
+    Iterable<PickedPhoto> photos,
+    CompressionSettings settings, {
+    bool Function()? isCancelled,
+  }) async => 50;
 
   @override
   Future<String?> createThumbnail(String inputPath) async => null;

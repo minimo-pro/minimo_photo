@@ -1,10 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:minimo_photo/features/compression/data/photo_compressor_adapter.dart';
 import 'package:minimo_photo/features/compression/domain/compression_settings.dart';
-import 'package:minimo_photo/features/compression/presentation/utils/compression_estimate.dart';
 
 void main() {
-  test('presets trade quality for estimated size', () {
+  test('presets trade quality for dimensions', () {
     final high = CompressionSettings.forSimpleQuality(
       SimpleCompressionQuality.high,
     );
@@ -18,12 +17,7 @@ void main() {
     expect(high.maxDimension, isNull);
     expect(medium.maxDimension, 2560);
     expect(low.maxDimension, 1600);
-    expect(
-      CompressionEstimate.compressedSize(originalSize: 1000, settings: high),
-      greaterThan(
-        CompressionEstimate.compressedSize(originalSize: 1000, settings: low),
-      ),
-    );
+    expect(high.quality, greaterThan(low.quality));
   });
 
   test('compression output must save at least ten percent', () {

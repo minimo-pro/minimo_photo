@@ -28,7 +28,7 @@ const _remoteChangelogUrl =
 
 const Changelog _changelog = {
   // TODO: Add one entry per app version before every release.
-  '1.0.1': {
+  '1.0.0': {
     Language.en: [
       'share minimo with friends.',
       'rate the app from the about screen.',

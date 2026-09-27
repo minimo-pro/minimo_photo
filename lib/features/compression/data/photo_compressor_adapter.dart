@@ -7,6 +7,7 @@ import 'package:path_provider/path_provider.dart';
 import '../../../services/app_settings_service.dart';
 import '../domain/compression_result.dart';
 import '../domain/compression_settings.dart';
+import '../domain/picked_photo.dart';
 
 class PhotoCompressorAdapter {
   var _cancelGeneration = 0;
@@ -30,16 +31,7 @@ class PhotoCompressorAdapter {
     );
     onProgress?.call(0);
 
-    final output = await FlutterImageCompress.compressAndGetFile(
-      inputPath,
-      outputPath,
-      quality: settings.quality,
-      minWidth: settings.maxDimension ?? 100000,
-      minHeight: settings.maxDimension ?? 100000,
-      format: png ? CompressFormat.png : CompressFormat.jpeg,
-      keepExif: settings.keepExif,
-      autoCorrectionAngle: true,
-    );
+    final output = await _encode(inputPath, outputPath, png, settings);
     if (output == null) throw StateError('Photo compression failed');
 
     final outputFile = File(output.path);
@@ -67,15 +59,37 @@ class PhotoCompressorAdapter {
   Future<void> cancelCompression() async => _cancelGeneration++;
 
   Future<int?> estimateCompressedSize(
-    Iterable<String> inputPaths,
-    CompressionSettings settings,
-  ) async {
+    Iterable<PickedPhoto> photos,
+    CompressionSettings settings, {
+    bool Function()? isCancelled,
+  }) async {
     var total = 0;
-    for (final inputPath in inputPaths) {
-      total += await File(inputPath).length();
+    for (final photo in photos) {
+      if (isCancelled?.call() == true) return null;
+      final png = path.extension(photo.name).toLowerCase() == '.png';
+      final directory = await (await getTemporaryDirectory()).createTemp(
+        'minimo_estimate_',
+      );
+      final outputPath = path.join(
+        directory.path,
+        png ? 'photo.png' : 'photo.jpg',
+      );
+      try {
+        final output = await _encode(photo.path, outputPath, png, settings);
+        if (isCancelled?.call() == true) return null;
+        if (output == null) return null;
+        final originalSize = await File(photo.path).length();
+        final outputSize = await File(output.path).length();
+        total += isUsefulCompression(originalSize, outputSize)
+            ? outputSize
+            : originalSize;
+      } catch (_) {
+        return null;
+      } finally {
+        await directory.delete(recursive: true);
+      }
     }
-    // ponytail: heuristic only; replace if the native package adds estimates.
-    return (total * settings.estimateRatio).round();
+    return total;
   }
 
   Future<String?> createThumbnail(String inputPath) async => inputPath;
@@ -83,6 +97,22 @@ class PhotoCompressorAdapter {
   static bool isUsefulCompression(int originalSize, int outputSize) {
     return originalSize > 0 && outputSize * 10 <= originalSize * 9;
   }
+
+  Future<XFile?> _encode(
+    String inputPath,
+    String outputPath,
+    bool png,
+    CompressionSettings settings,
+  ) => FlutterImageCompress.compressAndGetFile(
+    inputPath,
+    outputPath,
+    quality: settings.quality,
+    minWidth: settings.maxDimension ?? 100000,
+    minHeight: settings.maxDimension ?? 100000,
+    format: png ? CompressFormat.png : CompressFormat.jpeg,
+    keepExif: settings.keepExif,
+    autoCorrectionAngle: true,
+  );
 
   Future<String> _createOutputPath(
     String originalName, {

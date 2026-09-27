@@ -94,7 +94,8 @@ class _FakePhotoCompressorAdapter extends PhotoCompressorAdapter {
 
   @override
   Future<int?> estimateCompressedSize(
-    Iterable<String> inputPaths,
-    CompressionSettings settings,
-  ) async => 500;
+    Iterable<PickedPhoto> photos,
+    CompressionSettings settings, {
+    bool Function()? isCancelled,
+  }) async => 500;
 }

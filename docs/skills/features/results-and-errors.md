@@ -17,6 +17,8 @@ share.
 - Picker errors show a snackbar and keep the existing batch.
 - A null/missing compressor output marks that photo failed.
 - Less than 10% savings marks it skipped and removes the temp output.
+- When all items are skipped, the result says there was no useful saving; it
+  does not imply the app previously compressed the originals.
 - Save/share errors show a snackbar. Replacement deletes originals only after
   every compressed photo has been saved successfully.
 - Holding cancel invalidates the run and deletes generated temp outputs.

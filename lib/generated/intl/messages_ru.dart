@@ -69,10 +69,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "addPrefixDescription": m1,
     "advancedOptions": MessageLookupByLibrary.simpleMessage("расширенный"),
     "alreadyOptimized": MessageLookupByLibrary.simpleMessage(
-      "уже оптимизировано",
+      "нет заметной экономии",
     ),
     "alreadyOptimizedDescription": MessageLookupByLibrary.simpleMessage(
-      "это фото уже маленькое. попробуйте снизить качество или выберите другое фото.",
+      "при этих настройках размер не уменьшился хотя бы на 10%. попробуйте снизить качество или размер.",
     ),
     "appName": MessageLookupByLibrary.simpleMessage("minimo (photo)"),
     "automatic": MessageLookupByLibrary.simpleMessage("авто"),
@@ -171,7 +171,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "выберите язык приложения",
     ),
     "loadingManyPhotosHint": MessageLookupByLibrary.simpleMessage(
-      "загрузка большого количества или крупных файлов может занять больше времени",
+      "загрузка из облака или копирование крупных файлов может занять больше времени",
     ),
     "loadingPhotos": MessageLookupByLibrary.simpleMessage("загрузка фото..."),
     "low": MessageLookupByLibrary.simpleMessage("низкое"),

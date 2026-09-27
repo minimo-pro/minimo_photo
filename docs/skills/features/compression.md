@@ -22,11 +22,18 @@ skipped.
 
 1. `PhotoFileAdapter` returns `PickedPhoto` models.
 2. `CompressBloc` deduplicates by name and size and prepares thumbnails.
-3. Size estimate uses a documented preset heuristic.
+3. Size estimate runs the native encoder with the selected settings, measures
+   each temporary output, then deletes it. Items below 10% savings count at
+   their original size. The first calculation uses a placeholder in reserved
+   space. Settings changes retain and dim the previous numbers until the new
+   result arrives, matching `minimo_video`. Size and savings blocks keep their
+   height; counters animate directly between values. Stale calculations stop
+   after the current photo and cannot overwrite a newer result. Compression
+   is disabled while the estimate refreshes. This adds an encoding pass before
+   compression.
 4. `PhotoCompressorAdapter` processes photos sequentially.
 5. Each item becomes compressed, skipped, or failed.
 6. Cancellation invalidates the active run and deletes completed temp outputs.
 
 The plugin has no continuous progress callback. MVP reports the active item at
 0%, then 100%; weighted batch progress still advances per completed file.
-

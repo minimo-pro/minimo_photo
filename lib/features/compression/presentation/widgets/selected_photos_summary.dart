@@ -12,8 +12,9 @@ class SelectedPhotosSummary extends StatelessWidget {
   final int selectedCount;
   final List<String?> thumbnailPaths;
   final int originalSize;
-  final int estimatedSize;
-  final int savingsPercent;
+  final int? estimatedSize;
+  final int? savingsPercent;
+  final bool isEstimating;
   final Key? sizeRowKey;
   final bool compact;
 
@@ -24,6 +25,7 @@ class SelectedPhotosSummary extends StatelessWidget {
     required this.originalSize,
     required this.estimatedSize,
     required this.savingsPercent,
+    this.isEstimating = false,
     this.sizeRowKey,
     this.compact = false,
   });
@@ -82,14 +84,32 @@ class SelectedPhotosSummary extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: FittedBox(
                     fit: BoxFit.scaleDown,
-                    child: RollingCounterText(
-                      value: estimatedSize,
-                      formatter: (value) =>
-                          Utils.formatSize(value.toInt()).toLowerCase(),
-                      style: TextStyle(
-                        color: CompressionUiColors.red,
-                        fontSize: compact ? 23 : 28,
-                        height: 1,
+                    child: SizedBox(
+                      height: (compact ? 23.0 : 28.0) * 1.8,
+                      child: AnimatedOpacity(
+                        opacity: isEstimating ? 0.45 : 1,
+                        duration: const Duration(milliseconds: 180),
+                        child: estimatedSize == null
+                            ? Center(
+                                child: Text(
+                                  isEstimating ? '…' : '—',
+                                  style: TextStyle(
+                                    color: CompressionUiColors.red,
+                                    fontSize: compact ? 23 : 28,
+                                  ),
+                                ),
+                              )
+                            : RollingCounterText(
+                                value: estimatedSize!,
+                                formatter: (value) => Utils.formatSize(
+                                  value.toInt(),
+                                ).toLowerCase(),
+                                style: TextStyle(
+                                  color: CompressionUiColors.red,
+                                  fontSize: compact ? 23 : 28,
+                                  height: 1,
+                                ),
+                              ),
                       ),
                     ),
                   ),
@@ -99,38 +119,51 @@ class SelectedPhotosSummary extends StatelessWidget {
           ),
         ),
         SizedBox(height: compact ? 10 : 18),
-        if (savingsPercent == 0)
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Text(
-              strings.noSavingsHint,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: CompressionUiColors.red,
-                fontSize: compact ? 16 : 18,
-                height: 1.2,
-              ),
-            ),
-          )
-        else ...[
-          RollingCounterText(
-            value: savingsPercent,
-            formatter: (value) => '${value.toInt()}%',
-            style: TextStyle(
-              color: CompressionUiColors.red,
-              fontSize: compact ? 22 : 27,
-              height: 0.9,
-            ),
+        SizedBox(
+          height: compact ? 64 : 76,
+          child: AnimatedOpacity(
+            opacity: isEstimating ? 0.45 : 1,
+            duration: const Duration(milliseconds: 180),
+            child: savingsPercent == null
+                ? const SizedBox.shrink()
+                : savingsPercent == 0
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    child: Text(
+                      strings.noSavingsHint,
+                      textAlign: TextAlign.center,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: CompressionUiColors.red,
+                        fontSize: compact ? 16 : 18,
+                        height: 1.2,
+                      ),
+                    ),
+                  )
+                : Column(
+                    children: [
+                      RollingCounterText(
+                        value: savingsPercent!,
+                        formatter: (value) => '${value.toInt()}%',
+                        style: TextStyle(
+                          color: CompressionUiColors.red,
+                          fontSize: compact ? 22 : 27,
+                          height: 0.9,
+                        ),
+                      ),
+                      Text(
+                        strings.smaller,
+                        style: TextStyle(
+                          color: CompressionUiColors.red,
+                          fontSize: compact ? 16 : 19,
+                          height: 1.15,
+                        ),
+                      ),
+                    ],
+                  ),
           ),
-          Text(
-            strings.smaller,
-            style: TextStyle(
-              color: CompressionUiColors.red,
-              fontSize: compact ? 16 : 19,
-              height: 1.15,
-            ),
-          ),
-        ],
+        ),
       ],
     );
   }

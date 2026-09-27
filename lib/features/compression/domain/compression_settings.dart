@@ -46,12 +46,6 @@ class CompressionSettings {
       maxDimension: 1600,
     ),
   };
-
-  double get estimateRatio => switch (simpleQuality) {
-    SimpleCompressionQuality.high => 0.76,
-    SimpleCompressionQuality.medium => 0.54,
-    SimpleCompressionQuality.low => 0.34,
-  };
 }
 
 const _unset = Object();

@@ -11,7 +11,6 @@ import '../../../../widgets/hold_to_confirm_button.dart';
 import '../../bloc/compress_bloc.dart';
 import '../../bloc/compress_event.dart';
 import '../../bloc/compress_state.dart';
-import '../utils/compression_estimate.dart';
 import 'photo_status_list.dart';
 import 'selected_photos_preview.dart';
 
@@ -140,12 +139,7 @@ class _ProgressSizeComparison extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final estimatedSize =
-        state.estimatedSize ??
-        CompressionEstimate.compressedSize(
-          originalSize: state.totalOriginalSize,
-          settings: state.settings,
-        );
+    final estimatedSize = state.estimatedSize;
 
     return SizedBox(
       width: double.infinity,
@@ -182,7 +176,9 @@ class _ProgressSizeComparison extends StatelessWidget {
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                Utils.formatSize(estimatedSize).toLowerCase(),
+                estimatedSize == null
+                    ? '—'
+                    : Utils.formatSize(estimatedSize).toLowerCase(),
                 maxLines: 1,
                 style: TextStyle(
                   color: CompressionUiColors.red,

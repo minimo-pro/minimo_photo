@@ -53,6 +53,7 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
 
   @override
   Future<void> close() {
+    _estimateRunId++;
     _estimateDebounce?.cancel();
     return super.close();
   }
@@ -72,12 +73,20 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
   ) async {
     if (state.status != CompressStatus.ready) return;
     final runId = ++_estimateRunId;
+    emit(state.copyWith(isEstimating: true));
     final estimate = await _photoCompressorAdapter.estimateCompressedSize(
-      state.photos.map((photo) => photo.path),
+      state.photos,
       state.settings,
+      isCancelled: () => runId != _estimateRunId || isClosed,
     );
-    if (runId == _estimateRunId) {
-      emit(state.copyWith(estimatedSize: estimate, clearEstimatedSize: true));
+    if (runId == _estimateRunId && !emit.isDone) {
+      emit(
+        state.copyWith(
+          estimatedSize: estimate,
+          clearEstimatedSize: true,
+          isEstimating: false,
+        ),
+      );
     }
   }
 
@@ -119,6 +128,7 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
           ),
         ],
         clearEstimatedSize: true,
+        isEstimating: true,
       ),
     );
     add(const CompressThumbnailsRequested());
@@ -136,6 +146,7 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
         settings: CompressionSettings.forSimpleQuality(
           event.quality,
         ).copyWith(keepExif: state.settings.keepExif),
+        isEstimating: true,
       ),
     );
     _requestEstimate();
@@ -145,7 +156,7 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
     CompressSettingsChanged event,
     Emitter<CompressState> emit,
   ) {
-    emit(state.copyWith(settings: event.settings));
+    emit(state.copyWith(settings: event.settings, isEstimating: true));
     _requestEstimate();
   }
 
@@ -158,6 +169,7 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
     _replacementSourceIdentifiers.clear();
     _deletedSourceIdentifiers.clear();
     _cancelRequested = false;
+    _estimateRunId++;
     final runId = ++_compressionRunId;
     final stopwatch = Stopwatch()..start();
     final statuses = List<PhotoCompressionStatus>.filled(
@@ -173,6 +185,7 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
     emit(
       state.copyWith(
         status: CompressStatus.processing,
+        isEstimating: false,
         results: const [],
         photoStatuses: statuses,
         compressionRunId: runId,

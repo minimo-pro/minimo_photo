@@ -56,9 +56,9 @@ void main() {
       'last_seen_version': 'corrupt',
     });
     final service = ChangelogService(
-      packageInfo: () async => _packageInfo('1.0.1'),
+      packageInfo: () async => _packageInfo('1.0.0'),
       remoteChangelog: () async => {
-        '1.0.1': {
+        '1.0.0': {
           Language.en: ['fresh'],
         },
       },
