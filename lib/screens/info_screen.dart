@@ -16,6 +16,7 @@ import '../theme/app_theme.dart';
 import '../widgets/app_snack_bar.dart';
 import '../widgets/faded_scroll_view.dart';
 import '../widgets/pressable.dart';
+import '../widgets/video_app_card.dart';
 
 @RoutePage()
 class InfoScreen extends StatelessWidget {
@@ -152,6 +153,8 @@ class InfoScreen extends StatelessWidget {
                       title: strings.myOtherApps,
                       onTap: _openOtherApps,
                     ),
+                    const SizedBox(height: 12),
+                    const VideoAppCard(),
                     const SizedBox(height: 16),
                     Text(
                       strings.openSourceNote,

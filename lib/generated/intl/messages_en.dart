@@ -332,6 +332,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "system": MessageLookupByLibrary.simpleMessage("system"),
     "todo": MessageLookupByLibrary.simpleMessage("todo"),
     "tryAgain": MessageLookupByLibrary.simpleMessage("try again"),
+    "videoAppDescription": MessageLookupByLibrary.simpleMessage(
+      "make videos smaller, right on your phone",
+    ),
     "waiting": MessageLookupByLibrary.simpleMessage("waiting"),
     "xTwitter": MessageLookupByLibrary.simpleMessage("x (twitter)"),
     "youSavedSize": m14,

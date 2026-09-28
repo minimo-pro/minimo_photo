@@ -284,6 +284,16 @@ class S {
     );
   }
 
+  /// `make videos smaller, right on your phone`
+  String get videoAppDescription {
+    return Intl.message(
+      'make videos smaller, right on your phone',
+      name: 'videoAppDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `email copied`
   String get emailCopied {
     return Intl.message(
