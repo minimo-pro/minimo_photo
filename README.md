@@ -35,7 +35,7 @@ flowchart TD
 
     subgraph iOS
         H[iOS image APIs]
-        H --> I[JPEG or PNG output]
+        H --> I[JPEG, PNG or HEIC output]
     end
 
     E -->|Android| F
@@ -45,6 +45,11 @@ flowchart TD
     J -->|Yes| K[Keep temporary result for save or share]
     J -->|No| L[Discard result and keep original]
 ```
+
+The selected preset sets JPEG quality and a maximum image side. A photo is
+skipped when recompression saves less than 10%; this commonly happens when its
+dimensions are already below the preset limit. iOS keeps HEIC output for
+HEIC/HEIF sources; Android writes them as JPEG.
 
 
 ## How to contribute

@@ -9,7 +9,8 @@ iOS and Android. Photos are never uploaded.
 - Add more photos before compression starts
 - Choose a preset or advanced quality, dimension, and EXIF settings
 - Compress sequentially, cancel safely, compare, save, and share
-- Keep originals untouched
+- Keep originals untouched unless the user explicitly requests deletion after
+  saving replacements on iOS
 
 ## Main entry points
 
@@ -22,4 +23,3 @@ iOS and Android. Photos are never uploaded.
 | Settings/services | `lib/services/` |
 | Localization | `lib/l10n/` |
 | Shared UI | `lib/widgets/` |
-

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui' as ui;
 
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:path/path.dart' as path;
@@ -23,15 +24,15 @@ class PhotoCompressorAdapter {
     final stopwatch = Stopwatch()..start();
     final input = File(inputPath);
     final originalSize = await input.length();
-    final png = path.extension(originalName).toLowerCase() == '.png';
+    final format = _formatFor(originalName);
     final outputPath = await _createOutputPath(
       originalName,
-      png: png,
+      format: format,
       addMinimoPrefix: addMinimoPrefix,
     );
     onProgress?.call(0);
 
-    final output = await _encode(inputPath, outputPath, png, settings);
+    final output = await _encode(inputPath, outputPath, format, settings);
     if (output == null) throw StateError('Photo compression failed');
 
     final outputFile = File(output.path);
@@ -66,23 +67,23 @@ class PhotoCompressorAdapter {
     var total = 0;
     for (final photo in photos) {
       if (isCancelled?.call() == true) return null;
-      final png = path.extension(photo.name).toLowerCase() == '.png';
+      final format = _formatFor(photo.name);
       final directory = await (await getTemporaryDirectory()).createTemp(
         'minimo_estimate_',
       );
       final outputPath = path.join(
         directory.path,
-        png ? 'photo.png' : 'photo.jpg',
+        'photo.${_extensionFor(format)}',
       );
       try {
-        final output = await _encode(photo.path, outputPath, png, settings);
+        final output = await _encode(photo.path, outputPath, format, settings);
         if (isCancelled?.call() == true) return null;
         if (output == null) return null;
         final originalSize = await File(photo.path).length();
         final outputSize = await File(output.path).length();
         total += isUsefulCompression(originalSize, outputSize)
             ? outputSize
-            : originalSize;
+            : photo.size;
       } catch (_) {
         return null;
       } finally {
@@ -98,25 +99,72 @@ class PhotoCompressorAdapter {
     return originalSize > 0 && outputSize * 10 <= originalSize * 9;
   }
 
+  static CompressFormat _formatFor(String name) {
+    final extension = path.extension(name).toLowerCase();
+    if (extension == '.png') return CompressFormat.png;
+    if ((extension == '.heic' || extension == '.heif') && !Platform.isAndroid) {
+      return CompressFormat.heic;
+    }
+    return CompressFormat.jpeg;
+  }
+
+  static String _extensionFor(CompressFormat format) => switch (format) {
+    CompressFormat.png => 'png',
+    CompressFormat.heic => 'heic',
+    CompressFormat.webp => 'webp',
+    CompressFormat.jpeg => 'jpg',
+  };
+
   Future<XFile?> _encode(
     String inputPath,
     String outputPath,
-    bool png,
+    CompressFormat format,
     CompressionSettings settings,
-  ) => FlutterImageCompress.compressAndGetFile(
-    inputPath,
-    outputPath,
-    quality: settings.quality,
-    minWidth: settings.maxDimension ?? 100000,
-    minHeight: settings.maxDimension ?? 100000,
-    format: png ? CompressFormat.png : CompressFormat.jpeg,
-    keepExif: settings.keepExif,
-    autoCorrectionAngle: true,
-  );
+  ) async {
+    var targetWidth = 100000;
+    var targetHeight = 100000;
+    if (settings.maxDimension case final limit?) {
+      try {
+        final buffer = await ui.ImmutableBuffer.fromFilePath(inputPath);
+        try {
+          final descriptor = await ui.ImageDescriptor.encoded(buffer);
+          try {
+            final width = descriptor.width;
+            final height = descriptor.height;
+            if (width > limit || height > limit) {
+              targetWidth = (width * limit ~/ (width > height ? width : height))
+                  .clamp(1, limit);
+              targetHeight =
+                  (height * limit ~/ (width > height ? width : height)).clamp(
+                    1,
+                    limit,
+                  );
+            }
+          } finally {
+            descriptor.dispose();
+          }
+        } finally {
+          buffer.dispose();
+        }
+      } on Exception {
+        // Native codec may support formats that Flutter cannot inspect.
+      }
+    }
+    return FlutterImageCompress.compressAndGetFile(
+      inputPath,
+      outputPath,
+      quality: settings.quality,
+      minWidth: targetWidth,
+      minHeight: targetHeight,
+      format: format,
+      keepExif: settings.keepExif,
+      autoCorrectionAngle: true,
+    );
+  }
 
   Future<String> _createOutputPath(
     String originalName, {
-    required bool png,
+    required CompressFormat format,
     required bool addMinimoPrefix,
   }) async {
     final temporaryDirectory = await getTemporaryDirectory();
@@ -137,7 +185,7 @@ class PhotoCompressorAdapter {
         .trim();
     final baseName = safeBaseName.isEmpty ? 'photo' : safeBaseName;
     final prefix = addMinimoPrefix ? appPrefix : '';
-    final extension = png ? 'png' : 'jpg';
+    final extension = _extensionFor(format);
     var candidate = path.join(
       outputDirectory.path,
       '$prefix$baseName.$extension',
