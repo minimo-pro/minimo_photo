@@ -17,6 +17,7 @@ private struct PickedPhotoMetadata {
 
 class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDocumentPickerDelegate {
   private var pendingPickResult: FlutterResult?
+  private var activePickID: UUID?
   private var photosChannel: FlutterMethodChannel?
 
   override func scene(
@@ -37,6 +38,8 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
       case "pickPhotos":
         let source = (call.arguments as? [String: Any])?["source"] as? String ?? "gallery"
         self.pickPhotos(source: source, result: result)
+      case "cancelPhotoPick":
+        self.cancelPhotoPick(result: result)
       case "deleteOriginals":
         self.deleteOriginals(call.arguments as? [String] ?? [], result: result)
       case "saveReplacement":
@@ -57,7 +60,17 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
       return
     }
     pendingPickResult = result
+    activePickID = UUID()
     source == "files" ? presentDocumentPicker() : presentPhotosPicker()
+  }
+
+  private func cancelPhotoPick(result: @escaping FlutterResult) {
+    let cancelledResult = pendingPickResult
+    pendingPickResult = nil
+    activePickID = nil
+    window?.rootViewController?.presentedViewController?.dismiss(animated: true)
+    cancelledResult?([])
+    result(nil)
   }
 
   private func presentPhotosPicker() {
@@ -83,24 +96,42 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
 
   func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
     picker.dismiss(animated: true)
-    guard let pendingPickResult else { return }
-    self.pendingPickResult = nil
+    guard let pendingPickResult, let pickID = activePickID else { return }
 
     guard !results.isEmpty else {
+      activePickID = nil
+      self.pendingPickResult = nil
       pendingPickResult([])
       return
     }
 
+    photosChannel?.invokeMethod(
+      "pickProgress", arguments: ["processed": 0, "total": results.count]
+    )
+
     let group = DispatchGroup()
     let lock = NSLock()
     var photos: [(Int, [String: Any])] = []
+    var processed = 0
 
     for (index, item) in results.enumerated() {
       group.enter()
       let filename = originalFilename(for: item) ?? suggestedFilename(for: item)
       item.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.image.identifier) {
         [weak self] url, error in
-        defer { group.leave() }
+        defer {
+          lock.lock()
+          processed += 1
+          let completed = processed
+          lock.unlock()
+          DispatchQueue.main.async {
+            guard self?.activePickID == pickID else { return }
+            self?.photosChannel?.invokeMethod(
+              "pickProgress", arguments: ["processed": completed, "total": results.count]
+            )
+          }
+          group.leave()
+        }
         guard let self, error == nil, let url else { return }
 
         do {
@@ -138,6 +169,16 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
     }
 
     group.notify(queue: .main) {
+      guard self.activePickID == pickID else {
+        for (_, photo) in photos {
+          if let path = photo["path"] as? String {
+            try? FileManager.default.removeItem(atPath: path)
+          }
+        }
+        return
+      }
+      self.activePickID = nil
+      self.pendingPickResult = nil
       pendingPickResult(photos.sorted { $0.0 < $1.0 }.map { $0.1 })
     }
   }
@@ -146,27 +187,48 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
     _ controller: UIDocumentPickerViewController,
     didPickDocumentsAt urls: [URL]
   ) {
-    guard let pendingPickResult else { return }
-    self.pendingPickResult = nil
+    guard let pendingPickResult, let pickID = activePickID else { return }
+
+    photosChannel?.invokeMethod(
+      "pickProgress", arguments: ["processed": 0, "total": urls.count]
+    )
 
     DispatchQueue.global(qos: .userInitiated).async {
-      let photos = urls.compactMap { url -> [String: Any]? in
+      var photos: [[String: Any]] = []
+      for (index, url) in urls.enumerated() {
         do {
           let name = url.lastPathComponent.isEmpty ? "photo.jpg" : url.lastPathComponent
           let output = try self.copyPickedPhoto(from: url, filename: name)
           let size = (try? output.resourceValues(forKeys: [.fileSizeKey]).fileSize) ?? 0
-          return ["path": output.path, "name": name, "size": size]
-        } catch {
-          return nil
+          photos.append(["path": output.path, "name": name, "size": size])
+        } catch {}
+        DispatchQueue.main.async {
+          guard self.activePickID == pickID else { return }
+          self.photosChannel?.invokeMethod(
+            "pickProgress", arguments: ["processed": index + 1, "total": urls.count]
+          )
         }
       }
-      DispatchQueue.main.async { pendingPickResult(photos) }
+      DispatchQueue.main.async {
+        guard self.activePickID == pickID else {
+          for photo in photos {
+            if let path = photo["path"] as? String {
+              try? FileManager.default.removeItem(atPath: path)
+            }
+          }
+          return
+        }
+        self.activePickID = nil
+        self.pendingPickResult = nil
+        pendingPickResult(photos)
+      }
     }
   }
 
   func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
     guard let pendingPickResult else { return }
     self.pendingPickResult = nil
+    activePickID = nil
     pendingPickResult([])
   }
 

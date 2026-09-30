@@ -12,6 +12,7 @@ import '../../../../widgets/animated_asset_checkbox.dart';
 import '../../../../widgets/app_option_picker.dart';
 import '../../../../widgets/app_settings_section.dart';
 import '../../../../widgets/faded_scroll_view.dart';
+import '../../../../widgets/minimo_loader.dart';
 import '../../../../widgets/pressable.dart';
 import '../../../../widgets/rolling_counter_text.dart';
 import '../../../../widgets/spring_tab_content.dart';
@@ -26,12 +27,16 @@ import 'simple_quality_card.dart';
 
 class CompressionSettingsView extends StatefulWidget {
   final CompressState state;
-  final VoidCallback onAddPhotos;
+  final VoidCallback? onAddPhotos;
+  final bool isImporting;
+  final (int, int)? importProgress;
 
   const CompressionSettingsView({
     super.key,
     required this.state,
     required this.onAddPhotos,
+    this.isImporting = false,
+    this.importProgress,
   });
 
   @override
@@ -92,6 +97,7 @@ class _CompressionSettingsViewState extends State<CompressionSettingsView> {
         : ((1 - estimatedSize / state.totalOriginalSize) * 100)
               .clamp(0, 99)
               .round();
+    final initialImport = widget.isImporting && state.photos.isEmpty;
 
     return Column(
       children: [
@@ -113,16 +119,38 @@ class _CompressionSettingsViewState extends State<CompressionSettingsView> {
                             constraints: BoxConstraints(
                               minHeight: compact ? 185 : 200,
                             ),
-                            child: SelectedPhotosSummary(
-                              sizeRowKey: _sizeRowKey,
-                              selectedCount: state.photos.length,
-                              thumbnailPaths: state.thumbnailPaths,
-                              originalSize: state.totalOriginalSize,
-                              estimatedSize: estimatedSize,
-                              isEstimating: state.isEstimating,
-                              savingsPercent: savingsPercent,
-                              compact: compact,
-                            ),
+                            child: initialImport
+                                ? Center(
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        MinimoLoader(
+                                          size: 42,
+                                          semanticsLabel: S
+                                              .of(context)
+                                              .loadingPhotos,
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Text(
+                                          S.of(context).loadingManyPhotosHint,
+                                          textAlign: TextAlign.center,
+                                          style: Theme.of(
+                                            context,
+                                          ).textTheme.bodyMedium,
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                : SelectedPhotosSummary(
+                                    sizeRowKey: _sizeRowKey,
+                                    selectedCount: state.photos.length,
+                                    thumbnailPaths: state.thumbnailPaths,
+                                    originalSize: state.totalOriginalSize,
+                                    estimatedSize: estimatedSize,
+                                    isEstimating: state.isEstimating,
+                                    savingsPercent: savingsPercent,
+                                    compact: compact,
+                                  ),
                           ),
                           SizedBox(height: compact ? 14 : 22),
                           CompressionModeSwitch(
@@ -145,37 +173,38 @@ class _CompressionSettingsViewState extends State<CompressionSettingsView> {
                       ),
                     ),
                   ),
-                  Positioned(
-                    top: -55,
-                    left: 55,
-                    right: 8,
-                    height: 47,
-                    child: IgnorePointer(
-                      child: AnimatedOpacity(
-                        opacity: _showPinnedSummary ? 1 : 0,
-                        duration: const Duration(milliseconds: 180),
-                        curve: Curves.easeOutCubic,
-                        child: AnimatedSlide(
-                          offset: _showPinnedSummary
-                              ? Offset.zero
-                              : const Offset(0, -0.35),
-                          duration: const Duration(milliseconds: 260),
+                  if (!initialImport)
+                    Positioned(
+                      top: -55,
+                      left: 55,
+                      right: 8,
+                      height: 47,
+                      child: IgnorePointer(
+                        child: AnimatedOpacity(
+                          opacity: _showPinnedSummary ? 1 : 0,
+                          duration: const Duration(milliseconds: 180),
                           curve: Curves.easeOutCubic,
-                          child: AnimatedScale(
-                            scale: _showPinnedSummary ? 1 : 0.96,
+                          child: AnimatedSlide(
+                            offset: _showPinnedSummary
+                                ? Offset.zero
+                                : const Offset(0, -0.35),
                             duration: const Duration(milliseconds: 260),
                             curve: Curves.easeOutCubic,
-                            child: _PinnedSizeSummary(
-                              originalSize: state.totalOriginalSize,
-                              estimatedSize: estimatedSize,
-                              isEstimating: state.isEstimating,
-                              savingsPercent: savingsPercent,
+                            child: AnimatedScale(
+                              scale: _showPinnedSummary ? 1 : 0.96,
+                              duration: const Duration(milliseconds: 260),
+                              curve: Curves.easeOutCubic,
+                              child: _PinnedSizeSummary(
+                                originalSize: state.totalOriginalSize,
+                                estimatedSize: estimatedSize,
+                                isEstimating: state.isEstimating,
+                                savingsPercent: savingsPercent,
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
                 ],
               );
             },
@@ -184,7 +213,10 @@ class _CompressionSettingsViewState extends State<CompressionSettingsView> {
         const SizedBox(height: 12),
         CompressionBottomActions(
           onAdd: widget.onAddPhotos,
-          onCompress: state.isEstimating || savingsPercent == 0
+          isImporting: widget.isImporting,
+          importProgress: widget.importProgress,
+          onCompress:
+              widget.isImporting || state.isEstimating || savingsPercent == 0
               ? null
               : () => context.read<CompressBloc>().add(const CompressStarted()),
         ),

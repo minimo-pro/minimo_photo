@@ -23,9 +23,16 @@ may be skipped even when other photos in the batch compress successfully.
 
 ## Batch lifecycle
 
-1. `PhotoFileAdapter` returns `PickedPhoto` models.
-2. `CompressBloc` deduplicates by name and size and prepares thumbnails.
-3. Size estimate runs the native encoder with the selected settings, measures
+1. `StartRoute` opens `CompressRoute` with the selected source. The native
+   picker starts there; after selection, the loading indicator stays in the
+   photo summary while quality, size, and EXIF settings remain editable.
+   Import progress appears in the bottom action. Add and compress are disabled
+   until copying finishes. Leaving during import asks for confirmation and
+   cancels the picker. An empty initial selection returns to the start screen.
+2. `PhotoFileAdapter` returns `PickedPhoto` models. The settings selected
+   during import remain in `CompressBloc` when the photos arrive.
+3. `CompressBloc` deduplicates by name and size and prepares thumbnails.
+4. Size estimate runs the native encoder with the selected settings, measures
    each temporary output, then deletes it. Items below 10% savings count at
    their selected size, matching the total shown in the UI even if the file
    size changed after selection. The first calculation uses a placeholder in
@@ -35,9 +42,9 @@ may be skipped even when other photos in the batch compress successfully.
    calculations stop after the current photo and cannot overwrite a newer
    result. Compression is disabled while the estimate refreshes. This adds an
    encoding pass before compression.
-4. `PhotoCompressorAdapter` processes photos sequentially.
-5. Each item becomes compressed, skipped, or failed.
-6. Cancellation invalidates the active run and deletes completed temp outputs.
+5. `PhotoCompressorAdapter` processes photos sequentially.
+6. Each item becomes compressed, skipped, or failed.
+7. Cancellation invalidates the active run and deletes completed temp outputs.
 
 The plugin has no continuous progress callback. MVP reports the active item at
 0%, then 100%; weighted batch progress still advances per completed file.

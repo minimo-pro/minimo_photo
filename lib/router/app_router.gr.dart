@@ -10,8 +10,10 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i7;
-import 'package:collection/collection.dart' as _i10;
+import 'package:collection/collection.dart' as _i11;
 import 'package:flutter/material.dart' as _i8;
+import 'package:minimo_photo/features/compression/domain/photo_pick_source.dart'
+    as _i10;
 import 'package:minimo_photo/features/compression/domain/picked_photo.dart'
     as _i9;
 import 'package:minimo_photo/features/compression/presentation/compress_screen.dart'
@@ -28,10 +30,15 @@ class CompressRoute extends _i7.PageRouteInfo<CompressRouteArgs> {
   CompressRoute({
     _i8.Key? key,
     List<_i9.PickedPhoto> initialPhotos = const [],
+    _i10.PhotoPickSource? initialPickSource,
     List<_i7.PageRouteInfo>? children,
   }) : super(
          CompressRoute.name,
-         args: CompressRouteArgs(key: key, initialPhotos: initialPhotos),
+         args: CompressRouteArgs(
+           key: key,
+           initialPhotos: initialPhotos,
+           initialPickSource: initialPickSource,
+         ),
          initialChildren: children,
        );
 
@@ -46,21 +53,28 @@ class CompressRoute extends _i7.PageRouteInfo<CompressRouteArgs> {
       return _i1.CompressScreen(
         key: args.key,
         initialPhotos: args.initialPhotos,
+        initialPickSource: args.initialPickSource,
       );
     },
   );
 }
 
 class CompressRouteArgs {
-  const CompressRouteArgs({this.key, this.initialPhotos = const []});
+  const CompressRouteArgs({
+    this.key,
+    this.initialPhotos = const [],
+    this.initialPickSource,
+  });
 
   final _i8.Key? key;
 
   final List<_i9.PickedPhoto> initialPhotos;
 
+  final _i10.PhotoPickSource? initialPickSource;
+
   @override
   String toString() {
-    return 'CompressRouteArgs{key: $key, initialPhotos: $initialPhotos}';
+    return 'CompressRouteArgs{key: $key, initialPhotos: $initialPhotos, initialPickSource: $initialPickSource}';
   }
 
   @override
@@ -68,16 +82,18 @@ class CompressRouteArgs {
     if (identical(this, other)) return true;
     if (other is! CompressRouteArgs) return false;
     return key == other.key &&
-        const _i10.ListEquality<_i9.PickedPhoto>().equals(
+        const _i11.ListEquality<_i9.PickedPhoto>().equals(
           initialPhotos,
           other.initialPhotos,
-        );
+        ) &&
+        initialPickSource == other.initialPickSource;
   }
 
   @override
   int get hashCode =>
       key.hashCode ^
-      const _i10.ListEquality<_i9.PickedPhoto>().hash(initialPhotos);
+      const _i11.ListEquality<_i9.PickedPhoto>().hash(initialPhotos) ^
+      initialPickSource.hashCode;
 }
 
 /// generated route for

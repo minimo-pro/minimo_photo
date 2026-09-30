@@ -1,18 +1,23 @@
 # Platform Integration
 
-Compression uses a package plugin. iOS photo selection and gallery replacement
-use the `minimo_photo/photos` method channel in `SceneDelegate.swift`.
+Compression uses a package plugin. Photo selection uses the
+`minimo_photo/photos` method channel in `SceneDelegate.swift` on iOS and
+`MainActivity.kt` on Android. iOS gallery replacement uses the same channel.
 
 ## Selection
 
 - iOS gallery: `PHPickerViewController`, maximum 50 items; selected files are
   copied into the app cache with their source identifiers and available metadata
 - iOS files: `UIDocumentPickerViewController`, selected files copied to cache
-- Android gallery: `image_picker.pickMultiImage`, maximum 50 items
-- Android files: `file_picker.pickFiles`, extensions JPG/JPEG/PNG/WebP/HEIC/HEIF
+- Android gallery: system photo picker on Android 13+, content picker on older
+  versions; maximum 50 items
+- Android files: system document picker for images
 
 The start and add-more flows share `PhotoFileAdapter` and the same source
-sheet. Empty/cancelled selection leaves current state unchanged.
+sheet. Both native pickers send `pickProgress` after selection and as files are
+copied, so the settings screen stays interactive during cloud downloads and
+large-file copies. Empty initial selection returns to the start screen;
+empty add-more selection leaves current settings and photos unchanged.
 
 ## Compression
 

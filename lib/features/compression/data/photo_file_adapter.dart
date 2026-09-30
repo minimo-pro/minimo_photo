@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
 import 'package:gal/gal.dart';
 import 'package:image_picker/image_picker.dart';
@@ -19,16 +16,30 @@ class PhotoFileAdapter {
     PhotoPickSource source = PhotoPickSource.gallery,
     void Function(int processed, int total)? onProgress,
   }) async {
-    if (Platform.isIOS) {
-      final result = await _channel.invokeMethod<List<dynamic>>('pickPhotos', {
+    _channel.setMethodCallHandler((call) async {
+      if (call.method != 'pickProgress') return;
+      final progress = call.arguments as Map<dynamic, dynamic>;
+      onProgress?.call(progress['processed'] as int, progress['total'] as int);
+    });
+    final List<dynamic>? result;
+    try {
+      result = await _channel.invokeMethod<List<dynamic>>('pickPhotos', {
         'source': source.channelValue,
       });
-      return mapPlatformFiles(result ?? const []);
+    } finally {
+      _channel.setMethodCallHandler(null);
     }
-    final paths = source == PhotoPickSource.gallery
-        ? await _pickGallery()
-        : await _pickFiles();
-    return _toPickedPhotos(paths, onProgress);
+    return mapPlatformFiles(result ?? const []);
+  }
+
+  Future<void> cancelPhotoPick() async {
+    try {
+      await _channel.invokeMethod<void>('cancelPhotoPick');
+    } on PlatformException {
+      // Leaving the screen should still succeed if the picker already closed.
+    } on MissingPluginException {
+      // Unsupported platforms may not provide the native picker.
+    }
   }
 
   static List<PickedPhoto> mapPlatformFiles(List<dynamic> result) {
@@ -74,19 +85,6 @@ class PhotoFileAdapter {
       onProgress?.call(index + 1, paths.length);
     }
     return photos;
-  }
-
-  Future<List<String>> _pickGallery() async {
-    final files = await _imagePicker.pickMultiImage(limit: 50);
-    return files.map((file) => file.path).toList();
-  }
-
-  Future<List<String>> _pickFiles() async {
-    final files = await FilePicker.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: const ['jpg', 'jpeg', 'png', 'webp', 'heic', 'heif'],
-    );
-    return files.map((file) => file.path).whereType<String>().toList();
   }
 
   Future<void> saveToGallery(String filePath, {String? album}) {
