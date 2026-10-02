@@ -13,6 +13,8 @@ import java.util.UUID
 
 class MainActivity : FlutterActivity() {
     private lateinit var photosChannel: MethodChannel
+    private lateinit var externalPhotosChannel: MethodChannel
+    private val pendingExternalUris = mutableListOf<Uri>()
     private var pendingPickResult: MethodChannel.Result? = null
     @Volatile private var activePickId: Long? = null
     private var nextPickId = 0L
@@ -27,6 +29,54 @@ class MainActivity : FlutterActivity() {
                 else -> result.notImplemented()
             }
         }
+        externalPhotosChannel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "minimo_photo/external_photos")
+        externalPhotosChannel.setMethodCallHandler { call, result ->
+            when (call.method) {
+                "consumeExternalPhotos" -> consumeExternalPhotos(result)
+                else -> result.notImplemented()
+            }
+        }
+        importExternalIntent(intent)
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        importExternalIntent(intent)
+    }
+
+    private fun importExternalIntent(intent: Intent?) {
+        val externalIntent = intent ?: return
+        if (externalIntent.action !in setOf(Intent.ACTION_SEND, Intent.ACTION_SEND_MULTIPLE)) return
+        val uris = buildList {
+            if (Build.VERSION.SDK_INT >= 33) {
+                externalIntent.getParcelableExtra(Intent.EXTRA_STREAM, Uri::class.java)?.let(::add)
+                externalIntent.getParcelableArrayListExtra(Intent.EXTRA_STREAM, Uri::class.java)?.let(::addAll)
+            } else {
+                @Suppress("DEPRECATION")
+                externalIntent.getParcelableExtra<Uri>(Intent.EXTRA_STREAM)?.let(::add)
+                @Suppress("DEPRECATION")
+                externalIntent.getParcelableArrayListExtra<Uri>(Intent.EXTRA_STREAM)?.let(::addAll)
+            }
+            externalIntent.clipData?.let { clip ->
+                for (index in 0 until clip.itemCount) add(clip.getItemAt(index).uri)
+            }
+        }.distinct().take(50)
+        if (uris.isEmpty()) return
+        pendingExternalUris.addAll(uris.filterNot(pendingExternalUris::contains))
+        externalPhotosChannel.invokeMethod("externalPhotosAvailable", null)
+    }
+
+    private fun consumeExternalPhotos(result: MethodChannel.Result) {
+        val uris = pendingExternalUris.toList()
+        if (uris.isEmpty()) return result.success(null)
+        Thread {
+            val photos = uris.mapNotNull { uri -> runCatching { copyPickedPhoto(uri) }.getOrNull() }
+            runOnUiThread {
+                pendingExternalUris.removeAll(uris.toSet())
+                result.success(if (photos.isEmpty()) null else mapOf("files" to photos))
+            }
+        }.start()
     }
 
     private fun pickPhotos(arguments: Any?, result: MethodChannel.Result) {

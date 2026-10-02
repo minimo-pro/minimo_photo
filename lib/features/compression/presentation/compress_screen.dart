@@ -7,7 +7,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../constants/app_icons.dart';
 import '../../../generated/l10n.dart';
 import '../../../router/app_router.gr.dart';
+import '../../../services/app_settings_service.dart';
 import '../../../services/review_service.dart';
+import '../../../services/screen_awake_service.dart';
 import '../../../widgets/app_action_button.dart';
 import '../../../widgets/app_snack_bar.dart';
 import '../../../widgets/minimo_loader.dart';
@@ -16,6 +18,7 @@ import '../bloc/compress_event.dart';
 import '../bloc/compress_state.dart';
 import '../data/photo_file_adapter.dart';
 import '../domain/picked_photo.dart';
+import '../domain/compression_settings.dart';
 import '../domain/photo_pick_source.dart';
 import 'widgets/compression_progress_view.dart';
 import 'widgets/compression_result_view.dart';
@@ -26,11 +29,13 @@ import 'widgets/photo_pick_source_sheet.dart';
 @RoutePage()
 class CompressScreen extends StatelessWidget {
   final List<PickedPhoto> initialPhotos;
+  final CompressionSettings initialSettings;
   final PhotoPickSource? initialPickSource;
 
   const CompressScreen({
     super.key,
     this.initialPhotos = const [],
+    this.initialSettings = const CompressionSettings(),
     this.initialPickSource,
   });
 
@@ -40,7 +45,10 @@ class CompressScreen extends StatelessWidget {
       return const _StartRedirect();
     }
     return BlocProvider(
-      create: (_) => CompressBloc(initialPhotos: initialPhotos),
+      create: (_) => CompressBloc(
+        initialPhotos: initialPhotos,
+        initialSettings: initialSettings,
+      ),
       child: _CompressView(initialPickSource: initialPickSource),
     );
   }
@@ -82,6 +90,7 @@ class _CompressView extends StatefulWidget {
 class _CompressViewState extends State<_CompressView> {
   final _fileAdapter = PhotoFileAdapter();
   bool _loading = false;
+  bool _screenAwakeEnabled = false;
   (int, int)? _loadingProgress;
   bool _initialSelectionConfirmed = false;
   bool _leavingDuringImport = false;
@@ -101,6 +110,7 @@ class _CompressViewState extends State<_CompressView> {
   @override
   void dispose() {
     if (_loading) unawaited(_fileAdapter.cancelPhotoPick());
+    unawaited(_setScreenAwake(false));
     super.dispose();
   }
 
@@ -224,6 +234,7 @@ class _CompressViewState extends State<_CompressView> {
       _loading = true;
       _loadingProgress = null;
     });
+    unawaited(_setScreenAwake(AppSettingsService.instance.preventScreenSleep));
     try {
       final photos = await _fileAdapter.pickPhotos(
         source: source,
@@ -251,12 +262,23 @@ class _CompressViewState extends State<_CompressView> {
         if (initial) Navigator.of(context).pop();
       }
     } finally {
+      unawaited(_setScreenAwake(false));
       if (mounted) {
         setState(() {
           _loading = false;
           _loadingProgress = null;
         });
       }
+    }
+  }
+
+  Future<void> _setScreenAwake(bool enabled) async {
+    if (enabled == _screenAwakeEnabled) return;
+    _screenAwakeEnabled = enabled;
+    try {
+      await ScreenAwakeService.instance.setEnabled(enabled);
+    } catch (_) {
+      _screenAwakeEnabled = !enabled;
     }
   }
 

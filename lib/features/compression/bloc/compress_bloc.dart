@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../services/app_settings_service.dart';
 import '../../../services/app_stats_service.dart';
+import '../../../services/screen_awake_service.dart';
 import '../data/photo_compressor_adapter.dart';
 import '../data/photo_file_adapter.dart';
 import '../domain/compression_result.dart';
@@ -17,6 +18,8 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
   final PhotoFileAdapter _photoFileAdapter;
   final PhotoCompressorAdapter _photoCompressorAdapter;
   final AppSettingsService _appSettings;
+  final ScreenAwakeService _screenAwakeService;
+  bool _screenAwakeEnabled = false;
   bool _cancelRequested = false;
   int _compressionRunId = 0;
   int _estimateRunId = 0;
@@ -27,14 +30,17 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
 
   CompressBloc({
     List<PickedPhoto> initialPhotos = const [],
+    CompressionSettings initialSettings = const CompressionSettings(),
     PhotoFileAdapter? photoFileAdapter,
     PhotoCompressorAdapter? photoCompressorAdapter,
     AppSettingsService? appSettings,
+    ScreenAwakeService? screenAwakeService,
   }) : _photoFileAdapter = photoFileAdapter ?? PhotoFileAdapter(),
        _photoCompressorAdapter =
            photoCompressorAdapter ?? PhotoCompressorAdapter(),
        _appSettings = appSettings ?? AppSettingsService.instance,
-       super(CompressState.initial(initialPhotos)) {
+       _screenAwakeService = screenAwakeService ?? ScreenAwakeService.instance,
+       super(CompressState.initial(initialPhotos, settings: initialSettings)) {
     on<CompressThumbnailsRequested>(_onThumbnailsRequested);
     on<CompressEstimateRequested>(_onEstimateRequested);
     on<CompressPhotosAdded>(_onPhotosAdded);
@@ -52,9 +58,10 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
   }
 
   @override
-  Future<void> close() {
+  Future<void> close() async {
     _estimateRunId++;
     _estimateDebounce?.cancel();
+    await _setScreenAwake(false);
     return super.close();
   }
 
@@ -196,82 +203,87 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
       ),
     );
 
-    for (var index = 0; index < state.photos.length; index++) {
-      if (_cancelRequested || runId != _compressionRunId) return;
-      final photo = state.photos[index];
-      statuses[index] = PhotoCompressionStatus.processing;
-      emit(
-        state.copyWith(
-          processingIndex: index,
-          photoStatuses: List.of(statuses),
-          currentPhotoProgress: 0,
-          elapsed: stopwatch.elapsed,
-        ),
-      );
-      try {
-        final result = await _photoCompressorAdapter.compress(
-          photo.path,
-          photo.name,
-          state.settings,
-          addMinimoPrefix: _appSettings.addMinimoPrefix,
-          onProgress: (photoProgress) {
-            if (_cancelRequested || runId != _compressionRunId) return;
-            final overall =
-                (completedWeight + photo.size * photoProgress) / totalWeight;
-            add(
-              CompressProgressChanged(
-                runId: runId,
-                progress: overall,
-                currentPhotoProgress: photoProgress,
-                elapsed: stopwatch.elapsed,
-              ),
-            );
-          },
-        );
-        statuses[index] = result.success
-            ? PhotoCompressionStatus.compressed
-            : PhotoCompressionStatus.skipped;
-        results.add(CompressedPhoto(source: photo, result: result));
-      } catch (error) {
+    await _setScreenAwake(_appSettings.preventScreenSleep);
+    try {
+      for (var index = 0; index < state.photos.length; index++) {
         if (_cancelRequested || runId != _compressionRunId) return;
-        statuses[index] = PhotoCompressionStatus.failed;
-        results.add(
-          CompressedPhoto(
-            source: photo,
-            result: const CompressionResult(success: false),
+        final photo = state.photos[index];
+        statuses[index] = PhotoCompressionStatus.processing;
+        emit(
+          state.copyWith(
+            processingIndex: index,
+            photoStatuses: List.of(statuses),
+            currentPhotoProgress: 0,
+            elapsed: stopwatch.elapsed,
           ),
         );
-        emit(state.copyWith(compressionError: error));
+        try {
+          final result = await _photoCompressorAdapter.compress(
+            photo.path,
+            photo.name,
+            state.settings,
+            addMinimoPrefix: _appSettings.addMinimoPrefix,
+            onProgress: (photoProgress) {
+              if (_cancelRequested || runId != _compressionRunId) return;
+              final overall =
+                  (completedWeight + photo.size * photoProgress) / totalWeight;
+              add(
+                CompressProgressChanged(
+                  runId: runId,
+                  progress: overall,
+                  currentPhotoProgress: photoProgress,
+                  elapsed: stopwatch.elapsed,
+                ),
+              );
+            },
+          );
+          statuses[index] = result.success
+              ? PhotoCompressionStatus.compressed
+              : PhotoCompressionStatus.skipped;
+          results.add(CompressedPhoto(source: photo, result: result));
+        } catch (error) {
+          if (_cancelRequested || runId != _compressionRunId) return;
+          statuses[index] = PhotoCompressionStatus.failed;
+          results.add(
+            CompressedPhoto(
+              source: photo,
+              result: const CompressionResult(success: false),
+            ),
+          );
+          emit(state.copyWith(compressionError: error));
+        }
+        completedWeight += photo.size > 0 ? photo.size : 1;
+        emit(
+          state.copyWith(
+            results: List.of(results),
+            photoStatuses: List.of(statuses),
+            progress: completedWeight / totalWeight,
+            elapsed: stopwatch.elapsed,
+          ),
+        );
       }
-      completedWeight += photo.size > 0 ? photo.size : 1;
-      emit(
-        state.copyWith(
-          results: List.of(results),
-          photoStatuses: List.of(statuses),
-          progress: completedWeight / totalWeight,
-          elapsed: stopwatch.elapsed,
-        ),
-      );
+      final successfulResults = results
+          .where((item) => item.result.success)
+          .toList();
+      if (successfulResults.isNotEmpty) {
+        final originalSize = successfulResults.fold<int>(
+          0,
+          (sum, item) => sum + (item.result.originalSize ?? item.source.size),
+        );
+        final compressedSize = successfulResults.fold<int>(
+          0,
+          (sum, item) => sum + (item.result.outputSize ?? 0),
+        );
+        await AppStatsService.recordCompressions(
+          photoCount: successfulResults.length,
+          savedBytes: originalSize - compressedSize,
+        ).onError((_, _) {});
+      }
+      emit(state.copyWith(status: CompressStatus.done, progress: 1));
+    } finally {
+      stopwatch.stop();
+      await _setScreenAwake(false);
     }
-    stopwatch.stop();
-    final successfulResults = results
-        .where((item) => item.result.success)
-        .toList();
-    if (successfulResults.isNotEmpty) {
-      final originalSize = successfulResults.fold<int>(
-        0,
-        (sum, item) => sum + (item.result.originalSize ?? item.source.size),
-      );
-      final compressedSize = successfulResults.fold<int>(
-        0,
-        (sum, item) => sum + (item.result.outputSize ?? 0),
-      );
-      await AppStatsService.recordCompressions(
-        photoCount: successfulResults.length,
-        savedBytes: originalSize - compressedSize,
-      ).onError((_, _) {});
-    }
-    emit(state.copyWith(status: CompressStatus.done, progress: 1));
   }
 
   void _onProgressChanged(
@@ -297,6 +309,7 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
     _cancelRequested = true;
     _compressionRunId++;
     await _photoCompressorAdapter.cancelCompression();
+    await _setScreenAwake(false);
     await _deleteOutputs(state.results);
     emit(
       state.copyWith(
@@ -453,6 +466,16 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
         in results.map((item) => item.result.outputPath).whereType<String>()) {
       final file = File(path);
       if (await file.exists()) await file.delete();
+    }
+  }
+
+  Future<void> _setScreenAwake(bool enabled) async {
+    if (enabled == _screenAwakeEnabled) return;
+    _screenAwakeEnabled = enabled;
+    try {
+      await _screenAwakeService.setEnabled(enabled);
+    } catch (_) {
+      _screenAwakeEnabled = !enabled;
     }
   }
 }

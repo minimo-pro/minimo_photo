@@ -13,6 +13,7 @@ import '../generated/l10n.dart';
 import '../router/app_router.gr.dart';
 import '../services/app_settings_service.dart';
 import '../services/changelog_service.dart';
+import '../services/external_photo_import_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/bottom_frame.dart';
 import '../widgets/changelog_dialog.dart';
@@ -28,6 +29,8 @@ class StartPage extends StatefulWidget {
 
 class _StartPageState extends State<StartPage> {
   final _photoFileAdapter = PhotoFileAdapter();
+  final _externalImport = ExternalPhotoImportService();
+  bool _openingExternalImport = false;
   final _upgrader = Upgrader();
   final _upgradeFlowDone = Completer<void>();
   var _changelogStarted = false;
@@ -45,8 +48,41 @@ class _StartPageState extends State<StartPage> {
         };
     WidgetsBinding.instance.addPostFrameCallback((_) {
       unawaited(_showChangelogWhenReady());
+      unawaited(_consumeExternalImport());
       unawaited(_recoverLostPhotos());
     });
+    _externalImport.listen(_consumeExternalImport);
+  }
+
+  @override
+  void dispose() {
+    _externalImport.stopListening();
+    super.dispose();
+  }
+
+  Future<void> _consumeExternalImport() async {
+    if (_openingExternalImport || !mounted) return;
+    _openingExternalImport = true;
+    try {
+      final request = await _externalImport.consume();
+      if (request != null && mounted) {
+        _externalImport.stopListening();
+        await context.pushRoute(
+          CompressRoute(
+            initialPhotos: request.photos,
+            initialSettings: request.settings,
+          ),
+        );
+        if (mounted) {
+          _externalImport.listen(_consumeExternalImport);
+          WidgetsBinding.instance.addPostFrameCallback(
+            (_) => unawaited(_consumeExternalImport()),
+          );
+        }
+      }
+    } finally {
+      _openingExternalImport = false;
+    }
   }
 
   Future<void> _recoverLostPhotos() async {

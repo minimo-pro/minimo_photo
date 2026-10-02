@@ -60,7 +60,10 @@ class CompressState {
     this.compressionError,
   });
 
-  factory CompressState.initial(List<PickedPhoto> photos) => CompressState(
+  factory CompressState.initial(
+    List<PickedPhoto> photos, {
+    CompressionSettings settings = const CompressionSettings(),
+  }) => CompressState(
     status: CompressStatus.ready,
     photos: List.unmodifiable(photos),
     thumbnailPaths: List.unmodifiable(
@@ -78,7 +81,7 @@ class CompressState {
     progress: 0,
     currentPhotoProgress: 0,
     elapsed: Duration.zero,
-    settings: const CompressionSettings(),
+    settings: settings,
     isEstimating: photos.isNotEmpty,
     isSaving: false,
   );

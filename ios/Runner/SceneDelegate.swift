@@ -19,6 +19,7 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
   private var pendingPickResult: FlutterResult?
   private var activePickID: UUID?
   private var photosChannel: FlutterMethodChannel?
+  private var externalPhotosChannel: FlutterMethodChannel?
 
   override func scene(
     _ scene: UIScene,
@@ -46,6 +47,60 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
         self.saveReplacement(call.arguments as? [String: Any], result: result)
       default:
         result(FlutterMethodNotImplemented)
+      }
+    }
+    let externalChannel = FlutterMethodChannel(
+      name: "minimo_photo/external_photos",
+      binaryMessenger: controller.binaryMessenger
+    )
+    externalPhotosChannel = externalChannel
+    externalChannel.setMethodCallHandler { call, result in
+      switch call.method {
+      case "consumeExternalPhotos": self.consumeExternalPhotos(result: result)
+      default: result(FlutterMethodNotImplemented)
+      }
+    }
+    if connectionOptions.urlContexts.contains(where: { $0.url.scheme == "minimophoto" }) {
+      externalChannel.invokeMethod("externalPhotosAvailable", arguments: nil)
+    }
+  }
+
+  override func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+    super.scene(scene, openURLContexts: URLContexts)
+    if URLContexts.contains(where: { $0.url.scheme == "minimophoto" }) {
+      externalPhotosChannel?.invokeMethod("externalPhotosAvailable", arguments: nil)
+    }
+  }
+
+  override func sceneDidBecomeActive(_ scene: UIScene) {
+    super.sceneDidBecomeActive(scene)
+    externalPhotosChannel?.invokeMethod("externalPhotosAvailable", arguments: nil)
+  }
+
+  private func consumeExternalPhotos(result: @escaping FlutterResult) {
+    DispatchQueue.global(qos: .userInitiated).async {
+      do {
+        guard let (request, directory) = try SharedPhotoInbox.next() else {
+          return DispatchQueue.main.async { result(nil) }
+        }
+        var photos: [[String: Any]] = []
+        do {
+          for name in request.files {
+            let input = directory.appendingPathComponent(name)
+            let output = try self.copyPickedPhoto(from: input, filename: name)
+            photos.append(["path": output.path, "name": name, "size": (try? output.resourceValues(forKeys: [.fileSizeKey]).fileSize) ?? 0])
+          }
+          SharedPhotoInbox.remove(directory)
+          DispatchQueue.main.async { result(["preset": request.preset, "files": photos]) }
+        } catch {
+          for photo in photos {
+            if let path = photo["path"] as? String { try? FileManager.default.removeItem(atPath: path) }
+          }
+          SharedPhotoInbox.remove(directory)
+          throw error
+        }
+      } catch {
+        DispatchQueue.main.async { result(FlutterError(code: "external_import_failed", message: error.localizedDescription, details: nil)) }
       }
     }
   }
