@@ -19,4 +19,5 @@ Before release, verify on physical Android and iOS devices:
 - all three presets and advanced dimensions
 - batch cancel leaves no partial output offered for saving
 - gallery save and share sheet
+- screen stays awake during picker import and compression when enabled, then sleeps normally afterward
 - low-storage and permission-denied errors

@@ -7,6 +7,7 @@
 | `file_picker` | Android selection of supported image files |
 | `gal` | Save compressed photos to gallery |
 | `share_plus` | Share output files |
+| `wakelock_plus` | Keep screen awake during import and compression |
 | `flutter_bloc` | Compression state orchestration |
 | `auto_route` | Typed navigation |
 | `shared_preferences` | Persistent settings |

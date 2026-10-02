@@ -444,10 +444,10 @@ class S {
     );
   }
 
-  /// `prevents the screen from sleeping while photos are compressing`
+  /// `prevents the screen from sleeping while photos are loading or compressing`
   String get preventScreenSleepDescription {
     return Intl.message(
-      'prevents the screen from sleeping while photos are compressing',
+      'prevents the screen from sleeping while photos are loading or compressing',
       name: 'preventScreenSleepDescription',
       desc: '',
       args: [],

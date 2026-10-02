@@ -80,7 +80,7 @@
   "replaceOriginal": "replace original",
   "replaceOriginalDescription": "save with original metadata, then ask to delete the original",
   "preventScreenSleep": "keep screen awake",
-  "preventScreenSleepDescription": "prevents the screen from sleeping while photos are compressing",
+  "preventScreenSleepDescription": "prevents the screen from sleeping while photos are loading or compressing",
   "clearCache": "clear cache",
   "clearCacheDescription": "removes temporary app files. photos saved to your gallery remain untouched",
   "holdToClearCache": "hold the button to clear cache",

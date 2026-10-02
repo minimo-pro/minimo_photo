@@ -31,3 +31,13 @@ also save a replacement with source date/location metadata and, after a
 successful save, request deletion of selected originals. Android declares
 legacy write permission only through API 29; modern Android and iOS use system
 photo-library authorization. iOS usage strings live in `Runner/Info.plist`.
+
+## External photo imports
+
+- Android accepts `ACTION_SEND` and `ACTION_SEND_MULTIPLE` for images, copies up to 50 URIs into app cache, then opens `CompressRoute`.
+- iOS Share Extension and the `Compress Photos in minimo` Shortcut stage files in the `group.com.khlebobul.minimoPhoto` App Group inbox. The app copies a complete request into `picked_photos` before opening `CompressRoute`; the Shortcut quality preset becomes the initial setting.
+- Share Extension finishes after staging. Open minimo from the Home Screen to continue.
+
+## Screen awake
+
+When `prevent_screen_sleep` is enabled, `wakelock_plus` keeps the display awake while photos import through the picker and while a batch compresses. The app releases it on completion, cancellation, or leaving the import screen.

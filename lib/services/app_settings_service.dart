@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AppSettingsService extends ChangeNotifier {
   static const _addMinimoPrefixKey = 'add_minimo_prefix';
   static const _savePhotosToAlbumKey = 'save_photos_to_album';
+  static const _preventScreenSleepKey = 'prevent_screen_sleep';
   static const _languageCodeKey = 'language_code';
   static const _darkThemeKey = 'dark_theme';
   static const appPrefix = 'minimo_';
@@ -16,6 +17,7 @@ class AppSettingsService extends ChangeNotifier {
   late SharedPreferences _preferences;
   bool addMinimoPrefix = true;
   bool savePhotosToAlbum = false;
+  bool preventScreenSleep = true;
   String? languageCode;
   bool? darkTheme;
 
@@ -32,6 +34,8 @@ class AppSettingsService extends ChangeNotifier {
         _preferences.getBool(_addMinimoPrefixKey) ?? addMinimoPrefix;
     savePhotosToAlbum =
         _preferences.getBool(_savePhotosToAlbumKey) ?? savePhotosToAlbum;
+    preventScreenSleep =
+        _preferences.getBool(_preventScreenSleepKey) ?? preventScreenSleep;
     languageCode = _preferences.getString(_languageCodeKey);
     darkTheme = _preferences.getBool(_darkThemeKey);
   }
@@ -41,6 +45,9 @@ class AppSettingsService extends ChangeNotifier {
 
   Future<void> setSavePhotosToAlbum(bool value) =>
       _setBool(_savePhotosToAlbumKey, value, (v) => savePhotosToAlbum = v);
+
+  Future<void> setPreventScreenSleep(bool value) =>
+      _setBool(_preventScreenSleepKey, value, (v) => preventScreenSleep = v);
 
   Future<void> setDarkTheme(bool value) =>
       _setBool(_darkThemeKey, value, (v) => darkTheme = v);

@@ -20,7 +20,7 @@ lib/
 ## Compression flow
 
 ```text
-PhotoFileAdapter
+PhotoFileAdapter / ExternalPhotoImportService
   → PickedPhoto[]
   → CompressBloc
   → PhotoCompressorAdapter

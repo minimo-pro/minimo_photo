@@ -62,6 +62,12 @@ class SettingsScreen extends StatelessWidget {
                         onChanged: settings.setSavePhotosToAlbum,
                       ),
                       _ToggleRow(
+                        title: strings.preventScreenSleep,
+                        description: strings.preventScreenSleepDescription,
+                        value: settings.preventScreenSleep,
+                        onChanged: settings.setPreventScreenSleep,
+                      ),
+                      _ToggleRow(
                         title: strings.darkTheme,
                         description: strings.darkThemeDescription,
                         value:

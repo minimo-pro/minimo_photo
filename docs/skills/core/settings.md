@@ -6,6 +6,7 @@ Persistent app settings live in `AppSettingsService`.
 |---|---:|---|
 | `add_minimo_prefix` | `true` | Prefix output name with `minimo_` |
 | `save_photos_to_album` | `false` | Save to the `Minimo` album |
+| `prevent_screen_sleep` | `true` | Keep display awake during photo import and compression |
 | `language_code` | system | UI locale override |
 | `dark_theme` | system | Theme override |
 | `stats_compressed_photos` | `0` | Successfully compressed photo count |

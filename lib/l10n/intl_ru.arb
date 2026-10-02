@@ -80,7 +80,7 @@
   "replaceOriginal": "заменить оригинал",
   "replaceOriginalDescription": "сохранить с метаданными, затем запросить удаление оригинала",
   "preventScreenSleep": "не выключать экран",
-  "preventScreenSleepDescription": "не даёт экрану уснуть, пока фото сжимаются",
+  "preventScreenSleepDescription": "не даёт экрану уснуть, пока фото загружаются или сжимаются",
   "clearCache": "очистка кеша",
   "clearCacheDescription": "удаляет временные файлы приложения. фото в галерее останутся",
   "holdToClearCache": "удерживайте кнопку, чтобы очистить кеш",
