@@ -128,9 +128,7 @@ class CompressionResultView extends StatelessWidget {
                       message: strings.comparePhotos,
                       child: AppActionButton(
                         width: 47,
-                        label: 'VS',
-                        fontSize: 16,
-                        padding: EdgeInsets.zero,
+                        icon: AppIcons.vs,
                         onPressed: allFailed ? null : () => _compare(context),
                       ),
                     ),
