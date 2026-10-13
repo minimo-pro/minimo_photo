@@ -1,0 +1,13 @@
+{
+  "mockup": {
+    "url": "https://raw.githubusercontent.com/ParthJadhav/app-store-screenshots/8b75d86b7cbbd04bc32786cf491241adcb66d79e/skills/app-store-screenshots/template/public/mockup.png",
+    "sha256": "ee21a4d5644c17ec9c86d81583b9d4b0a6b6cfb57771f4e45f879a7e19003415"
+  },
+  "photos": {
+    "beach": "photo-1507525428034-b723cf961d3e",
+    "dog": "photo-1552053831-71594a27632d",
+    "birthday": "photo-1464349095431-e9a21285b5f3",
+    "mountains": "photo-1464822759023-fed622ff2c3b",
+    "concert": "photo-1492684223066-81342ee5ff30"
+  }
+}

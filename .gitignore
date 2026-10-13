@@ -43,3 +43,25 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Store sources and exports stay local. The clean README overview is public.
+/metadata/
+/.asc/
+/store_screenshots/node_modules/
+/store_screenshots/.next/
+/store_screenshots/public/
+/store_screenshots/export/
+/store_screenshots/reports/
+/store_screenshots/*.tsbuildinfo
+/store_screenshots/*.tmp
+/store_screenshots/.env*
+/store_screenshots/**/__pycache__/
+/screenshots/
+/promo/
+/store_screenshots/.venv/
+*.p8
+*.p12
+*.mobileprovision
+*.jks
+*.keystore
+.env*

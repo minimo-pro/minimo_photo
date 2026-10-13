@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -165,14 +166,10 @@ class _ComparisonImage extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
             child: ColoredBox(
               color: Colors.black,
-              child: InteractiveViewer(
-                minScale: 1,
-                maxScale: 5,
-                child: _SplitImageBody(
-                  result: result,
-                  originalLabel: strings.originalPhoto,
-                  compressedLabel: strings.compressedPhoto,
-                ),
+              child: _SplitImageBody(
+                result: result,
+                originalLabel: strings.originalPhoto,
+                compressedLabel: strings.compressedPhoto,
               ),
             ),
           ),
@@ -182,7 +179,7 @@ class _ComparisonImage extends StatelessWidget {
   }
 }
 
-class _SplitImageBody extends StatelessWidget {
+class _SplitImageBody extends StatefulWidget {
   final CompressedPhoto result;
   final String originalLabel;
   final String compressedLabel;
@@ -194,54 +191,220 @@ class _SplitImageBody extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final compressedPath = result.result.outputPath;
+  State<_SplitImageBody> createState() => _SplitImageBodyState();
+}
 
-    return Stack(
-      fit: StackFit.expand,
+class _SplitImageBodyState extends State<_SplitImageBody> {
+  static const _handleHitWidth = 48.0;
+  static const _labelHideFraction = 0.18;
+  static const _semanticStep = 0.05;
+  static const _aspectTolerance = 0.02;
+
+  final _transformation = TransformationController();
+  late final ImageProvider _originalImage = FileImage(
+    File(widget.result.source.path),
+  );
+  late final ImageProvider? _compressedImage =
+      switch (widget.result.result.outputPath) {
+        final path? => FileImage(File(path)),
+        null => null,
+      };
+  final _originalSize = _ImageSizeProbe();
+  final _compressedSize = _ImageSizeProbe();
+  var _split = 0.5;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final configuration = createLocalImageConfiguration(context);
+    _originalSize.resolve(_originalImage, configuration, _onSizeResolved);
+    if (_compressedImage case final image?) {
+      _compressedSize.resolve(image, configuration, _onSizeResolved);
+    }
+  }
+
+  @override
+  void dispose() {
+    _originalSize.dispose();
+    _compressedSize.dispose();
+    _transformation.dispose();
+    super.dispose();
+  }
+
+  void _onSizeResolved() {
+    if (mounted) setState(() {});
+  }
+
+  void _setSplit(double value) {
+    setState(() => _split = value.clamp(0.0, 1.0));
+  }
+
+  String _percent(double value) => '${(value.clamp(0.0, 1.0) * 100).round()}%';
+
+  bool _aspectsMatch(Size a, Size b) {
+    final ratioA = a.width / a.height;
+    final ratioB = b.width / b.height;
+    return (ratioA - ratioB).abs() / ratioA <= _aspectTolerance;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final originalSize = _originalSize.size;
+    final compressedSize = _compressedSize.size;
+
+    if (originalSize != null &&
+        compressedSize != null &&
+        !_aspectsMatch(originalSize, compressedSize)) {
+      return _buildSideBySide(context);
+    }
+
+    if (originalSize == null) return _buildSplit(context, BoxFit.contain);
+
+    return Center(
+      child: AspectRatio(
+        aspectRatio: originalSize.width / originalSize.height,
+        child: _buildSplit(context, BoxFit.fill),
+      ),
+    );
+  }
+
+  Widget _buildSideBySide(BuildContext context) {
+    return Row(
+      key: const Key('comparison-side-by-side'),
       children: [
-        Row(
+        Expanded(
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              _image(_originalImage, 'comparison-original', BoxFit.contain),
+              Positioned(
+                left: 10,
+                top: 10,
+                child: _PhotoLabel(text: widget.originalLabel),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(width: 2),
+        Expanded(
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              _image(_compressedImage, 'comparison-compressed', BoxFit.contain),
+              Positioned(
+                right: 10,
+                top: 10,
+                child: _PhotoLabel(text: widget.compressedLabel),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _image(ImageProvider? image, String key, BoxFit fit) {
+    if (image == null) {
+      return _imageError(context, StateError('missing path'), null);
+    }
+    return Image(
+      key: Key(key),
+      image: image,
+      fit: fit,
+      errorBuilder: _imageError,
+    );
+  }
+
+  Widget _buildSplit(BuildContext context, BoxFit fit) {
+    final animationDuration = MediaQuery.disableAnimationsOf(context)
+        ? Duration.zero
+        : const Duration(milliseconds: 160);
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final width = constraints.maxWidth;
+        final dividerX = width * _split;
+
+        return Stack(
+          fit: StackFit.expand,
           children: [
-            Expanded(
+            InteractiveViewer(
+              transformationController: _transformation,
+              minScale: 1,
+              maxScale: 5,
+              child: _image(_originalImage, 'comparison-original', fit),
+            ),
+            IgnorePointer(
               child: ClipRect(
-                child: Image.file(
-                  File(result.source.path),
-                  key: const Key('comparison-original'),
-                  fit: BoxFit.cover,
-                  alignment: Alignment.centerRight,
-                  errorBuilder: _imageError,
+                clipper: _RevealClipper(_split),
+                child: ListenableBuilder(
+                  listenable: _transformation,
+                  builder: (context, child) =>
+                      Transform(transform: _transformation.value, child: child),
+                  child: _image(_compressedImage, 'comparison-compressed', fit),
                 ),
               ),
             ),
-            Expanded(
-              child: ClipRect(
-                child: compressedPath == null
-                    ? _imageError(context, StateError('missing path'), null)
-                    : Image.file(
-                        File(compressedPath),
-                        key: const Key('comparison-compressed'),
-                        fit: BoxFit.cover,
-                        alignment: Alignment.centerLeft,
-                        errorBuilder: _imageError,
-                      ),
+            Positioned(
+              left: dividerX - 1,
+              top: 0,
+              bottom: 0,
+              child: IgnorePointer(
+                child: Container(
+                  key: const Key('comparison-divider'),
+                  width: 2,
+                  color: CompressionUiColors.white,
+                ),
+              ),
+            ),
+            Positioned(
+              left: dividerX - _handleHitWidth / 2,
+              top: 0,
+              bottom: 0,
+              width: _handleHitWidth,
+              child: Semantics(
+                slider: true,
+                value: _percent(_split),
+                increasedValue: _percent(_split + _semanticStep),
+                decreasedValue: _percent(_split - _semanticStep),
+                onIncrease: () => _setSplit(_split + _semanticStep),
+                onDecrease: () => _setSplit(_split - _semanticStep),
+                child: GestureDetector(
+                  key: const Key('comparison-handle'),
+                  behavior: HitTestBehavior.opaque,
+                  dragStartBehavior: DragStartBehavior.down,
+                  onHorizontalDragUpdate: (details) {
+                    if (width > 0) _setSplit(_split + details.delta.dx / width);
+                  },
+                  child: const Center(child: _SplitHandle()),
+                ),
+              ),
+            ),
+            Positioned(
+              left: 10,
+              top: 10,
+              child: IgnorePointer(
+                child: AnimatedOpacity(
+                  opacity: _split < _labelHideFraction ? 0 : 1,
+                  duration: animationDuration,
+                  child: _PhotoLabel(text: widget.originalLabel),
+                ),
+              ),
+            ),
+            Positioned(
+              right: 10,
+              top: 10,
+              child: IgnorePointer(
+                child: AnimatedOpacity(
+                  opacity: _split > 1 - _labelHideFraction ? 0 : 1,
+                  duration: animationDuration,
+                  child: _PhotoLabel(text: widget.compressedLabel),
+                ),
               ),
             ),
           ],
-        ),
-        Center(
-          child: Container(
-            key: const Key('comparison-divider'),
-            width: 2,
-            color: CompressionUiColors.white,
-          ),
-        ),
-        Positioned(left: 10, top: 10, child: _PhotoLabel(text: originalLabel)),
-        Positioned(
-          right: 10,
-          top: 10,
-          child: _PhotoLabel(text: compressedLabel),
-        ),
-      ],
+        );
+      },
     );
   }
 
@@ -251,6 +414,74 @@ class _SplitImageBody extends StatelessWidget {
         Icons.broken_image_outlined,
         color: CompressionUiColors.white.withValues(alpha: 0.78),
         size: 42,
+      ),
+    );
+  }
+}
+
+class _ImageSizeProbe {
+  ImageStream? _stream;
+  ImageStreamListener? _listener;
+  Size? size;
+
+  void resolve(
+    ImageProvider image,
+    ImageConfiguration configuration,
+    VoidCallback onResolved,
+  ) {
+    final stream = image.resolve(configuration);
+    if (stream.key == _stream?.key) return;
+    _detach();
+    final listener = ImageStreamListener((info, _) {
+      size = Size(info.image.width.toDouble(), info.image.height.toDouble());
+      info.dispose();
+      onResolved();
+    }, onError: (_, _) {});
+    _stream = stream..addListener(listener);
+    _listener = listener;
+  }
+
+  void _detach() {
+    if (_listener case final listener?) _stream?.removeListener(listener);
+  }
+
+  void dispose() => _detach();
+}
+
+class _RevealClipper extends CustomClipper<Rect> {
+  final double split;
+
+  const _RevealClipper(this.split);
+
+  @override
+  Rect getClip(Size size) =>
+      Rect.fromLTRB(size.width * split, 0, size.width, size.height);
+
+  @override
+  bool shouldReclip(_RevealClipper oldClipper) => oldClipper.split != split;
+}
+
+class _SplitHandle extends StatelessWidget {
+  const _SplitHandle();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 34,
+      height: 34,
+      decoration: BoxDecoration(
+        color: CompressionUiColors.white,
+        shape: BoxShape.circle,
+        boxShadow: [
+          BoxShadow(color: Colors.black.withValues(alpha: 0.28), blurRadius: 6),
+        ],
+      ),
+      child: const Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.chevron_left, size: 16, color: Colors.black),
+          Icon(Icons.chevron_right, size: 16, color: Colors.black),
+        ],
       ),
     );
   }

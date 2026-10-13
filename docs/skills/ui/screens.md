@@ -20,6 +20,17 @@
    time, per-photo status list, and hold-to-cancel.
 3. **Done:** responsive saved-space result, statuses, compare, save, and share.
 
+The compare sheet shows one uncropped frame: the original fills the frame and
+the compressed photo is revealed to the right of a draggable divider (starts
+at 50%). Pinch-zoom and pan share one transform, so both sides stay aligned.
+The divider is exposed as an accessibility slider, and a label fades out when
+its side gets too narrow.
+
+Once both images decode, the frame takes the original's oriented aspect ratio
+and both images fill it exactly, absorbing resize rounding. If the aspect
+ratios differ by more than 2% (for example, a wrong EXIF rotation), the sheet
+shows the photos side by side instead of overlaying misaligned halves.
+
 Shared controls, colors, spacing, sheets, animation, and typography remain the
 same as `minimo_video`; media-specific controls live inside compression feature
 widgets.
