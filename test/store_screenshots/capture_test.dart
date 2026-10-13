@@ -158,6 +158,15 @@ final _captureKey = GlobalKey();
 late Locale _locale;
 
 void main() {
+  group(
+    'store screenshots',
+    _captureScreenshots,
+    // Skip setup too: CI has neither local photo fixtures nor macOS fonts.
+    skip: !Directory('$_root/photos').existsSync(),
+  );
+}
+
+void _captureScreenshots() {
   TestWidgetsFlutterBinding.ensureInitialized();
   final cacheLimit = imageCache.maximumSizeBytes;
   tearDownAll(() => imageCache.maximumSizeBytes = cacheLimit);
@@ -284,7 +293,6 @@ void main() {
           );
           debugDefaultTargetPlatformOverride = null;
         },
-        skip: !Directory('$_root/photos').existsSync(),
       );
     }
   }
