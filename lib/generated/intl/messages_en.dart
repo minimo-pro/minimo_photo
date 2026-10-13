@@ -332,6 +332,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "system": MessageLookupByLibrary.simpleMessage("system"),
     "todo": MessageLookupByLibrary.simpleMessage("todo"),
     "tryAgain": MessageLookupByLibrary.simpleMessage("try again"),
+    "unsavedResultsExit": MessageLookupByLibrary.simpleMessage(
+      "leave and delete unsaved compressed photos?",
+    ),
+    "unsavedResultsTitle": MessageLookupByLibrary.simpleMessage(
+      "unsaved photos",
+    ),
     "videoAppDescription": MessageLookupByLibrary.simpleMessage(
       "make videos smaller, right on your phone",
     ),

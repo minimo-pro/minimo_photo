@@ -95,6 +95,8 @@ class _CompressViewState extends State<_CompressView> {
   bool _initialSelectionConfirmed = false;
   bool _leavingDuringImport = false;
   int? _reviewedRun;
+  bool _confirmingExit = false;
+  bool _exitAllowed = false;
 
   @override
   void initState() {
@@ -161,9 +163,9 @@ class _CompressViewState extends State<_CompressView> {
         }
       },
       builder: (context, state) => PopScope(
-        canPop: state.status != CompressStatus.processing && !_loading,
+        canPop: _exitAllowed,
         onPopInvokedWithResult: (didPop, _) {
-          if (!didPop && _loading) unawaited(_confirmLoadingExit());
+          if (!didPop) unawaited(_exit());
         },
         child: Scaffold(
           body: SafeArea(
@@ -179,9 +181,7 @@ class _CompressViewState extends State<_CompressView> {
                         icon: AppIcons.arrowBack,
                         iconWidth: 22,
                         iconHeight: 22,
-                        onPressed: () => _loading
-                            ? unawaited(_confirmLoadingExit())
-                            : context.router.replaceAll([const StartRoute()]),
+                        onPressed: () => unawaited(_exit()),
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -236,21 +236,26 @@ class _CompressViewState extends State<_CompressView> {
     });
     unawaited(_setScreenAwake(AppSettingsService.instance.preventScreenSleep));
     try {
-      final photos = await _fileAdapter.pickPhotos(
-        source: source,
-        onProgress: (done, total) {
-          if (mounted) {
-            setState(() {
-              _loadingProgress = (done, total);
-              if (initial && total > 0) _initialSelectionConfirmed = true;
-            });
-          }
-        },
-      );
-      if (photos.isNotEmpty && mounted) {
+      final bloc = context.read<CompressBloc>();
+      final photos = await bloc.useFiles(() async {
+        final picked = await _fileAdapter.pickPhotos(
+          source: source,
+          onProgress: (done, total) {
+            if (mounted) {
+              setState(() {
+                _loadingProgress = (done, total);
+                if (initial && total > 0) _initialSelectionConfirmed = true;
+              });
+            }
+          },
+        );
+        await bloc.retainPhotos(picked);
+        return picked;
+      });
+      if (photos.isNotEmpty && mounted && !_leavingDuringImport) {
         context.read<CompressBloc>().add(CompressPhotosAdded(photos));
       } else if (initial && mounted && !_leavingDuringImport) {
-        Navigator.of(context).pop();
+        unawaited(_exit(confirm: false));
       }
     } catch (_) {
       if (mounted) {
@@ -259,7 +264,7 @@ class _CompressViewState extends State<_CompressView> {
           message: S.of(context).failedToPickPhotos,
           type: AppSnackBarType.error,
         );
-        if (initial) Navigator.of(context).pop();
+        if (initial) unawaited(_exit(confirm: false));
       }
     } finally {
       unawaited(_setScreenAwake(false));
@@ -282,31 +287,60 @@ class _CompressViewState extends State<_CompressView> {
     }
   }
 
-  Future<void> _confirmLoadingExit() async {
-    if (_leavingDuringImport) return;
-    final strings = S.of(context);
-    final leave = await showDialog<bool>(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(strings.loadingPhotos),
-        content: Text(strings.loadingManyPhotosHint),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(false),
-            child: Text(strings.cancel),
-          ),
-          TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: Text(
-              MaterialLocalizations.of(dialogContext).closeButtonLabel,
+  Future<void> _exit({bool confirm = true}) async {
+    if (_confirmingExit || _exitAllowed) return;
+    final bloc = context.read<CompressBloc>();
+    if (bloc.state.status == CompressStatus.processing) return;
+    _confirmingExit = true;
+    try {
+      if (confirm && (_loading || bloc.state.hasUnsavedResults)) {
+        final strings = S.of(context);
+        final leave = await showDialog<bool>(
+          context: context,
+          builder: (dialogContext) => AlertDialog(
+            title: Text(
+              _loading ? strings.loadingPhotos : strings.unsavedResultsTitle,
             ),
+            content: Text(
+              _loading
+                  ? strings.loadingManyPhotosHint
+                  : strings.unsavedResultsExit,
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(dialogContext).pop(false),
+                child: Text(strings.cancel),
+              ),
+              TextButton(
+                onPressed: () => Navigator.of(dialogContext).pop(true),
+                child: Text(
+                  MaterialLocalizations.of(dialogContext).closeButtonLabel,
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
-    );
-    if (leave != true || !mounted) return;
-    _leavingDuringImport = true;
-    await _fileAdapter.cancelPhotoPick();
-    if (mounted) Navigator.of(context).pop();
+        );
+        if (leave != true || !mounted) return;
+      }
+      _leavingDuringImport = true;
+      if (_loading) await _fileAdapter.cancelPhotoPick();
+      try {
+        await bloc.finishBatch();
+      } catch (_) {
+        if (mounted) {
+          AppSnackBar.show(
+            context,
+            message: S.of(context).cacheClearFailed,
+            type: AppSnackBarType.error,
+          );
+        }
+      }
+      if (!mounted) return;
+      setState(() => _exitAllowed = true);
+      await WidgetsBinding.instance.endOfFrame;
+      if (mounted) Navigator.of(context).pop();
+    } finally {
+      _confirmingExit = false;
+    }
   }
 }

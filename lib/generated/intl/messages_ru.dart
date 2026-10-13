@@ -336,6 +336,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "system": MessageLookupByLibrary.simpleMessage("система"),
     "todo": MessageLookupByLibrary.simpleMessage("в разработке"),
     "tryAgain": MessageLookupByLibrary.simpleMessage("попробовать снова"),
+    "unsavedResultsExit": MessageLookupByLibrary.simpleMessage(
+      "выйти и удалить несохранённые сжатые фото?",
+    ),
+    "unsavedResultsTitle": MessageLookupByLibrary.simpleMessage(
+      "несохранённые фото",
+    ),
     "videoAppDescription": MessageLookupByLibrary.simpleMessage(
       "сжимайте видео прямо на телефоне",
     ),

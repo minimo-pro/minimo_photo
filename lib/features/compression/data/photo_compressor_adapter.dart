@@ -32,29 +32,42 @@ class PhotoCompressorAdapter {
     );
     onProgress?.call(0);
 
-    final output = await _encode(inputPath, outputPath, format, settings);
-    if (output == null) throw StateError('Photo compression failed');
+    try {
+      final output = await _encode(inputPath, outputPath, format, settings);
+      if (output == null) throw StateError('Photo compression failed');
 
-    final outputFile = File(output.path);
-    if (generation != _cancelGeneration) {
-      if (await outputFile.exists()) await outputFile.delete();
-      throw StateError('Photo compression cancelled');
-    }
-    if (!await outputFile.exists()) {
-      throw StateError('Photo compression produced no file');
-    }
+      if (path.normalize(output.path) != path.normalize(outputPath)) {
+        throw StateError('Photo compression returned an unowned path');
+      }
+      final outputFile = File(outputPath);
+      if (generation != _cancelGeneration) {
+        if (await outputFile.exists()) await outputFile.delete();
+        throw StateError('Photo compression cancelled');
+      }
+      if (!await outputFile.exists()) {
+        throw StateError('Photo compression produced no file');
+      }
 
-    onProgress?.call(1);
-    final outputSize = await outputFile.length();
-    final success = isUsefulCompression(originalSize, outputSize);
-    if (!success) await outputFile.delete();
-    return CompressionResult(
-      success: success,
-      originalSize: originalSize,
-      outputSize: outputSize,
-      outputPath: success ? outputFile.path : null,
-      durationMs: stopwatch.elapsedMilliseconds,
-    );
+      onProgress?.call(1);
+      final outputSize = await outputFile.length();
+      final success = isUsefulCompression(originalSize, outputSize);
+      if (!success) {
+        await outputFile.delete();
+        await outputFile.parent.delete();
+      }
+      return CompressionResult(
+        success: success,
+        originalSize: originalSize,
+        outputSize: outputSize,
+        outputPath: success ? outputFile.path : null,
+        durationMs: stopwatch.elapsedMilliseconds,
+      );
+    } catch (_) {
+      final partial = File(outputPath);
+      if (await partial.exists()) await partial.delete();
+      await partial.parent.delete(recursive: true);
+      rethrow;
+    }
   }
 
   Future<void> cancelCompression() async => _cancelGeneration++;
@@ -68,9 +81,7 @@ class PhotoCompressorAdapter {
     for (final photo in photos) {
       if (isCancelled?.call() == true) return null;
       final format = _formatFor(photo.name);
-      final directory = await (await getTemporaryDirectory()).createTemp(
-        'minimo_estimate_',
-      );
+      final directory = await _createWorkDirectory();
       final outputPath = path.join(
         directory.path,
         'photo.${_extensionFor(format)}',
@@ -162,16 +173,20 @@ class PhotoCompressorAdapter {
     );
   }
 
+  Future<Directory> _createWorkDirectory() async {
+    final root = Directory(
+      path.join((await getTemporaryDirectory()).path, 'minimo_photo'),
+    );
+    await root.create(recursive: true);
+    return root.createTemp('operation_');
+  }
+
   Future<String> _createOutputPath(
     String originalName, {
     required CompressFormat format,
     required bool addMinimoPrefix,
   }) async {
-    final temporaryDirectory = await getTemporaryDirectory();
-    final outputDirectory = Directory(
-      path.join(temporaryDirectory.path, 'minimo_photo'),
-    );
-    await outputDirectory.create(recursive: true);
+    final outputDirectory = await _createWorkDirectory();
 
     final appPrefix = AppSettingsService.appPrefix;
     final rawBaseName = path.basenameWithoutExtension(originalName);
@@ -186,19 +201,6 @@ class PhotoCompressorAdapter {
     final baseName = safeBaseName.isEmpty ? 'photo' : safeBaseName;
     final prefix = addMinimoPrefix ? appPrefix : '';
     final extension = _extensionFor(format);
-    var candidate = path.join(
-      outputDirectory.path,
-      '$prefix$baseName.$extension',
-    );
-    var duplicateIndex = 2;
-    while (await FileSystemEntity.type(candidate) !=
-        FileSystemEntityType.notFound) {
-      candidate = path.join(
-        outputDirectory.path,
-        '$prefix${baseName}_$duplicateIndex.$extension',
-      );
-      duplicateIndex++;
-    }
-    return candidate;
+    return path.join(outputDirectory.path, '$prefix$baseName.$extension');
   }
 }

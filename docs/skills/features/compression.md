@@ -44,7 +44,21 @@ may be skipped even when other photos in the batch compress successfully.
    encoding pass before compression.
 5. `PhotoCompressorAdapter` processes photos sequentially.
 6. Each item becomes compressed, skipped, or failed.
-7. Cancellation invalidates the active run and deletes completed temp outputs.
+7. Cancellation invalidates the active run, waits for the current encoder and
+   removes completed, partial and late outputs. Imported sources and previews
+   remain available for retry. Encoding failures also remove partial files.
+8. A batch retains only explicitly handed-off files inside `picked_photos` and
+   `minimo_photo` in the app cache. Native imports use UUID filenames; each
+   compression/estimate gets a unique operation directory. Cleanup checks
+   canonical paths, file identity metadata and owners, protecting originals,
+   symlink targets, reused paths and files still used by another batch.
+9. Leaving closes the batch only after import, compression, estimation,
+   thumbnail creation, gallery save and share/comparison operations finish.
+   Late imports/previews/results are included in cleanup. Recovered picker
+   files are handed off into owned cache storage; external originals stay intact. Cold startup clears
+   abandoned app cache, including legacy imports/estimates; resuming from the
+   background keeps the active batch. Manual clear remains in Settings and
+   refuses to delete cache while a batch is active.
 
 The plugin has no continuous progress callback. MVP reports the active item at
 0%, then 100%; weighted batch progress still advances per completed file.

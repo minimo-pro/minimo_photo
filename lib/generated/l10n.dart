@@ -54,6 +54,26 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
+  /// `unsaved photos`
+  String get unsavedResultsTitle {
+    return Intl.message(
+      'unsaved photos',
+      name: 'unsavedResultsTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `leave and delete unsaved compressed photos?`
+  String get unsavedResultsExit {
+    return Intl.message(
+      'leave and delete unsaved compressed photos?',
+      name: 'unsavedResultsExit',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `minimo (photo)`
   String get appName {
     return Intl.message('minimo (photo)', name: 'appName', desc: '', args: []);

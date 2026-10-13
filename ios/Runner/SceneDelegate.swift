@@ -18,6 +18,7 @@ private struct PickedPhotoMetadata {
 class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDocumentPickerDelegate {
   private var pendingPickResult: FlutterResult?
   private var activePickID: UUID?
+  private var copyingPhotos = false
   private var photosChannel: FlutterMethodChannel?
   private var externalPhotosChannel: FlutterMethodChannel?
 
@@ -121,10 +122,10 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
 
   private func cancelPhotoPick(result: @escaping FlutterResult) {
     let cancelledResult = pendingPickResult
-    pendingPickResult = nil
+    if !copyingPhotos { pendingPickResult = nil }
     activePickID = nil
     window?.rootViewController?.presentedViewController?.dismiss(animated: true)
-    cancelledResult?([])
+    if !copyingPhotos { cancelledResult?([]) }
     result(nil)
   }
 
@@ -164,6 +165,7 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
       "pickProgress", arguments: ["processed": 0, "total": results.count]
     )
 
+    copyingPhotos = true
     let group = DispatchGroup()
     let lock = NSLock()
     var photos: [(Int, [String: Any])] = []
@@ -224,12 +226,15 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
     }
 
     group.notify(queue: .main) {
+      self.copyingPhotos = false
       guard self.activePickID == pickID else {
         for (_, photo) in photos {
           if let path = photo["path"] as? String {
             try? FileManager.default.removeItem(atPath: path)
           }
         }
+        self.pendingPickResult = nil
+        pendingPickResult([])
         return
       }
       self.activePickID = nil
@@ -248,6 +253,7 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
       "pickProgress", arguments: ["processed": 0, "total": urls.count]
     )
 
+    copyingPhotos = true
     DispatchQueue.global(qos: .userInitiated).async {
       var photos: [[String: Any]] = []
       for (index, url) in urls.enumerated() {
@@ -265,12 +271,15 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
         }
       }
       DispatchQueue.main.async {
+        self.copyingPhotos = false
         guard self.activePickID == pickID else {
           for photo in photos {
             if let path = photo["path"] as? String {
               try? FileManager.default.removeItem(atPath: path)
             }
           }
+          self.pendingPickResult = nil
+          pendingPickResult([])
           return
         }
         self.activePickID = nil
@@ -603,15 +612,13 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
   private func copyPickedPhoto(from source: URL, filename: String) throws -> URL {
     let directory = try cacheDirectory(named: "picked_photos")
     let safeName = sanitizeFilename(filename)
-    var output = directory.appendingPathComponent(safeName)
-    let ext = output.pathExtension.isEmpty ? "jpg" : output.pathExtension
-    let base = output.deletingPathExtension().lastPathComponent
-    var index = 2
-    while FileManager.default.fileExists(atPath: output.path) {
-      output = directory.appendingPathComponent("\(base)_\(index).\(ext)")
-      index += 1
+    let output = directory.appendingPathComponent("\(UUID().uuidString)_\(safeName)")
+    do {
+      try FileManager.default.copyItem(at: source, to: output)
+    } catch {
+      try? FileManager.default.removeItem(at: output)
+      throw error
     }
-    try FileManager.default.copyItem(at: source, to: output)
     return output
   }
 

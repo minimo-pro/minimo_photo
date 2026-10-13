@@ -29,7 +29,7 @@ Commit generated output together with its source change.
 - Keep plugin-specific types inside `PhotoCompressorAdapter`.
 - Keep batch orchestration and user-visible state inside `CompressBloc`.
 - Preserve run-ID checks; they prevent stale native events from mutating a new run.
-- Never overwrite source files. Compression writes a separate temporary MP4.
+- Never overwrite source files. Compression writes a separate temporary image.
 - Preserve the 10% acceptance threshold unless product behavior explicitly changes.
 - Keep simple presets primary; advanced controls must work on both platforms.
 

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share_plus/share_plus.dart';
@@ -179,25 +180,31 @@ class CompressionResultView extends StatelessWidget {
   }
 
   void _compare(BuildContext context) {
-    showAppSheet(
-      context: context,
-      heightFraction: 0.86,
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      child: CompressionComparisonSheet(results: state.successResults),
+    unawaited(
+      context.read<CompressBloc>().useFiles(
+        () => showAppSheet(
+          context: context,
+          heightFraction: 0.86,
+          backgroundColor: Theme.of(context).colorScheme.surface,
+          child: CompressionComparisonSheet(results: state.successResults),
+        ),
+      ),
     );
   }
 
   Future<void> _share(BuildContext context) async {
     try {
       final box = context.findRenderObject() as RenderBox?;
-      await SharePlus.instance.share(
-        ShareParams(
-          files: state.successfulOutputPaths
-              .map((path) => XFile(path, mimeType: 'image/*'))
-              .toList(),
-          sharePositionOrigin: box == null
-              ? null
-              : box.localToGlobal(Offset.zero) & box.size,
+      await context.read<CompressBloc>().useFiles(
+        () => SharePlus.instance.share(
+          ShareParams(
+            files: state.successfulOutputPaths
+                .map((path) => XFile(path, mimeType: 'image/*'))
+                .toList(),
+            sharePositionOrigin: box == null
+                ? null
+                : box.localToGlobal(Offset.zero) & box.size,
+          ),
         ),
       );
     } catch (_) {

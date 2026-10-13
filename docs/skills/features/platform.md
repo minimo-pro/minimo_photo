@@ -22,7 +22,8 @@ empty add-more selection leaves current settings and photos unchanged.
 ## Compression
 
 `flutter_image_compress` calls native Android/iOS image APIs. Output files are
-created under temporary `minimo_photo` storage with collision-safe names.
+created in unique operation directories under temporary `minimo_photo` storage.
+Native imported copies use UUID names under `picked_photos` on both platforms.
 
 ## Gallery
 

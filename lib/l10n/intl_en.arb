@@ -1,4 +1,6 @@
 {
+  "unsavedResultsTitle": "unsaved photos",
+  "unsavedResultsExit": "leave and delete unsaved compressed photos?",
   "@@locale": "en",
   "appName": "minimo (photo)",
   "madeByKhlebobul": "by khlebobul",

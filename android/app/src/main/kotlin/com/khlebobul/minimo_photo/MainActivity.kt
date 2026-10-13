@@ -18,6 +18,7 @@ class MainActivity : FlutterActivity() {
     private var pendingPickResult: MethodChannel.Result? = null
     @Volatile private var activePickId: Long? = null
     private var nextPickId = 0L
+    private var copyingPhotos = false
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
@@ -112,10 +113,10 @@ class MainActivity : FlutterActivity() {
     private fun cancelPhotoPick(result: MethodChannel.Result) {
         val cancelledResult = pendingPickResult
         val wasPicking = activePickId != null
-        pendingPickResult = null
+        if (!copyingPhotos) pendingPickResult = null
         activePickId = null
         if (wasPicking) finishActivity(PICK_PHOTOS_REQUEST)
-        cancelledResult?.success(emptyList<Map<String, Any>>())
+        if (!copyingPhotos) cancelledResult?.success(emptyList<Map<String, Any>>())
         result.success(null)
     }
 
@@ -138,6 +139,7 @@ class MainActivity : FlutterActivity() {
             }
             data.data?.let(::add)
         }.distinct().take(50)
+        copyingPhotos = true
         sendPickProgress(0, uris.size, pickId)
         Thread {
             val photos = mutableListOf<Map<String, Any>>()
@@ -147,8 +149,11 @@ class MainActivity : FlutterActivity() {
                 sendPickProgress(index + 1, uris.size, pickId)
             }
             runOnUiThread {
+                copyingPhotos = false
                 if (activePickId != pickId) {
                     photos.forEach { (it["path"] as? String)?.let(::File)?.delete() }
+                    pendingPickResult = null
+                    result.success(emptyList<Map<String, Any>>())
                     return@runOnUiThread
                 }
                 pendingPickResult = null
@@ -169,7 +174,9 @@ class MainActivity : FlutterActivity() {
             ?.use { cursor ->
                 if (cursor.moveToFirst()) cursor.getString(0) else null
             }?.substringAfterLast('/') ?: "photo.jpg"
-        val output = File(cacheDir, "photo_${UUID.randomUUID()}_${name}")
+        val directory = File(cacheDir, "picked_photos").apply { mkdirs() }
+        val safeName = name.replace(Regex("[\\\\/:*?\"<>|\\p{Cntrl}]"), "_")
+        val output = File(directory, "photo_${UUID.randomUUID()}_${safeName}")
         try {
             contentResolver.openInputStream(uri).use { input ->
                 requireNotNull(input) { "unable to open selected photo" }

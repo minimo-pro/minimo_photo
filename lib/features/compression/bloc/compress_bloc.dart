@@ -1,9 +1,9 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../services/app_settings_service.dart';
+import '../../../services/app_cache_service.dart';
 import '../../../services/app_stats_service.dart';
 import '../../../services/screen_awake_service.dart';
 import '../data/photo_compressor_adapter.dart';
@@ -19,6 +19,11 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
   final PhotoCompressorAdapter _photoCompressorAdapter;
   final AppSettingsService _appSettings;
   final ScreenAwakeService _screenAwakeService;
+  final BatchCache _cache;
+  final _operations = <Future<void>>{};
+  Future<void>? _closingFuture;
+  bool _closing = false;
+  Future<void>? _compressionOperation;
   bool _screenAwakeEnabled = false;
   bool _cancelRequested = false;
   int _compressionRunId = 0;
@@ -29,40 +34,95 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
   final _deletedSourceIdentifiers = <String>{};
 
   CompressBloc({
+    BatchCache? batchCache,
     List<PickedPhoto> initialPhotos = const [],
     CompressionSettings initialSettings = const CompressionSettings(),
     PhotoFileAdapter? photoFileAdapter,
     PhotoCompressorAdapter? photoCompressorAdapter,
     AppSettingsService? appSettings,
     ScreenAwakeService? screenAwakeService,
-  }) : _photoFileAdapter = photoFileAdapter ?? PhotoFileAdapter(),
+  }) : _cache = batchCache ?? BatchCache(),
+       _photoFileAdapter = photoFileAdapter ?? PhotoFileAdapter(),
        _photoCompressorAdapter =
            photoCompressorAdapter ?? PhotoCompressorAdapter(),
        _appSettings = appSettings ?? AppSettingsService.instance,
        _screenAwakeService = screenAwakeService ?? ScreenAwakeService.instance,
        super(CompressState.initial(initialPhotos, settings: initialSettings)) {
-    on<CompressThumbnailsRequested>(_onThumbnailsRequested);
-    on<CompressEstimateRequested>(_onEstimateRequested);
-    on<CompressPhotosAdded>(_onPhotosAdded);
-    on<CompressSimpleQualityChanged>(_onSimpleQualityChanged);
-    on<CompressSettingsChanged>(_onSettingsChanged);
-    on<CompressStarted>(_onStarted);
-    on<CompressProgressChanged>(_onProgressChanged);
-    on<CompressCancelled>(_onCancelled);
+    _handle<CompressThumbnailsRequested>(_onThumbnailsRequested);
+    _handle<CompressEstimateRequested>(_onEstimateRequested);
+    _handle<CompressPhotosAdded>(_onPhotosAdded);
+    _handle<CompressSimpleQualityChanged>(_onSimpleQualityChanged);
+    _handle<CompressSettingsChanged>(_onSettingsChanged);
+    _handle<CompressStarted>(_onStarted);
+    _handle<CompressProgressChanged>(_onProgressChanged);
+    _handle<CompressCancelled>(_onCancelled);
     on<CompressBackgrounded>((_, _) {});
     on<CompressForegroundResumed>((_, _) {});
-    on<CompressResultsSaved>(_onResultsSaved);
-    on<CompressMessagesCleared>(_onMessagesCleared);
+    _handle<CompressResultsSaved>(_onResultsSaved);
+    _handle<CompressMessagesCleared>(_onMessagesCleared);
+    unawaited(useFiles(() => _cache.retain(initialPhotos.map((p) => p.path))));
     add(const CompressThumbnailsRequested());
     add(const CompressEstimateRequested());
   }
 
+  void _handle<E extends CompressEvent>(
+    FutureOr<void> Function(E, Emitter<CompressState>) handler,
+  ) {
+    on<E>((event, emit) async {
+      if (_closing ||
+          (event is CompressStarted &&
+              state.status == CompressStatus.processing)) {
+        return;
+      }
+      final operation = useFiles(() async => handler(event, emit));
+      if (event is CompressStarted) _compressionOperation = operation;
+      await operation;
+    });
+  }
+
+  /// Imports, previews and the share sheet also hold a file lease.
+  Future<T> useFiles<T>(Future<T> Function() operation) async {
+    if (_closing) throw StateError('Batch is closing');
+    final finished = Completer<void>();
+    _operations.add(finished.future);
+    try {
+      return await operation();
+    } finally {
+      _operations.remove(finished.future);
+      finished.complete();
+    }
+  }
+
+  Future<void> retainPhotos(List<PickedPhoto> photos) =>
+      _cache.retain(photos.map((photo) => photo.path));
+
+  @override
+  void add(CompressEvent event) {
+    if (!_closing) super.add(event);
+  }
+
   @override
   Future<void> close() async {
+    try {
+      await finishBatch();
+    } finally {
+      await super.close();
+    }
+  }
+
+  // Close the state stream after widgets detach; paused listeners can delay it.
+  Future<void> finishBatch() => _closingFuture ??= _closeBatch();
+
+  Future<void> _closeBatch() async {
+    _closing = true;
+    _cancelRequested = true;
+    _compressionRunId++;
     _estimateRunId++;
     _estimateDebounce?.cancel();
+    await _photoCompressorAdapter.cancelCompression();
+    await Future.wait(_operations.toList());
     await _setScreenAwake(false);
-    return super.close();
+    await _cache.clear(release: true);
   }
 
   void _requestEstimate() {
@@ -86,7 +146,7 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
       state.settings,
       isCancelled: () => runId != _estimateRunId || isClosed,
     );
-    if (runId == _estimateRunId && !emit.isDone) {
+    if (runId == _estimateRunId && !_closing && !emit.isDone) {
       emit(
         state.copyWith(
           estimatedSize: estimate,
@@ -107,13 +167,21 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
       final path = await _photoCompressorAdapter.createThumbnail(
         state.photos[index].path,
       );
-      if (index >= state.thumbnailPaths.length) return;
+      if (path != null) await _cache.retain([path]);
+      if (_closing || emit.isDone || index >= state.thumbnailPaths.length) {
+        return;
+      }
       final thumbnails = List<String?>.of(state.thumbnailPaths)..[index] = path;
       emit(state.copyWith(thumbnailPaths: thumbnails));
     }
   }
 
-  void _onPhotosAdded(CompressPhotosAdded event, Emitter<CompressState> emit) {
+  Future<void> _onPhotosAdded(
+    CompressPhotosAdded event,
+    Emitter<CompressState> emit,
+  ) async {
+    await retainPhotos(event.photos);
+    if (_closing) return;
     if (state.status != CompressStatus.ready || event.photos.isEmpty) return;
     final identities = state.photos.map(_identity).toSet();
     final added = event.photos
@@ -171,7 +239,9 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
     CompressStarted event,
     Emitter<CompressState> emit,
   ) async {
-    if (state.photos.isEmpty) return;
+    if (state.photos.isEmpty || state.status == CompressStatus.processing) {
+      return;
+    }
     _savedOutputPaths.clear();
     _replacementSourceIdentifiers.clear();
     _deletedSourceIdentifiers.clear();
@@ -193,6 +263,7 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
       state.copyWith(
         status: CompressStatus.processing,
         isEstimating: false,
+        isSaved: false,
         results: const [],
         photoStatuses: statuses,
         compressionRunId: runId,
@@ -237,6 +308,10 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
               );
             },
           );
+          if (result.outputPath case final output?) {
+            await _cache.retain([output]);
+          }
+          if (_cancelRequested || runId != _compressionRunId) return;
           statuses[index] = result.success
               ? PhotoCompressionStatus.compressed
               : PhotoCompressionStatus.skipped;
@@ -279,7 +354,9 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
           savedBytes: originalSize - compressedSize,
         ).onError((_, _) {});
       }
-      emit(state.copyWith(status: CompressStatus.done, progress: 1));
+      if (!_closing && runId == _compressionRunId) {
+        emit(state.copyWith(status: CompressStatus.done, progress: 1));
+      }
     } finally {
       stopwatch.stop();
       await _setScreenAwake(false);
@@ -305,12 +382,17 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
     CompressCancelled event,
     Emitter<CompressState> emit,
   ) async {
-    if (state.status != CompressStatus.processing) return;
+    if (state.status != CompressStatus.processing || _cancelRequested) return;
     _cancelRequested = true;
     _compressionRunId++;
     await _photoCompressorAdapter.cancelCompression();
     await _setScreenAwake(false);
-    await _deleteOutputs(state.results);
+    await _compressionOperation;
+    await _cache.clear(
+      keep: state.photos.map((photo) => photo.path).toSet()
+        ..addAll(state.thumbnailPaths.whereType<String>()),
+    );
+    if (_closing) return;
     emit(
       state.copyWith(
         status: CompressStatus.ready,
@@ -460,14 +542,6 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
     CompressMessagesCleared event,
     Emitter<CompressState> emit,
   ) => emit(state.copyWith(clearSaveNotification: true));
-
-  Future<void> _deleteOutputs(Iterable<CompressedPhoto> results) async {
-    for (final path
-        in results.map((item) => item.result.outputPath).whereType<String>()) {
-      final file = File(path);
-      if (await file.exists()) await file.delete();
-    }
-  }
 
   Future<void> _setScreenAwake(bool enabled) async {
     if (enabled == _screenAwakeEnabled) return;

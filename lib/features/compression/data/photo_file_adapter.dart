@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/services.dart';
 import 'package:gal/gal.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path/path.dart' as path;
+import 'package:path_provider/path_provider.dart';
 
 import '../domain/photo_pick_source.dart';
 import '../domain/picked_photo.dart';
@@ -73,16 +77,49 @@ class PhotoFileAdapter {
     void Function(int processed, int total)? onProgress,
   ) async {
     final photos = <PickedPhoto>[];
-    for (var index = 0; index < paths.length; index++) {
-      final file = XFile(paths[index]);
-      photos.add(
-        PickedPhoto(
-          path: file.path,
-          name: file.name,
-          size: await file.length(),
-        ),
-      );
-      onProgress?.call(index + 1, paths.length);
+    final directories = <Directory>[];
+    try {
+      for (var index = 0; index < paths.length; index++) {
+        final source = File(paths[index]);
+        final cacheRoot = await getTemporaryDirectory();
+        final pickedRoot = await Directory(
+          path.join(cacheRoot.path, 'picked_photos'),
+        ).create(recursive: true);
+        final directory = await pickedRoot.createTemp('recovered_');
+        directories.add(directory);
+        final destination = path.join(
+          directory.path,
+          path.basename(source.path),
+        );
+        final canonicalSource = await source.resolveSymbolicLinks();
+        final canonicalRoot = await cacheRoot.resolveSymbolicLinks();
+        final pluginDirectory = RegExp(
+          r'^[0-9a-fA-F]{8}(-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}$',
+        );
+        if (path.isWithin(canonicalRoot, canonicalSource) &&
+            pluginDirectory.hasMatch(path.basename(source.parent.path))) {
+          await source.rename(destination);
+          if (await source.parent.list(followLinks: false).isEmpty) {
+            await source.parent.delete();
+          }
+        } else {
+          await source.copy(destination);
+        }
+        final file = XFile(destination);
+        photos.add(
+          PickedPhoto(
+            path: file.path,
+            name: file.name,
+            size: await file.length(),
+          ),
+        );
+        onProgress?.call(index + 1, paths.length);
+      }
+    } catch (_) {
+      for (final directory in directories) {
+        if (await directory.exists()) await directory.delete(recursive: true);
+      }
+      rethrow;
     }
     return photos;
   }

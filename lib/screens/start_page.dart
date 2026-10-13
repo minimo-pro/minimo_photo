@@ -12,10 +12,12 @@ import '../features/compression/presentation/widgets/photo_pick_source_sheet.dar
 import '../generated/l10n.dart';
 import '../router/app_router.gr.dart';
 import '../services/app_settings_service.dart';
+import '../services/app_cache_service.dart';
 import '../services/changelog_service.dart';
 import '../services/external_photo_import_service.dart';
 import '../theme/app_theme.dart';
 import '../widgets/bottom_frame.dart';
+import '../widgets/app_snack_bar.dart';
 import '../widgets/changelog_dialog.dart';
 import '../widgets/pressable.dart';
 
@@ -63,8 +65,12 @@ class _StartPageState extends State<StartPage> {
   Future<void> _consumeExternalImport() async {
     if (_openingExternalImport || !mounted) return;
     _openingExternalImport = true;
+    final cache = BatchCache();
     try {
       final request = await _externalImport.consume();
+      if (request != null) {
+        await cache.retain(request.photos.map((photo) => photo.path));
+      }
       if (request != null && mounted) {
         _externalImport.stopListening();
         await context.pushRoute(
@@ -82,16 +88,36 @@ class _StartPageState extends State<StartPage> {
       }
     } finally {
       _openingExternalImport = false;
+      await _releaseImport(cache);
     }
   }
 
   Future<void> _recoverLostPhotos() async {
+    final cache = BatchCache();
     try {
       final photos = await _photoFileAdapter.recoverLostPhotos();
+      await cache.retain(photos.map((photo) => photo.path));
       if (photos.isNotEmpty && mounted) {
-        context.pushRoute(CompressRoute(initialPhotos: photos));
+        await context.pushRoute(CompressRoute(initialPhotos: photos));
       }
-    } catch (_) {}
+    } catch (_) {
+    } finally {
+      await _releaseImport(cache);
+    }
+  }
+
+  Future<void> _releaseImport(BatchCache cache) async {
+    try {
+      await cache.clear(release: true);
+    } catch (_) {
+      if (mounted) {
+        AppSnackBar.show(
+          context,
+          message: S.of(context).cacheClearFailed,
+          type: AppSnackBarType.error,
+        );
+      }
+    }
   }
 
   void _completeUpgradeFlow() {

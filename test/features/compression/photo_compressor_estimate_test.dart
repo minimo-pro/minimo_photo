@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:ui' as ui;
 
@@ -6,10 +7,90 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:minimo_photo/features/compression/data/photo_compressor_adapter.dart';
 import 'package:minimo_photo/features/compression/domain/compression_settings.dart';
+import 'package:minimo_photo/features/compression/domain/compression_result.dart';
 import 'package:minimo_photo/features/compression/domain/picked_photo.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+
+  group('temporary output ownership', () {
+    late Directory root;
+    late File original;
+    late _FakeCodec codec;
+    late FlutterImageCompressPlatform previous;
+    const channel = MethodChannel('plugins.flutter.io/path_provider');
+    setUp(() async {
+      root = await Directory.systemTemp.createTemp('codec_cleanup_');
+      original = await File(
+        '${root.path}/original.jpg',
+      ).writeAsBytes(List.filled(100, 1));
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMethodCallHandler(channel, (_) async => root.path);
+      previous = FlutterImageCompressPlatform.instance;
+      codec = _FakeCodec()..outputSize = 50;
+      FlutterImageCompressPlatform.instance = codec;
+    });
+    tearDown(() async {
+      FlutterImageCompressPlatform.instance = previous;
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMethodCallHandler(channel, null);
+      await root.delete(recursive: true);
+    });
+    Future<CompressionResult> compress(PhotoCompressorAdapter adapter) =>
+        adapter.compress(
+          original.path,
+          'same.jpg',
+          const CompressionSettings(),
+        );
+    Future<List<File>> outputs() => Directory('${root.path}/minimo_photo')
+        .list(recursive: true, followLinks: false)
+        .where((e) => e is File)
+        .cast<File>()
+        .toList();
+
+    for (final nullResult in [false, true]) {
+      test(
+        'removes partial output on ${nullResult ? 'null' : 'throw'}',
+        () async {
+          codec.nullOutput = nullResult;
+          codec.throwAfterWrite = !nullResult;
+          await expectLater(
+            compress(PhotoCompressorAdapter()),
+            throwsStateError,
+          );
+          expect(await outputs(), isEmpty);
+          expect(await original.length(), 100);
+        },
+      );
+    }
+    test('removes late output after cancellation', () async {
+      codec.gate = Completer<void>();
+      final adapter = PhotoCompressorAdapter();
+      final pending = compress(adapter);
+      await codec.started.future;
+      await adapter.cancelCompression();
+      expect(await outputs(), hasLength(1));
+      final failure = expectLater(pending, throwsStateError);
+      codec.gate!.complete();
+      await failure;
+      expect(await outputs(), isEmpty);
+      expect(await original.exists(), isTrue);
+    });
+    test('same names use independent directories', () async {
+      final first = await compress(PhotoCompressorAdapter());
+      final second = await compress(PhotoCompressorAdapter());
+      expect(first.outputPath, isNot(second.outputPath));
+      await File(first.outputPath!).delete();
+      expect(await File(second.outputPath!).exists(), isTrue);
+    });
+    test('untrusted output path never deletes original', () async {
+      codec.returnedPath = original.path;
+      final adapter = PhotoCompressorAdapter();
+      await expectLater(compress(adapter), throwsStateError);
+      expect(await original.length(), 100);
+      expect(await outputs(), isEmpty);
+    });
+  });
 
   test('estimate uses actual output and rejects savings below 10%', () async {
     final directory = await Directory.systemTemp.createTemp('minimo_test_');
@@ -114,6 +195,11 @@ void main() {
 
 class _FakeCodec extends UnsupportedFlutterImageCompress {
   int outputSize = 0;
+  bool throwAfterWrite = false;
+  bool nullOutput = false;
+  String? returnedPath;
+  Completer<void>? gate;
+  final started = Completer<void>();
   final qualities = <int>[];
   final formats = <CompressFormat>[];
   final widths = <int>[];
@@ -138,6 +224,10 @@ class _FakeCodec extends UnsupportedFlutterImageCompress {
     widths.add(minWidth);
     heights.add(minHeight);
     await File(targetPath).writeAsBytes(List.filled(outputSize, 2));
-    return XFile(targetPath);
+    if (!started.isCompleted) started.complete();
+    await gate?.future;
+    if (throwAfterWrite) throw StateError('encoder failed after writing');
+    if (nullOutput) return null;
+    return XFile(returnedPath ?? targetPath);
   }
 }
