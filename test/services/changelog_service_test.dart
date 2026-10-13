@@ -11,6 +11,17 @@ PackageInfo _packageInfo(String version) => PackageInfo(
 );
 
 void main() {
+  test('initialize stays hidden while no releases are documented', () async {
+    SharedPreferences.setMockInitialValues({'onboarding_completed': true});
+    final service = ChangelogService(
+      packageInfo: () async => _packageInfo('1.0.0'),
+    );
+
+    expect(await service.initialize(language: Language.en), isNull);
+    final prefs = await SharedPreferences.getInstance();
+    expect(prefs.getString('last_seen_version'), '1.0.0');
+  });
+
   test('unseenChanges returns every version between last seen and current', () {
     final changes = unseenChanges(
       lastSeen: '1.2.0',
@@ -57,7 +68,7 @@ void main() {
     });
     final service = ChangelogService(
       packageInfo: () async => _packageInfo('1.0.0'),
-      remoteChangelog: () async => {
+      changelog: {
         '1.0.0': {
           Language.en: ['fresh'],
         },
@@ -75,12 +86,49 @@ void main() {
     SharedPreferences.setMockInitialValues({'onboarding_completed': false});
     final service = ChangelogService(
       packageInfo: () async => _packageInfo('1.0.0'),
-      remoteChangelog: () async => null,
     );
 
     expect(await service.initialize(language: Language.en), isNull);
 
     final prefs = await SharedPreferences.getInstance();
     expect(prefs.getString('last_seen_version'), '1.0.0');
+  });
+
+  test('currentUpdate stays hidden without a current release entry', () async {
+    final service = ChangelogService(
+      packageInfo: () async => _packageInfo('1.0.0'),
+    );
+
+    expect(await service.currentUpdate(language: Language.ru), isNull);
+  });
+
+  test('dismiss saves all unseen releases; currentUpdate can reopen', () async {
+    SharedPreferences.setMockInitialValues({
+      'onboarding_completed': true,
+      'last_seen_version': '1.0.0',
+    });
+    final service = ChangelogService(
+      packageInfo: () async => _packageInfo('1.2.0'),
+      changelog: const {
+        '1.3.0': {
+          Language.en: ['future'],
+        },
+        '1.2.0': {
+          Language.en: ['latest'],
+          Language.ru: ['новое'],
+        },
+        '1.1.0': {
+          Language.en: ['middle'],
+        },
+      },
+    );
+
+    final update = await service.initialize(language: Language.ru);
+    expect(update?.changes, ['middle', 'новое']);
+    await service.dismiss();
+    expect(await service.initialize(language: Language.ru), isNull);
+    final reopened = await service.currentUpdate(language: Language.ru);
+    expect(reopened?.version, '1.2.0');
+    expect(reopened?.changes, ['новое']);
   });
 }

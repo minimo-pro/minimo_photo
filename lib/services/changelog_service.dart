@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -23,26 +20,8 @@ enum Language {
 
 typedef Changelog = Map<String, Map<Language, List<String>>>;
 
-const _remoteChangelogUrl =
-    'https://raw.githubusercontent.com/minimo-pro/minimo_photo/main/changelog.json';
-
-const Changelog _changelog = {
-  // TODO: Add one entry per app version before every release.
-  '1.0.0': {
-    Language.en: [
-      'share minimo with friends.',
-      'rate the app from the about screen.',
-      'get a gentle review prompt after successful conversions.',
-      'see update prompts when a new store version is available.',
-    ],
-    Language.ru: [
-      'можно поделиться minimo с друзьями.',
-      'можно оценить приложение из экрана о приложении.',
-      'после успешных конвертаций появляется аккуратный запрос оценки.',
-      'приложение подсказывает, когда в магазине доступно обновление.',
-    ],
-  },
-};
+// Add localized entries here when app updates are released.
+const Changelog _changelog = {};
 
 List<String> unseenChanges({
   required String lastSeen,
@@ -93,17 +72,28 @@ class ChangelogService {
 
   final Future<PackageInfo> Function() _packageInfo;
   final Future<SharedPreferences> Function() _preferences;
-  final Future<Changelog?> Function() _remoteChangelog;
+  final Changelog _changes;
 
   String? _currentVersion;
 
   ChangelogService({
     Future<PackageInfo> Function()? packageInfo,
     Future<SharedPreferences> Function()? preferences,
-    Future<Changelog?> Function()? remoteChangelog,
+    Changelog changelog = _changelog,
   }) : _packageInfo = packageInfo ?? PackageInfo.fromPlatform,
        _preferences = preferences ?? SharedPreferences.getInstance,
-       _remoteChangelog = remoteChangelog ?? _fetchRemoteChangelog;
+       _changes = changelog;
+
+  Future<ChangelogUpdate?> currentUpdate({required Language language}) async {
+    final current = (await _packageInfo()).version;
+    _currentVersion = current;
+    final texts = _changes[current];
+    if (texts == null) return null;
+
+    final changes = texts[language] ?? texts[Language.en] ?? const [];
+    if (changes.isEmpty) return null;
+    return ChangelogUpdate(version: current, changes: changes);
+  }
 
   Future<ChangelogUpdate?> initialize({required Language language}) async {
     final current = (await _packageInfo()).version;
@@ -130,7 +120,7 @@ class ChangelogService {
       lastSeen: lastSeen ?? '0.0.0',
       current: current,
       language: language,
-      changelog: await _remoteChangelog() ?? _changelog,
+      changelog: _changes,
     );
 
     if (changes.isEmpty) {
@@ -150,50 +140,4 @@ class ChangelogService {
   Future<void> dismiss() async {
     await markCurrentVersionSeen();
   }
-}
-
-Future<Changelog?> _fetchRemoteChangelog() async {
-  final client = HttpClient()..connectionTimeout = const Duration(seconds: 2);
-  try {
-    final uri = Uri.parse(_remoteChangelogUrl);
-    final request = await client
-        .getUrl(uri)
-        .timeout(const Duration(seconds: 3));
-    final response = await request.close().timeout(const Duration(seconds: 3));
-    if (response.statusCode != HttpStatus.ok) return null;
-    final body = await response
-        .transform(utf8.decoder)
-        .join()
-        .timeout(const Duration(seconds: 3));
-    return _parseChangelog(jsonDecode(body));
-  } catch (_) {
-    return null;
-  } finally {
-    client.close(force: true);
-  }
-}
-
-Changelog? _parseChangelog(Object? value) {
-  if (value is! Map) return null;
-
-  final result = <String, Map<Language, List<String>>>{};
-  for (final versionEntry in value.entries) {
-    if (versionEntry.key is! String || versionEntry.value is! Map) continue;
-    final version = versionEntry.key as String;
-    if (_tryParseVersion(version) == null) continue;
-
-    final languages = <Language, List<String>>{};
-    for (final languageEntry in (versionEntry.value as Map).entries) {
-      if (languageEntry.key is! String || languageEntry.value is! List) {
-        continue;
-      }
-      final language = Language.fromCode(languageEntry.key as String);
-      languages[language] = (languageEntry.value as List)
-          .whereType<String>()
-          .toList();
-    }
-    if (languages.isNotEmpty) result[version] = languages;
-  }
-
-  return result.isEmpty ? null : result;
 }

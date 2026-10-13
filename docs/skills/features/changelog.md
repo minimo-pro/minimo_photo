@@ -4,18 +4,18 @@
 
 `ChangelogService` stores a local versioned changelog map in Dart. Keys are semantic versions, language keys use the `Language` enum, and version comparisons use `pub_semver`.
 
-The service can fetch root [`changelog.json`](../../../changelog.json) from the repository before falling back to the bundled map. Remote JSON uses this shape:
+The bundled `_changelog` map in [`changelog_service.dart`](../../../lib/services/changelog_service.dart) is currently empty because no app updates have been released. Add localized entries when updates ship:
 
-```json
-{
-  "1.0.0": {
-    "en": ["share minimo with friends."],
-    "ru": ["можно поделиться minimo с друзьями."]
-  }
-}
+```dart
+const Changelog _changelog = {
+  '1.0.1': {
+    Language.en: ['describe the update here.'],
+    Language.ru: ['опишите обновление здесь.'],
+  },
+};
 ```
 
-Remote fetch failures are ignored; the bundled map remains authoritative offline.
+The changelog works offline and does not fetch remote data.
 
 ## Seen Version
 
@@ -37,11 +37,15 @@ If unseen changes exist, `showChangelogDialog()` presents a content-sized
 `stupid_simple_sheet` (scroll-to-drag dismiss). Dismissing the sheet marks
 the current version as seen.
 
+The About screen includes a What's New link when `currentUpdate()` finds
+nonempty notes for the installed version. It reopens that version's notes even
+after dismissal. With an empty map, both the automatic sheet and this link stay
+hidden.
+
 ## Release Checklist
 
 - Update root `CHANGELOG.md` and group entries under category headings such as `### Added`.
 - Add a local `_changelog` entry for every app version.
-- Publish/update remote `changelog.json` before release.
 - Keep English and Russian copy in sync.
 
 ---
