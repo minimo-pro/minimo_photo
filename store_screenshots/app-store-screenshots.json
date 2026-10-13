@@ -1,0 +1,2793 @@
+{
+  "schemaVersion": 2,
+  "appName": "minimo (photo)",
+  "themeId": "minimo-sky",
+  "connectedCanvas": false,
+  "locales": [
+    "en",
+    "ru"
+  ],
+  "locale": "en",
+  "device": "iphone",
+  "orientation": "portrait",
+  "appIcon": "/app-icon.png",
+  "slidesByDevice": {
+    "iphone": [
+      {
+        "id": "iphone-1",
+        "layout": "hero",
+        "inverted": false,
+        "label": {
+          "en": "free · no subscription",
+          "ru": "бесплатно · без подписки"
+        },
+        "headline": {
+          "en": "make your photos\nsmaller",
+          "ru": "сделайте фото\nлегче"
+        },
+        "highlight": {
+          "en": "smaller",
+          "ru": "легче"
+        },
+        "screenshot": "/screenshots/apple/iphone/{locale}/01-settings.png",
+        "transforms": {
+          "caption": {
+            "x": 79.2,
+            "y": 157.74,
+            "width": 1161.6,
+            "height": 573.6,
+            "rotation": 0,
+            "zIndex": 6
+          },
+          "device": {
+            "x": 92.4,
+            "y": 717,
+            "width": 1135.2,
+            "height": 2312.61,
+            "rotation": 0,
+            "zIndex": 3
+          }
+        },
+        "imageElements": [
+          {
+            "id": "i1-i1",
+            "src": "/photos/dog.jpg",
+            "radius": 32,
+            "border": 14,
+            "shadow": true,
+            "fit": "cover",
+            "transform": {
+              "x": -52.8,
+              "y": 1089.84,
+              "width": 396,
+              "height": 297,
+              "rotation": -9,
+              "zIndex": 7
+            }
+          },
+          {
+            "id": "i1-i2",
+            "src": "/photos/beach.jpg",
+            "radius": 32,
+            "border": 14,
+            "shadow": true,
+            "fit": "cover",
+            "transform": {
+              "x": 960,
+              "y": 850,
+              "width": 396,
+              "height": 297,
+              "rotation": 8,
+              "zIndex": 7
+            }
+          }
+        ]
+      },
+      {
+        "id": "iphone-2",
+        "layout": "device-bottom",
+        "inverted": false,
+        "label": {
+          "en": "before & after",
+          "ru": "до и после"
+        },
+        "headline": {
+          "en": "same photo,\nlighter file",
+          "ru": "то же фото,\nменьше места"
+        },
+        "highlight": {
+          "en": "lighter file",
+          "ru": "меньше места"
+        },
+        "screenshot": "/screenshots/apple/iphone/{locale}/04-result.png",
+        "transforms": {
+          "caption": {
+            "x": 79.2,
+            "y": 157.74,
+            "width": 1161.6,
+            "height": 573.6,
+            "rotation": 0,
+            "zIndex": 6
+          },
+          "device": {
+            "x": 186.38,
+            "y": 1261.92,
+            "width": 947.23,
+            "height": 1929.68,
+            "rotation": 0,
+            "zIndex": 3
+          }
+        },
+        "imageElements": [
+          {
+            "id": "i2-i1",
+            "src": "/brand/compare-{locale}.png",
+            "radius": 61,
+            "border": 24,
+            "shadow": true,
+            "fit": "cover",
+            "transform": {
+              "x": 52.8,
+              "y": 616.62,
+              "width": 1214.4,
+              "height": 910.8,
+              "rotation": -3,
+              "zIndex": 9
+            }
+          }
+        ]
+      },
+      {
+        "id": "iphone-3",
+        "layout": "device-top",
+        "inverted": false,
+        "label": {
+          "en": "batch compression",
+          "ru": "пакетное сжатие"
+        },
+        "headline": {
+          "en": "shrink them\nall at once",
+          "ru": "сжимайте\nвсё сразу"
+        },
+        "highlight": {
+          "en": "all at once",
+          "ru": "всё сразу"
+        },
+        "screenshot": "/screenshots/apple/iphone/{locale}/03-progress.png",
+        "transforms": {
+          "device": {
+            "x": 156.55,
+            "y": -182.72,
+            "width": 1029.6,
+            "height": 2097.48,
+            "rotation": 0,
+            "zIndex": 3
+          },
+          "caption": {
+            "x": 79.2,
+            "y": 2222.7,
+            "width": 1161.6,
+            "height": 573.6,
+            "rotation": 0,
+            "zIndex": 6
+          }
+        },
+        "imageElements": [
+          {
+            "id": "i3-i1",
+            "src": "/photos/birthday.jpg",
+            "radius": 34,
+            "border": 15,
+            "shadow": true,
+            "fit": "cover",
+            "transform": {
+              "x": -66,
+              "y": 1434,
+              "width": 422.4,
+              "height": 316.8,
+              "rotation": -8,
+              "zIndex": 7
+            }
+          },
+          {
+            "id": "i3-i2",
+            "src": "/photos/mountains.jpg",
+            "radius": 34,
+            "border": 15,
+            "shadow": true,
+            "fit": "cover",
+            "transform": {
+              "x": 950.4,
+              "y": 1606.08,
+              "width": 422.4,
+              "height": 316.8,
+              "rotation": 7,
+              "zIndex": 7
+            }
+          }
+        ]
+      },
+      {
+        "id": "iphone-4",
+        "layout": "device-bottom",
+        "inverted": true,
+        "label": {
+          "en": "100% on-device",
+          "ru": "100% на устройстве"
+        },
+        "headline": {
+          "en": "your photos\nnever leave\nyour phone",
+          "ru": "ваши фото\nостаются\nв телефоне"
+        },
+        "highlight": {
+          "en": "never leave",
+          "ru": "остаются"
+        },
+        "screenshot": "/screenshots/apple/iphone/{locale}/09-result-dark.png",
+        "transforms": {
+          "caption": {
+            "x": 79.2,
+            "y": 157.74,
+            "width": 1161.6,
+            "height": 803.04,
+            "rotation": 0,
+            "zIndex": 6
+          },
+          "device": {
+            "x": 196.68,
+            "y": 1434,
+            "width": 926.64,
+            "height": 1887.73,
+            "rotation": 0,
+            "zIndex": 3
+          }
+        },
+        "textElements": [
+          {
+            "id": "i4-t1",
+            "text": {
+              "en": "no cloud",
+              "ru": "без облака"
+            },
+            "transform": {
+              "x": 0,
+              "y": 1204.56,
+              "width": 475.2,
+              "height": 130.68,
+              "rotation": -6,
+              "zIndex": 8
+            },
+            "fontSize": 59,
+            "color": "#272727",
+            "background": "rgba(255,255,255,0.92)",
+            "align": "center"
+          },
+          {
+            "id": "i4-t2",
+            "text": {
+              "en": "no account",
+              "ru": "без аккаунта"
+            },
+            "transform": {
+              "x": 792,
+              "y": 1276.26,
+              "width": 528,
+              "height": 130.68,
+              "rotation": 5,
+              "zIndex": 8
+            },
+            "fontSize": 59,
+            "color": "#272727",
+            "background": "rgba(255,255,255,0.92)",
+            "align": "center"
+          }
+        ]
+      },
+      {
+        "id": "iphone-5",
+        "layout": "device-bottom",
+        "inverted": false,
+        "label": {
+          "en": "advanced mode",
+          "ru": "расширенный режим"
+        },
+        "headline": {
+          "en": "fine-tune\nevery detail",
+          "ru": "настройте\nкаждую деталь"
+        },
+        "highlight": {
+          "en": "every detail",
+          "ru": "каждую деталь"
+        },
+        "screenshot": "/screenshots/apple/iphone/{locale}/02-advanced.png",
+        "transforms": {
+          "caption": {
+            "x": 79.2,
+            "y": 157.74,
+            "width": 1161.6,
+            "height": 573.6,
+            "rotation": 0,
+            "zIndex": 6
+          },
+          "device": {
+            "x": 79.2,
+            "y": 774.36,
+            "width": 1029.6,
+            "height": 2097.48,
+            "rotation": -4,
+            "zIndex": 3
+          }
+        },
+        "textElements": [
+          {
+            "id": "i5-t1",
+            "text": {
+              "en": "EXIF",
+              "ru": "EXIF"
+            },
+            "transform": {
+              "x": 844.8,
+              "y": 1032.48,
+              "width": 422.4,
+              "height": 145.2,
+              "rotation": 8,
+              "zIndex": 8
+            },
+            "fontSize": 66,
+            "color": "#FFFFFF",
+            "background": "#FC3636",
+            "align": "center"
+          },
+          {
+            "id": "i5-t2",
+            "text": {
+              "en": "quality 60–95%",
+              "ru": "качество 60–95%"
+            },
+            "transform": {
+              "x": 660,
+              "y": 1434,
+              "width": 633.6,
+              "height": 121.97,
+              "rotation": -5,
+              "zIndex": 8
+            },
+            "fontSize": 55,
+            "color": "#272727",
+            "background": "#FFFFFF",
+            "align": "center"
+          },
+          {
+            "id": "i5-t3",
+            "text": {
+              "en": "1280–3840 px",
+              "ru": "1280–3840 px"
+            },
+            "transform": {
+              "x": 633.6,
+              "y": 1835.52,
+              "width": 660,
+              "height": 121.97,
+              "rotation": 4,
+              "zIndex": 8
+            },
+            "fontSize": 55,
+            "color": "#272727",
+            "background": "#FFFFFF",
+            "align": "center"
+          }
+        ]
+      },
+      {
+        "id": "iphone-6",
+        "layout": "no-device",
+        "inverted": false,
+        "label": {
+          "en": "simple · private · free",
+          "ru": "просто · приватно · бесплатно"
+        },
+        "headline": {
+          "en": "everything you\nneed. nothing\nyou don’t",
+          "ru": "всё нужное.\nничего\nлишнего"
+        },
+        "highlight": {
+          "en": "nothing",
+          "ru": "ничего"
+        },
+        "screenshot": "",
+        "transforms": {
+          "caption": {
+            "x": 79.2,
+            "y": 200.76,
+            "width": 1161.6,
+            "height": 860.4,
+            "rotation": 0,
+            "zIndex": 6
+          }
+        },
+        "textElements": [
+          {
+            "id": "i6-t0",
+            "text": {
+              "en": "batch compression",
+              "ru": "пакетное сжатие"
+            },
+            "transform": {
+              "x": 52.8,
+              "y": 1147.2,
+              "width": 660,
+              "height": 116.16,
+              "rotation": -4,
+              "zIndex": 8
+            },
+            "fontSize": 53,
+            "color": "#FFFFFF",
+            "background": "#FC3636",
+            "align": "center"
+          },
+          {
+            "id": "i6-t1",
+            "text": {
+              "en": "before & after",
+              "ru": "до и после"
+            },
+            "transform": {
+              "x": 607.2,
+              "y": 1147.2,
+              "width": 660,
+              "height": 116.16,
+              "rotation": 3,
+              "zIndex": 8
+            },
+            "fontSize": 53,
+            "color": "#272727",
+            "background": "#FFFFFF",
+            "align": "center"
+          },
+          {
+            "id": "i6-t2",
+            "text": {
+              "en": "keeps EXIF",
+              "ru": "сохраняет EXIF"
+            },
+            "transform": {
+              "x": 52.8,
+              "y": 1362.3,
+              "width": 660,
+              "height": 116.16,
+              "rotation": 2,
+              "zIndex": 8
+            },
+            "fontSize": 53,
+            "color": "#272727",
+            "background": "#FFFFFF",
+            "align": "center"
+          },
+          {
+            "id": "i6-t3",
+            "text": {
+              "en": "JPEG · PNG · HEIC",
+              "ru": "JPEG · PNG · HEIC"
+            },
+            "transform": {
+              "x": 607.2,
+              "y": 1362.3,
+              "width": 660,
+              "height": 116.16,
+              "rotation": -3,
+              "zIndex": 8
+            },
+            "fontSize": 53,
+            "color": "#272727",
+            "background": "#FFFFFF",
+            "align": "center"
+          },
+          {
+            "id": "i6-t4",
+            "text": {
+              "en": "replace originals",
+              "ru": "замена оригиналов"
+            },
+            "transform": {
+              "x": 52.8,
+              "y": 1577.4,
+              "width": 660,
+              "height": 116.16,
+              "rotation": -2,
+              "zIndex": 8
+            },
+            "fontSize": 53,
+            "color": "#272727",
+            "background": "#FFFFFF",
+            "align": "center"
+          },
+          {
+            "id": "i6-t5",
+            "text": {
+              "en": "save & share",
+              "ru": "сохранить и поделиться"
+            },
+            "transform": {
+              "x": 607.2,
+              "y": 1577.4,
+              "width": 660,
+              "height": 116.16,
+              "rotation": 4,
+              "zIndex": 8
+            },
+            "fontSize": 53,
+            "color": "#272727",
+            "background": "#FFFFFF",
+            "align": "center"
+          },
+          {
+            "id": "i6-t6",
+            "text": {
+              "en": "dark mode",
+              "ru": "тёмная тема"
+            },
+            "transform": {
+              "x": 52.8,
+              "y": 1792.5,
+              "width": 660,
+              "height": 116.16,
+              "rotation": 3,
+              "zIndex": 8
+            },
+            "fontSize": 53,
+            "color": "#272727",
+            "background": "#FFFFFF",
+            "align": "center"
+          },
+          {
+            "id": "i6-t7",
+            "text": {
+              "en": "open source",
+              "ru": "открытый код"
+            },
+            "transform": {
+              "x": 607.2,
+              "y": 1792.5,
+              "width": 660,
+              "height": 116.16,
+              "rotation": -4,
+              "zIndex": 8
+            },
+            "fontSize": 53,
+            "color": "#FFFFFF",
+            "background": "#FC3636",
+            "align": "center"
+          }
+        ],
+        "imageElements": [
+          {
+            "id": "i6-i1",
+            "src": "/app-icon.png",
+            "radius": 88,
+            "border": 0,
+            "shadow": true,
+            "fit": "cover",
+            "transform": {
+              "x": 462,
+              "y": 2380,
+              "width": 396,
+              "height": 396,
+              "rotation": -6,
+              "zIndex": 7
+            }
+          }
+        ]
+      }
+    ],
+    "ipad": [
+      {
+        "id": "ipad-1",
+        "layout": "hero",
+        "inverted": false,
+        "label": {
+          "en": "free · no subscription",
+          "ru": "бесплатно · без подписки"
+        },
+        "headline": {
+          "en": "make your photos\nsmaller",
+          "ru": "сделайте фото\nлегче"
+        },
+        "highlight": {
+          "en": "smaller",
+          "ru": "легче"
+        },
+        "screenshot": "/screenshots/apple/ipad/{locale}/01-settings.png",
+        "transforms": {
+          "caption": {
+            "x": 123.84,
+            "y": 151.36,
+            "width": 1816.32,
+            "height": 550.4,
+            "rotation": 0,
+            "zIndex": 6
+          },
+          "device": {
+            "x": 206.4,
+            "y": 688,
+            "width": 1651.2,
+            "height": 2144.42,
+            "rotation": 0,
+            "zIndex": 3
+          }
+        },
+        "imageElements": [
+          {
+            "id": "i1-i1",
+            "src": "/photos/dog.jpg",
+            "radius": 36,
+            "border": 16,
+            "shadow": true,
+            "fit": "cover",
+            "transform": {
+              "x": 41.28,
+              "y": 1045.76,
+              "width": 454.08,
+              "height": 340.56,
+              "rotation": -9,
+              "zIndex": 7
+            }
+          },
+          {
+            "id": "i1-i2",
+            "src": "/photos/beach.jpg",
+            "radius": 36,
+            "border": 16,
+            "shadow": true,
+            "fit": "cover",
+            "transform": {
+              "x": 1540,
+              "y": 800,
+              "width": 454.08,
+              "height": 340.56,
+              "rotation": 8,
+              "zIndex": 7
+            }
+          }
+        ]
+      },
+      {
+        "id": "ipad-2",
+        "layout": "device-bottom",
+        "inverted": false,
+        "label": {
+          "en": "before & after",
+          "ru": "до и после"
+        },
+        "headline": {
+          "en": "same photo,\nlighter file",
+          "ru": "то же фото,\nменьше места"
+        },
+        "highlight": {
+          "en": "lighter file",
+          "ru": "меньше места"
+        },
+        "screenshot": "/screenshots/apple/ipad/{locale}/04-result.png",
+        "transforms": {
+          "caption": {
+            "x": 123.84,
+            "y": 151.36,
+            "width": 1816.32,
+            "height": 550.4,
+            "rotation": 0,
+            "zIndex": 6
+          },
+          "device": {
+            "x": 367.39,
+            "y": 1155.84,
+            "width": 1329.22,
+            "height": 1726.25,
+            "rotation": 0,
+            "zIndex": 3
+          }
+        },
+        "imageElements": [
+          {
+            "id": "i2-i1",
+            "src": "/brand/compare-{locale}.png",
+            "radius": 83,
+            "border": 37,
+            "shadow": true,
+            "fit": "cover",
+            "transform": {
+              "x": 206.4,
+              "y": 591.68,
+              "width": 1651.2,
+              "height": 1238.4,
+              "rotation": -3,
+              "zIndex": 9
+            }
+          }
+        ]
+      },
+      {
+        "id": "ipad-3",
+        "layout": "device-top",
+        "inverted": false,
+        "label": {
+          "en": "batch compression",
+          "ru": "пакетное сжатие"
+        },
+        "headline": {
+          "en": "shrink them\nall at once",
+          "ru": "сжимайте\nвсё сразу"
+        },
+        "highlight": {
+          "en": "all at once",
+          "ru": "всё сразу"
+        },
+        "screenshot": "/screenshots/apple/ipad/{locale}/03-progress.png",
+        "transforms": {
+          "device": {
+            "x": 309.6,
+            "y": -120,
+            "width": 1444.8,
+            "height": 1876.36,
+            "rotation": 0,
+            "zIndex": 3
+          },
+          "caption": {
+            "x": 123.84,
+            "y": 2174.08,
+            "width": 1816.32,
+            "height": 550.4,
+            "rotation": 0,
+            "zIndex": 6
+          }
+        },
+        "imageElements": [
+          {
+            "id": "i3-i1",
+            "src": "/photos/birthday.jpg",
+            "radius": 40,
+            "border": 17,
+            "shadow": true,
+            "fit": "cover",
+            "transform": {
+              "x": 61.92,
+              "y": 1376,
+              "width": 495.36,
+              "height": 371.52,
+              "rotation": -8,
+              "zIndex": 7
+            }
+          },
+          {
+            "id": "i3-i2",
+            "src": "/photos/mountains.jpg",
+            "radius": 40,
+            "border": 17,
+            "shadow": true,
+            "fit": "cover",
+            "transform": {
+              "x": 1506.72,
+              "y": 1541.12,
+              "width": 495.36,
+              "height": 371.52,
+              "rotation": 7,
+              "zIndex": 7
+            }
+          }
+        ]
+      },
+      {
+        "id": "ipad-4",
+        "layout": "device-bottom",
+        "inverted": true,
+        "label": {
+          "en": "100% on-device",
+          "ru": "100% на устройстве"
+        },
+        "headline": {
+          "en": "your photos\nnever leave\nyour phone",
+          "ru": "ваши фото\nостаются\nв телефоне"
+        },
+        "highlight": {
+          "en": "never leave",
+          "ru": "остаются"
+        },
+        "screenshot": "/screenshots/apple/ipad/{locale}/09-result-dark.png",
+        "transforms": {
+          "caption": {
+            "x": 123.84,
+            "y": 151.36,
+            "width": 1816.32,
+            "height": 770.56,
+            "rotation": 0,
+            "zIndex": 6
+          },
+          "device": {
+            "x": 381.84,
+            "y": 1293.44,
+            "width": 1300.32,
+            "height": 1688.73,
+            "rotation": 0,
+            "zIndex": 3
+          }
+        },
+        "textElements": [
+          {
+            "id": "i4-t1",
+            "text": {
+              "en": "no cloud",
+              "ru": "без облака"
+            },
+            "transform": {
+              "x": 123.84,
+              "y": 1155.84,
+              "width": 743.04,
+              "height": 204.34,
+              "rotation": -6,
+              "zIndex": 8
+            },
+            "fontSize": 93,
+            "color": "#272727",
+            "background": "rgba(255,255,255,0.92)",
+            "align": "center"
+          },
+          {
+            "id": "i4-t2",
+            "text": {
+              "en": "no account",
+              "ru": "без аккаунта"
+            },
+            "transform": {
+              "x": 1238.4,
+              "y": 1210.88,
+              "width": 825.6,
+              "height": 204.34,
+              "rotation": 5,
+              "zIndex": 8
+            },
+            "fontSize": 93,
+            "color": "#272727",
+            "background": "rgba(255,255,255,0.92)",
+            "align": "center"
+          }
+        ]
+      },
+      {
+        "id": "ipad-5",
+        "layout": "device-bottom",
+        "inverted": false,
+        "label": {
+          "en": "advanced mode",
+          "ru": "расширенный режим"
+        },
+        "headline": {
+          "en": "fine-tune\nevery detail",
+          "ru": "настройте\nкаждую деталь"
+        },
+        "highlight": {
+          "en": "every detail",
+          "ru": "каждую деталь"
+        },
+        "screenshot": "/screenshots/apple/ipad/{locale}/02-advanced.png",
+        "transforms": {
+          "caption": {
+            "x": 123.84,
+            "y": 151.36,
+            "width": 1816.32,
+            "height": 550.4,
+            "rotation": 0,
+            "zIndex": 6
+          },
+          "device": {
+            "x": 247.68,
+            "y": 743.04,
+            "width": 1444.8,
+            "height": 1876.36,
+            "rotation": -4,
+            "zIndex": 3
+          }
+        },
+        "textElements": [
+          {
+            "id": "i5-t1",
+            "text": {
+              "en": "EXIF",
+              "ru": "EXIF"
+            },
+            "transform": {
+              "x": 1360,
+              "y": 990.72,
+              "width": 620,
+              "height": 227.04,
+              "rotation": 8,
+              "zIndex": 8
+            },
+            "fontSize": 103,
+            "color": "#FFFFFF",
+            "background": "#FC3636",
+            "align": "center"
+          },
+          {
+            "id": "i5-t2",
+            "text": {
+              "en": "quality 60–95%",
+              "ru": "качество 60–95%"
+            },
+            "transform": {
+              "x": 1000,
+              "y": 1376,
+              "width": 1000,
+              "height": 190.71,
+              "rotation": -5,
+              "zIndex": 8
+            },
+            "fontSize": 87,
+            "color": "#272727",
+            "background": "#FFFFFF",
+            "align": "center"
+          },
+          {
+            "id": "i5-t3",
+            "text": {
+              "en": "1280–3840 px",
+              "ru": "1280–3840 px"
+            },
+            "transform": {
+              "x": 1080,
+              "y": 1761.28,
+              "width": 920,
+              "height": 190.71,
+              "rotation": 4,
+              "zIndex": 8
+            },
+            "fontSize": 87,
+            "color": "#272727",
+            "background": "#FFFFFF",
+            "align": "center"
+          }
+        ]
+      },
+      {
+        "id": "ipad-6",
+        "layout": "no-device",
+        "inverted": false,
+        "label": {
+          "en": "simple · private · free",
+          "ru": "просто · приватно · бесплатно"
+        },
+        "headline": {
+          "en": "everything you\nneed. nothing\nyou don’t",
+          "ru": "всё нужное.\nничего\nлишнего"
+        },
+        "highlight": {
+          "en": "nothing",
+          "ru": "ничего"
+        },
+        "screenshot": "",
+        "transforms": {
+          "caption": {
+            "x": 123.84,
+            "y": 192.64,
+            "width": 1816.32,
+            "height": 825.6,
+            "rotation": 0,
+            "zIndex": 6
+          }
+        },
+        "textElements": [
+          {
+            "id": "i6-t0",
+            "text": {
+              "en": "batch compression",
+              "ru": "пакетное сжатие"
+            },
+            "transform": {
+              "x": 82.56,
+              "y": 1100.8,
+              "width": 1032,
+              "height": 163.47,
+              "rotation": -4,
+              "zIndex": 8
+            },
+            "fontSize": 74,
+            "color": "#FFFFFF",
+            "background": "#FC3636",
+            "align": "center"
+          },
+          {
+            "id": "i6-t1",
+            "text": {
+              "en": "before & after",
+              "ru": "до и после"
+            },
+            "transform": {
+              "x": 949.44,
+              "y": 1100.8,
+              "width": 1032,
+              "height": 163.47,
+              "rotation": 3,
+              "zIndex": 8
+            },
+            "fontSize": 74,
+            "color": "#272727",
+            "background": "#FFFFFF",
+            "align": "center"
+          },
+          {
+            "id": "i6-t2",
+            "text": {
+              "en": "keeps EXIF",
+              "ru": "сохраняет EXIF"
+            },
+            "transform": {
+              "x": 82.56,
+              "y": 1334.72,
+              "width": 1032,
+              "height": 163.47,
+              "rotation": 2,
+              "zIndex": 8
+            },
+            "fontSize": 74,
+            "color": "#272727",
+            "background": "#FFFFFF",
+            "align": "center"
+          },
+          {
+            "id": "i6-t3",
+            "text": {
+              "en": "JPEG · PNG · HEIC",
+              "ru": "JPEG · PNG · HEIC"
+            },
+            "transform": {
+              "x": 949.44,
+              "y": 1334.72,
+              "width": 1032,
+              "height": 163.47,
+              "rotation": -3,
+              "zIndex": 8
+            },
+            "fontSize": 74,
+            "color": "#272727",
+            "background": "#FFFFFF",
+            "align": "center"
+          },
+          {
+            "id": "i6-t4",
+            "text": {
+              "en": "replace originals",
+              "ru": "замена оригиналов"
+            },
+            "transform": {
+              "x": 82.56,
+              "y": 1568.6399999999999,
+              "width": 1032,
+              "height": 163.47,
+              "rotation": -2,
+              "zIndex": 8
+            },
+            "fontSize": 74,
+            "color": "#272727",
+            "background": "#FFFFFF",
+            "align": "center"
+          },
+          {
+            "id": "i6-t5",
+            "text": {
+              "en": "save & share",
+              "ru": "сохранить и поделиться"
+            },
+            "transform": {
+              "x": 949.44,
+              "y": 1568.6399999999999,
+              "width": 1032,
+              "height": 163.47,
+              "rotation": 4,
+              "zIndex": 8
+            },
+            "fontSize": 74,
+            "color": "#272727",
+            "background": "#FFFFFF",
+            "align": "center"
+          },
+          {
+            "id": "i6-t6",
+            "text": {
+              "en": "dark mode",
+              "ru": "тёмная тема"
+            },
+            "transform": {
+              "x": 82.56,
+              "y": 1802.56,
+              "width": 1032,
+              "height": 163.47,
+              "rotation": 3,
+              "zIndex": 8
+            },
+            "fontSize": 74,
+            "color": "#272727",
+            "background": "#FFFFFF",
+            "align": "center"
+          },
+          {
+            "id": "i6-t7",
+            "text": {
+              "en": "open source",
+              "ru": "открытый код"
+            },
+            "transform": {
+              "x": 949.44,
+              "y": 1802.56,
+              "width": 1032,
+              "height": 163.47,
+              "rotation": -4,
+              "zIndex": 8
+            },
+            "fontSize": 74,
+            "color": "#FFFFFF",
+            "background": "#FC3636",
+            "align": "center"
+          }
+        ],
+        "imageElements": [
+          {
+            "id": "i6-i1",
+            "src": "/app-icon.png",
+            "radius": 127,
+            "border": 0,
+            "shadow": true,
+            "fit": "cover",
+            "transform": {
+              "x": 743.04,
+              "y": 2120,
+              "width": 577.92,
+              "height": 577.92,
+              "rotation": -6,
+              "zIndex": 7
+            }
+          }
+        ]
+      }
+    ],
+    "android": [
+      {
+        "id": "android-1",
+        "layout": "hero",
+        "inverted": false,
+        "label": {
+          "en": "free · no subscription",
+          "ru": "бесплатно · без подписки"
+        },
+        "headline": {
+          "en": "make your photos\nsmaller",
+          "ru": "сделайте фото\nлегче"
+        },
+        "highlight": {
+          "en": "smaller",
+          "ru": "легче"
+        },
+        "screenshot": "/screenshots/android/phone/{locale}/01-settings.png",
+        "transforms": {
+          "caption": {
+            "x": 64.8,
+            "y": 105.6,
+            "width": 950.4,
+            "height": 384,
+            "rotation": 0,
+            "zIndex": 6
+          },
+          "device": {
+            "x": 140.4,
+            "y": 480,
+            "width": 799.2,
+            "height": 1731.6,
+            "rotation": 0,
+            "zIndex": 3
+          }
+        },
+        "imageElements": [
+          {
+            "id": "a1-i1",
+            "src": "/photos/dog.jpg",
+            "radius": 26,
+            "border": 11,
+            "shadow": true,
+            "fit": "cover",
+            "transform": {
+              "x": -43.2,
+              "y": 729.6,
+              "width": 324,
+              "height": 243,
+              "rotation": -9,
+              "zIndex": 7
+            }
+          },
+          {
+            "id": "a1-i2",
+            "src": "/photos/beach.jpg",
+            "radius": 26,
+            "border": 11,
+            "shadow": true,
+            "fit": "cover",
+            "transform": {
+              "x": 790,
+              "y": 585,
+              "width": 324,
+              "height": 243,
+              "rotation": 8,
+              "zIndex": 7
+            }
+          }
+        ]
+      },
+      {
+        "id": "android-2",
+        "layout": "device-bottom",
+        "inverted": false,
+        "label": {
+          "en": "before & after",
+          "ru": "до и после"
+        },
+        "headline": {
+          "en": "same photo,\nlighter file",
+          "ru": "то же фото,\nменьше места"
+        },
+        "highlight": {
+          "en": "lighter file",
+          "ru": "меньше места"
+        },
+        "screenshot": "/screenshots/android/phone/{locale}/04-result.png",
+        "transforms": {
+          "caption": {
+            "x": 64.8,
+            "y": 105.6,
+            "width": 950.4,
+            "height": 384,
+            "rotation": 0,
+            "zIndex": 6
+          },
+          "device": {
+            "x": 222.05,
+            "y": 844.8,
+            "width": 635.9,
+            "height": 1377.79,
+            "rotation": 0,
+            "zIndex": 3
+          }
+        },
+        "imageElements": [
+          {
+            "id": "a2-i1",
+            "src": "/brand/compare-{locale}.png",
+            "radius": 50,
+            "border": 19,
+            "shadow": true,
+            "fit": "cover",
+            "transform": {
+              "x": 43.2,
+              "y": 451.2,
+              "width": 993.6,
+              "height": 745.2,
+              "rotation": -3,
+              "zIndex": 9
+            }
+          }
+        ]
+      },
+      {
+        "id": "android-3",
+        "layout": "device-top",
+        "inverted": false,
+        "label": {
+          "en": "batch compression",
+          "ru": "пакетное сжатие"
+        },
+        "headline": {
+          "en": "shrink them\nall at once",
+          "ru": "сжимайте\nвсё сразу"
+        },
+        "highlight": {
+          "en": "all at once",
+          "ru": "всё сразу"
+        },
+        "screenshot": "/screenshots/android/phone/{locale}/03-progress.png",
+        "transforms": {
+          "device": {
+            "x": 194.4,
+            "y": -90,
+            "width": 691.2,
+            "height": 1497.6,
+            "rotation": 0,
+            "zIndex": 3
+          },
+          "caption": {
+            "x": 64.8,
+            "y": 1488,
+            "width": 950.4,
+            "height": 384,
+            "rotation": 0,
+            "zIndex": 6
+          }
+        },
+        "imageElements": [
+          {
+            "id": "a3-i1",
+            "src": "/photos/birthday.jpg",
+            "radius": 28,
+            "border": 12,
+            "shadow": true,
+            "fit": "cover",
+            "transform": {
+              "x": -54,
+              "y": 960,
+              "width": 345.6,
+              "height": 259.2,
+              "rotation": -8,
+              "zIndex": 7
+            }
+          },
+          {
+            "id": "a3-i2",
+            "src": "/photos/mountains.jpg",
+            "radius": 28,
+            "border": 12,
+            "shadow": true,
+            "fit": "cover",
+            "transform": {
+              "x": 777.6,
+              "y": 1075.2,
+              "width": 345.6,
+              "height": 259.2,
+              "rotation": 7,
+              "zIndex": 7
+            }
+          }
+        ]
+      },
+      {
+        "id": "android-4",
+        "layout": "device-bottom",
+        "inverted": true,
+        "label": {
+          "en": "100% on-device",
+          "ru": "100% на устройстве"
+        },
+        "headline": {
+          "en": "your photos\nnever leave\nyour phone",
+          "ru": "ваши фото\nостаются\nв телефоне"
+        },
+        "highlight": {
+          "en": "never leave",
+          "ru": "остаются"
+        },
+        "screenshot": "/screenshots/android/phone/{locale}/09-result-dark.png",
+        "transforms": {
+          "caption": {
+            "x": 64.8,
+            "y": 105.6,
+            "width": 950.4,
+            "height": 537.6,
+            "rotation": 0,
+            "zIndex": 6
+          },
+          "device": {
+            "x": 228.96,
+            "y": 960,
+            "width": 622.08,
+            "height": 1347.84,
+            "rotation": 0,
+            "zIndex": 3
+          }
+        },
+        "textElements": [
+          {
+            "id": "a4-t1",
+            "text": {
+              "en": "no cloud",
+              "ru": "без облака"
+            },
+            "transform": {
+              "x": 0,
+              "y": 806.4,
+              "width": 388.8,
+              "height": 106.92,
+              "rotation": -6,
+              "zIndex": 8
+            },
+            "fontSize": 49,
+            "color": "#272727",
+            "background": "rgba(255,255,255,0.92)",
+            "align": "center"
+          },
+          {
+            "id": "a4-t2",
+            "text": {
+              "en": "no account",
+              "ru": "без аккаунта"
+            },
+            "transform": {
+              "x": 648,
+              "y": 854.4,
+              "width": 432,
+              "height": 106.92,
+              "rotation": 5,
+              "zIndex": 8
+            },
+            "fontSize": 49,
+            "color": "#272727",
+            "background": "rgba(255,255,255,0.92)",
+            "align": "center"
+          }
+        ]
+      },
+      {
+        "id": "android-5",
+        "layout": "device-bottom",
+        "inverted": false,
+        "label": {
+          "en": "advanced mode",
+          "ru": "расширенный режим"
+        },
+        "headline": {
+          "en": "fine-tune\nevery detail",
+          "ru": "настройте\nкаждую деталь"
+        },
+        "highlight": {
+          "en": "every detail",
+          "ru": "каждую деталь"
+        },
+        "screenshot": "/screenshots/android/phone/{locale}/02-advanced.png",
+        "transforms": {
+          "caption": {
+            "x": 64.8,
+            "y": 105.6,
+            "width": 950.4,
+            "height": 384,
+            "rotation": 0,
+            "zIndex": 6
+          },
+          "device": {
+            "x": 64.8,
+            "y": 518.4,
+            "width": 691.2,
+            "height": 1497.6,
+            "rotation": -4,
+            "zIndex": 3
+          }
+        },
+        "textElements": [
+          {
+            "id": "a5-t1",
+            "text": {
+              "en": "EXIF",
+              "ru": "EXIF"
+            },
+            "transform": {
+              "x": 691.2,
+              "y": 691.2,
+              "width": 345.6,
+              "height": 118.8,
+              "rotation": 8,
+              "zIndex": 8
+            },
+            "fontSize": 54,
+            "color": "#FFFFFF",
+            "background": "#FC3636",
+            "align": "center"
+          },
+          {
+            "id": "a5-t2",
+            "text": {
+              "en": "quality 60–95%",
+              "ru": "качество 60–95%"
+            },
+            "transform": {
+              "x": 540,
+              "y": 960,
+              "width": 518.4,
+              "height": 99.79,
+              "rotation": -5,
+              "zIndex": 8
+            },
+            "fontSize": 45,
+            "color": "#272727",
+            "background": "#FFFFFF",
+            "align": "center"
+          },
+          {
+            "id": "a5-t3",
+            "text": {
+              "en": "1280–3840 px",
+              "ru": "1280–3840 px"
+            },
+            "transform": {
+              "x": 518.4,
+              "y": 1228.8,
+              "width": 540,
+              "height": 99.79,
+              "rotation": 4,
+              "zIndex": 8
+            },
+            "fontSize": 45,
+            "color": "#272727",
+            "background": "#FFFFFF",
+            "align": "center"
+          }
+        ]
+      },
+      {
+        "id": "android-6",
+        "layout": "no-device",
+        "inverted": false,
+        "label": {
+          "en": "simple · private · free",
+          "ru": "просто · приватно · бесплатно"
+        },
+        "headline": {
+          "en": "everything you\nneed. nothing\nyou don’t",
+          "ru": "всё нужное.\nничего\nлишнего"
+        },
+        "highlight": {
+          "en": "nothing",
+          "ru": "ничего"
+        },
+        "screenshot": "",
+        "transforms": {
+          "caption": {
+            "x": 64.8,
+            "y": 134.4,
+            "width": 950.4,
+            "height": 576,
+            "rotation": 0,
+            "zIndex": 6
+          }
+        },
+        "textElements": [
+          {
+            "id": "a6-t0",
+            "text": {
+              "en": "batch compression",
+              "ru": "пакетное сжатие"
+            },
+            "transform": {
+              "x": 43.2,
+              "y": 768,
+              "width": 540,
+              "height": 95.04,
+              "rotation": -4,
+              "zIndex": 8
+            },
+            "fontSize": 43,
+            "color": "#FFFFFF",
+            "background": "#FC3636",
+            "align": "center"
+          },
+          {
+            "id": "a6-t1",
+            "text": {
+              "en": "before & after",
+              "ru": "до и после"
+            },
+            "transform": {
+              "x": 496.8,
+              "y": 768,
+              "width": 540,
+              "height": 95.04,
+              "rotation": 3,
+              "zIndex": 8
+            },
+            "fontSize": 43,
+            "color": "#272727",
+            "background": "#FFFFFF",
+            "align": "center"
+          },
+          {
+            "id": "a6-t2",
+            "text": {
+              "en": "keeps EXIF",
+              "ru": "сохраняет EXIF"
+            },
+            "transform": {
+              "x": 43.2,
+              "y": 912,
+              "width": 540,
+              "height": 95.04,
+              "rotation": 2,
+              "zIndex": 8
+            },
+            "fontSize": 43,
+            "color": "#272727",
+            "background": "#FFFFFF",
+            "align": "center"
+          },
+          {
+            "id": "a6-t3",
+            "text": {
+              "en": "JPEG · PNG",
+              "ru": "JPEG · PNG"
+            },
+            "transform": {
+              "x": 496.8,
+              "y": 912,
+              "width": 540,
+              "height": 95.04,
+              "rotation": -3,
+              "zIndex": 8
+            },
+            "fontSize": 43,
+            "color": "#272727",
+            "background": "#FFFFFF",
+            "align": "center"
+          },
+          {
+            "id": "a6-t4",
+            "text": {
+              "en": "replace originals",
+              "ru": "замена оригиналов"
+            },
+            "transform": {
+              "x": 43.2,
+              "y": 1056,
+              "width": 540,
+              "height": 95.04,
+              "rotation": -2,
+              "zIndex": 8
+            },
+            "fontSize": 43,
+            "color": "#272727",
+            "background": "#FFFFFF",
+            "align": "center"
+          },
+          {
+            "id": "a6-t5",
+            "text": {
+              "en": "save & share",
+              "ru": "сохранить и поделиться"
+            },
+            "transform": {
+              "x": 496.8,
+              "y": 1056,
+              "width": 540,
+              "height": 95.04,
+              "rotation": 4,
+              "zIndex": 8
+            },
+            "fontSize": 43,
+            "color": "#272727",
+            "background": "#FFFFFF",
+            "align": "center"
+          },
+          {
+            "id": "a6-t6",
+            "text": {
+              "en": "dark mode",
+              "ru": "тёмная тема"
+            },
+            "transform": {
+              "x": 43.2,
+              "y": 1200,
+              "width": 540,
+              "height": 95.04,
+              "rotation": 3,
+              "zIndex": 8
+            },
+            "fontSize": 43,
+            "color": "#272727",
+            "background": "#FFFFFF",
+            "align": "center"
+          },
+          {
+            "id": "a6-t7",
+            "text": {
+              "en": "open source",
+              "ru": "открытый код"
+            },
+            "transform": {
+              "x": 496.8,
+              "y": 1200,
+              "width": 540,
+              "height": 95.04,
+              "rotation": -4,
+              "zIndex": 8
+            },
+            "fontSize": 43,
+            "color": "#FFFFFF",
+            "background": "#FC3636",
+            "align": "center"
+          }
+        ],
+        "imageElements": [
+          {
+            "id": "a6-i1",
+            "src": "/app-icon.png",
+            "radius": 67,
+            "border": 0,
+            "shadow": true,
+            "fit": "cover",
+            "transform": {
+              "x": 388.8,
+              "y": 1459.2,
+              "width": 302.4,
+              "height": 302.4,
+              "rotation": -6,
+              "zIndex": 7
+            }
+          }
+        ]
+      }
+    ],
+    "android-7": [],
+    "android-10": [],
+    "feature-graphic": [
+      {
+        "id": "play",
+        "layout": "feature-graphic",
+        "label": {},
+        "headline": {
+          "en": "Lighter photos.\nMoments stay.",
+          "ru": "Фото легче.\nМоменты те же."
+        },
+        "screenshot": ""
+      }
+    ],
+    "duo-outer": [
+      {
+        "id": "duo-outer-1",
+        "layout": "hero",
+        "inverted": false,
+        "label": {
+          "en": "free · no subscription"
+        },
+        "headline": {
+          "en": "make your photos\nsmaller"
+        },
+        "highlight": {
+          "en": "smaller"
+        },
+        "screenshot": "/screenshots/apple/duo-outer/en/01-settings.png",
+        "transforms": {
+          "caption": {
+            "x": 83.88,
+            "y": 101.7,
+            "width": 1230.24,
+            "height": 406.8,
+            "zIndex": 6
+          },
+          "device": {
+            "x": 209.70000000000005,
+            "y": 589.86,
+            "width": 978.5999999999999,
+            "height": 1364.071410419314,
+            "rotation": 0,
+            "zIndex": 3
+          }
+        },
+        "imageElements": [
+          {
+            "id": "i1-i1",
+            "src": "/photos/dog.jpg",
+            "radius": 24,
+            "border": 11,
+            "shadow": true,
+            "fit": "cover",
+            "transform": {
+              "x": 27.96,
+              "y": 772.92,
+              "width": 307.56,
+              "height": 251.71,
+              "rotation": -9,
+              "zIndex": 7
+            }
+          },
+          {
+            "id": "i1-i2",
+            "src": "/photos/beach.jpg",
+            "radius": 24,
+            "border": 11,
+            "shadow": true,
+            "fit": "cover",
+            "transform": {
+              "x": 1104.42,
+              "y": 1464.48,
+              "width": 251.64,
+              "height": 188.73000000000002,
+              "rotation": 8,
+              "zIndex": 7
+            }
+          }
+        ]
+      },
+      {
+        "id": "duo-outer-2",
+        "layout": "device-bottom",
+        "inverted": false,
+        "label": {
+          "en": "before & after"
+        },
+        "headline": {
+          "en": "same photo,\nlighter file"
+        },
+        "highlight": {
+          "en": "lighter file"
+        },
+        "screenshot": "/screenshots/apple/duo-outer/en/04-result.png",
+        "transforms": {
+          "caption": {
+            "x": 83.88,
+            "y": 101.7,
+            "width": 1230.24,
+            "height": 406.8,
+            "zIndex": 6
+          },
+          "device": {
+            "x": 237.65999999999997,
+            "y": 589.86,
+            "width": 922.6800000000001,
+            "height": 1286.1244726810676,
+            "rotation": 0,
+            "zIndex": 3
+          }
+        },
+        "imageElements": [
+          {
+            "id": "i2-i1",
+            "src": "/brand/compare-en.png",
+            "radius": 56,
+            "border": 25,
+            "shadow": true,
+            "fit": "cover",
+            "transform": {
+              "x": 48.93000000000001,
+              "y": 1281.42,
+              "width": 615.12,
+              "height": 461.34000000000003,
+              "rotation": -5,
+              "zIndex": 9
+            }
+          }
+        ]
+      },
+      {
+        "id": "duo-outer-3",
+        "layout": "device-top",
+        "inverted": false,
+        "label": {
+          "en": "batch compression"
+        },
+        "headline": {
+          "en": "shrink them\nall at once"
+        },
+        "highlight": {
+          "en": "all at once"
+        },
+        "screenshot": "/screenshots/apple/duo-outer/en/03-progress.png",
+        "transforms": {
+          "device": {
+            "x": 209.70000000000005,
+            "y": 589.86,
+            "width": 978.5999999999999,
+            "height": 1364.071410419314,
+            "rotation": 0,
+            "zIndex": 3
+          },
+          "caption": {
+            "x": 83.88,
+            "y": 101.7,
+            "width": 1230.24,
+            "height": 406.8,
+            "zIndex": 6
+          }
+        },
+        "imageElements": [
+          {
+            "id": "i3-i1",
+            "src": "/photos/birthday.jpg",
+            "radius": 27,
+            "border": 12,
+            "shadow": true,
+            "fit": "cover",
+            "transform": {
+              "x": 34.95,
+              "y": 1301.76,
+              "width": 307.56,
+              "height": 230.67000000000002,
+              "rotation": -8,
+              "zIndex": 7
+            }
+          },
+          {
+            "id": "i3-i2",
+            "src": "/photos/mountains.jpg",
+            "radius": 27,
+            "border": 12,
+            "shadow": true,
+            "fit": "cover",
+            "transform": {
+              "x": 1062.48,
+              "y": 1464.48,
+              "width": 307.56,
+              "height": 230.67000000000002,
+              "rotation": 7,
+              "zIndex": 7
+            }
+          }
+        ]
+      },
+      {
+        "id": "duo-outer-4",
+        "layout": "device-bottom",
+        "inverted": true,
+        "label": {
+          "en": "100% on-device"
+        },
+        "headline": {
+          "en": "your photos\nnever leave\nyour phone"
+        },
+        "highlight": {
+          "en": "never leave"
+        },
+        "screenshot": "/screenshots/apple/duo-outer/en/09-result-dark.png",
+        "transforms": {
+          "caption": {
+            "x": 83.88,
+            "y": 101.7,
+            "width": 1230.24,
+            "height": 508.5,
+            "zIndex": 6
+          },
+          "device": {
+            "x": 237.65999999999997,
+            "y": 589.86,
+            "width": 922.6800000000001,
+            "height": 1286.1244726810676,
+            "rotation": 0,
+            "zIndex": 3
+          }
+        },
+        "textElements": [
+          {
+            "id": "i4-t1",
+            "text": {
+              "en": "no cloud"
+            },
+            "transform": {
+              "x": 48.93000000000001,
+              "y": 1545.84,
+              "width": 419.4,
+              "height": 132.21,
+              "rotation": -6,
+              "zIndex": 8
+            },
+            "fontSize": 53,
+            "color": "#272727",
+            "background": "rgba(255,255,255,0.92)",
+            "align": "center"
+          },
+          {
+            "id": "i4-t2",
+            "text": {
+              "en": "no account"
+            },
+            "transform": {
+              "x": 922.6800000000001,
+              "y": 1423.8,
+              "width": 419.4,
+              "height": 132.21,
+              "rotation": 5,
+              "zIndex": 8
+            },
+            "fontSize": 53,
+            "color": "#272727",
+            "background": "rgba(255,255,255,0.92)",
+            "align": "center"
+          }
+        ]
+      },
+      {
+        "id": "duo-outer-5",
+        "layout": "device-bottom",
+        "inverted": false,
+        "label": {
+          "en": "advanced mode"
+        },
+        "headline": {
+          "en": "fine-tune\nevery detail"
+        },
+        "highlight": {
+          "en": "every detail"
+        },
+        "screenshot": "/screenshots/apple/duo-outer/en/02-advanced.png",
+        "transforms": {
+          "caption": {
+            "x": 83.88,
+            "y": 101.7,
+            "width": 1230.24,
+            "height": 406.8,
+            "zIndex": 6
+          },
+          "device": {
+            "x": 237.65999999999997,
+            "y": 589.86,
+            "width": 922.6800000000001,
+            "height": 1286.1244726810676,
+            "rotation": 0,
+            "zIndex": 3
+          }
+        },
+        "textElements": [
+          {
+            "id": "i5-t1",
+            "text": {
+              "en": "EXIF"
+            },
+            "transform": {
+              "x": 950.6400000000001,
+              "y": 894.96,
+              "width": 419.4,
+              "height": 117.97200000000001,
+              "rotation": 8,
+              "zIndex": 8
+            },
+            "fontSize": 42,
+            "color": "#FFFFFF",
+            "background": "#FC3636",
+            "align": "center"
+          },
+          {
+            "id": "i5-t2",
+            "text": {
+              "en": "quality 60–95%"
+            },
+            "transform": {
+              "x": 950.6400000000001,
+              "y": 1179.7200000000003,
+              "width": 419.4,
+              "height": 117.97200000000001,
+              "rotation": -5,
+              "zIndex": 8
+            },
+            "fontSize": 42,
+            "color": "#272727",
+            "background": "#FFFFFF",
+            "align": "center"
+          },
+          {
+            "id": "i5-t3",
+            "text": {
+              "en": "1280–3840 px"
+            },
+            "transform": {
+              "x": 950.6400000000001,
+              "y": 1464.48,
+              "width": 419.4,
+              "height": 117.97200000000001,
+              "rotation": 4,
+              "zIndex": 8
+            },
+            "fontSize": 42,
+            "color": "#272727",
+            "background": "#FFFFFF",
+            "align": "center"
+          }
+        ]
+      },
+      {
+        "id": "duo-outer-6",
+        "layout": "no-device",
+        "inverted": false,
+        "label": {
+          "en": "simple · private · free"
+        },
+        "headline": {
+          "en": "everything you\nneed. nothing\nyou don’t"
+        },
+        "highlight": {
+          "en": "nothing"
+        },
+        "screenshot": "",
+        "transforms": {
+          "caption": {
+            "x": 83.88,
+            "y": 142.38,
+            "width": 1230.24,
+            "height": 610.2,
+            "rotation": 0,
+            "zIndex": 6
+          }
+        },
+        "textElements": [
+          {
+            "id": "i6-t0",
+            "text": {
+              "en": "batch compression"
+            },
+            "transform": {
+              "x": 55.92,
+              "y": 813.6,
+              "width": 699.0,
+              "height": 120.82,
+              "rotation": -4,
+              "zIndex": 8
+            },
+            "fontSize": 50,
+            "color": "#FFFFFF",
+            "background": "#FC3636",
+            "align": "center"
+          },
+          {
+            "id": "i6-t1",
+            "text": {
+              "en": "before & after"
+            },
+            "transform": {
+              "x": 643.08,
+              "y": 813.6,
+              "width": 699.0,
+              "height": 120.82,
+              "rotation": 3,
+              "zIndex": 8
+            },
+            "fontSize": 50,
+            "color": "#272727",
+            "background": "#FFFFFF",
+            "align": "center"
+          },
+          {
+            "id": "i6-t2",
+            "text": {
+              "en": "keeps EXIF"
+            },
+            "transform": {
+              "x": 55.92,
+              "y": 986.49,
+              "width": 699.0,
+              "height": 120.82,
+              "rotation": 2,
+              "zIndex": 8
+            },
+            "fontSize": 50,
+            "color": "#272727",
+            "background": "#FFFFFF",
+            "align": "center"
+          },
+          {
+            "id": "i6-t3",
+            "text": {
+              "en": "JPEG · PNG · HEIC"
+            },
+            "transform": {
+              "x": 643.08,
+              "y": 986.49,
+              "width": 699.0,
+              "height": 120.82,
+              "rotation": -3,
+              "zIndex": 8
+            },
+            "fontSize": 50,
+            "color": "#272727",
+            "background": "#FFFFFF",
+            "align": "center"
+          },
+          {
+            "id": "i6-t4",
+            "text": {
+              "en": "replace originals"
+            },
+            "transform": {
+              "x": 55.92,
+              "y": 1159.38,
+              "width": 699.0,
+              "height": 120.82,
+              "rotation": -2,
+              "zIndex": 8
+            },
+            "fontSize": 50,
+            "color": "#272727",
+            "background": "#FFFFFF",
+            "align": "center"
+          },
+          {
+            "id": "i6-t5",
+            "text": {
+              "en": "save & share"
+            },
+            "transform": {
+              "x": 643.08,
+              "y": 1159.38,
+              "width": 699.0,
+              "height": 120.82,
+              "rotation": 4,
+              "zIndex": 8
+            },
+            "fontSize": 50,
+            "color": "#272727",
+            "background": "#FFFFFF",
+            "align": "center"
+          },
+          {
+            "id": "i6-t6",
+            "text": {
+              "en": "dark mode"
+            },
+            "transform": {
+              "x": 55.92,
+              "y": 1332.27,
+              "width": 699.0,
+              "height": 120.82,
+              "rotation": 3,
+              "zIndex": 8
+            },
+            "fontSize": 50,
+            "color": "#272727",
+            "background": "#FFFFFF",
+            "align": "center"
+          },
+          {
+            "id": "i6-t7",
+            "text": {
+              "en": "open source"
+            },
+            "transform": {
+              "x": 643.08,
+              "y": 1332.27,
+              "width": 699.0,
+              "height": 120.82,
+              "rotation": -4,
+              "zIndex": 8
+            },
+            "fontSize": 50,
+            "color": "#FFFFFF",
+            "background": "#FC3636",
+            "align": "center"
+          }
+        ],
+        "imageElements": [
+          {
+            "id": "i6-i1",
+            "src": "/app-icon.png",
+            "radius": 86,
+            "border": 0,
+            "shadow": true,
+            "fit": "cover",
+            "transform": {
+              "x": 503.28,
+              "y": 1566.89,
+              "width": 391.44,
+              "height": 427.14,
+              "rotation": -6,
+              "zIndex": 7
+            }
+          }
+        ]
+      }
+    ],
+    "duo-inner": [
+      {
+        "id": "duo-inner-1",
+        "layout": "hero",
+        "inverted": false,
+        "label": {
+          "en": "free · no subscription"
+        },
+        "headline": {
+          "en": "make your photos\nsmaller"
+        },
+        "highlight": {
+          "en": "smaller"
+        },
+        "screenshot": "/screenshots/apple/duo-inner/en/01-settings.png",
+        "transforms": {
+          "caption": {
+            "x": 120.42,
+            "y": 142.65,
+            "width": 1766.16,
+            "height": 570.6,
+            "zIndex": 6
+          },
+          "device": {
+            "x": 301.05000000000007,
+            "y": 827.3699999999999,
+            "width": 1404.8999999999999,
+            "height": 1933.8476635514016,
+            "rotation": 0,
+            "zIndex": 3
+          }
+        },
+        "imageElements": [
+          {
+            "id": "i1-i1",
+            "src": "/photos/dog.jpg",
+            "radius": 35,
+            "border": 16,
+            "shadow": true,
+            "fit": "cover",
+            "transform": {
+              "x": 40.14,
+              "y": 1084.14,
+              "width": 441.54,
+              "height": 353.06,
+              "rotation": -9,
+              "zIndex": 7
+            }
+          },
+          {
+            "id": "i1-i2",
+            "src": "/photos/beach.jpg",
+            "radius": 35,
+            "border": 16,
+            "shadow": true,
+            "fit": "cover",
+            "transform": {
+              "x": 1585.53,
+              "y": 2054.16,
+              "width": 361.26,
+              "height": 270.945,
+              "rotation": 8,
+              "zIndex": 7
+            }
+          }
+        ]
+      },
+      {
+        "id": "duo-inner-2",
+        "layout": "device-bottom",
+        "inverted": false,
+        "label": {
+          "en": "before & after"
+        },
+        "headline": {
+          "en": "same photo,\nlighter file"
+        },
+        "highlight": {
+          "en": "lighter file"
+        },
+        "screenshot": "/screenshots/apple/duo-inner/en/04-result.png",
+        "transforms": {
+          "caption": {
+            "x": 120.42,
+            "y": 142.65,
+            "width": 1766.16,
+            "height": 570.6,
+            "zIndex": 6
+          },
+          "device": {
+            "x": 341.18999999999994,
+            "y": 827.3699999999999,
+            "width": 1324.6200000000001,
+            "height": 1823.342082777036,
+            "rotation": 0,
+            "zIndex": 3
+          }
+        },
+        "imageElements": [
+          {
+            "id": "i2-i1",
+            "src": "/brand/compare-en.png",
+            "radius": 81,
+            "border": 36,
+            "shadow": true,
+            "fit": "cover",
+            "transform": {
+              "x": 70.245,
+              "y": 1797.39,
+              "width": 883.08,
+              "height": 662.3100000000001,
+              "rotation": -5,
+              "zIndex": 9
+            }
+          }
+        ]
+      },
+      {
+        "id": "duo-inner-3",
+        "layout": "device-top",
+        "inverted": false,
+        "label": {
+          "en": "batch compression"
+        },
+        "headline": {
+          "en": "shrink them\nall at once"
+        },
+        "highlight": {
+          "en": "all at once"
+        },
+        "screenshot": "/screenshots/apple/duo-inner/en/03-progress.png",
+        "transforms": {
+          "device": {
+            "x": 301.05000000000007,
+            "y": 827.3699999999999,
+            "width": 1404.8999999999999,
+            "height": 1933.8476635514016,
+            "rotation": 0,
+            "zIndex": 3
+          },
+          "caption": {
+            "x": 120.42,
+            "y": 142.65,
+            "width": 1766.16,
+            "height": 570.6,
+            "zIndex": 6
+          }
+        },
+        "imageElements": [
+          {
+            "id": "i3-i1",
+            "src": "/photos/birthday.jpg",
+            "radius": 39,
+            "border": 17,
+            "shadow": true,
+            "fit": "cover",
+            "transform": {
+              "x": 50.175000000000004,
+              "y": 1825.92,
+              "width": 441.54,
+              "height": 331.15500000000003,
+              "rotation": -8,
+              "zIndex": 7
+            }
+          },
+          {
+            "id": "i3-i2",
+            "src": "/photos/mountains.jpg",
+            "radius": 39,
+            "border": 17,
+            "shadow": true,
+            "fit": "cover",
+            "transform": {
+              "x": 1525.32,
+              "y": 2054.16,
+              "width": 441.54,
+              "height": 331.15500000000003,
+              "rotation": 7,
+              "zIndex": 7
+            }
+          }
+        ]
+      },
+      {
+        "id": "duo-inner-4",
+        "layout": "device-bottom",
+        "inverted": true,
+        "label": {
+          "en": "100% on-device"
+        },
+        "headline": {
+          "en": "your photos\nnever leave\nyour phone"
+        },
+        "highlight": {
+          "en": "never leave"
+        },
+        "screenshot": "/screenshots/apple/duo-inner/en/09-result-dark.png",
+        "transforms": {
+          "caption": {
+            "x": 120.42,
+            "y": 142.65,
+            "width": 1766.16,
+            "height": 713.25,
+            "zIndex": 6
+          },
+          "device": {
+            "x": 341.18999999999994,
+            "y": 827.3699999999999,
+            "width": 1324.6200000000001,
+            "height": 1823.342082777036,
+            "rotation": 0,
+            "zIndex": 3
+          }
+        },
+        "textElements": [
+          {
+            "id": "i4-t1",
+            "text": {
+              "en": "no cloud"
+            },
+            "transform": {
+              "x": 70.245,
+              "y": 2168.28,
+              "width": 602.1,
+              "height": 185.445,
+              "rotation": -6,
+              "zIndex": 8
+            },
+            "fontSize": 76,
+            "color": "#272727",
+            "background": "rgba(255,255,255,0.92)",
+            "align": "center"
+          },
+          {
+            "id": "i4-t2",
+            "text": {
+              "en": "no account"
+            },
+            "transform": {
+              "x": 1324.6200000000001,
+              "y": 1997.1,
+              "width": 602.1,
+              "height": 185.445,
+              "rotation": 5,
+              "zIndex": 8
+            },
+            "fontSize": 76,
+            "color": "#272727",
+            "background": "rgba(255,255,255,0.92)",
+            "align": "center"
+          }
+        ]
+      },
+      {
+        "id": "duo-inner-5",
+        "layout": "device-bottom",
+        "inverted": false,
+        "label": {
+          "en": "advanced mode"
+        },
+        "headline": {
+          "en": "fine-tune\nevery detail"
+        },
+        "highlight": {
+          "en": "every detail"
+        },
+        "screenshot": "/screenshots/apple/duo-inner/en/02-advanced.png",
+        "transforms": {
+          "caption": {
+            "x": 120.42,
+            "y": 142.65,
+            "width": 1766.16,
+            "height": 570.6,
+            "zIndex": 6
+          },
+          "device": {
+            "x": 341.18999999999994,
+            "y": 827.3699999999999,
+            "width": 1324.6200000000001,
+            "height": 1823.342082777036,
+            "rotation": 0,
+            "zIndex": 3
+          }
+        },
+        "textElements": [
+          {
+            "id": "i5-t1",
+            "text": {
+              "en": "EXIF"
+            },
+            "transform": {
+              "x": 1364.76,
+              "y": 1255.32,
+              "width": 602.1,
+              "height": 165.47400000000002,
+              "rotation": 8,
+              "zIndex": 8
+            },
+            "fontSize": 60,
+            "color": "#FFFFFF",
+            "background": "#FC3636",
+            "align": "center"
+          },
+          {
+            "id": "i5-t2",
+            "text": {
+              "en": "quality 60–95%"
+            },
+            "transform": {
+              "x": 1364.76,
+              "y": 1654.7400000000002,
+              "width": 602.1,
+              "height": 165.47400000000002,
+              "rotation": -5,
+              "zIndex": 8
+            },
+            "fontSize": 60,
+            "color": "#272727",
+            "background": "#FFFFFF",
+            "align": "center"
+          },
+          {
+            "id": "i5-t3",
+            "text": {
+              "en": "1280–3840 px"
+            },
+            "transform": {
+              "x": 1364.76,
+              "y": 2054.16,
+              "width": 602.1,
+              "height": 165.47400000000002,
+              "rotation": 4,
+              "zIndex": 8
+            },
+            "fontSize": 60,
+            "color": "#272727",
+            "background": "#FFFFFF",
+            "align": "center"
+          }
+        ]
+      },
+      {
+        "id": "duo-inner-6",
+        "layout": "no-device",
+        "inverted": false,
+        "label": {
+          "en": "simple · private · free"
+        },
+        "headline": {
+          "en": "everything you\nneed. nothing\nyou don’t"
+        },
+        "highlight": {
+          "en": "nothing"
+        },
+        "screenshot": "",
+        "transforms": {
+          "caption": {
+            "x": 120.42,
+            "y": 199.71,
+            "width": 1766.16,
+            "height": 855.9,
+            "rotation": 0,
+            "zIndex": 6
+          }
+        },
+        "textElements": [
+          {
+            "id": "i6-t0",
+            "text": {
+              "en": "batch compression"
+            },
+            "transform": {
+              "x": 80.28,
+              "y": 1141.2,
+              "width": 1003.5,
+              "height": 169.47,
+              "rotation": -4,
+              "zIndex": 8
+            },
+            "fontSize": 72,
+            "color": "#FFFFFF",
+            "background": "#FC3636",
+            "align": "center"
+          },
+          {
+            "id": "i6-t1",
+            "text": {
+              "en": "before & after"
+            },
+            "transform": {
+              "x": 923.22,
+              "y": 1141.2,
+              "width": 1003.5,
+              "height": 169.47,
+              "rotation": 3,
+              "zIndex": 8
+            },
+            "fontSize": 72,
+            "color": "#272727",
+            "background": "#FFFFFF",
+            "align": "center"
+          },
+          {
+            "id": "i6-t2",
+            "text": {
+              "en": "keeps EXIF"
+            },
+            "transform": {
+              "x": 80.28,
+              "y": 1383.71,
+              "width": 1003.5,
+              "height": 169.47,
+              "rotation": 2,
+              "zIndex": 8
+            },
+            "fontSize": 72,
+            "color": "#272727",
+            "background": "#FFFFFF",
+            "align": "center"
+          },
+          {
+            "id": "i6-t3",
+            "text": {
+              "en": "JPEG · PNG · HEIC"
+            },
+            "transform": {
+              "x": 923.22,
+              "y": 1383.71,
+              "width": 1003.5,
+              "height": 169.47,
+              "rotation": -3,
+              "zIndex": 8
+            },
+            "fontSize": 72,
+            "color": "#272727",
+            "background": "#FFFFFF",
+            "align": "center"
+          },
+          {
+            "id": "i6-t4",
+            "text": {
+              "en": "replace originals"
+            },
+            "transform": {
+              "x": 80.28,
+              "y": 1626.21,
+              "width": 1003.5,
+              "height": 169.47,
+              "rotation": -2,
+              "zIndex": 8
+            },
+            "fontSize": 72,
+            "color": "#272727",
+            "background": "#FFFFFF",
+            "align": "center"
+          },
+          {
+            "id": "i6-t5",
+            "text": {
+              "en": "save & share"
+            },
+            "transform": {
+              "x": 923.22,
+              "y": 1626.21,
+              "width": 1003.5,
+              "height": 169.47,
+              "rotation": 4,
+              "zIndex": 8
+            },
+            "fontSize": 72,
+            "color": "#272727",
+            "background": "#FFFFFF",
+            "align": "center"
+          },
+          {
+            "id": "i6-t6",
+            "text": {
+              "en": "dark mode"
+            },
+            "transform": {
+              "x": 80.28,
+              "y": 1868.71,
+              "width": 1003.5,
+              "height": 169.47,
+              "rotation": 3,
+              "zIndex": 8
+            },
+            "fontSize": 72,
+            "color": "#272727",
+            "background": "#FFFFFF",
+            "align": "center"
+          },
+          {
+            "id": "i6-t7",
+            "text": {
+              "en": "open source"
+            },
+            "transform": {
+              "x": 923.22,
+              "y": 1868.71,
+              "width": 1003.5,
+              "height": 169.47,
+              "rotation": -4,
+              "zIndex": 8
+            },
+            "fontSize": 72,
+            "color": "#FFFFFF",
+            "background": "#FC3636",
+            "align": "center"
+          }
+        ],
+        "imageElements": [
+          {
+            "id": "i6-i1",
+            "src": "/app-icon.png",
+            "radius": 123,
+            "border": 0,
+            "shadow": true,
+            "fit": "cover",
+            "transform": {
+              "x": 722.52,
+              "y": 2197.81,
+              "width": 561.96,
+              "height": 599.13,
+              "rotation": -6,
+              "zIndex": 7
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
