@@ -19,11 +19,6 @@ No cloud upload. No subscription. Your photos stay yours.
 - Batch compression with progress and cancellation
 - Before-and-after comparison
 - Save and share compressed photos
-- English and Russian localization
-
-## Store assets
-
-Local screenshot editor, capture/export steps and previews: [store_screenshots/README.md](store_screenshots/README.md). Local App Store metadata workflow: [ASC.md](ASC.md).
 
 ## Native compression pipeline
 
@@ -64,9 +59,7 @@ HEIC/HEIF sources; Android writes them as JPEG.
 
 ## Credits
 
-Photo compression is powered by [flutter_image_compress](https://pub.dev/packages/flutter_image_compress). Respect and thanks to its maintainers and contributors.
-
-
+- Photo compression is powered by [flutter_image_compress](https://pub.dev/packages/flutter_image_compress). Respect and thanks to its maintainers and contributors.
 - Store screenshot editor: [app-store-screenshots](https://github.com/ParthJadhav/app-store-screenshots) by [Parth Jadhav](https://x.com/parthjadhav8).
 - Local metadata workflow: [asc-metadata-sync](https://github.com/rorkai/app-store-connect-cli-skills/tree/main/skills/asc-metadata-sync) and [App Store Connect CLI](https://github.com/rorkai/App-Store-Connect-CLI) by [Rudrank Riyam](https://x.com/rudrank).
 
