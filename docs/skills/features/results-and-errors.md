@@ -9,6 +9,8 @@ share.
 - **VS:** split original/compressed image with pan and zoom
 - **Save:** Android saves a new gallery photo directly. iOS offers save as new,
   preserve the original gallery metadata, or save then request original deletion.
+  Save as new sets the current date, so the copy lands at the end of the library
+  even when EXIF keeps the capture date.
 - **Share:** open system share UI for successful image files
 - **Try again:** rerun the current batch after no useful result
 - **Exit:** confirm if successful results remain unsaved. Keep imported sources,
