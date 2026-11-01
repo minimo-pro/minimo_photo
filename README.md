@@ -11,6 +11,12 @@ No cloud upload. No subscription. Your photos stay yours.
 
 ![minimo (photo) store preview](docs/images/store-preview.png)
 
+<div align="center">
+
+Also available: [minimo (video)](https://github.com/minimo-pro/minimo_video), for compressing videos on your device.
+
+</div>
+
 ## Features
 
 - Simple quality presets: high, medium, low
