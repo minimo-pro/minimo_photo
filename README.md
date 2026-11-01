@@ -1,8 +1,7 @@
 <div align="center">
 
 
-<!-- TODO: Add store links after release. -->
-![App Store](https://img.shields.io/badge/App_Store-414141?style=for-the-badge&logo=apple&logoColor=F1F1F1) ![Google Play](https://img.shields.io/badge/Google_Play-414141?style=for-the-badge&logo=googleplay&logoColor=F1F1F1) [![Website](https://img.shields.io/badge/Website-414141?style=for-the-badge)](https://minimo-photo.vercel.app)
+[![App Store](https://img.shields.io/badge/App_Store-414141?style=for-the-badge&logo=apple&logoColor=F1F1F1)](https://apps.apple.com/us/app/minimo-photo-compressor/id6822256099) [![Google Play](https://img.shields.io/badge/Google_Play-414141?style=for-the-badge&logo=googleplay&logoColor=F1F1F1)](https://play.google.com/store/apps/details?id=com.khlebobul.minimo_photo) [![Website](https://img.shields.io/badge/Website-414141?style=for-the-badge)](https://minimo-photo.vercel.app/)
 
 minimo (photo) is a free mobile app for shrinking photos directly on your device.
 No cloud upload. No subscription. Your photos stay yours.
