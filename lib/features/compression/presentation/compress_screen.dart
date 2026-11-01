@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -152,7 +153,8 @@ class _CompressViewState extends State<_CompressView> {
           );
           context.read<CompressBloc>().add(const CompressMessagesCleared());
         }
-        if (state.status == CompressStatus.done &&
+        if (Platform.isIOS &&
+            state.status == CompressStatus.done &&
             _reviewedRun != state.compressionRunId) {
           _reviewedRun = state.compressionRunId;
           unawaited(

@@ -46,6 +46,8 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
         self.deleteOriginals(call.arguments as? [String] ?? [], result: result)
       case "saveReplacement":
         self.saveReplacement(call.arguments as? [String: Any], result: result)
+      case "saveCopy":
+        self.saveCopy(call.arguments as? [String: Any], result: result)
       default:
         result(FlutterMethodNotImplemented)
       }
@@ -425,6 +427,53 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
     }
   }
 
+  /// Photos dates imports by their EXIF capture time, so an explicit date keeps
+  /// the copy at the end of the library instead of next to the original.
+  private func saveCopy(
+    _ arguments: [String: Any]?,
+    result: @escaping FlutterResult
+  ) {
+    guard
+      let path = arguments?["path"] as? String,
+      FileManager.default.fileExists(atPath: path)
+    else {
+      result(FlutterError(
+        code: "save_failed",
+        message: "compressed photo is unavailable",
+        details: nil
+      ))
+      return
+    }
+
+    let requestedAlbum = (arguments?["album"] as? String)?
+      .trimmingCharacters(in: .whitespacesAndNewlines)
+    let accessLevel: PHAccessLevel =
+      requestedAlbum?.isEmpty == false ? .readWrite : .addOnly
+    PHPhotoLibrary.requestAuthorization(for: accessLevel) { status in
+      guard status == .authorized || status == .limited else {
+        DispatchQueue.main.async {
+          result(FlutterError(
+            code: "save_denied",
+            message: "Photos access was denied",
+            details: nil
+          ))
+        }
+        return
+      }
+
+      self.ensureAlbum(named: requestedAlbum) { album, albumWarning in
+        self.createReplacement(
+          at: URL(fileURLWithPath: path),
+          metadata: PickedPhotoMetadata(creationDate: Date(), location: nil),
+          albums: album.map { [$0] } ?? [],
+          favorite: false,
+          initialWarnings: albumWarning ? ["album_unavailable"] : [],
+          result: result
+        )
+      }
+    }
+  }
+
   private func createReplacement(
     at url: URL,
     metadata: PickedPhotoMetadata,
@@ -438,7 +487,7 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
       let request = PHAssetCreationRequest.forAsset()
       request.addResource(with: .photo, fileURL: url, options: nil)
       request.creationDate = metadata.creationDate
-      request.location = metadata.location
+      if let location = metadata.location { request.location = location }
       let placeholder = request.placeholderForCreatedAsset
       identifier = placeholder?.localIdentifier
       if let placeholder {

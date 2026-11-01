@@ -2,9 +2,9 @@
 
 ## In-App Changelog
 
-`ChangelogService` stores a local versioned changelog map in Dart. Keys are semantic versions, language keys use the `Language` enum, and version comparisons use `pub_semver`.
+`ChangelogService` stores a local versioned changelog map in Dart. Keys are semantic versions, language keys use the `Language` enum, and version comparisons use `pub_semver`. Keep this map aligned with root [`CHANGELOG.md`](../../../CHANGELOG.md); it currently contains localized notes for version `1.0.1`.
 
-The bundled `_changelog` map in [`changelog_service.dart`](../../../lib/services/changelog_service.dart) is currently empty because no app updates have been released. Add localized entries when updates ship:
+Add localized entries to `_changelog` in [`changelog_service.dart`](../../../lib/services/changelog_service.dart) when updates ship:
 
 ```dart
 const Changelog _changelog = {

@@ -25,11 +25,9 @@ class InfoScreen extends StatelessWidget {
   const InfoScreen({super.key});
 
   static const _email = 'khlebobul@gmail.com';
-  // TODO: Replace with real app store links when the app is published
-  static const _appStoreAppId = '0000000000';
-  static const _appStoreAppUrl = 'https://apps.apple.com/app/id0000000000';
-  static const _googlePlayAppUrl =
-      'https://play.google.com/store/apps/details?id=com.khlebobul.minimo_photo';
+  static const _appStoreAppId = '6822256099';
+  static const _appStoreAppUrl =
+      'https://apps.apple.com/us/app/minimo-photo-compressor/id6822256099';
   static final _appStoreApps = Uri.parse(
     'https://apps.apple.com/developer/gleb-shalimov/id1775466597',
   );
@@ -37,7 +35,7 @@ class InfoScreen extends StatelessWidget {
     'https://play.google.com/store/apps/developer?id=Gleb+Shalimov&hl=en',
   );
   static final _links = <String, Uri>{
-    'project': Uri.parse('https://github.com/minimo-pro'),
+    'project': Uri.parse('https://minimo-photo.vercel.app'),
     'github': Uri.parse('https://github.com/minimo-pro/minimo_photo'),
     'x': Uri.parse('https://x.com/khlebobul'),
   };
@@ -57,12 +55,10 @@ class InfoScreen extends StatelessWidget {
   }
 
   Future<void> _shareApp(BuildContext context) async {
-    final url = Platform.isIOS ? _appStoreAppUrl : _googlePlayAppUrl;
     final renderBox = context.findRenderObject() as RenderBox?;
-
     await SharePlus.instance.share(
       ShareParams(
-        text: S.of(context).shareAppText(url),
+        text: S.of(context).shareAppText(_appStoreAppUrl),
         sharePositionOrigin: renderBox == null
             ? null
             : renderBox.localToGlobal(Offset.zero) & renderBox.size,

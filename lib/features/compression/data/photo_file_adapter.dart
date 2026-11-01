@@ -124,8 +124,15 @@ class PhotoFileAdapter {
     return photos;
   }
 
-  Future<void> saveToGallery(String filePath, {String? album}) {
-    return Gal.putImage(filePath, album: album);
+  Future<void> saveToGallery(String filePath, {String? album}) async {
+    if (!Platform.isIOS) return Gal.putImage(filePath, album: album);
+    final result = await _channel.invokeMapMethod<String, dynamic>(
+      'saveCopy',
+      {'path': filePath, 'album': album},
+    );
+    if (result == null || result['saved'] != true) {
+      throw StateError('compressed photo was not saved');
+    }
   }
 
   Future<GallerySaveResult> saveReplacement(
