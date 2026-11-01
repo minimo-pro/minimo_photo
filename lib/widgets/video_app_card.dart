@@ -1,10 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../constants/app_icons.dart';
 import '../generated/l10n.dart';
 import '../theme/app_theme.dart';
 import 'pressable.dart';
@@ -66,15 +64,6 @@ class VideoAppCard extends StatelessWidget {
                         ),
                       ),
                     ],
-                  ),
-                ),
-                SvgPicture.asset(
-                  AppIcons.arrowForward,
-                  width: 18,
-                  height: 18,
-                  colorFilter: ColorFilter.mode(
-                    theme.iconColor,
-                    BlendMode.srcIn,
                   ),
                 ),
               ],
