@@ -20,8 +20,18 @@ enum Language {
 
 typedef Changelog = Map<String, Map<Language, List<String>>>;
 
-// Add localized entries here when app updates are released.
-const Changelog _changelog = {};
+const Changelog _changelog = {
+  '1.0.1': {
+    Language.en: [
+      'Share minimo with friends from the About screen.',
+      'Save compressed photos as new gallery items more reliably.',
+    ],
+    Language.ru: [
+      'Делитесь minimo с друзьями через экран «О приложении».',
+      'Улучшено сохранение сжатых фото как новых снимков в галерее.',
+    ],
+  },
+};
 
 List<String> unseenChanges({
   required String lastSeen,

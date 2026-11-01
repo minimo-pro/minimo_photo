@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +9,7 @@ import '../../../constants/app_icons.dart';
 import '../../../generated/l10n.dart';
 import '../../../router/app_router.gr.dart';
 import '../../../services/app_settings_service.dart';
-// TODO: Restore review prompts after the app is published.
-// import '../../../services/review_service.dart';
+import '../../../services/review_service.dart';
 import '../../../services/screen_awake_service.dart';
 import '../../../widgets/app_action_button.dart';
 import '../../../widgets/app_snack_bar.dart';
@@ -95,8 +95,7 @@ class _CompressViewState extends State<_CompressView> {
   (int, int)? _loadingProgress;
   bool _initialSelectionConfirmed = false;
   bool _leavingDuringImport = false;
-  // TODO: Restore with the review prompt below after publication.
-  // int? _reviewedRun;
+  int? _reviewedRun;
   bool _confirmingExit = false;
   bool _exitAllowed = false;
 
@@ -154,16 +153,16 @@ class _CompressViewState extends State<_CompressView> {
           );
           context.read<CompressBloc>().add(const CompressMessagesCleared());
         }
-        // TODO: Restore automatic review requests after publication.
-        // if (state.status == CompressStatus.done &&
-        // _reviewedRun != state.compressionRunId) {
-        // _reviewedRun = state.compressionRunId;
-        // unawaited(
-        // ReviewService.instance.onSuccessfulConversions(
-        // state.successfulOutputPaths.length,
-        // ),
-        // );
-        // }
+        if (Platform.isIOS &&
+            state.status == CompressStatus.done &&
+            _reviewedRun != state.compressionRunId) {
+          _reviewedRun = state.compressionRunId;
+          unawaited(
+            ReviewService.instance.onSuccessfulConversions(
+              state.successfulOutputPaths.length,
+            ),
+          );
+        }
       },
       builder: (context, state) => PopScope(
         canPop: _exitAllowed,

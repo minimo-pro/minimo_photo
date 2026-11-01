@@ -11,16 +11,19 @@ PackageInfo _packageInfo(String version) => PackageInfo(
 );
 
 void main() {
-  test('initialize stays hidden while no releases are documented', () async {
-    SharedPreferences.setMockInitialValues({'onboarding_completed': true});
-    final service = ChangelogService(
-      packageInfo: () async => _packageInfo('1.0.0'),
-    );
+  test(
+    'initialize stays hidden when no notes apply to current version',
+    () async {
+      SharedPreferences.setMockInitialValues({'onboarding_completed': true});
+      final service = ChangelogService(
+        packageInfo: () async => _packageInfo('1.0.0'),
+      );
 
-    expect(await service.initialize(language: Language.en), isNull);
-    final prefs = await SharedPreferences.getInstance();
-    expect(prefs.getString('last_seen_version'), '1.0.0');
-  });
+      expect(await service.initialize(language: Language.en), isNull);
+      final prefs = await SharedPreferences.getInstance();
+      expect(prefs.getString('last_seen_version'), '1.0.0');
+    },
+  );
 
   test('unseenChanges returns every version between last seen and current', () {
     final changes = unseenChanges(

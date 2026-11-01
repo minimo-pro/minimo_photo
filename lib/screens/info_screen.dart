@@ -7,8 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-// TODO: Restore app sharing after store links are available.
-// import 'package:share_plus/share_plus.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../constants/app_icons.dart';
@@ -26,12 +25,9 @@ class InfoScreen extends StatelessWidget {
   const InfoScreen({super.key});
 
   static const _email = 'khlebobul@gmail.com';
-  // TODO: Replace with real app store links when the app is published
-  static const _appStoreAppId = '0000000000';
-  // TODO: Restore app sharing with published store links.
-  // static const _appStoreAppUrl = 'https://apps.apple.com/app/id0000000000';
-  // static const _googlePlayAppUrl =
-  // 'https://play.google.com/store/apps/details?id=com.khlebobul.minimo_photo';
+  static const _appStoreAppId = '6822256099';
+  static const _appStoreAppUrl =
+      'https://apps.apple.com/us/app/minimo-photo-compressor/id6822256099';
   static final _appStoreApps = Uri.parse(
     'https://apps.apple.com/developer/gleb-shalimov/id1775466597',
   );
@@ -58,21 +54,17 @@ class InfoScreen extends StatelessWidget {
     );
   }
 
-  // TODO: Restore app sharing after publication.
-  // Future<void> _shareApp(BuildContext context) async {
-  // final url = Platform.isIOS ? _appStoreAppUrl : _googlePlayAppUrl;
-  // final renderBox = context.findRenderObject() as RenderBox?;
-  //
-  // await SharePlus.instance.share(
-  // ShareParams(
-  // text: S.of(context).shareAppText(url),
-  // sharePositionOrigin: renderBox == null
-  // ? null
-  // : renderBox.localToGlobal(Offset.zero) & renderBox.size,
-  // ),
-  // );
-  // }
-  //
+  Future<void> _shareApp(BuildContext context) async {
+    final renderBox = context.findRenderObject() as RenderBox?;
+    await SharePlus.instance.share(
+      ShareParams(
+        text: S.of(context).shareAppText(_appStoreAppUrl),
+        sharePositionOrigin: renderBox == null
+            ? null
+            : renderBox.localToGlobal(Offset.zero) & renderBox.size,
+      ),
+    );
+  }
 
   Future<void> _sendEmail(BuildContext context) async {
     final strings = S.of(context);
@@ -152,11 +144,10 @@ class InfoScreen extends StatelessWidget {
                     const SizedBox(height: 18),
                     const _WhatsNewLink(),
                     _InfoLink(title: strings.rateTheApp, onTap: _rateApp),
-                    // TODO: Show app sharing after publication.
-                    // _InfoLink(
-                    // title: strings.shareWithFriends,
-                    // onTap: () => _shareApp(context),
-                    // ),
+                    _InfoLink(
+                      title: strings.shareWithFriends,
+                      onTap: () => _shareApp(context),
+                    ),
                     _InfoLink(
                       title: strings.myOtherApps,
                       onTap: _openOtherApps,
