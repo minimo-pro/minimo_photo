@@ -21,14 +21,26 @@ enum Language {
 typedef Changelog = Map<String, Map<Language, List<String>>>;
 
 const Changelog _changelog = {
-  '1.0.1': {
+  '1.0.2': {
     Language.en: [
-      'Share minimo with friends from the About screen.',
-      'Save compressed photos as new gallery items more reliably.',
+      'adjust photo quality and maximum dimension with sliders in advanced mode.',
+      'see a reminder to keep minimo open while compressing photos.',
+      'select more photos at once from the gallery or files.',
     ],
     Language.ru: [
-      'Делитесь minimo с друзьями через экран «О приложении».',
-      'Улучшено сохранение сжатых фото как новых снимков в галерее.',
+      'в продвинутом режиме качество и максимальный размер фото теперь настраиваются слайдерами.',
+      'во время сжатия показывается напоминание не сворачивать minimo.',
+      'выбирайте больше фото за раз из галереи или файлов.',
+    ],
+  },
+  '1.0.1': {
+    Language.en: [
+      'share minimo with friends from the about screen.',
+      'save compressed photos as new gallery items more reliably.',
+    ],
+    Language.ru: [
+      'делитесь minimo с друзьями через экран «о приложении».',
+      'улучшено сохранение сжатых фото как новых снимков в галерее.',
     ],
   },
 };

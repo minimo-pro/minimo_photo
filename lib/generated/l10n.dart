@@ -575,11 +575,11 @@ class S {
     );
   }
 
-  /// `keep minimo open during compression. if you leave, the current photo restarts when you return`
-  String get iosBackgroundCompressionWarning {
+  /// `keep minimo open until compression finishes. your phone may pause the app if you switch away`
+  String get backgroundCompressionWarning {
     return Intl.message(
-      'keep minimo open during compression. if you leave, the current photo restarts when you return',
-      name: 'iosBackgroundCompressionWarning',
+      'keep minimo open until compression finishes. your phone may pause the app if you switch away',
+      name: 'backgroundCompressionWarning',
       desc: '',
       args: [],
     );

@@ -6,11 +6,11 @@ Compression uses a package plugin. Photo selection uses the
 
 ## Selection
 
-- iOS gallery: `PHPickerViewController`, maximum 50 items; selected files are
+- iOS gallery: `PHPickerViewController`, no app-imposed selection limit; selected files are
   copied into the app cache with their source identifiers and available metadata
 - iOS files: `UIDocumentPickerViewController`, selected files copied to cache
-- Android gallery: system photo picker on Android 13+, content picker on older
-  versions; maximum 50 items
+- Android gallery: system photo picker on Android 13+ (up to its system limit),
+  content picker on older versions; no app-imposed selection limit
 - Android files: system document picker for images
 
 The start and add-more flows share `PhotoFileAdapter` and the same source

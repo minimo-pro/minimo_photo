@@ -134,7 +134,7 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
   private func presentPhotosPicker() {
     var configuration = PHPickerConfiguration(photoLibrary: .shared())
     configuration.filter = .images
-    configuration.selectionLimit = 50
+    configuration.selectionLimit = 0
     configuration.preferredAssetRepresentationMode = .current
 
     let picker = PHPickerViewController(configuration: configuration)

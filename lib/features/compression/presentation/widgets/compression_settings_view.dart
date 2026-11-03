@@ -1,6 +1,7 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -9,7 +10,7 @@ import '../../../../generated/l10n.dart';
 import '../../../../services/utils.dart';
 import '../../../../theme/app_colors.dart';
 import '../../../../widgets/animated_asset_checkbox.dart';
-import '../../../../widgets/app_option_picker.dart';
+import '../../../../widgets/app_action_button.dart';
 import '../../../../widgets/app_settings_section.dart';
 import '../../../../widgets/faded_scroll_view.dart';
 import '../../../../widgets/minimo_loader.dart';
@@ -441,15 +442,12 @@ class _AdvancedOptions extends StatelessWidget {
         AppSettingsSection(
           title: strings.quality,
           description: strings.photoQualityDescription,
-          child: AppOptionPicker<int>(
+          child: _SettingSlider(
             value: settings.quality,
-            options: const [
-              AppOption(value: 95, label: '95%'),
-              AppOption(value: 90, label: '90%'),
-              AppOption(value: 82, label: '82%'),
-              AppOption(value: 72, label: '72%'),
-              AppOption(value: 60, label: '60%'),
-            ],
+            min: 60,
+            max: 95,
+            unit: '%',
+            label: strings.quality,
             onChanged: (quality) => update(settings.copyWith(quality: quality)),
           ),
         ),
@@ -457,16 +455,13 @@ class _AdvancedOptions extends StatelessWidget {
         AppSettingsSection(
           title: strings.maximumDimension,
           description: strings.maximumDimensionDescription,
-          child: AppOptionPicker<int?>(
+          child: _SettingSlider(
             value: settings.maxDimension,
-            options: [
-              AppOption(value: null, label: strings.original),
-              const AppOption(value: 3840, label: '3840 px'),
-              const AppOption(value: 2560, label: '2560 px'),
-              const AppOption(value: 1920, label: '1920 px'),
-              const AppOption(value: 1600, label: '1600 px'),
-              const AppOption(value: 1280, label: '1280 px'),
-            ],
+            min: 1280,
+            max: 3840,
+            unit: ' px',
+            label: strings.maximumDimension,
+            originalLabel: strings.original,
             onChanged: (dimension) =>
                 update(settings.copyWith(maxDimension: dimension)),
           ),
@@ -496,5 +491,254 @@ class _AdvancedOptions extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+class _SettingSlider extends StatefulWidget {
+  final int? value;
+  final int min;
+  final int max;
+  final String unit;
+  final String label;
+  final String? originalLabel;
+  final ValueChanged<int?> onChanged;
+
+  const _SettingSlider({
+    required this.value,
+    required this.min,
+    required this.max,
+    required this.unit,
+    required this.label,
+    required this.onChanged,
+    this.originalLabel,
+  });
+
+  @override
+  State<_SettingSlider> createState() => _SettingSliderState();
+}
+
+class _SettingSliderState extends State<_SettingSlider> {
+  late int? _selected = widget.value;
+
+  @override
+  void didUpdateWidget(covariant _SettingSlider oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.value != widget.value) _selected = widget.value;
+  }
+
+  void _commit(int? value) {
+    if (value == widget.value) return;
+    HapticFeedback.selectionClick();
+    widget.onChanged(value);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    final value = (_selected ?? widget.max).clamp(widget.min, widget.max);
+    return Padding(
+      padding: const EdgeInsets.only(top: 2),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              if (widget.originalLabel != null) ...[
+                AppActionButton(
+                  label: widget.originalLabel!,
+                  variant: _selected == null
+                      ? AppActionButtonVariant.filled
+                      : AppActionButtonVariant.outlined,
+                  height: 40,
+                  fontSize: 16,
+                  padding: const EdgeInsets.symmetric(horizontal: 14),
+                  onPressed: () {
+                    setState(() => _selected = null);
+                    _commit(null);
+                  },
+                ),
+                const SizedBox(width: 12),
+              ],
+              Expanded(
+                child: Text(
+                  _selected == null ? '' : '$_selected${widget.unit}',
+                  textAlign: TextAlign.right,
+                  style: const TextStyle(
+                    fontSize: 25,
+                    height: 1,
+                    color: CompressionUiColors.red,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Semantics(
+            label: widget.label,
+            child: SliderTheme(
+              data: SliderTheme.of(context).copyWith(
+                trackHeight: 4,
+                activeTrackColor: _selected == null
+                    ? colors.outline
+                    : CompressionUiColors.red,
+                inactiveTrackColor: colors.outline,
+                thumbColor: _selected == null
+                    ? colors.outline
+                    : CompressionUiColors.red,
+                overlayShape: SliderComponentShape.noOverlay,
+                thumbShape: const _SettingThumb(),
+                trackShape: const _DrawnSettingTrack(),
+                activeTickMarkColor: _selected == null
+                    ? colors.outline
+                    : CompressionUiColors.red,
+                inactiveTickMarkColor: colors.outline,
+                tickMarkShape: widget.max - widget.min <= 100
+                    ? const RoundSliderTickMarkShape(tickMarkRadius: 1.5)
+                    : SliderTickMarkShape.noTickMark,
+              ),
+              child: Slider(
+                value: value.toDouble(),
+                padding: const EdgeInsets.symmetric(horizontal: 14),
+                min: widget.min.toDouble(),
+                max: widget.max.toDouble(),
+                divisions: widget.max - widget.min <= 100
+                    ? widget.max - widget.min
+                    : null,
+                semanticFormatterCallback: (value) =>
+                    _selected == null && widget.originalLabel != null
+                    ? widget.originalLabel!
+                    : '${value.round()}${widget.unit}',
+                onChanged: (value) => setState(() => _selected = value.round()),
+                onChangeEnd: (value) => _commit(value.round()),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 14),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  '${widget.min}${widget.unit}',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: colors.onSurfaceVariant,
+                  ),
+                ),
+                Text(
+                  '${widget.max}${widget.unit}',
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: colors.onSurfaceVariant,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SettingThumb extends SliderComponentShape {
+  const _SettingThumb();
+
+  @override
+  Size getPreferredSize(bool isEnabled, bool isDiscrete) => const Size(28, 28);
+
+  @override
+  void paint(
+    PaintingContext context,
+    Offset center, {
+    required Animation<double> activationAnimation,
+    required Animation<double> enableAnimation,
+    required bool isDiscrete,
+    required TextPainter labelPainter,
+    required RenderBox parentBox,
+    required SliderThemeData sliderTheme,
+    required TextDirection textDirection,
+    required double value,
+    required double textScaleFactor,
+    required Size sizeWithOverflow,
+  }) {
+    final outline = Path()
+      ..moveTo(-2, -12)
+      ..quadraticBezierTo(0, -14, 3, -11)
+      ..cubicTo(6, -8, 9, -5, 12, -2)
+      ..quadraticBezierTo(14, 0, 11, 3)
+      ..cubicTo(8, 7, 5, 9, 2, 12)
+      ..quadraticBezierTo(0, 14, -3, 11)
+      ..cubicTo(-7, 8, -9, 5, -12, 2)
+      ..quadraticBezierTo(-14, 0, -11, -3)
+      ..cubicTo(-8, -6, -5, -10, -2, -12)
+      ..close();
+    final thumb = outline.shift(center);
+    context.canvas.drawPath(thumb, Paint()..color = sliderTheme.thumbColor!);
+  }
+}
+
+class _DrawnSettingTrack extends SliderTrackShape with BaseSliderTrackShape {
+  const _DrawnSettingTrack();
+
+  @override
+  void paint(
+    PaintingContext context,
+    Offset offset, {
+    required RenderBox parentBox,
+    required SliderThemeData sliderTheme,
+    required Animation<double> enableAnimation,
+    required Offset thumbCenter,
+    Offset? secondaryOffset,
+    bool isEnabled = false,
+    bool isDiscrete = false,
+    required TextDirection textDirection,
+  }) {
+    final rect = getPreferredRect(
+      parentBox: parentBox,
+      offset: offset,
+      sliderTheme: sliderTheme,
+      isEnabled: isEnabled,
+      isDiscrete: isDiscrete,
+    );
+    final x = rect.left;
+    final y = rect.center.dy;
+    final w = rect.width;
+    final line = Path()
+      ..moveTo(x, y + 0.6)
+      ..cubicTo(x + w * 0.12, y - 1.8, x + w * 0.24, y + 1.6, x + w * 0.36, y)
+      ..cubicTo(
+        x + w * 0.5,
+        y - 1.4,
+        x + w * 0.62,
+        y + 1.8,
+        x + w * 0.74,
+        y + 0.4,
+      )
+      ..cubicTo(
+        x + w * 0.84,
+        y - 1,
+        x + w * 0.93,
+        y + 1.3,
+        rect.right,
+        y - 0.4,
+      );
+    final pen = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round
+      ..strokeWidth = sliderTheme.trackHeight!
+      ..color = sliderTheme.inactiveTrackColor!;
+    final canvas = context.canvas;
+    canvas.drawPath(line, pen);
+    canvas.save();
+    canvas.clipRect(
+      Rect.fromLTRB(
+        textDirection == TextDirection.ltr ? rect.left - 3 : thumbCenter.dx,
+        rect.top - 3,
+        textDirection == TextDirection.ltr ? thumbCenter.dx : rect.right + 3,
+        rect.bottom + 3,
+      ),
+    );
+    canvas.drawPath(line, pen..color = sliderTheme.activeTrackColor!);
+    canvas.restore();
   }
 }
