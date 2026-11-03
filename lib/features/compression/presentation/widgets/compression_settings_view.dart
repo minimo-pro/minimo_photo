@@ -604,7 +604,9 @@ class _SettingSliderState extends State<_SettingSlider> {
                     ? widget.max - widget.min
                     : null,
                 semanticFormatterCallback: (value) =>
-                    '${value.round()}${widget.unit}',
+                    _selected == null && widget.originalLabel != null
+                    ? widget.originalLabel!
+                    : '${value.round()}${widget.unit}',
                 onChanged: (value) => setState(() => _selected = value.round()),
                 onChangeEnd: (value) => _commit(value.round()),
               ),

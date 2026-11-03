@@ -123,10 +123,18 @@ void main() {
     tester.widget<Slider>(sliders.last).onChangeEnd!(2333);
     await tester.pump();
     expect(bloc.state.settings.maxDimension, 2333);
+    expect(
+      tester.widget<Slider>(sliders.last).semanticFormatterCallback!(2333),
+      '2333 px',
+    );
     await tester.ensureVisible(find.text('original'));
     await tester.tap(find.text('original'));
     await tester.pump();
     expect(bloc.state.settings.maxDimension, isNull);
+    expect(
+      tester.widget<Slider>(sliders.last).semanticFormatterCallback!(3840),
+      'original',
+    );
     await tester.pump(const Duration(milliseconds: 150));
   });
 }

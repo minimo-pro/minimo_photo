@@ -1,23 +1,23 @@
 ## [1.0.2]
 
-### added
+### Added
 
-* adjust photo quality and maximum dimension with sliders in advanced mode
-* show a reminder to keep the app open while compressing photos
-* select more photos at once from the gallery or files
+* Adjust photo quality and maximum dimension with sliders in advanced mode
+* Show a reminder to keep the app open while compressing photos
+* Select more photos at once from the gallery or files
 
 ## [1.0.1]
 
-### added
+### Added
 
-* share minimo with friends from the about screen
+* Share minimo with friends from the about screen
 
-### improved
+### Improved
 
-* save compressed photos as new gallery items more reliably
+* Save compressed photos as new gallery items more reliably
 
 ## [1.0.0]
 
-### added
+### Added
 
-* initial release
+* Initial release

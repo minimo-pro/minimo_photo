@@ -47,7 +47,7 @@ hidden.
 - Update root `CHANGELOG.md` and group entries under category headings such as `### Added`.
 - Add a local `_changelog` entry for every app version.
 - Keep English and Russian copy in sync.
-- Write changelog headings and entries in lowercase in every language.
+- Write in-app changelog headings and entries in lowercase in every language.
 
 ---
 
