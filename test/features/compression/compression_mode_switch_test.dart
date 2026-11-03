@@ -80,6 +80,55 @@ void main() {
     expect(find.text('maximum dimension'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
+
+  testWidgets('advanced sliders accept values between old presets', (
+    tester,
+  ) async {
+    final bloc = CompressBloc(
+      initialPhotos: const [
+        PickedPhoto(path: 'photo.jpg', name: 'photo.jpg', size: 1000),
+      ],
+      photoCompressorAdapter: _FakePhotoCompressorAdapter(),
+    );
+    addTearDown(bloc.close);
+
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: const [
+          S.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: S.delegate.supportedLocales,
+        home: BlocProvider.value(
+          value: bloc,
+          child: Scaffold(
+            body: BlocBuilder<CompressBloc, CompressState>(
+              builder: (context, state) =>
+                  CompressionSettingsView(state: state, onAddPhotos: () {}),
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.tap(find.text('advanced'));
+    await tester.pumpAndSettle();
+
+    final sliders = find.byType(Slider);
+    expect(sliders, findsNWidgets(2));
+    tester.widget<Slider>(sliders.first).onChangeEnd!(83);
+    await tester.pump();
+    expect(bloc.state.settings.quality, 83);
+
+    tester.widget<Slider>(sliders.last).onChangeEnd!(2333);
+    await tester.pump();
+    expect(bloc.state.settings.maxDimension, 2333);
+    await tester.ensureVisible(find.text('original'));
+    await tester.tap(find.text('original'));
+    await tester.pump();
+    expect(bloc.state.settings.maxDimension, isNull);
+    await tester.pump(const Duration(milliseconds: 150));
+  });
 }
 
 List<bool> _selectedModes(WidgetTester tester) => tester

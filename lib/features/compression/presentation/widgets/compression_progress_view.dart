@@ -81,6 +81,43 @@ class CompressionProgressView extends StatelessWidget {
                     fit: FlexFit.loose,
                     child: PhotoStatusList(state: state),
                   ),
+                  SizedBox(height: compact ? 10 : 14),
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.fromLTRB(12, 10, 14, 10),
+                    decoration: BoxDecoration(
+                      color: CompressionUiColors.red.withValues(alpha: 0.08),
+                      border: Border.all(
+                        color: CompressionUiColors.red.withValues(alpha: 0.18),
+                      ),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SvgPicture.asset(
+                          AppIcons.warning,
+                          width: 18,
+                          height: 18,
+                          colorFilter: const ColorFilter.mode(
+                            CompressionUiColors.red,
+                            BlendMode.srcIn,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            strings.backgroundCompressionWarning,
+                            style: const TextStyle(
+                              color: CompressionUiColors.red,
+                              fontSize: 14,
+                              height: 1.22,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                   SizedBox(height: compact ? 12 : 24),
                 ],
               );

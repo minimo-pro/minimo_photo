@@ -76,6 +76,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "appName": MessageLookupByLibrary.simpleMessage("minimo (photo)"),
     "automatic": MessageLookupByLibrary.simpleMessage("авто"),
+    "backgroundCompressionWarning": MessageLookupByLibrary.simpleMessage(
+      "не сворачивайте minimo до завершения сжатия. телефон может приостановить приложение",
+    ),
     "better": MessageLookupByLibrary.simpleMessage("лучше"),
     "cacheClearFailed": MessageLookupByLibrary.simpleMessage(
       "не удалось очистить кеш",
@@ -157,9 +160,6 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "howCompressionWorksTitle": MessageLookupByLibrary.simpleMessage(
       "за счёт чего фото становится меньше",
-    ),
-    "iosBackgroundCompressionWarning": MessageLookupByLibrary.simpleMessage(
-      "не сворачивайте minimo во время сжатия. иначе текущий фото начнёт сжиматься заново после возвращения",
     ),
     "keepExif": MessageLookupByLibrary.simpleMessage("сохранять exif"),
     "keepMetadata": MessageLookupByLibrary.simpleMessage("метаданные"),

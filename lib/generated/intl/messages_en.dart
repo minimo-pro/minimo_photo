@@ -77,6 +77,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "appName": MessageLookupByLibrary.simpleMessage("minimo (photo)"),
     "automatic": MessageLookupByLibrary.simpleMessage("auto"),
+    "backgroundCompressionWarning": MessageLookupByLibrary.simpleMessage(
+      "keep minimo open until compression finishes. your phone may pause the app if you switch away",
+    ),
     "better": MessageLookupByLibrary.simpleMessage("better"),
     "cacheClearFailed": MessageLookupByLibrary.simpleMessage(
       "failed to clear cache",
@@ -158,9 +161,6 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "howCompressionWorksTitle": MessageLookupByLibrary.simpleMessage(
       "how photo gets smaller",
-    ),
-    "iosBackgroundCompressionWarning": MessageLookupByLibrary.simpleMessage(
-      "keep minimo open during compression. if you leave, the current photo restarts when you return",
     ),
     "keepExif": MessageLookupByLibrary.simpleMessage("keep exif metadata"),
     "keepMetadata": MessageLookupByLibrary.simpleMessage("metadata"),
