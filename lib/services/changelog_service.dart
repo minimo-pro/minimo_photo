@@ -25,10 +25,12 @@ const Changelog _changelog = {
     Language.en: [
       'adjust photo quality and maximum dimension with sliders in advanced mode.',
       'see a reminder to keep minimo open while compressing photos.',
+      'select more photos at once from the gallery or files.',
     ],
     Language.ru: [
       'в продвинутом режиме качество и максимальный размер фото теперь настраиваются слайдерами.',
       'во время сжатия показывается напоминание не сворачивать minimo.',
+      'выбирайте больше фото за раз из галереи или файлов.',
     ],
   },
   '1.0.1': {

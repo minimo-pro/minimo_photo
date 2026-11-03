@@ -4,6 +4,7 @@
 
 * adjust photo quality and maximum dimension with sliders in advanced mode
 * show a reminder to keep the app open while compressing photos
+* select more photos at once from the gallery or files
 
 ## [1.0.1]
 

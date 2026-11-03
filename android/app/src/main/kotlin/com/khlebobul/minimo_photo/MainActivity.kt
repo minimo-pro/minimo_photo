@@ -98,7 +98,7 @@ class MainActivity : FlutterActivity() {
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             Intent(MediaStore.ACTION_PICK_IMAGES).apply {
                 type = "image/*"
-                putExtra(MediaStore.EXTRA_PICK_IMAGES_MAX, minOf(50, MediaStore.getPickImagesMaxLimit()))
+                putExtra(MediaStore.EXTRA_PICK_IMAGES_MAX, MediaStore.getPickImagesMaxLimit())
             }
         } else {
             Intent(Intent.ACTION_GET_CONTENT).apply {
@@ -138,7 +138,7 @@ class MainActivity : FlutterActivity() {
                 for (index in 0 until clip.itemCount) add(clip.getItemAt(index).uri)
             }
             data.data?.let(::add)
-        }.distinct().take(50)
+        }.distinct()
         copyingPhotos = true
         sendPickProgress(0, uris.size, pickId)
         Thread {
