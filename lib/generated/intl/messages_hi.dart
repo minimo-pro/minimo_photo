@@ -77,7 +77,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "appName": MessageLookupByLibrary.simpleMessage("minimo (photo)"),
     "automatic": MessageLookupByLibrary.simpleMessage("ऑटो"),
     "backgroundCompressionWarning": MessageLookupByLibrary.simpleMessage(
-      "संपीड़न समाप्त होने तक मिनिमो को खुला रखें। यदि आप स्विच ऑफ करते हैं तो आपका फ़ोन ऐप को रोक सकता है",
+      "संपीड़न पूरा होने तक minimo खुला रखें। दूसरे ऐप पर जाने से आपका फ़ोन minimo को रोक सकता है",
     ),
     "better": MessageLookupByLibrary.simpleMessage("बेहतर"),
     "cacheClearFailed": MessageLookupByLibrary.simpleMessage(

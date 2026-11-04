@@ -106,6 +106,8 @@
 		BBF21F15309B19F900C42191 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		BBF21F16309B1A1100C42191 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
 		BBF21F17309B1A1100C42191 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		BBF21F18309B1A1100C42191 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
+		BBF21F19309B1A1100C42191 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		D00000000000000000000011 /* SharedPhotoInbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedPhotoInbox.swift; sourceTree = "<group>"; };
 		D00000000000000000000012 /* CompressPhotosIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompressPhotosIntent.swift; sourceTree = "<group>"; };
 		D00000000000000000000013 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
@@ -332,6 +334,7 @@
 				"pt-BR",
 				tr,
 				de,
+				es,
 			);
 			mainGroup = 97C146E51CF9000F007C117D;
 			packageReferences = (
@@ -472,6 +475,7 @@
 				BBF21F12309B19F200C42191 /* pt-BR */,
 				BBF21F14309B19F800C42191 /* tr */,
 				BBF21F16309B1A1100C42191 /* de */,
+				BBF21F18309B1A1100C42191 /* es */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -492,6 +496,7 @@
 				BBF21F13309B19F700C42191 /* pt-BR */,
 				BBF21F15309B19F900C42191 /* tr */,
 				BBF21F17309B1A1100C42191 /* de */,
+				BBF21F19309B1A1100C42191 /* es */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";

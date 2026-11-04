@@ -1,6 +1,6 @@
 {
   "unsavedResultsTitle": "未保存的照片",
-  "unsavedResultsExit": "保留并删除未保存的压缩照片？",
+  "unsavedResultsExit": "离开并丢弃未保存的压缩照片？",
   "@@locale": "zh",
   "appName": "minimo (photo)",
   "madeByKhlebobul": "khlebobul 制作",
@@ -75,12 +75,12 @@
     }
   },
   "saveOptionsTitle": "保存方式",
-  "saveAsNew": "保存为新视频",
+  "saveAsNew": "另存为新照片",
   "saveAsNewDescription": "保留原始照片并保存新的图库照片",
-  "saveBesideOriginal": "保存在原视频旁",
-  "saveBesideOriginalDescription": "保留原视频，并复制其日期和元数据",
-  "replaceOriginal": "替换原视频",
-  "replaceOriginalDescription": "使用原始元数据保存，然后要求删除原始元数据",
+  "saveBesideOriginal": "保存在原照片旁",
+  "saveBesideOriginalDescription": "保留原照片，并复制其拍摄日期和元数据",
+  "replaceOriginal": "替换原照片",
+  "replaceOriginalDescription": "保留原始元数据并保存，然后询问是否删除原照片",
   "preventScreenSleep": "保持屏幕亮起",
   "preventScreenSleepDescription": "防止屏幕在加载或压缩照片时休眠",
   "clearCache": "清除缓存",
@@ -177,7 +177,7 @@
   "photoPreviewUnavailable": "预览不可用",
   "save": "保存",
   "saved": "已保存",
-  "holdToDeleteOriginals": "长按按钮删除原视频",
+  "holdToDeleteOriginals": "长按按钮删除原照片",
   "failedToShare": "无法分享照片。再试一次",
   "savedPhotosAndDeletedOriginals": "已保存 {saved} 照片并删除 {deleted} 原件",
   "@savedPhotosAndDeletedOriginals": {
@@ -207,7 +207,7 @@
     }
   },
   "metadataPreservationIncomplete": "部分图库元数据无法复制",
-  "originalDeletionFailed": "部分原视频无法删除",
+  "originalDeletionFailed": "部分原照片无法删除",
   "waiting": "等待中",
   "failed": "失败",
   "photoProgress": "{total} 的照片 {current}",

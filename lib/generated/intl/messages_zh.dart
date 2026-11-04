@@ -117,7 +117,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "high": MessageLookupByLibrary.simpleMessage("高"),
     "holdToCancelCompression": MessageLookupByLibrary.simpleMessage("长按按钮取消压缩"),
     "holdToClearCache": MessageLookupByLibrary.simpleMessage("长按按钮清除缓存"),
-    "holdToDeleteOriginals": MessageLookupByLibrary.simpleMessage("长按按钮删除原视频"),
+    "holdToDeleteOriginals": MessageLookupByLibrary.simpleMessage("长按按钮删除原照片"),
     "howCompressionWorksBody": MessageLookupByLibrary.simpleMessage(
       "minimo 制作照片的新副本并更有效地存储它。它可以降低图像质量或尺寸，同时保持结果有用。\n\n质量较低的存储较少难以注意到的微小细节。较小的尺寸使用较少的像素。两者都减少了文件大小。\n\n您的原始照片保持不变，并在您的设备上进行压缩。",
     ),
@@ -171,7 +171,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "minimo（照片）是开源的。探索代码、关注项目或取得联系",
     ),
     "original": MessageLookupByLibrary.simpleMessage("原始"),
-    "originalDeletionFailed": MessageLookupByLibrary.simpleMessage("部分原视频无法删除"),
+    "originalDeletionFailed": MessageLookupByLibrary.simpleMessage("部分原照片无法删除"),
     "originalPhoto": MessageLookupByLibrary.simpleMessage("之前"),
     "outputFormat": MessageLookupByLibrary.simpleMessage("输出格式"),
     "outputFormatDescription": MessageLookupByLibrary.simpleMessage(
@@ -206,9 +206,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "将降低质量以节省空间",
     ),
     "rateTheApp": MessageLookupByLibrary.simpleMessage("为应用评分"),
-    "replaceOriginal": MessageLookupByLibrary.simpleMessage("替换原视频"),
+    "replaceOriginal": MessageLookupByLibrary.simpleMessage("替换原照片"),
     "replaceOriginalDescription": MessageLookupByLibrary.simpleMessage(
-      "使用原始元数据保存，然后要求删除原始元数据",
+      "保留原始元数据并保存，然后询问是否删除原照片",
     ),
     "resize": MessageLookupByLibrary.simpleMessage("图像尺寸"),
     "resizeDescription": MessageLookupByLibrary.simpleMessage(
@@ -226,13 +226,13 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "russian": MessageLookupByLibrary.simpleMessage("русский"),
     "save": MessageLookupByLibrary.simpleMessage("保存"),
-    "saveAsNew": MessageLookupByLibrary.simpleMessage("保存为新视频"),
+    "saveAsNew": MessageLookupByLibrary.simpleMessage("另存为新照片"),
     "saveAsNewDescription": MessageLookupByLibrary.simpleMessage(
       "保留原始照片并保存新的图库照片",
     ),
-    "saveBesideOriginal": MessageLookupByLibrary.simpleMessage("保存在原视频旁"),
+    "saveBesideOriginal": MessageLookupByLibrary.simpleMessage("保存在原照片旁"),
     "saveBesideOriginalDescription": MessageLookupByLibrary.simpleMessage(
-      "保留原视频，并复制其日期和元数据",
+      "保留原照片，并复制其拍摄日期和元数据",
     ),
     "saveOptionsTitle": MessageLookupByLibrary.simpleMessage("保存方式"),
     "savePhotos": m6,
@@ -267,7 +267,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "todo": MessageLookupByLibrary.simpleMessage("待办事项"),
     "tryAgain": MessageLookupByLibrary.simpleMessage("重试"),
     "unsavedResultsExit": MessageLookupByLibrary.simpleMessage(
-      "保留并删除未保存的压缩照片？",
+      "离开并丢弃未保存的压缩照片？",
     ),
     "unsavedResultsTitle": MessageLookupByLibrary.simpleMessage("未保存的照片"),
     "videoAppDescription": MessageLookupByLibrary.simpleMessage("直接在手机上缩小视频"),

@@ -53,16 +53,20 @@ What's New and promotional text for en-US and ru were uploaded and verified on
 2026-11-01; the post-upload snapshot is in `.asc/source/metadata-verified/`.
 All 24 iPhone 6.9-inch/iPad
 13-inch screenshots were verified by order, checksum and `COMPLETE` status.
-Six English Duo screenshots were uploaded in alternating order: outer slides
-1/3/5, inner slides 2/4/6, without repeated story slides. Order, checksums and
-`COMPLETE` status were verified. Duo has no Russian exports yet.
+For 1.0.1, six English Duo screenshots were uploaded in alternating order:
+outer slides 1/3/5, inner slides 2/4/6. Order, checksums and `COMPLETE` status
+were verified.
 English and Russian Header/Search Results images were uploaded to Asset Library
 and assigned to their version localizations for 1.0.1.
 
 For 1.0.3, all 14 App Store localizations have matching app info and version
-metadata; the verified pull is in `.asc/source/metadata-1.0.3-verified/`.
-All 14 locales have six iPhone and six iPad screenshots; all 168 are `COMPLETE`
-with export order and MD5 verified. All 28 Header/Search Results placements are
+metadata; the verified pull is in `.asc/source/metadata-1.0.3-promo-verified/`.
+Promotional text reuses the benefit-focused copy from 1.0.0 in every locale.
+All 14 locales have six iPhone, six iPad and six Duo screenshots, with Duo
+alternating outer slides 1/3/5 and inner slides 2/4/6. Upload receipts for all
+252 show `COMPLETE` in upload results or readbacks; the final full remote
+readback is pending because App Store Connect returned HTTP 429. All 28
+Header/Search Results placements are
 `ACTIVE`. The version is `PREPARE_FOR_SUBMISSION`;
 no build was uploaded or submitted for review. `zh-Hant` storefront graphics
 reuse the `zh` (Simplified Chinese) UI captures because the app has no separate

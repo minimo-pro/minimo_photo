@@ -198,9 +198,6 @@ void _captureScreenshots() {
   });
   for (final locale in S.delegate.supportedLocales) {
     for (final device in _devices) {
-      if (device.folder.contains('duo-') && locale.languageCode != 'en') {
-        continue;
-      }
       testWidgets(
         'capture ${device.folder}/${locale.languageCode}',
         (tester) async {

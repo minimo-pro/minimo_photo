@@ -96,7 +96,7 @@
   "english": "english",
   "russian": "русский",
   "overheatWarning": "डिवाइस गरम होने पर कंप्रेशन धीमा हो सकता है",
-  "backgroundCompressionWarning": "संपीड़न समाप्त होने तक मिनिमो को खुला रखें। यदि आप स्विच ऑफ करते हैं तो आपका फ़ोन ऐप को रोक सकता है",
+  "backgroundCompressionWarning": "संपीड़न पूरा होने तक minimo खुला रखें। दूसरे ऐप पर जाने से आपका फ़ोन minimo को रोक सकता है",
   "quality": "क्वालिटी",
   "resolution": "रिज़ॉल्यूशन",
   "high": "उच्च",

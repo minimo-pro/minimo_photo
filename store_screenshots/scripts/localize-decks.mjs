@@ -8,6 +8,7 @@ locales.sort((a, b) => a === "en" ? -1 : b === "en" ? 1 : a.localeCompare(b));
 const file = new URL("../app-store-screenshots.json", import.meta.url);
 const state = JSON.parse(fs.readFileSync(file));
 
+/** Require complete copy so exports never silently fall back to English. */
 function translate(field) {
   if (!field?.en) return;
   for (const locale of locales) {
@@ -18,8 +19,10 @@ function translate(field) {
 }
 
 for (const [device, slides] of Object.entries(state.slidesByDevice)) {
-  if (device.startsWith("duo-")) continue;
   for (const slide of slides) {
+    if (device.startsWith("duo-") && slide.screenshot) {
+      slide.screenshot = slide.screenshot.replace(`/${device}/en/`, `/${device}/{locale}/`);
+    }
     for (const key of ["label", "headline", "highlight"]) translate(slide[key]);
     for (const element of slide.textElements || []) translate(element.text);
   }

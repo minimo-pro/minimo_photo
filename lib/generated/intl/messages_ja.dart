@@ -132,7 +132,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "ボタンを長押ししてキャッシュを消去",
     ),
     "holdToDeleteOriginals": MessageLookupByLibrary.simpleMessage(
-      "ボタンを長押しして元の動画を削除",
+      "ボタンを長押しして元の写真を削除",
     ),
     "howCompressionWorksBody": MessageLookupByLibrary.simpleMessage(
       "minimo は写真の新しいコピーを作成し、より効率的に保存します。有用な結果を維持しながら、画質やサイズを下げることができます。\n\n低品質では、気づきにくい小さな詳細があまり保存されません。寸法が小さいほど、使用するピクセルが少なくなります。どちらもファイルサイズを削減します。\n\n元の写真は変更されず、デバイス上で圧縮が行われます。",
@@ -190,7 +190,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "original": MessageLookupByLibrary.simpleMessage("オリジナル"),
     "originalDeletionFailed": MessageLookupByLibrary.simpleMessage(
-      "一部の元動画を削除できませんでした",
+      "一部の元の写真を削除できませんでした",
     ),
     "originalPhoto": MessageLookupByLibrary.simpleMessage("前に"),
     "outputFormat": MessageLookupByLibrary.simpleMessage("出力形式"),
@@ -230,9 +230,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "スペースを節約するために品質が低下します",
     ),
     "rateTheApp": MessageLookupByLibrary.simpleMessage("アプリを評価"),
-    "replaceOriginal": MessageLookupByLibrary.simpleMessage("元の動画を置き換え"),
+    "replaceOriginal": MessageLookupByLibrary.simpleMessage("元の写真を置き換え"),
     "replaceOriginalDescription": MessageLookupByLibrary.simpleMessage(
-      "元のメタデータを付けて保存し、元のメタデータを削除するよう依頼する",
+      "元のメタデータを引き継いで保存し、元の写真を削除するか確認します",
     ),
     "resize": MessageLookupByLibrary.simpleMessage("画像の寸法"),
     "resizeDescription": MessageLookupByLibrary.simpleMessage(
@@ -254,9 +254,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "saveAsNewDescription": MessageLookupByLibrary.simpleMessage(
       "オリジナルを保持し、新しいギャラリー写真を保存します",
     ),
-    "saveBesideOriginal": MessageLookupByLibrary.simpleMessage("元の動画の横に保存"),
+    "saveBesideOriginal": MessageLookupByLibrary.simpleMessage("元の写真の隣に保存"),
     "saveBesideOriginalDescription": MessageLookupByLibrary.simpleMessage(
-      "元の動画を残し、日付とメタデータをコピーします",
+      "元の写真を残し、撮影日とメタデータをコピーします",
     ),
     "saveOptionsTitle": MessageLookupByLibrary.simpleMessage("保存方法"),
     "savePhotos": m6,
@@ -291,7 +291,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "todo": MessageLookupByLibrary.simpleMessage("やるべきこと"),
     "tryAgain": MessageLookupByLibrary.simpleMessage("再試行"),
     "unsavedResultsExit": MessageLookupByLibrary.simpleMessage(
-      "未保存の圧縮写真をそのままにして削除しますか?",
+      "終了して、未保存の圧縮写真を破棄しますか？",
     ),
     "unsavedResultsTitle": MessageLookupByLibrary.simpleMessage("保存されていない写真"),
     "videoAppDescription": MessageLookupByLibrary.simpleMessage(

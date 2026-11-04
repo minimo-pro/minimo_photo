@@ -3,7 +3,7 @@
 Next.js editor adapted from the `app-store-screenshots` template and this app's
 Pangolin font, sky backgrounds and red controls. The app and editor support
 **13 languages**, matching `lib/l10n/intl_*.arb`: en, de, es, fr, hi, it,
-ja, ko, nl, pt, ru, tr and zh. The Duo decks remain English only.
+ja, ko, nl, pt, ru, tr and zh, including both iPhone Duo decks.
 
 ## Start and restore
 
@@ -75,13 +75,15 @@ the README image and all ZIPs together. Rerun capture first after UI changes.
 | Asset | PNG size | Local output |
 |---|---|---|
 | iPhone 6.9-inch | 1320 × 2868 | `export/apple/iphone-6.9/<locale>/01–06.png` |
+| iPhone Duo outer | 1398 × 2034 | `export/apple/iphone-duo-outer/<locale>/01–06.png` |
+| iPhone Duo inner | 2007 × 2853 | `export/apple/iphone-duo-inner/<locale>/01–06.png` |
 | iPad 13-inch | 2064 × 2752 | `export/apple/ipad-13/<locale>/01–06.png` |
 | Android phone | 1080 × 1920 | `export/android/phone/<locale>/01–06.png` |
 | Android Feature Graphic | 1024 × 500 | `export/android/feature-graphic/<locale>/01.png` |
 | Apple Header | 3840 × 1646 | `export/apple/header/<locale>/01.png` |
 | Apple Search Results | 3840 × 2560 | `export/apple/search-results/<locale>/01.png` |
 
-There are **273 PNGs**, 21 per language, plus 12 English Duo PNGs. Each deck follows the same story:
+There are **429 PNGs**, 33 per language. Each deck follows the same story:
 hero, before/after, batch, on-device privacy (dark), advanced settings and a
 feature wall. Chips only state verified app features. ZIPs:
 `export/minimo-photo-<locale>.zip` and `export/minimo-photo-all.zip`.
@@ -91,6 +93,7 @@ overview is `docs/images/store-preview.png`, without labels or service bars.
 Preview routes:
 
 - `/preview?device=iphone&locale=ru&h=640`
+- `/preview?device=duo-outer&locale=hi&h=640`
 - `/preview?device=ipad&locale=en&h=640`
 - `/preview?device=android&locale=ru&h=640`
 - `/creative?kind=play&locale=ru`
@@ -132,17 +135,16 @@ Local store texts and ASC instructions: [../ASC.md](../ASC.md).
 Apps made with the editor skill: <https://www.parthjadhav.com/products/app-store-screenshots>.
 Tag **@parthjadhav8** on Twitter to request inclusion in its showcase.
 
-## iPhone Duo — English review
+## iPhone Duo — 13 languages
 
 Two additional portrait decks (`duo-outer`, `duo-inner`) reuse the iPhone
-story/copy and tablet composition. Existing iPhone 6.9-inch assets stay intact.
-Duo captures remain English only. The editor exports only locales present in
-every slide headline.
+story/copy and tablet composition. Duo captures and headlines cover all 13 app
+languages. The editor exports only locales present in every slide headline.
 
 ```bash
 flutter test test/store_screenshots/capture_test.dart --plain-name 'capture apple/duo'
-store_screenshots/.venv/bin/python store_screenshots/scripts/export.py --devices duo-outer duo-inner --locale en
-store_screenshots/.venv/bin/python store_screenshots/scripts/export.py --devices duo-outer duo-inner --locale en --check
+store_screenshots/.venv/bin/python store_screenshots/scripts/export.py --devices duo-outer duo-inner
+store_screenshots/.venv/bin/python store_screenshots/scripts/export.py --devices duo-outer duo-inner --check
 store_screenshots/.venv/bin/python store_screenshots/scripts/browser-check.py --devices duo-outer duo-inner
 ```
 
@@ -152,8 +154,8 @@ insets top/bottom 24 pt and right 84 pt; inner 669 × 951 pt, top 48 pt and
 bottom 24 pt. System chrome is painted separately. These are widget captures,
 not an iOS 27.1 simulator / hardware compatibility certification.
 
-- Outer: `export/apple/iphone-duo-outer/en/01–06.png`, 1398 × 2034 RGB.
-- Inner: `export/apple/iphone-duo-inner/en/01–06.png`, 2007 × 2853 RGB.
+- Outer: `export/apple/iphone-duo-outer/<locale>/01–06.png`, 1398 × 2034 RGB.
+- Inner: `export/apple/iphone-duo-inner/<locale>/01–06.png`, 2007 × 2853 RGB.
 - Review sheets: `export/previews/duo-outer.png`, `duo-inner.png`.
 - Preview: `/preview?device=duo-outer&locale=en&h=640` (or `duo-inner`).
 
