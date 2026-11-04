@@ -1,3 +1,9 @@
+## [1.0.3]
+
+### Added
+
+* Use minimo in 13 languages, with a language picker in Settings
+
 ## [1.0.2]
 
 ### Added

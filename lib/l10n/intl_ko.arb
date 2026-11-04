@@ -1,0 +1,265 @@
+{
+  "unsavedResultsTitle": "저장되지 않은 사진",
+  "unsavedResultsExit": "저장되지 않은 압축 사진을 두고 삭제하시겠습니까?",
+  "@@locale": "ko",
+  "appName": "minimo (photo)",
+  "madeByKhlebobul": "khlebobul 제작",
+  "skip": "건너뛰기",
+  "next": "다음",
+  "getStarted": "시작하기",
+  "onboardingPickTitle": "사진 고르기",
+  "onboardingPickDescription": "하나 또는 여러 장의 사진을 선택하십시오. minimo는 로컬 파일과 함께 작동하며 원본을 그대로 유지합니다.",
+  "onboardingQualityTitle": "변경할 내용 선택",
+  "onboardingQualityDescription": "품질 사전 설정을 선택하거나 크기 및 메타데이터를 수동으로 조정하세요.",
+  "onboardingSaveTitle": "기본적으로 개인 정보 보호",
+  "onboardingSaveDescription": "압축은 장치에서 발생합니다. 사진은 어디에도 업로드되지 않습니다. 결과가 마음에 들면 더 작은 복사본을 저장하세요.",
+  "todo": "할 일",
+  "about": "앱 정보",
+  "aboutStory": "minimo(사진)는 단순한 좌절감에서 탄생했습니다.\n\n이 프로젝트는 모든 사람에게 모바일 장치에서 직접 사진을 압축하고 저장 공간을 절약하며 중요한 순간을 보관할 수 있는 편리하고 자유로운 방법을 제공합니다.",
+  "howCompressionWorksTitle": "사진이 어떻게 작아지는지",
+  "howCompressionWorksBody": "minimo는 사진의 새 복사본을 만들어 보다 효율적으로 저장합니다. 결과를 유용하게 유지하면서 이미지 품질이나 크기를 줄일 수 있습니다.\n\n품질이 낮을수록 눈에 띄기 어려운 작은 세부 사항이 저장됩니다. 크기가 작을수록 더 적은 수의 픽셀을 사용합니다. 둘 다 파일 크기를 줄입니다.\n\n원본 사진은 그대로 유지되며 장치에서 압축이 발생합니다.",
+  "openSourceNote": "minimo(사진)는 오픈소스입니다. 코드를 탐색하고, 프로젝트를 팔로우하고, 연락하세요.",
+  "rateTheApp": "앱 평가하기",
+  "shareWithFriends": "친구와 공유",
+  "shareAppText": "minimo(photo)를 사용해 보세요 — 휴대폰에서 사진을 더 작게 만들 수 있는 간단한 앱: {url}",
+  "@shareAppText": {
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "changelogTitle": "{version} 새 기능",
+  "@changelogTitle": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "changelogSubtitle": "아직 확인하지 않은 업데이트 내용",
+  "changelogDone": "확인",
+  "projectWebsite": "프로젝트 웹사이트",
+  "githubRepository": "github 저장소",
+  "xTwitter": "x (twitter)",
+  "myWebsite": "내 웹사이트",
+  "myOtherApps": "내 다른 앱",
+  "videoAppDescription": "휴대전화에서 바로 동영상을 작게 만드세요.",
+  "emailCopied": "이메일 복사됨",
+  "settings": "설정",
+  "addPrefix": "\"{prefix}\" 접두사 추가",
+  "@addPrefix": {
+    "placeholders": {
+      "prefix": {
+        "type": "String"
+      }
+    }
+  },
+  "addPrefixDescription": "원본 파일 이름 앞에 \"{prefix}\"를 추가합니다. 끄면 원본 이름을 유지합니다",
+  "@addPrefixDescription": {
+    "placeholders": {
+      "prefix": {
+        "type": "String"
+      }
+    }
+  },
+  "showOverheatWarning": "과열 경고 표시",
+  "showOverheatWarningDescription": "기기가 느려질 수 있을 때 압축 중 작은 배너를 표시합니다",
+  "savePhotosToAlbum": "사진을 앨범에 저장",
+  "savePhotosToAlbumDescription": "최근에 저장한 사진 대신 압축된 사진을 {album} 앨범에 저장합니다.",
+  "@savePhotosToAlbumDescription": {
+    "placeholders": {
+      "album": {
+        "type": "String"
+      }
+    }
+  },
+  "saveOptionsTitle": "저장 방법",
+  "saveAsNew": "새로 저장",
+  "saveAsNewDescription": "원본을 유지하고 새 갤러리 사진을 저장하세요",
+  "saveBesideOriginal": "원본 옆에 저장",
+  "saveBesideOriginalDescription": "원본을 유지하고 날짜와 메타데이터를 복사합니다",
+  "replaceOriginal": "원본 교체",
+  "replaceOriginalDescription": "원본 메타데이터와 함께 저장한 다음 원본 삭제를 요청하세요.",
+  "preventScreenSleep": "화면 켜기",
+  "preventScreenSleepDescription": "사진을 로드하거나 압축하는 동안 화면이 절전 모드로 전환되는 것을 방지합니다.",
+  "clearCache": "캐시 지우기",
+  "clearCacheDescription": "임시 앱 파일을 제거합니다. 갤러리에 저장된 사진은 그대로 유지됩니다.",
+  "holdToClearCache": "캐시를 지우려면 버튼을 길게 누르세요",
+  "cacheCleared": "캐시 지워짐",
+  "cacheClearFailed": "캐시를 지울 수 없습니다",
+  "language": "언어",
+  "languageDescription": "앱 언어를 선택하세요",
+  "darkTheme": "다크 테마",
+  "darkThemeDescription": "어두운 화면을 사용합니다",
+  "system": "시스템",
+  "english": "english",
+  "russian": "русский",
+  "overheatWarning": "기기가 뜨거워지면 압축이 느려질 수 있습니다",
+  "backgroundCompressionWarning": "압축이 끝날 때까지 minimo를 열어 두십시오. 다른 곳으로 전환하면 휴대전화에서 앱이 일시중지될 수 있습니다.",
+  "quality": "화질",
+  "resolution": "해상도",
+  "high": "높음",
+  "good": "좋음",
+  "medium": "중간",
+  "low": "낮음",
+  "small": "작음",
+  "resolutionDescription": "크기를 줄여 가장 많은 공간을 절약합니다",
+  "detailLevel": "사진 품질",
+  "detailLevelDescription": "목표 품질을 설정하거나 품질 사전 설정에서 선택하도록 합니다.",
+  "automatic": "자동",
+  "resize": "이미지 크기",
+  "resizeDescription": "가장 긴 이미지 면을 제한합니다. 더 작은 크기로 더 많은 공간을 절약",
+  "outputFormat": "출력 형식",
+  "outputFormatDescription": "JPEG는 어디에서나 작동합니다. heic은 더 작을 수 있지만 JPEG로 다시 떨어질 수 있습니다.",
+  "metadataMode": "메타데이터 모드",
+  "metadataModeDescription": "지원되는 경우 카메라 및 EXIF 정보를 유지하거나 제거합니다.",
+  "keepMetadataLegacy": "메타데이터 유지",
+  "stripMetadata": "메타데이터 제거",
+  "original": "원본",
+  "compressed": "압축됨",
+  "simpleOptions": "간단",
+  "advancedOptions": "고급",
+  "qualityReducedDescription": "공간을 절약하기 위해 품질이 저하됩니다.",
+  "resolutionReducedHdDescription": "해상도를 hd로 낮춥니다",
+  "resolutionReducedSdDescription": "해상도를 sd로 낮춥니다",
+  "better": "더 좋게",
+  "smaller": "더 작게",
+  "noSavingsHint": "다른 모드를 사용해 보세요 — 이 모드는 크기를 줄이지 않습니다",
+  "compress": "압축",
+  "compressing": "압축 중...",
+  "cancel": "취소",
+  "holdToCancelCompression": "압축을 취소하려면 버튼을 길게 누르세요",
+  "compressionCancelled": "압축 취소됨",
+  "estimatingTimeRemaining": "남은 시간 계산 중...",
+  "secondsRemaining": "{count, plural, =1{약 1초 남음} other{약 {count}초 남음}}",
+  "@secondsRemaining": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "minutesRemaining": "{count, plural, =1{약 1분 남음} other{약 {count}분 남음}}",
+  "@minutesRemaining": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "pickFromGallery": "갤러리에서",
+  "pickFromFiles": "파일에서",
+  "loadingPhotos": "사진 로드 중...",
+  "loadingManyPhotosHint": "클라우드 저장소에서 다운로드하거나 대용량 파일을 복사하는 데 시간이 더 오래 걸릴 수 있습니다.",
+  "failedToPickPhotos": "사진 파일을 선택하세요",
+  "compressionComplete": "압축 완료",
+  "compressionCompleted": "압축이 완료됨",
+  "compressionFailed": "압축 실패",
+  "compressionFailedDescription": "이 사진을 압축할 수 없습니다. 다시 시도하거나 다른 것을 선택하세요.",
+  "alreadyOptimized": "쓸모없는 저축",
+  "alreadyOptimizedDescription": "이러한 설정은 파일을 10% 이상 줄이지 않았습니다. 품질이나 크기를 낮추어 보세요.",
+  "tryAgain": "다시 시도",
+  "youSavedSize": "{size} 절약",
+  "@youSavedSize": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "share": "공유",
+  "shareOrSave": "공유 또는 저장…",
+  "comparePhotos": "비교하다",
+  "originalPhoto": "전에",
+  "compressedPhoto": "이후",
+  "formatFallbackNotice": "heic을 사용할 수 없어서 이 사진은 jpeg로 저장되었습니다.",
+  "photoPreviewUnavailable": "미리보기를 사용할 수 없습니다",
+  "save": "저장",
+  "saved": "저장됨",
+  "holdToDeleteOriginals": "원본을 삭제하려면 버튼을 길게 누르세요",
+  "failedToShare": "사진을 공유할 수 없습니다. 다시 시도",
+  "savedPhotosAndDeletedOriginals": "{saved} 사진을 저장하고 {deleted} 원본을 삭제했습니다.",
+  "@savedPhotosAndDeletedOriginals": {
+    "placeholders": {
+      "saved": {
+        "type": "int"
+      },
+      "deleted": {
+        "type": "int"
+      }
+    }
+  },
+  "savedButOriginalsNotDeleted": "사진이 저장되었으나 일부 원본을 삭제할 수 없음: {error}",
+  "@savedButOriginalsNotDeleted": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "savedWithWarnings": "몇 가지 문제로 저장된 사진: {error}",
+  "@savedWithWarnings": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "metadataPreservationIncomplete": "일부 갤러리 메타데이터를 복사할 수 없습니다",
+  "originalDeletionFailed": "일부 원본을 삭제할 수 없습니다",
+  "waiting": "대기 중",
+  "failed": "실패",
+  "photoProgress": "{total}의 사진 {current}",
+  "@photoProgress": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "photosCompressed": "{total} 사진 중 {completed} 압축",
+  "@photosCompressed": {
+    "placeholders": {
+      "completed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "savePhotos": "{count} 사진 저장",
+  "@savePhotos": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "savedPhotosToGallery": "{count} 사진을 갤러리에 저장했습니다.",
+  "@savedPhotosToGallery": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "failedToSave": "사진을 저장할 수 없습니다. 다시 시도",
+  "photoQualityHighDescription": "세부 사항 및 원래 치수 유지",
+  "photoQualityMediumDescription": "균형 잡힌 품질과 파일 크기",
+  "photoQualityLowDescription": "공유할 수 있는 작은 파일",
+  "photoQualityDescription": "품질이 높을수록 더 많은 세부 정보가 유지되고 더 큰 파일이 생성됩니다.",
+  "maximumDimension": "최대 치수",
+  "maximumDimensionDescription": "가장 긴 이미지 면을 제한합니다. 값이 작을수록 더 많은 공간이 절약됩니다.",
+  "keepMetadata": "메타데이터",
+  "keepMetadataDescription": "지원되는 경우 카메라 및 EXIF 정보 보존",
+  "keepExif": "EXIF 메타데이터 유지",
+  "statistics": "통계",
+  "photosCompressedStat": "압축된 사진",
+  "spaceSavedStat": "절약한 공간",
+  "statisticsSinceVersion": "통계는 이 장치에 로컬로 저장됩니다."
+}

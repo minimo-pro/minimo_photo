@@ -166,6 +166,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "keepMetadataDescription": MessageLookupByLibrary.simpleMessage(
       "сохранять данные камеры и exif, когда формат это поддерживает",
     ),
+    "keepMetadataLegacy": MessageLookupByLibrary.simpleMessage(
+      "сохранять метаданные",
+    ),
     "language": MessageLookupByLibrary.simpleMessage("язык"),
     "languageDescription": MessageLookupByLibrary.simpleMessage(
       "выберите язык приложения",
@@ -185,7 +188,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "medium": MessageLookupByLibrary.simpleMessage("среднее"),
     "metadataMode": MessageLookupByLibrary.simpleMessage("звук"),
     "metadataModeDescription": MessageLookupByLibrary.simpleMessage(
-      "сохраните исходный звук или удалите его для меньшего размера",
+      "сохраняйте данные камеры и EXIF, если формат позволяет, или удаляйте их",
     ),
     "metadataPreservationIncomplete": MessageLookupByLibrary.simpleMessage(
       "некоторые метаданные галереи перенести не удалось",
@@ -225,7 +228,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "некоторые оригиналы удалить не удалось",
     ),
     "originalPhoto": MessageLookupByLibrary.simpleMessage("было"),
-    "outputFormat": MessageLookupByLibrary.simpleMessage("кодек"),
+    "outputFormat": MessageLookupByLibrary.simpleMessage("формат файла"),
     "outputFormatDescription": MessageLookupByLibrary.simpleMessage(
       "jpeg совместим везде; heic может быть компактнее, но иногда заменяется на jpeg",
     ),
@@ -272,7 +275,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "resize": MessageLookupByLibrary.simpleMessage("размер изображения"),
     "resizeDescription": MessageLookupByLibrary.simpleMessage(
-      "ограничивает число кадров в секунду; меньшая частота источника не повышается",
+      "ограничьте длинную сторону изображения; меньший размер экономит место",
     ),
     "resolution": MessageLookupByLibrary.simpleMessage("разрешение"),
     "resolutionDescription": MessageLookupByLibrary.simpleMessage(

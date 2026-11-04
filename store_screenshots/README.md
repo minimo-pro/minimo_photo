@@ -1,8 +1,9 @@
 # minimo (photo) store screenshots
 
 Next.js editor adapted from the `app-store-screenshots` template and this app's
-Pangolin font, sky backgrounds and red controls. Only **en** and **ru** are
-supported, matching `lib/l10n/intl_*.arb`.
+Pangolin font, sky backgrounds and red controls. The app and editor support
+**13 languages**, matching `lib/l10n/intl_*.arb`: en, de, es, fr, hi, it,
+ja, ko, nl, pt, ru, tr and zh. The Duo decks remain English only.
 
 ## Start and restore
 
@@ -44,7 +45,9 @@ not a simulator or hardware compression test. JPEG fixture copies use quality
 Preferences are mocked; no personal Photos library or real saved settings are
 read. Capture tests skip in ordinary test runs when local demo assets are absent.
 
-Pangolin covers both languages. All marketing text fitting includes word and
+Pangolin covers Latin and Cyrillic; system fallback fonts cover Hindi, Japanese,
+Korean and Chinese. The capture test loads macOS Arial Unicode for those scripts.
+All marketing text fitting includes word and
 letter spacing; no decorative background circles are used. Device screen
 ratios match captures; the Android camera is inside the screen.
 
@@ -58,7 +61,7 @@ flutter analyze
 ```
 
 The browser check clicks the actual **Export bundle** button for iPhone, iPad,
-Android and Feature Graphic; opens every downloaded PNG; checks both locales,
+Android and Feature Graphic; opens every downloaded PNG; checks all 13 locales,
 dimensions, no alpha channel, nonblank pixels and ZIP integrity. It also checks
 editing, saving, language switching, rejection of invalid project JSON and
 stale-cache protection, then restores the original settings. Close other
@@ -71,18 +74,18 @@ the README image and all ZIPs together. Rerun capture first after UI changes.
 
 | Asset | PNG size | Local output |
 |---|---|---|
-| iPhone 6.9-inch | 1320 × 2868 | `export/apple/iphone-6.9/{en,ru}/01–06.png` |
-| iPad 13-inch | 2064 × 2752 | `export/apple/ipad-13/{en,ru}/01–06.png` |
-| Android phone | 1080 × 1920 | `export/android/phone/{en,ru}/01–06.png` |
-| Android Feature Graphic | 1024 × 500 | `export/android/feature-graphic/{en,ru}/01.png` |
-| Apple Header | 3840 × 1646 | `export/apple/header/{en,ru}/01.png` |
-| Apple Search Results | 3840 × 2560 | `export/apple/search-results/{en,ru}/01.png` |
+| iPhone 6.9-inch | 1320 × 2868 | `export/apple/iphone-6.9/<locale>/01–06.png` |
+| iPad 13-inch | 2064 × 2752 | `export/apple/ipad-13/<locale>/01–06.png` |
+| Android phone | 1080 × 1920 | `export/android/phone/<locale>/01–06.png` |
+| Android Feature Graphic | 1024 × 500 | `export/android/feature-graphic/<locale>/01.png` |
+| Apple Header | 3840 × 1646 | `export/apple/header/<locale>/01.png` |
+| Apple Search Results | 3840 × 2560 | `export/apple/search-results/<locale>/01.png` |
 
-There are **42 PNGs**, 21 per language. Each deck follows the same story:
+There are **273 PNGs**, 21 per language, plus 12 English Duo PNGs. Each deck follows the same story:
 hero, before/after, batch, on-device privacy (dark), advanced settings and a
-feature wall. Chips only state verified app features. ZIPs: `export/minimo-photo-en.zip`,
-`export/minimo-photo-ru.zip`, `export/minimo-photo-all.zip`. Contact sheets:
-`export/previews/{iphone,ipad,android,en,ru,banners}.png`. The public README
+feature wall. Chips only state verified app features. ZIPs:
+`export/minimo-photo-<locale>.zip` and `export/minimo-photo-all.zip`.
+Contact sheets: `export/previews/{iphone,ipad,android,<locale>,banners}.png`. The public README
 overview is `docs/images/store-preview.png`, without labels or service bars.
 
 Preview routes:
@@ -133,8 +136,8 @@ Tag **@parthjadhav8** on Twitter to request inclusion in its showcase.
 
 Two additional portrait decks (`duo-outer`, `duo-inner`) reuse the iPhone
 story/copy and tablet composition. Existing iPhone 6.9-inch assets stay intact.
-Duo copy and captures currently contain English only; other locales wait for
-approval. The editor exports only locales present in every slide headline.
+Duo captures remain English only. The editor exports only locales present in
+every slide headline.
 
 ```bash
 flutter test test/store_screenshots/capture_test.dart --plain-name 'capture apple/duo'

@@ -6,21 +6,69 @@ import 'first_launch_service.dart';
 
 enum Language {
   en('en'),
-  ru('ru');
+  de('de'),
+  es('es'),
+  fr('fr'),
+  hi('hi'),
+  it('it'),
+  ja('ja'),
+  ko('ko'),
+  nl('nl'),
+  pt('pt'),
+  ru('ru'),
+  tr('tr'),
+  zh('zh');
 
   final String code;
 
   const Language(this.code);
 
-  static Language fromCode(String? code) => switch (code) {
-    'ru' => Language.ru,
-    _ => Language.en,
-  };
+  static Language fromCode(String? code) {
+    for (final language in values) {
+      if (language.code == code) return language;
+    }
+    return Language.en;
+  }
 }
 
 typedef Changelog = Map<String, Map<Language, List<String>>>;
 
 const Changelog _changelog = {
+  '1.0.3': {
+    Language.en: [
+      'minimo now supports 13 languages. choose yours in settings or use your device language.',
+    ],
+    Language.de: [
+      'minimo unterstützt jetzt 13 sprachen. wähle deine sprache in den einstellungen oder nutze die gerätesprache.',
+    ],
+    Language.es: [
+      'minimo ya está disponible en 13 idiomas. elige el tuyo en ajustes o usa el idioma del dispositivo.',
+    ],
+    Language.fr: [
+      'minimo est désormais disponible en 13 langues. choisissez la vôtre dans les réglages ou utilisez celle de votre appareil.',
+    ],
+    Language.hi: [
+      'minimo अब 13 भाषाओं में उपलब्ध है। सेटिंग में अपनी भाषा चुनें या फ़ोन की भाषा का उपयोग करें।',
+    ],
+    Language.it: [
+      'minimo ora supporta 13 lingue. scegli la tua nelle impostazioni o usa quella del dispositivo.',
+    ],
+    Language.ja: ['minimoが13言語に対応しました。設定で言語を選ぶか、端末の言語を使用できます。'],
+    Language.ko: ['이제 minimo를 13개 언어로 사용할 수 있습니다. 설정에서 언어를 선택하거나 기기 언어를 따르세요.'],
+    Language.nl: [
+      'minimo ondersteunt nu 13 talen. kies je taal in de instellingen of gebruik de taal van je apparaat.',
+    ],
+    Language.pt: [
+      'o minimo agora está disponível em 13 idiomas. escolha o seu nas configurações ou use o idioma do aparelho.',
+    ],
+    Language.ru: [
+      'minimo теперь доступен на 13 языках. выберите язык в настройках или используйте язык устройства.',
+    ],
+    Language.tr: [
+      'minimo artık 13 dili destekliyor. ayarlardan dilinizi seçin veya cihaz dilini kullanın.',
+    ],
+    Language.zh: ['minimo 现已支持 13 种语言。可在设置中选择语言，也可使用设备语言。'],
+  },
   '1.0.2': {
     Language.en: [
       'adjust photo quality and maximum dimension with sliders in advanced mode.',

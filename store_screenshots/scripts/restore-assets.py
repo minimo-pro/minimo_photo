@@ -10,7 +10,6 @@ from PIL import Image, ImageDraw, ImageFont, ImageOps
 
 ROOT = Path(__file__).resolve().parents[1]
 PUBLIC = ROOT / 'public'
-COMPARE_LABELS = {'en': ('before', 'after'), 'ru': ('было', 'стало')}
 
 def download(url):
     return subprocess.check_output(['curl', '--fail', '--location', '--silent', '--show-error',
@@ -52,9 +51,13 @@ def render_compare(width=1600, height=1200):
     before = ImageOps.fit(Image.open(before_path).convert('RGB'), (width, height))
     after = ImageOps.fit(Image.open(after_path).convert('RGB'), (width, height))
     sizes = [f'{path.stat().st_size / 1024:.1f} KB' for path in (before_path, after_path)]
-    font = ImageFont.truetype(str(PUBLIC / 'fonts/Pangolin-Regular.ttf'), 64)
+    copy = json.loads((ROOT / 'src/lib/store-copy.json').read_text())
     badge_font = ImageFont.truetype(str(PUBLIC / 'fonts/Pangolin-Regular.ttf'), 84)
-    for locale, labels in COMPARE_LABELS.items():
+    for locale, translations in copy.items():
+        labels = (translations['before'], translations['after'])
+        font_path = (PUBLIC / 'fonts/Pangolin-Regular.ttf' if locale in ('en', 'ru')
+                     else '/System/Library/Fonts/Supplemental/Arial Unicode.ttf')
+        font = ImageFont.truetype(str(font_path), 64)
         image = before.copy()
         image.paste(after.crop((width // 2, 0, width, height)), (width // 2, 0))
         overlay = Image.new('RGBA', image.size, (0, 0, 0, 0))

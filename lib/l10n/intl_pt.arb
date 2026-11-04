@@ -1,0 +1,265 @@
+{
+  "unsavedResultsTitle": "fotos não salvas",
+  "unsavedResultsExit": "sair e excluir fotos compactadas não salvas?",
+  "@@locale": "pt",
+  "appName": "minimo (photo)",
+  "madeByKhlebobul": "por khlebobul",
+  "skip": "pular",
+  "next": "próximo",
+  "getStarted": "começar",
+  "onboardingPickTitle": "escolha fotos",
+  "onboardingPickDescription": "escolha uma ou várias fotos. minimo funciona com arquivos locais e mantém os originais intactos",
+  "onboardingQualityTitle": "escolha o que mudar",
+  "onboardingQualityDescription": "escolha uma predefinição de qualidade ou ajuste dimensões e metadados manualmente",
+  "onboardingSaveTitle": "privado por padrão",
+  "onboardingSaveDescription": "a compactação acontece no seu dispositivo. as fotos não são carregadas em lugar nenhum; salve a cópia menor quando gostar do resultado",
+  "todo": "fazer",
+  "about": "sobre",
+  "aboutStory": "minimo (foto) nasceu de uma simples frustração.\n\neste projeto oferece a todos uma maneira conveniente e gratuita de compactar fotos diretamente em um dispositivo móvel, economizar armazenamento e manter os momentos que importam.",
+  "howCompressionWorksTitle": "como a foto fica menor",
+  "howCompressionWorksBody": "minimo faz uma nova cópia da sua foto e a armazena com mais eficiência. pode reduzir a qualidade ou as dimensões da imagem, mantendo o resultado útil.\n\nqualidade inferior armazena menos pequenos detalhes que são difíceis de notar. dimensões menores usam menos pixels. ambos reduzem o tamanho do arquivo.\n\nsua foto original permanece intacta e a compactação ocorre no seu dispositivo.",
+  "openSourceNote": "minimo (foto) é de código aberto. explore o código, acompanhe o projeto ou entre em contato",
+  "rateTheApp": "avaliar o app",
+  "shareWithFriends": "compartilhar com amigos",
+  "shareAppText": "experimente o minimo (foto) – um aplicativo simples para diminuir o tamanho das fotos no seu telefone: {url}",
+  "@shareAppText": {
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "changelogTitle": "novidades da versão {version}",
+  "@changelogTitle": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "changelogSubtitle": "mudanças de atualizações que você ainda não viu",
+  "changelogDone": "entendi",
+  "projectWebsite": "site do projeto",
+  "githubRepository": "repositório no github",
+  "xTwitter": "x (twitter)",
+  "myWebsite": "meu site",
+  "myOtherApps": "meus outros apps",
+  "videoAppDescription": "diminua o tamanho dos vídeos diretamente no seu telefone",
+  "emailCopied": "e-mail copiado",
+  "settings": "configurações",
+  "addPrefix": "adicionar o prefixo \"{prefix}\"",
+  "@addPrefix": {
+    "placeholders": {
+      "prefix": {
+        "type": "String"
+      }
+    }
+  },
+  "addPrefixDescription": "adiciona \"{prefix}\" antes do nome original. ao desativar, mantém o nome original",
+  "@addPrefixDescription": {
+    "placeholders": {
+      "prefix": {
+        "type": "String"
+      }
+    }
+  },
+  "showOverheatWarning": "mostrar aviso de superaquecimento",
+  "showOverheatWarningDescription": "mostra um pequeno aviso durante a compressão quando o dispositivo pode ficar mais lento",
+  "savePhotosToAlbum": "salvar fotos no álbum",
+  "savePhotosToAlbumDescription": "salva fotos compactadas no álbum {album} em vez de salvas recentemente",
+  "@savePhotosToAlbumDescription": {
+    "placeholders": {
+      "album": {
+        "type": "String"
+      }
+    }
+  },
+  "saveOptionsTitle": "como salvar",
+  "saveAsNew": "salvar como novo",
+  "saveAsNewDescription": "mantenha o original e salve uma nova foto da galeria",
+  "saveBesideOriginal": "salvar ao lado do original",
+  "saveBesideOriginalDescription": "manter o original e copiar a data e os metadados dele",
+  "replaceOriginal": "substituir o original",
+  "replaceOriginalDescription": "salve com os metadados originais e peça para excluir o original",
+  "preventScreenSleep": "manter a tela ligada",
+  "preventScreenSleepDescription": "evita que a tela hiberne enquanto as fotos estão sendo carregadas ou compactadas",
+  "clearCache": "limpar cache",
+  "clearCacheDescription": "remove arquivos temporários de aplicativos. as fotos salvas na sua galeria permanecem intactas",
+  "holdToClearCache": "mantenha o botão pressionado para limpar o cache",
+  "cacheCleared": "cache limpo",
+  "cacheClearFailed": "não foi possível limpar o cache",
+  "language": "idioma",
+  "languageDescription": "escolha o idioma do app",
+  "darkTheme": "tema escuro",
+  "darkThemeDescription": "usar aparência escura",
+  "system": "sistema",
+  "english": "english",
+  "russian": "русский",
+  "overheatWarning": "a compressão pode ficar mais lenta se o dispositivo esquentar",
+  "backgroundCompressionWarning": "mantenha o mínimo aberto até que a compressão termine. seu telefone pode pausar o aplicativo se você sair",
+  "quality": "qualidade",
+  "resolution": "resolução",
+  "high": "alta",
+  "good": "boa",
+  "medium": "média",
+  "low": "baixa",
+  "small": "pequeno",
+  "resolutionDescription": "reduza as dimensões para economizar o máximo de espaço",
+  "detailLevel": "qualidade da foto",
+  "detailLevelDescription": "defina uma qualidade alvo ou deixe a predefinição de qualidade escolhê-la",
+  "automatic": "auto",
+  "resize": "dimensões da imagem",
+  "resizeDescription": "limite o lado mais longo da imagem; dimensões menores economizam mais espaço",
+  "outputFormat": "formato de saída",
+  "outputFormatDescription": "jpeg funciona em qualquer lugar; heic pode ser menor, mas pode voltar para jpeg",
+  "metadataMode": "modo de metadados",
+  "metadataModeDescription": "mantenha as informações da câmera e EXIF quando compatível ou remova-as",
+  "keepMetadataLegacy": "manter metadados",
+  "stripMetadata": "remover metadados",
+  "original": "original",
+  "compressed": "comprimido",
+  "simpleOptions": "simples",
+  "advancedOptions": "avançado",
+  "qualityReducedDescription": "a qualidade será reduzida para economizar espaço",
+  "resolutionReducedHdDescription": "a resolução será reduzida para hd",
+  "resolutionReducedSdDescription": "a resolução será reduzida para sd",
+  "better": "melhor",
+  "smaller": "menor",
+  "noSavingsHint": "tente outro modo — este não vai diminuir o tamanho",
+  "compress": "comprimir",
+  "compressing": "comprimindo...",
+  "cancel": "cancelar",
+  "holdToCancelCompression": "mantenha o botão pressionado para cancelar a compressão",
+  "compressionCancelled": "compressão cancelada",
+  "estimatingTimeRemaining": "calculando o tempo restante...",
+  "secondsRemaining": "{count, plural, =1{falta cerca de 1 segundo} other{faltam cerca de {count} segundos}}",
+  "@secondsRemaining": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "minutesRemaining": "{count, plural, =1{falta cerca de 1 minuto} other{faltam cerca de {count} minutos}}",
+  "@minutesRemaining": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "pickFromGallery": "da galeria",
+  "pickFromFiles": "dos arquivos",
+  "loadingPhotos": "carregando fotos...",
+  "loadingManyPhotosHint": "baixar do armazenamento em nuvem ou copiar arquivos grandes pode demorar mais",
+  "failedToPickPhotos": "escolha um arquivo de foto",
+  "compressionComplete": "compressão concluída",
+  "compressionCompleted": "compressão concluída",
+  "compressionFailed": "falha na compressão",
+  "compressionFailedDescription": "não foi possível compactar esta foto. tente novamente ou escolha outro.",
+  "alreadyOptimized": "nenhuma economia útil",
+  "alreadyOptimizedDescription": "essas configurações não reduziram o arquivo em pelo menos 10%. tente qualidade ou dimensões inferiores.",
+  "tryAgain": "tentar novamente",
+  "youSavedSize": "você economizou {size}",
+  "@youSavedSize": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "share": "compartilhar",
+  "shareOrSave": "compartilhar ou salvar em…",
+  "comparePhotos": "comparar",
+  "originalPhoto": "antes",
+  "compressedPhoto": "depois",
+  "formatFallbackNotice": "heic não estava disponível, então esta foto foi salva como jpeg",
+  "photoPreviewUnavailable": "visualização indisponível",
+  "save": "salvar",
+  "saved": "salvo",
+  "holdToDeleteOriginals": "mantenha o botão pressionado para excluir os originais",
+  "failedToShare": "não foi possível compartilhar as fotos. tente novamente",
+  "savedPhotosAndDeletedOriginals": "salvou fotos {saved} e excluiu originais {deleted}",
+  "@savedPhotosAndDeletedOriginals": {
+    "placeholders": {
+      "saved": {
+        "type": "int"
+      },
+      "deleted": {
+        "type": "int"
+      }
+    }
+  },
+  "savedButOriginalsNotDeleted": "fotos salvas, mas alguns originais não puderam ser excluídos: {error}",
+  "@savedButOriginalsNotDeleted": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "savedWithWarnings": "fotos salvas com alguns problemas: {error}",
+  "@savedWithWarnings": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "metadataPreservationIncomplete": "alguns metadados da galeria não puderam ser copiados",
+  "originalDeletionFailed": "alguns originais não puderam ser excluídos",
+  "waiting": "aguardando",
+  "failed": "falhou",
+  "photoProgress": "foto {current} de {total}",
+  "@photoProgress": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "photosCompressed": "{completed} de fotos {total} compactadas",
+  "@photosCompressed": {
+    "placeholders": {
+      "completed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "savePhotos": "salvar fotos {count}",
+  "@savePhotos": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "savedPhotosToGallery": "salvou fotos {count} na galeria",
+  "@savedPhotosToGallery": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "failedToSave": "não foi possível salvar as fotos. tente novamente",
+  "photoQualityHighDescription": "mantenha detalhes e dimensões originais",
+  "photoQualityMediumDescription": "qualidade e tamanho de arquivo equilibrados",
+  "photoQualityLowDescription": "arquivos menores para compartilhar",
+  "photoQualityDescription": "qualidade superior mantém mais detalhes e cria um arquivo maior",
+  "maximumDimension": "dimensão máxima",
+  "maximumDimensionDescription": "limite o lado mais longo da imagem; valores menores economizam mais espaço",
+  "keepMetadata": "metadados",
+  "keepMetadataDescription": "preservar informações da câmera e exif quando suportado",
+  "keepExif": "manter metadados exif",
+  "statistics": "estatísticas",
+  "photosCompressedStat": "fotos compactadas",
+  "spaceSavedStat": "espaço economizado",
+  "statisticsSinceVersion": "as estatísticas são armazenadas localmente neste dispositivo."
+}

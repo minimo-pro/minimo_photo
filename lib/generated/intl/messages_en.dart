@@ -187,7 +187,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "medium": MessageLookupByLibrary.simpleMessage("medium"),
     "metadataMode": MessageLookupByLibrary.simpleMessage("metadatamode"),
     "metadataModeDescription": MessageLookupByLibrary.simpleMessage(
-      "keep the original audio or strip it to save more space",
+      "keep camera and EXIF information when supported, or remove it",
     ),
     "metadataPreservationIncomplete": MessageLookupByLibrary.simpleMessage(
       "some gallery metadata could not be copied",
@@ -223,7 +223,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "some originals could not be deleted",
     ),
     "originalPhoto": MessageLookupByLibrary.simpleMessage("before"),
-    "outputFormat": MessageLookupByLibrary.simpleMessage("outputformat"),
+    "outputFormat": MessageLookupByLibrary.simpleMessage("output format"),
     "outputFormatDescription": MessageLookupByLibrary.simpleMessage(
       "jpeg works everywhere; heic can be smaller but may fall back to jpeg",
     ),
@@ -270,7 +270,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "resize": MessageLookupByLibrary.simpleMessage("image dimensions"),
     "resizeDescription": MessageLookupByLibrary.simpleMessage(
-      "limit output frames per second; higher source rates are left unchanged",
+      "limit the longest image side; smaller dimensions save more space",
     ),
     "resolution": MessageLookupByLibrary.simpleMessage("resolution"),
     "resolutionDescription": MessageLookupByLibrary.simpleMessage(

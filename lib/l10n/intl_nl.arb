@@ -1,0 +1,265 @@
+{
+  "unsavedResultsTitle": "niet-opgeslagen foto's",
+  "unsavedResultsExit": "niet-opgeslagen gecomprimeerde foto's achterlaten en verwijderen?",
+  "@@locale": "nl",
+  "appName": "minimo (photo)",
+  "madeByKhlebobul": "door khlebobul",
+  "skip": "overslaan",
+  "next": "volgende",
+  "getStarted": "aan de slag",
+  "onboardingPickTitle": "kies foto's",
+  "onboardingPickDescription": "kies één of meerdere foto's. minimo werkt met lokale bestanden en houdt de originelen onaangeroerd",
+  "onboardingQualityTitle": "kies wat er verandert",
+  "onboardingQualityDescription": "kies een kwaliteitsvoorinstelling of pas afmetingen en metadata handmatig aan",
+  "onboardingSaveTitle": "standaard privé",
+  "onboardingSaveDescription": "compressie vindt plaats op uw apparaat. foto's worden nergens geüpload; bewaar de kleinere kopie als het resultaat u bevalt",
+  "todo": "taak",
+  "about": "over de app",
+  "aboutStory": "minimo (foto) is ontstaan uit een simpele frustratie.\n\ndit project biedt iedereen een handige en gratis manier om foto's rechtstreeks op een mobiel apparaat te comprimeren, opslagruimte te besparen en de momenten die er toe doen vast te leggen.",
+  "howCompressionWorksTitle": "hoe de foto kleiner wordt",
+  "howCompressionWorksBody": "minimo maakt een nieuwe kopie van uw foto en slaat deze efficiënter op. het kan de beeldkwaliteit of afmetingen verminderen terwijl het resultaat bruikbaar blijft.\n\nlagere kwaliteit slaat minder kleine details op die moeilijk op te merken zijn. kleinere afmetingen gebruiken minder pixels. beide verkleinen de bestandsgrootte.\n\nuw originele foto blijft onaangeroerd en de compressie vindt plaats op uw apparaat.",
+  "openSourceNote": "minimo (foto) is open source. verken de code, volg het project of neem contact op",
+  "rateTheApp": "beoordeel de app",
+  "shareWithFriends": "delen met vrienden",
+  "shareAppText": "probeer minimo (foto) — een eenvoudige app om foto's kleiner te maken op je telefoon: {url}",
+  "@shareAppText": {
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "changelogTitle": "nieuw in {version}",
+  "@changelogTitle": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "changelogSubtitle": "wijzigingen uit updates die je nog niet hebt gezien",
+  "changelogDone": "begrepen",
+  "projectWebsite": "projectwebsite",
+  "githubRepository": "github-repository",
+  "xTwitter": "x (twitter)",
+  "myWebsite": "mijn website",
+  "myOtherApps": "mijn andere apps",
+  "videoAppDescription": "maak video's kleiner, rechtstreeks op je telefoon",
+  "emailCopied": "e-mailadres gekopieerd",
+  "settings": "instellingen",
+  "addPrefix": "voorvoegsel \"{prefix}\" toevoegen",
+  "@addPrefix": {
+    "placeholders": {
+      "prefix": {
+        "type": "String"
+      }
+    }
+  },
+  "addPrefixDescription": "voegt \"{prefix}\" toe voor de oorspronkelijke bestandsnaam. uitschakelen behoudt de oorspronkelijke naam",
+  "@addPrefixDescription": {
+    "placeholders": {
+      "prefix": {
+        "type": "String"
+      }
+    }
+  },
+  "showOverheatWarning": "waarschuwing voor oververhitting tonen",
+  "showOverheatWarningDescription": "toont tijdens compressie een kleine melding wanneer het apparaat mogelijk trager wordt",
+  "savePhotosToAlbum": "foto's opslaan in album",
+  "savePhotosToAlbumDescription": "slaat gecomprimeerde foto's op in het {album}-album in plaats van recentelijk opgeslagen",
+  "@savePhotosToAlbumDescription": {
+    "placeholders": {
+      "album": {
+        "type": "String"
+      }
+    }
+  },
+  "saveOptionsTitle": "manier van opslaan",
+  "saveAsNew": "opslaan als nieuw",
+  "saveAsNewDescription": "bewaar het origineel en sla een nieuwe galerijfoto op",
+  "saveBesideOriginal": "naast origineel opslaan",
+  "saveBesideOriginalDescription": "behoud het origineel en kopieer de datum en metadata",
+  "replaceOriginal": "origineel vervangen",
+  "replaceOriginalDescription": "sla op met de originele metagegevens en vraag vervolgens om het origineel te verwijderen",
+  "preventScreenSleep": "scherm ingeschakeld houden",
+  "preventScreenSleepDescription": "voorkomt dat het scherm slaapt terwijl foto's worden geladen of gecomprimeerd",
+  "clearCache": "cache wissen",
+  "clearCacheDescription": "verwijdert tijdelijke app-bestanden. foto's die in uw galerij zijn opgeslagen, blijven onaangeroerd",
+  "holdToClearCache": "houd de knop ingedrukt om de cache te wissen",
+  "cacheCleared": "cache gewist",
+  "cacheClearFailed": "cache kon niet worden gewist",
+  "language": "taal",
+  "languageDescription": "kies de taal van de app",
+  "darkTheme": "donker thema",
+  "darkThemeDescription": "gebruik de donkere weergave",
+  "system": "systeem",
+  "english": "english",
+  "russian": "русский",
+  "overheatWarning": "compressie kan trager worden als je apparaat warm wordt",
+  "backgroundCompressionWarning": "houd minimo open totdat de compressie is voltooid. uw telefoon kan de app pauzeren als u wegschakelt",
+  "quality": "kwaliteit",
+  "resolution": "resolutie",
+  "high": "hoog",
+  "good": "goed",
+  "medium": "gemiddeld",
+  "low": "laag",
+  "small": "klein",
+  "resolutionDescription": "verlaag de afmetingen voor de grootste ruimtebesparing",
+  "detailLevel": "foto kwaliteit",
+  "detailLevelDescription": "stel een doelkwaliteit in of laat de kwaliteitsvoorinstelling deze kiezen",
+  "automatic": "auto",
+  "resize": "afmetingen van afbeeldingen",
+  "resizeDescription": "beperk de langste beeldzijde; kleinere afmetingen besparen meer ruimte",
+  "outputFormat": "uitvoerformaat",
+  "outputFormatDescription": "jpeg werkt overal; heic kan kleiner zijn, maar kan terugvallen op jpeg",
+  "metadataMode": "metadatamodus",
+  "metadataModeDescription": "bewaar camera- en EXIF-informatie indien ondersteund, of verwijder deze",
+  "keepMetadataLegacy": "metagegevens bewaren",
+  "stripMetadata": "metagegevens verwijderen",
+  "original": "origineel",
+  "compressed": "gecomprimeerd",
+  "simpleOptions": "eenvoudig",
+  "advancedOptions": "geavanceerd",
+  "qualityReducedDescription": "de kwaliteit zal worden verminderd om ruimte te besparen",
+  "resolutionReducedHdDescription": "de resolutie wordt verlaagd naar hd",
+  "resolutionReducedSdDescription": "de resolutie wordt verlaagd naar sd",
+  "better": "beter",
+  "smaller": "kleiner",
+  "noSavingsHint": "probeer een andere modus — deze maakt het bestand niet kleiner",
+  "compress": "comprimeren",
+  "compressing": "comprimeren...",
+  "cancel": "annuleren",
+  "holdToCancelCompression": "houd de knop ingedrukt om de compressie te annuleren",
+  "compressionCancelled": "compressie geannuleerd",
+  "estimatingTimeRemaining": "resterende tijd schatten...",
+  "secondsRemaining": "{count, plural, =1{nog ongeveer 1 seconde} other{nog ongeveer {count} seconden}}",
+  "@secondsRemaining": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "minutesRemaining": "{count, plural, =1{nog ongeveer 1 minuut} other{nog ongeveer {count} minuten}}",
+  "@minutesRemaining": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "pickFromGallery": "uit galerij",
+  "pickFromFiles": "uit bestanden",
+  "loadingPhotos": "foto's laden...",
+  "loadingManyPhotosHint": "downloaden vanuit de cloudopslag of het kopiëren van grote bestanden kan langer duren",
+  "failedToPickPhotos": "kies een fotobestand",
+  "compressionComplete": "compressie voltooid",
+  "compressionCompleted": "compressie voltooid",
+  "compressionFailed": "compressie mislukt",
+  "compressionFailedDescription": "we konden deze foto niet comprimeren. probeer het opnieuw of kies een andere.",
+  "alreadyOptimized": "geen nuttige besparingen",
+  "alreadyOptimizedDescription": "deze instellingen hebben het bestand niet met minstens 10% verkleind. probeer een lagere kwaliteit of afmetingen.",
+  "tryAgain": "opnieuw proberen",
+  "youSavedSize": "je hebt {size} bespaard",
+  "@youSavedSize": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "share": "delen",
+  "shareOrSave": "delen of opslaan in…",
+  "comparePhotos": "vergelijk",
+  "originalPhoto": "voor",
+  "compressedPhoto": "na",
+  "formatFallbackNotice": "heic was niet beschikbaar, dus deze foto is opgeslagen als jpeg",
+  "photoPreviewUnavailable": "voorbeeld niet beschikbaar",
+  "save": "opslaan",
+  "saved": "opgeslagen",
+  "holdToDeleteOriginals": "houd de knop ingedrukt om originelen te verwijderen",
+  "failedToShare": "kon de foto's niet delen. probeer het opnieuw",
+  "savedPhotosAndDeletedOriginals": "opgeslagen {saved}-foto('s) en verwijderde {deleted}-origineel(en)",
+  "@savedPhotosAndDeletedOriginals": {
+    "placeholders": {
+      "saved": {
+        "type": "int"
+      },
+      "deleted": {
+        "type": "int"
+      }
+    }
+  },
+  "savedButOriginalsNotDeleted": "foto's opgeslagen, maar sommige originelen konden niet worden verwijderd: {error}",
+  "@savedButOriginalsNotDeleted": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "savedWithWarnings": "foto's opgeslagen met enkele problemen: {error}",
+  "@savedWithWarnings": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "metadataPreservationIncomplete": "sommige galerijmetadata kon niet worden gekopieerd",
+  "originalDeletionFailed": "sommige originelen konden niet worden verwijderd",
+  "waiting": "wachten",
+  "failed": "mislukt",
+  "photoProgress": "foto {current} of {total}",
+  "@photoProgress": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "photosCompressed": "{completed} van {total}-foto's gecomprimeerd",
+  "@photosCompressed": {
+    "placeholders": {
+      "completed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "savePhotos": "bewaar {count}-foto's",
+  "@savePhotos": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "savedPhotosToGallery": "{count}-foto's opgeslagen in galerij",
+  "@savedPhotosToGallery": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "failedToSave": "kon de foto's niet opslaan. probeer het opnieuw",
+  "photoQualityHighDescription": "behoud details en originele afmetingen",
+  "photoQualityMediumDescription": "evenwichtige kwaliteit en bestandsgrootte",
+  "photoQualityLowDescription": "kleinere bestanden om te delen",
+  "photoQualityDescription": "hogere kwaliteit behoudt meer details en creëert een groter bestand",
+  "maximumDimension": "maximale afmeting",
+  "maximumDimensionDescription": "beperk de langste beeldzijde; kleinere waarden besparen meer ruimte",
+  "keepMetadata": "metagegevens",
+  "keepMetadataDescription": "bewaar camera- en exif-informatie indien ondersteund",
+  "keepExif": "bewaar exif-metagegevens",
+  "statistics": "statistieken",
+  "photosCompressedStat": "foto's gecomprimeerd",
+  "spaceSavedStat": "ruimte bespaard",
+  "statisticsSinceVersion": "statistieken worden lokaal op dit apparaat opgeslagen."
+}

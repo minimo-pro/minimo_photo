@@ -177,6 +177,11 @@ void _captureScreenshots() {
     await (FontLoader(
       'Pangolin',
     )..addFont(rootBundle.load('assets/fonts/Pangolin-Regular.ttf'))).load();
+    // Widget tests do not load system fallback fonts automatically.
+    await (FontLoader('StoreFallback')..addFont(
+      File('/System/Library/Fonts/Supplemental/Arial Unicode.ttf')
+          .readAsBytes().then(ByteData.sublistView),
+    )).load();
     await (FontLoader(
       'StatusBar',
     )..addFont(rootBundle.load('assets/fonts/Pangolin-Regular.ttf'))).load();
@@ -431,8 +436,10 @@ Future<void> _shoot(
   await tester.pump();
 }
 
-ThemeData _theme(ThemeData base, TargetPlatform platform) =>
-    base.copyWith(platform: platform);
+ThemeData _theme(ThemeData base, TargetPlatform platform) => base.copyWith(
+  platform: platform,
+  textTheme: base.textTheme.apply(fontFamilyFallback: const ['StoreFallback']),
+);
 
 class _CompressPage extends StatelessWidget {
   final Widget child;
