@@ -1,0 +1,265 @@
+{
+  "unsavedResultsTitle": "保存されていない写真",
+  "unsavedResultsExit": "終了して、未保存の圧縮写真を破棄しますか？",
+  "@@locale": "ja",
+  "appName": "minimo (photo)",
+  "madeByKhlebobul": "khlebobul 作",
+  "skip": "スキップ",
+  "next": "次へ",
+  "getStarted": "始める",
+  "onboardingPickTitle": "写真を選ぶ",
+  "onboardingPickDescription": "1 つまたは複数の写真を選択します。 minimo はローカル ファイルを操作し、オリジナルをそのまま保持します",
+  "onboardingQualityTitle": "変更内容を選択",
+  "onboardingQualityDescription": "品質プリセットを選択するか、寸法とメタデータを手動で調整します",
+  "onboardingSaveTitle": "プライバシーを優先",
+  "onboardingSaveDescription": "圧縮はデバイス上で行われます。写真はどこにもアップロードされません。結果が気に入ったら、小さいコピーを保存します",
+  "todo": "やるべきこと",
+  "about": "このアプリについて",
+  "aboutStory": "minimo（写真）は、単純な不満から生まれました。\n\nこのプロジェクトは、モバイル デバイス上で写真を直接圧縮し、ストレージを節約し、重要な瞬間を保存するための便利で無料の方法を誰にでも提供します。",
+  "howCompressionWorksTitle": "写真が小さくなる仕組み",
+  "howCompressionWorksBody": "minimo は写真の新しいコピーを作成し、より効率的に保存します。有用な結果を維持しながら、画質やサイズを下げることができます。\n\n低品質では、気づきにくい小さな詳細があまり保存されません。寸法が小さいほど、使用するピクセルが少なくなります。どちらもファイルサイズを削減します。\n\n元の写真は変更されず、デバイス上で圧縮が行われます。",
+  "openSourceNote": "minimo (写真) はオープンソースです。コードを探索したり、プロジェクトをフォローしたり、連絡したりする",
+  "rateTheApp": "アプリを評価",
+  "shareWithFriends": "友達と共有",
+  "shareAppText": "minimo (写真) を試してください — 携帯電話で写真を小さくするためのシンプルなアプリ: {url}",
+  "@shareAppText": {
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "changelogTitle": "{version}の新機能",
+  "@changelogTitle": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "changelogSubtitle": "まだ確認していない更新内容",
+  "changelogDone": "了解",
+  "projectWebsite": "プロジェクトサイト",
+  "githubRepository": "githubリポジトリ",
+  "xTwitter": "x (twitter)",
+  "myWebsite": "私のサイト",
+  "myOtherApps": "その他のアプリ",
+  "videoAppDescription": "携帯電話で直接ビデオを小さくする",
+  "emailCopied": "メールアドレスをコピーしました",
+  "settings": "設定",
+  "addPrefix": "\"{prefix}\"接頭辞を追加",
+  "@addPrefix": {
+    "placeholders": {
+      "prefix": {
+        "type": "String"
+      }
+    }
+  },
+  "addPrefixDescription": "元のファイル名の前に\"{prefix}\"を追加します。オフにすると元の名前を保持します",
+  "@addPrefixDescription": {
+    "placeholders": {
+      "prefix": {
+        "type": "String"
+      }
+    }
+  },
+  "showOverheatWarning": "過熱警告を表示",
+  "showOverheatWarningDescription": "デバイスが遅くなる可能性があるときに小さなバナーを表示します",
+  "savePhotosToAlbum": "写真をアルバムに保存する",
+  "savePhotosToAlbumDescription": "圧縮された写真を最近保存したものではなく、{album} アルバムに保存します",
+  "@savePhotosToAlbumDescription": {
+    "placeholders": {
+      "album": {
+        "type": "String"
+      }
+    }
+  },
+  "saveOptionsTitle": "保存方法",
+  "saveAsNew": "新規保存",
+  "saveAsNewDescription": "オリジナルを保持し、新しいギャラリー写真を保存します",
+  "saveBesideOriginal": "元の写真の隣に保存",
+  "saveBesideOriginalDescription": "元の写真を残し、撮影日とメタデータをコピーします",
+  "replaceOriginal": "元の写真を置き換え",
+  "replaceOriginalDescription": "元のメタデータを引き継いで保存し、元の写真を削除するか確認します",
+  "preventScreenSleep": "画面をオンのままにする",
+  "preventScreenSleepDescription": "写真の読み込み中または圧縮中に画面がスリープ状態になるのを防ぎます",
+  "clearCache": "キャッシュを消去",
+  "clearCacheDescription": "アプリの一時ファイルを削除します。ギャラリーに保存された写真はそのまま残ります",
+  "holdToClearCache": "ボタンを長押ししてキャッシュを消去",
+  "cacheCleared": "キャッシュを消去しました",
+  "cacheClearFailed": "キャッシュを消去できません",
+  "language": "言語",
+  "languageDescription": "アプリの言語を選択",
+  "darkTheme": "ダークテーマ",
+  "darkThemeDescription": "暗い外観を使用",
+  "system": "システム",
+  "english": "english",
+  "russian": "русский",
+  "overheatWarning": "デバイスが熱くなると圧縮が遅くなることがあります",
+  "backgroundCompressionWarning": "圧縮が完了するまで minimo を開いたままにしてください。切り替えると携帯電話がアプリを一時停止する可能性があります",
+  "quality": "画質",
+  "resolution": "解像度",
+  "high": "高",
+  "good": "良好",
+  "medium": "中",
+  "low": "低",
+  "small": "小",
+  "resolutionDescription": "寸法を下げると容量を最も節約できます",
+  "detailLevel": "写真の品質",
+  "detailLevelDescription": "目標品質を設定するか、品質プリセットで選択させます",
+  "automatic": "自動",
+  "resize": "画像の寸法",
+  "resizeDescription": "画像の最長辺を制限します。より小さな寸法でより多くのスペースを節約",
+  "outputFormat": "出力形式",
+  "outputFormatDescription": "jpeg はどこでも機能します。 heic の方が小さくなる可能性がありますが、jpeg に戻る可能性があります",
+  "metadataMode": "メタデータモード",
+  "metadataModeDescription": "サポートされている場合はカメラと EXIF 情報を保持するか、削除します",
+  "keepMetadataLegacy": "メタデータを保持する",
+  "stripMetadata": "メタデータを削除する",
+  "original": "オリジナル",
+  "compressed": "圧縮済み",
+  "simpleOptions": "シンプル",
+  "advancedOptions": "詳細",
+  "qualityReducedDescription": "スペースを節約するために品質が低下します",
+  "resolutionReducedHdDescription": "解像度をhdに下げます",
+  "resolutionReducedSdDescription": "解像度をsdに下げます",
+  "better": "高品質",
+  "smaller": "小さい",
+  "noSavingsHint": "別のモードをお試しください — これでは小さくなりません",
+  "compress": "圧縮",
+  "compressing": "圧縮中...",
+  "cancel": "キャンセル",
+  "holdToCancelCompression": "ボタンを長押しして圧縮をキャンセル",
+  "compressionCancelled": "圧縮をキャンセルしました",
+  "estimatingTimeRemaining": "残り時間を計算中...",
+  "secondsRemaining": "{count, plural, =1{残り約1秒} other{残り約{count}秒}}",
+  "@secondsRemaining": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "minutesRemaining": "{count, plural, =1{残り約1分} other{残り約{count}分}}",
+  "@minutesRemaining": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "pickFromGallery": "ギャラリーから",
+  "pickFromFiles": "ファイルから",
+  "loadingPhotos": "写真を読み込んでいます...",
+  "loadingManyPhotosHint": "クラウド ストレージからのダウンロードや大きなファイルのコピーには時間がかかる場合があります",
+  "failedToPickPhotos": "写真ファイルを選択してください",
+  "compressionComplete": "圧縮完了",
+  "compressionCompleted": "圧縮が完了しました",
+  "compressionFailed": "圧縮に失敗しました",
+  "compressionFailedDescription": "この写真は圧縮できませんでした。もう一度試すか、別のものを選択してください。",
+  "alreadyOptimized": "有益な貯蓄がない",
+  "alreadyOptimizedDescription": "これらの設定では、ファイルは少なくとも 10% 削減されませんでした。低品質または低サイズを試してください。",
+  "tryAgain": "再試行",
+  "youSavedSize": "{size}節約しました",
+  "@youSavedSize": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "share": "共有",
+  "shareOrSave": "共有または保存先…",
+  "comparePhotos": "比較する",
+  "originalPhoto": "前に",
+  "compressedPhoto": "その後",
+  "formatFallbackNotice": "heic が利用できなかったので、この写真は jpeg で保存されました",
+  "photoPreviewUnavailable": "プレビューは利用できません",
+  "save": "保存",
+  "saved": "保存済み",
+  "holdToDeleteOriginals": "ボタンを長押しして元の写真を削除",
+  "failedToShare": "写真を共有できませんでした。もう一度試してください",
+  "savedPhotosAndDeletedOriginals": "{saved} 個の写真を保存し、{deleted} 個のオリジナルを削除しました",
+  "@savedPhotosAndDeletedOriginals": {
+    "placeholders": {
+      "saved": {
+        "type": "int"
+      },
+      "deleted": {
+        "type": "int"
+      }
+    }
+  },
+  "savedButOriginalsNotDeleted": "写真は保存されましたが、一部のオリジナルは削除できませんでした: {error}",
+  "@savedButOriginalsNotDeleted": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "savedWithWarnings": "いくつかの問題を抱えて保存された写真: {error}",
+  "@savedWithWarnings": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "metadataPreservationIncomplete": "一部のギャラリーメタデータをコピーできませんでした",
+  "originalDeletionFailed": "一部の元の写真を削除できませんでした",
+  "waiting": "待機中",
+  "failed": "失敗",
+  "photoProgress": "{total}の写真{current}",
+  "@photoProgress": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "photosCompressed": "{total} 枚中 {completed} 枚の写真を圧縮",
+  "@photosCompressed": {
+    "placeholders": {
+      "completed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "savePhotos": "{count}写真を保存",
+  "@savePhotos": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "savedPhotosToGallery": "{count} の写真をギャラリーに保存しました",
+  "@savedPhotosToGallery": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "failedToSave": "写真を保存できませんでした。もう一度試してください",
+  "photoQualityHighDescription": "ディテールと元の寸法を維持する",
+  "photoQualityMediumDescription": "バランスの取れた品質とファイルサイズ",
+  "photoQualityLowDescription": "共有用の小さいファイル",
+  "photoQualityDescription": "品質が高いほど、より多くの詳細が保持され、より大きなファイルが作成されます",
+  "maximumDimension": "最大寸法",
+  "maximumDimensionDescription": "画像の最長辺を制限します。値を小さくすると、より多くのスペースを節約できます",
+  "keepMetadata": "メタデータ",
+  "keepMetadataDescription": "サポートされている場合はカメラと exif 情報を保持します",
+  "keepExif": "exifメタデータを保持する",
+  "statistics": "統計",
+  "photosCompressedStat": "圧縮された写真",
+  "spaceSavedStat": "節約した容量",
+  "statisticsSinceVersion": "統計情報はこのデバイスにローカルに保存されます。"
+}

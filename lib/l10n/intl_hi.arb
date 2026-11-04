@@ -1,0 +1,265 @@
+{
+  "unsavedResultsTitle": "सहेजे न गए फ़ोटो",
+  "unsavedResultsExit": "सहेजे न गए संपीड़ित फ़ोटो को छोड़ें और हटाएं?",
+  "@@locale": "hi",
+  "appName": "minimo (photo)",
+  "madeByKhlebobul": "khlebobul द्वारा",
+  "skip": "छोड़ें",
+  "next": "अगला",
+  "getStarted": "शुरू करें",
+  "onboardingPickTitle": "तस्वीरें चुनें",
+  "onboardingPickDescription": "एक या अनेक फ़ोटो चुनें. मिनिमो स्थानीय फ़ाइलों के साथ काम करता है और मूल फ़ाइलों को अछूता रखता है",
+  "onboardingQualityTitle": "क्या बदलना है चुनें",
+  "onboardingQualityDescription": "एक गुणवत्ता प्रीसेट चुनें या आयाम और मेटाडेटा को मैन्युअल रूप से समायोजित करें",
+  "onboardingSaveTitle": "डिफ़ॉल्ट रूप से निजी",
+  "onboardingSaveDescription": "आपके डिवाइस पर संपीड़न होता है. तस्वीरें कहीं भी अपलोड नहीं की जाती हैं; परिणाम पसंद आने पर छोटी प्रति सहेजें",
+  "todo": "कार्य करना",
+  "about": "ऐप के बारे में",
+  "aboutStory": "मिनिमो (फोटो) का जन्म एक साधारण निराशा से हुआ था।\n\nयह प्रोजेक्ट हर किसी को सीधे मोबाइल डिवाइस पर फोटो कंप्रेस करने, स्टोरेज बचाने और महत्वपूर्ण क्षणों को सहेजने का एक सुविधाजनक और मुफ्त तरीका देता है।",
+  "howCompressionWorksTitle": "फोटो छोटी कैसे हो जाती है",
+  "howCompressionWorksBody": "मिनिमो आपके फोटो की एक नई प्रतिलिपि बनाता है और इसे अधिक कुशलता से संग्रहीत करता है। यह परिणाम को उपयोगी बनाए रखते हुए छवि गुणवत्ता या आयाम को कम कर सकता है।\n\nनिम्न गुणवत्ता में कम छोटे विवरण संग्रहीत होते हैं जिन पर ध्यान देना कठिन होता है। छोटे आयाम कम पिक्सेल का उपयोग करते हैं। दोनों फ़ाइल का आकार कम करते हैं।\n\nआपकी मूल फ़ोटो अछूती रहती है, और आपके डिवाइस पर संपीड़न होता है।",
+  "openSourceNote": "मिनिमो (फोटो) खुला स्रोत है। कोड का अन्वेषण करें, प्रोजेक्ट का अनुसरण करें या संपर्क करें",
+  "rateTheApp": "ऐप को रेट करें",
+  "shareWithFriends": "दोस्तों के साथ शेयर करें",
+  "shareAppText": "मिनिमो (फोटो) आज़माएँ - आपके फ़ोन पर फ़ोटो को छोटा बनाने के लिए एक सरल ऐप: {url}",
+  "@shareAppText": {
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "changelogTitle": "{version} में नया",
+  "@changelogTitle": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "changelogSubtitle": "अनदेखे अपडेट के बदलाव",
+  "changelogDone": "समझ गया",
+  "projectWebsite": "प्रोजेक्ट वेबसाइट",
+  "githubRepository": "github रिपॉज़िटरी",
+  "xTwitter": "x (twitter)",
+  "myWebsite": "मेरी वेबसाइट",
+  "myOtherApps": "मेरे अन्य ऐप",
+  "videoAppDescription": "सीधे अपने फ़ोन पर वीडियो छोटे बनाएं",
+  "emailCopied": "ईमेल कॉपी हुआ",
+  "settings": "सेटिंग्स",
+  "addPrefix": "\"{prefix}\" प्रीफ़िक्स जोड़ें",
+  "@addPrefix": {
+    "placeholders": {
+      "prefix": {
+        "type": "String"
+      }
+    }
+  },
+  "addPrefixDescription": "मूल फ़ाइल नाम से पहले \"{prefix}\" जोड़ता है। बंद करने पर मूल नाम रहता है",
+  "@addPrefixDescription": {
+    "placeholders": {
+      "prefix": {
+        "type": "String"
+      }
+    }
+  },
+  "showOverheatWarning": "ओवरहीट चेतावनी दिखाएँ",
+  "showOverheatWarningDescription": "डिवाइस धीमा हो सकने पर कंप्रेशन के दौरान छोटा बैनर दिखाता है",
+  "savePhotosToAlbum": "फ़ोटो को एल्बम में सहेजें",
+  "savePhotosToAlbumDescription": "हाल ही में सहेजे गए फ़ोटो के बजाय संपीड़ित फ़ोटो को {album} एल्बम में सहेजता है",
+  "@savePhotosToAlbumDescription": {
+    "placeholders": {
+      "album": {
+        "type": "String"
+      }
+    }
+  },
+  "saveOptionsTitle": "कैसे सेव करें",
+  "saveAsNew": "नया सेव करें",
+  "saveAsNewDescription": "मूल रखें और एक नई गैलरी फ़ोटो सहेजें",
+  "saveBesideOriginal": "मूल के पास सेव करें",
+  "saveBesideOriginalDescription": "मूल रखें और उसकी तारीख व मेटाडेटा कॉपी करें",
+  "replaceOriginal": "मूल बदलें",
+  "replaceOriginalDescription": "मूल मेटाडेटा के साथ सहेजें, फिर मूल को हटाने के लिए कहें",
+  "preventScreenSleep": "स्क्रीन चालू रखें",
+  "preventScreenSleepDescription": "फ़ोटो लोड होने या संपीड़ित होने के दौरान स्क्रीन को निष्क्रिय होने से रोकता है",
+  "clearCache": "कैश साफ़ करें",
+  "clearCacheDescription": "अस्थायी ऐप फ़ाइलें हटा देता है। आपकी गैलरी में सहेजी गई तस्वीरें अछूती रहती हैं",
+  "holdToClearCache": "कैश साफ़ करने के लिए बटन दबाए रखें",
+  "cacheCleared": "कैश साफ़",
+  "cacheClearFailed": "कैश साफ़ नहीं हुआ",
+  "language": "भाषा",
+  "languageDescription": "ऐप की भाषा चुनें",
+  "darkTheme": "डार्क थीम",
+  "darkThemeDescription": "गहरा रूप इस्तेमाल करें",
+  "system": "सिस्टम",
+  "english": "english",
+  "russian": "русский",
+  "overheatWarning": "डिवाइस गरम होने पर कंप्रेशन धीमा हो सकता है",
+  "backgroundCompressionWarning": "संपीड़न पूरा होने तक minimo खुला रखें। दूसरे ऐप पर जाने से आपका फ़ोन minimo को रोक सकता है",
+  "quality": "क्वालिटी",
+  "resolution": "रिज़ॉल्यूशन",
+  "high": "उच्च",
+  "good": "अच्छी",
+  "medium": "मध्यम",
+  "low": "कम",
+  "small": "छोटा",
+  "resolutionDescription": "सबसे ज़्यादा स्पेस बचाने के लिए आकार घटाएँ",
+  "detailLevel": "फोटो गुणवत्ता",
+  "detailLevelDescription": "एक लक्ष्य गुणवत्ता निर्धारित करें या गुणवत्ता पूर्व निर्धारित को इसे चुनने दें",
+  "automatic": "ऑटो",
+  "resize": "छवि आयाम",
+  "resizeDescription": "छवि के सबसे लंबे पक्ष को सीमित करें; छोटे आयाम अधिक स्थान बचाते हैं",
+  "outputFormat": "आउटपुट स्वरूप",
+  "outputFormatDescription": "जेपीईजी हर जगह काम करता है; heic छोटा हो सकता है लेकिन वापस jpeg पर आ सकता है",
+  "metadataMode": "मेटाडेटामोड",
+  "metadataModeDescription": "समर्थित होने पर कैमरा और EXIF जानकारी रखें, या हटा दें",
+  "keepMetadataLegacy": "मेटाडेटा रखें",
+  "stripMetadata": "मेटाडेटा स्ट्रिप करें",
+  "original": "मूल",
+  "compressed": "कंप्रेस्ड",
+  "simpleOptions": "सरल",
+  "advancedOptions": "उन्नत",
+  "qualityReducedDescription": "जगह बचाने के लिए गुणवत्ता कम की जाएगी",
+  "resolutionReducedHdDescription": "रिज़ॉल्यूशन hd होगा",
+  "resolutionReducedSdDescription": "रिज़ॉल्यूशन sd होगा",
+  "better": "बेहतर",
+  "smaller": "छोटा",
+  "noSavingsHint": "दूसरा मोड आज़माएँ — यह छोटा नहीं करेगा",
+  "compress": "कंप्रेस करें",
+  "compressing": "कंप्रेस हो रहा है...",
+  "cancel": "रद्द करें",
+  "holdToCancelCompression": "कंप्रेशन रोकने के लिए बटन दबाए रखें",
+  "compressionCancelled": "कंप्रेशन रद्द",
+  "estimatingTimeRemaining": "बचा समय आँक रहे हैं...",
+  "secondsRemaining": "{count, plural, =1{लगभग 1 सेकंड बाक़ी} other{लगभग {count} सेकंड बाक़ी}}",
+  "@secondsRemaining": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "minutesRemaining": "{count, plural, =1{लगभग 1 मिनट बाक़ी} other{लगभग {count} मिनट बाक़ी}}",
+  "@minutesRemaining": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "pickFromGallery": "गैलरी से",
+  "pickFromFiles": "फ़ाइलों से",
+  "loadingPhotos": "फ़ोटो लोड हो रहा है...",
+  "loadingManyPhotosHint": "क्लाउड स्टोरेज से डाउनलोड करने या बड़ी फ़ाइलों की प्रतिलिपि बनाने में अधिक समय लग सकता है",
+  "failedToPickPhotos": "एक फोटो फ़ाइल चुनें",
+  "compressionComplete": "कंप्रेशन पूरा",
+  "compressionCompleted": "कंप्रेशन पूरा हुआ",
+  "compressionFailed": "कंप्रेशन असफल",
+  "compressionFailedDescription": "हम इस फ़ोटो को संपीड़ित नहीं कर सके. पुनः प्रयास करें या कोई अन्य चुनें।",
+  "alreadyOptimized": "कोई उपयोगी बचत नहीं",
+  "alreadyOptimizedDescription": "इन सेटिंग्स ने फ़ाइल को कम से कम 10% तक कम नहीं किया। निम्न गुणवत्ता या आयाम आज़माएँ.",
+  "tryAgain": "फिर कोशिश करें",
+  "youSavedSize": "आपने {size} बचाया",
+  "@youSavedSize": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "share": "शेयर",
+  "shareOrSave": "शेयर या सेव…",
+  "comparePhotos": "तुलना करें",
+  "originalPhoto": "पहले",
+  "compressedPhoto": "के बाद",
+  "formatFallbackNotice": "heic उपलब्ध नहीं था, इसलिए इस फ़ोटो को jpeg के रूप में सहेजा गया था",
+  "photoPreviewUnavailable": "पूर्वावलोकन अनुपलब्ध",
+  "save": "सेव",
+  "saved": "सेव हुआ",
+  "holdToDeleteOriginals": "मूल हटाने के लिए बटन दबाए रखें",
+  "failedToShare": "फ़ोटो साझा नहीं कर सके. पुनः प्रयास करें",
+  "savedPhotosAndDeletedOriginals": "{saved} फोटो सहेजे गए और {deleted} मूल हटा दिए गए",
+  "@savedPhotosAndDeletedOriginals": {
+    "placeholders": {
+      "saved": {
+        "type": "int"
+      },
+      "deleted": {
+        "type": "int"
+      }
+    }
+  },
+  "savedButOriginalsNotDeleted": "तस्वीरें सहेजी गईं, लेकिन कुछ मूल हटाई नहीं जा सकीं: {error}",
+  "@savedButOriginalsNotDeleted": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "savedWithWarnings": "कुछ समस्याओं के साथ तस्वीरें सहेजी गईं: {error}",
+  "@savedWithWarnings": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "metadataPreservationIncomplete": "कुछ गैलरी मेटाडेटा कॉपी नहीं हुआ",
+  "originalDeletionFailed": "कुछ मूल नहीं हटे",
+  "waiting": "इंतज़ार",
+  "failed": "असफल",
+  "photoProgress": "{total} का फोटो {current}",
+  "@photoProgress": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "photosCompressed": "{total} फ़ोटो में से {completed} संपीड़ित",
+  "@photosCompressed": {
+    "placeholders": {
+      "completed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "savePhotos": "{count} फ़ोटो सहेजें",
+  "@savePhotos": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "savedPhotosToGallery": "गैलरी में {count} तस्वीरें सहेजी गईं",
+  "@savedPhotosToGallery": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "failedToSave": "तस्वीरें सहेजी नहीं जा सकीं. पुनः प्रयास करें",
+  "photoQualityHighDescription": "विवरण और मूल आयाम रखें",
+  "photoQualityMediumDescription": "संतुलित गुणवत्ता और फ़ाइल आकार",
+  "photoQualityLowDescription": "साझा करने के लिए छोटी फ़ाइलें",
+  "photoQualityDescription": "उच्च गुणवत्ता अधिक विवरण रखती है और एक बड़ी फ़ाइल बनाती है",
+  "maximumDimension": "अधिकतम आयाम",
+  "maximumDimensionDescription": "छवि के सबसे लंबे पक्ष को सीमित करें; छोटे मान अधिक स्थान बचाते हैं",
+  "keepMetadata": "मेटाडेटा",
+  "keepMetadataDescription": "समर्थित होने पर कैमरा और एक्सिफ़ जानकारी को सुरक्षित रखें",
+  "keepExif": "एक्सिफ़ मेटाडेटा रखें",
+  "statistics": "आँकड़े",
+  "photosCompressedStat": "तस्वीरें संपीड़ित",
+  "spaceSavedStat": "बचाया गया स्थान",
+  "statisticsSinceVersion": "इस उपकरण पर आँकड़े स्थानीय रूप से संग्रहीत किए जाते हैं।"
+}

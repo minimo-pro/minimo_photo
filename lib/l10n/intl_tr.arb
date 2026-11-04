@@ -1,0 +1,265 @@
+{
+  "unsavedResultsTitle": "kaydedilmemiş fotoğraflar",
+  "unsavedResultsExit": "kaydedilmemiş sıkıştırılmış fotoğrafları bırakıp silmek mi istiyorsunuz?",
+  "@@locale": "tr",
+  "appName": "minimo (photo)",
+  "madeByKhlebobul": "khlebobul tarafından",
+  "skip": "atla",
+  "next": "ileri",
+  "getStarted": "başla",
+  "onboardingPickTitle": "fotoğraf seç",
+  "onboardingPickDescription": "bir veya daha fazla fotoğraf seçin. minimo yerel dosyalarla çalışır ve orijinallere dokunulmaz",
+  "onboardingQualityTitle": "neyin değişeceğini seç",
+  "onboardingQualityDescription": "bir kalite ön ayarı seçin veya boyutları ve meta verileri manuel olarak ayarlayın",
+  "onboardingSaveTitle": "varsayılan olarak gizli",
+  "onboardingSaveDescription": "cihazınızda sıkıştırma gerçekleşir. fotoğraflar hiçbir yere yüklenmez; sonucu beğendiğinizde küçük kopyayı kaydedin",
+  "todo": "yapılacak",
+  "about": "hakkında",
+  "aboutStory": "minimo (fotoğraf) basit bir hayal kırıklığından doğdu.\n\nBu proje herkese fotoğrafları doğrudan mobil cihazda sıkıştırmanın, depolama alanından tasarruf etmenin ve önemli anları saklamanın kolay ve ücretsiz bir yolunu sunuyor.",
+  "howCompressionWorksTitle": "fotoğraf nasıl küçülür",
+  "howCompressionWorksBody": "minimo, fotoğrafınızın yeni bir kopyasını oluşturur ve onu daha verimli bir şekilde saklar. sonucu faydalı tutarken görüntü kalitesini veya boyutlarını azaltabilir.\n\ndüşük kalite, fark edilmesi zor olan daha az küçük ayrıntıyı depolar. daha küçük boyutlar daha az piksel kullanır. her ikisi de dosya boyutunu azaltır.\n\norijinal fotoğrafınıza dokunulmaz ve cihazınızda sıkıştırma gerçekleşir.",
+  "openSourceNote": "minimo (fotoğraf) açık kaynaktır. Kodu inceleyin, projeyi takip edin veya iletişime geçin",
+  "rateTheApp": "uygulamayı değerlendir",
+  "shareWithFriends": "arkadaşlarla paylaş",
+  "shareAppText": "telefonunuzda fotoğrafları küçültmek için basit bir uygulama olan minimo'yu (photo) deneyin: {url}",
+  "@shareAppText": {
+    "placeholders": {
+      "url": {
+        "type": "String"
+      }
+    }
+  },
+  "changelogTitle": "{version} sürümündeki yenilikler",
+  "@changelogTitle": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "changelogSubtitle": "henüz görmediğin güncellemelerdeki değişiklikler",
+  "changelogDone": "anladım",
+  "projectWebsite": "proje web sitesi",
+  "githubRepository": "github deposu",
+  "xTwitter": "x (twitter)",
+  "myWebsite": "web sitem",
+  "myOtherApps": "diğer uygulamalarım",
+  "videoAppDescription": "videoları doğrudan telefonunuzda küçültün",
+  "emailCopied": "e-posta kopyalandı",
+  "settings": "ayarlar",
+  "addPrefix": "\"{prefix}\" önekini ekle",
+  "@addPrefix": {
+    "placeholders": {
+      "prefix": {
+        "type": "String"
+      }
+    }
+  },
+  "addPrefixDescription": "orijinal dosya adının önüne \"{prefix}\" ekler. kapatıldığında orijinal ad korunur",
+  "@addPrefixDescription": {
+    "placeholders": {
+      "prefix": {
+        "type": "String"
+      }
+    }
+  },
+  "showOverheatWarning": "aşırı ısınma uyarısını göster",
+  "showOverheatWarningDescription": "cihaz yavaşlayabileceğinde sıkıştırma sırasında küçük bir bildirim gösterir",
+  "savePhotosToAlbum": "fotoğrafları albüme kaydet",
+  "savePhotosToAlbumDescription": "sıkıştırılmış fotoğrafları yakın zamanda kaydedilenler yerine {album} albümüne kaydeder",
+  "@savePhotosToAlbumDescription": {
+    "placeholders": {
+      "album": {
+        "type": "String"
+      }
+    }
+  },
+  "saveOptionsTitle": "nasıl kaydedilsin",
+  "saveAsNew": "yeni olarak kaydet",
+  "saveAsNewDescription": "orijinali saklayın ve yeni bir galeri fotoğrafı kaydedin",
+  "saveBesideOriginal": "orijinalin yanına kaydet",
+  "saveBesideOriginalDescription": "orijinali koru, tarihini ve meta verilerini kopyala",
+  "replaceOriginal": "orijinali değiştir",
+  "replaceOriginalDescription": "orijinal meta verilerle kaydedin, ardından orijinalin silinmesini isteyin",
+  "preventScreenSleep": "ekranı açık tut",
+  "preventScreenSleepDescription": "fotoğraflar yüklenirken veya sıkıştırılırken ekranın uyku moduna geçmesini önler",
+  "clearCache": "önbelleği temizle",
+  "clearCacheDescription": "geçici uygulama dosyalarını kaldırır. galerinize kaydedilen fotoğraflara dokunulmaz",
+  "holdToClearCache": "önbelleği temizlemek için düğmeyi basılı tut",
+  "cacheCleared": "önbellek temizlendi",
+  "cacheClearFailed": "önbellek temizlenemedi",
+  "language": "dil",
+  "languageDescription": "uygulamanın dilini seç",
+  "darkTheme": "koyu tema",
+  "darkThemeDescription": "koyu görünümü kullan",
+  "system": "sistem",
+  "english": "english",
+  "russian": "русский",
+  "overheatWarning": "cihazın ısınırsa sıkıştırma yavaşlayabilir",
+  "backgroundCompressionWarning": "Sıkıştırma bitene kadar minimo'yu açık tutun. geçiş yaparsanız telefonunuz uygulamayı duraklatabilir",
+  "quality": "kalite",
+  "resolution": "çözünürlük",
+  "high": "yüksek",
+  "good": "iyi",
+  "medium": "orta",
+  "low": "düşük",
+  "small": "küçük",
+  "resolutionDescription": "en fazla alan tasarrufu için boyutları azalt",
+  "detailLevel": "fotoğraf kalitesi",
+  "detailLevelDescription": "bir hedef kalite belirleyin veya kalite ön ayarının bunu seçmesine izin verin",
+  "automatic": "otomatik",
+  "resize": "görüntü boyutları",
+  "resizeDescription": "en uzun görüntü tarafını sınırlayın; daha küçük boyutlar daha fazla yerden tasarruf sağlar",
+  "outputFormat": "çıktı formatı",
+  "outputFormatDescription": "jpeg her yerde çalışır; heic daha küçük olabilir ancak jpeg'e geri dönebilir",
+  "metadataMode": "meta veri modu",
+  "metadataModeDescription": "Desteklendiğinde kamera ve EXIF bilgilerini saklayın veya kaldırın",
+  "keepMetadataLegacy": "meta verileri sakla",
+  "stripMetadata": "meta verileri şeritle",
+  "original": "orijinal",
+  "compressed": "sıkıştırılmış",
+  "simpleOptions": "basit",
+  "advancedOptions": "gelişmiş",
+  "qualityReducedDescription": "yerden tasarruf etmek için kalite düşürülecek",
+  "resolutionReducedHdDescription": "çözünürlük hd'ye düşürülecek",
+  "resolutionReducedSdDescription": "çözünürlük sd'ye düşürülecek",
+  "better": "daha iyi",
+  "smaller": "daha küçük",
+  "noSavingsHint": "başka bir mod dene — bu seçenek boyutu küçültmeyecek",
+  "compress": "sıkıştır",
+  "compressing": "sıkıştırılıyor...",
+  "cancel": "iptal",
+  "holdToCancelCompression": "sıkıştırmayı iptal etmek için düğmeyi basılı tut",
+  "compressionCancelled": "sıkıştırma iptal edildi",
+  "estimatingTimeRemaining": "kalan süre hesaplanıyor...",
+  "secondsRemaining": "{count, plural, =1{yaklaşık 1 saniye kaldı} other{yaklaşık {count} saniye kaldı}}",
+  "@secondsRemaining": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "minutesRemaining": "{count, plural, =1{yaklaşık 1 dakika kaldı} other{yaklaşık {count} dakika kaldı}}",
+  "@minutesRemaining": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "pickFromGallery": "galeriden",
+  "pickFromFiles": "dosyalardan",
+  "loadingPhotos": "fotoğraflar yükleniyor...",
+  "loadingManyPhotosHint": "bulut depolama alanından indirme veya büyük dosyaları kopyalama daha uzun sürebilir",
+  "failedToPickPhotos": "bir fotoğraf dosyası seç",
+  "compressionComplete": "sıkıştırma tamamlandı",
+  "compressionCompleted": "sıkıştırma tamamlandı",
+  "compressionFailed": "sıkıştırma başarısız",
+  "compressionFailedDescription": "bu fotoğrafı sıkıştıramadık. tekrar deneyin veya başka bir tane seçin.",
+  "alreadyOptimized": "yararlı tasarruf yok",
+  "alreadyOptimizedDescription": "bu ayarlar dosyayı en az %10 oranında azaltmadı. daha düşük kaliteyi veya boyutları deneyin.",
+  "tryAgain": "tekrar dene",
+  "youSavedSize": "{size} tasarruf ettin",
+  "@youSavedSize": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "share": "paylaş",
+  "shareOrSave": "paylaş veya şuraya kaydet…",
+  "comparePhotos": "karşılaştırmak",
+  "originalPhoto": "önce",
+  "compressedPhoto": "sonra",
+  "formatFallbackNotice": "heic mevcut olmadığından bu fotoğraf jpeg olarak kaydedildi",
+  "photoPreviewUnavailable": "önizleme kullanılamıyor",
+  "save": "kaydet",
+  "saved": "kaydedildi",
+  "holdToDeleteOriginals": "orijinalleri silmek için düğmeyi basılı tut",
+  "failedToShare": "fotoğrafları paylaşamadım. tekrar dene",
+  "savedPhotosAndDeletedOriginals": "kaydedilen {saved} fotoğraf(lar)ı ve silinen {deleted} orijinal(ler)i",
+  "@savedPhotosAndDeletedOriginals": {
+    "placeholders": {
+      "saved": {
+        "type": "int"
+      },
+      "deleted": {
+        "type": "int"
+      }
+    }
+  },
+  "savedButOriginalsNotDeleted": "fotoğraflar kaydedildi ancak bazı orijinaller silinemedi: {error}",
+  "@savedButOriginalsNotDeleted": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "savedWithWarnings": "bazı sorunlarla kaydedilen fotoğraflar: {error}",
+  "@savedWithWarnings": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
+  "metadataPreservationIncomplete": "bazı galeri meta verileri kopyalanamadı",
+  "originalDeletionFailed": "bazı orijinaller silinemedi",
+  "waiting": "bekliyor",
+  "failed": "başarısız",
+  "photoProgress": "{total}'nin {current} fotoğrafı",
+  "@photoProgress": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "photosCompressed": "{total} fotoğraflarından {completed} sıkıştırılmış",
+  "@photosCompressed": {
+    "placeholders": {
+      "completed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "savePhotos": "{count} fotoğraflarını kaydet",
+  "@savePhotos": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "savedPhotosToGallery": "{count} fotoğrafları galeriye kaydedildi",
+  "@savedPhotosToGallery": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "failedToSave": "fotoğraflar kaydedilemedi. tekrar dene",
+  "photoQualityHighDescription": "ayrıntıları ve orijinal boyutları koruyun",
+  "photoQualityMediumDescription": "dengeli kalite ve dosya boyutu",
+  "photoQualityLowDescription": "paylaşım için daha küçük dosyalar",
+  "photoQualityDescription": "daha yüksek kalite daha fazla ayrıntıyı korur ve daha büyük bir dosya oluşturur",
+  "maximumDimension": "maksimum boyut",
+  "maximumDimensionDescription": "en uzun görüntü tarafını sınırlayın; daha küçük değerler daha fazla yerden tasarruf sağlar",
+  "keepMetadata": "meta veri",
+  "keepMetadataDescription": "desteklendiğinde kamera ve exif bilgilerini koruyun",
+  "keepExif": "exif meta verilerini sakla",
+  "statistics": "istatistikler",
+  "photosCompressedStat": "fotoğraflar sıkıştırılmış",
+  "spaceSavedStat": "kazanılan alan",
+  "statisticsSinceVersion": "istatistikler bu cihazda yerel olarak depolanır."
+}

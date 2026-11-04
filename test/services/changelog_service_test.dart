@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:minimo_photo/generated/l10n.dart';
 import 'package:minimo_photo/services/changelog_service.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,6 +12,20 @@ PackageInfo _packageInfo(String version) => PackageInfo(
 );
 
 void main() {
+  test('release notes cover every app language', () {
+    for (final locale in S.delegate.supportedLocales) {
+      expect(Language.fromCode(locale.languageCode).code, locale.languageCode);
+      expect(
+        unseenChanges(
+          lastSeen: '1.0.2',
+          current: '1.0.3',
+          language: Language.fromCode(locale.languageCode),
+        ),
+        isNotEmpty,
+      );
+    }
+  });
+
   test(
     'initialize stays hidden when no notes apply to current version',
     () async {

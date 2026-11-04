@@ -1,7 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import 'intl/messages_all.dart';
 
 // **************************************************************************
@@ -660,20 +659,20 @@ class S {
     return Intl.message('image dimensions', name: 'resize', desc: '', args: []);
   }
 
-  /// `limit output frames per second; higher source rates are left unchanged`
+  /// `limit the longest image side; smaller dimensions save more space`
   String get resizeDescription {
     return Intl.message(
-      'limit output frames per second; higher source rates are left unchanged',
+      'limit the longest image side; smaller dimensions save more space',
       name: 'resizeDescription',
       desc: '',
       args: [],
     );
   }
 
-  /// `outputformat`
+  /// `output format`
   String get outputFormat {
     return Intl.message(
-      'outputformat',
+      'output format',
       name: 'outputFormat',
       desc: '',
       args: [],
@@ -700,10 +699,10 @@ class S {
     );
   }
 
-  /// `keep the original audio or strip it to save more space`
+  /// `keep camera and EXIF information when supported, or remove it`
   String get metadataModeDescription {
     return Intl.message(
-      'keep the original audio or strip it to save more space',
+      'keep camera and EXIF information when supported, or remove it',
       name: 'metadataModeDescription',
       desc: '',
       args: [],
@@ -1325,7 +1324,18 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
   List<Locale> get supportedLocales {
     return const <Locale>[
       Locale.fromSubtags(languageCode: 'en'),
+      Locale.fromSubtags(languageCode: 'de'),
+      Locale.fromSubtags(languageCode: 'es'),
+      Locale.fromSubtags(languageCode: 'fr'),
+      Locale.fromSubtags(languageCode: 'hi'),
+      Locale.fromSubtags(languageCode: 'it'),
+      Locale.fromSubtags(languageCode: 'ja'),
+      Locale.fromSubtags(languageCode: 'ko'),
+      Locale.fromSubtags(languageCode: 'nl'),
+      Locale.fromSubtags(languageCode: 'pt'),
       Locale.fromSubtags(languageCode: 'ru'),
+      Locale.fromSubtags(languageCode: 'tr'),
+      Locale.fromSubtags(languageCode: 'zh'),
     ];
   }
 

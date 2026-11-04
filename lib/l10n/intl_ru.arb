@@ -109,12 +109,11 @@
   "detailLevelDescription": "задайте целевой качество или доверьте выбор профилю качества",
   "automatic": "авто",
   "resize": "размер изображения",
-  "resizeDescription": "ограничивает число кадров в секунду; меньшая частота источника не повышается",
-  "outputFormat": "кодек",
+  "resizeDescription": "ограничьте длинную сторону изображения; меньший размер экономит место",
+  "outputFormat": "формат файла",
   "outputFormatDescription": "jpeg совместим везде; heic может быть компактнее, но иногда заменяется на jpeg",
   "metadataMode": "звук",
-  "metadataModeDescription": "сохраните исходный звук или удалите его для меньшего размера",
-  "stereo": "с метаданными",
+  "metadataModeDescription": "сохраняйте данные камеры и EXIF, если формат позволяет, или удаляйте их",
   "stripMetadata": "без метаданных",
   "original": "оригинал",
   "compressed": "сжатое",
@@ -261,5 +260,6 @@
   "statistics": "статистика",
   "photosCompressedStat": "фото сжато",
   "spaceSavedStat": "места сэкономлено",
-  "statisticsSinceVersion": "статистика хранится локально на этом устройстве."
+  "statisticsSinceVersion": "статистика хранится локально на этом устройстве.",
+  "keepMetadataLegacy": "сохранять метаданные"
 }

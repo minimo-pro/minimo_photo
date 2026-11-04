@@ -1,0 +1,32 @@
+// Fill existing decks without changing their composition.
+import fs from "node:fs";
+
+const copy = JSON.parse(fs.readFileSync(new URL("../src/lib/store-copy.json", import.meta.url)));
+const locales = fs.readdirSync(new URL("../../lib/l10n/", import.meta.url))
+  .filter((name) => /^intl_.+\.arb$/.test(name)).map((name) => name.slice(5, -4));
+locales.sort((a, b) => a === "en" ? -1 : b === "en" ? 1 : a.localeCompare(b));
+const file = new URL("../app-store-screenshots.json", import.meta.url);
+const state = JSON.parse(fs.readFileSync(file));
+
+/** Require complete copy so exports never silently fall back to English. */
+function translate(field) {
+  if (!field?.en) return;
+  for (const locale of locales) {
+    const value = copy[locale]?.[field.en];
+    if (!value) throw new Error(`Missing ${locale}: ${field.en}`);
+    field[locale] = value;
+  }
+}
+
+for (const [device, slides] of Object.entries(state.slidesByDevice)) {
+  for (const slide of slides) {
+    if (device.startsWith("duo-") && slide.screenshot) {
+      slide.screenshot = slide.screenshot.replace(`/${device}/en/`, `/${device}/{locale}/`);
+    }
+    for (const key of ["label", "headline", "highlight"]) translate(slide[key]);
+    for (const element of slide.textElements || []) translate(element.text);
+  }
+}
+state.locales = locales;
+fs.writeFileSync(file, JSON.stringify(state, null, 2) + "\n");
+console.log(`Localized ${locales.length} locales: ${locales.join(", ")}`);

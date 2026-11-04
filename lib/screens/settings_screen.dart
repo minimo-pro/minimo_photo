@@ -250,11 +250,9 @@ class _LanguageRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final strings = S.of(context);
-    final language = switch (settings.languageCode) {
-      'en' => strings.english,
-      'ru' => strings.russian,
-      _ => strings.system,
-    };
+    final language = settings.languageCode == null
+        ? strings.system
+        : _languageNames[settings.languageCode] ?? settings.languageCode!;
 
     return _SettingBlock(
       description: strings.languageDescription,
@@ -314,25 +312,28 @@ class _LanguageSheet extends StatelessWidget {
           ),
           child: Padding(
             padding: const EdgeInsets.all(10),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _LanguageOption(
-                  value: 'system',
-                  title: strings.system,
-                  selected: selected == null,
-                ),
-                _LanguageOption(
-                  value: 'en',
-                  title: strings.english,
-                  selected: selected == 'en',
-                ),
-                _LanguageOption(
-                  value: 'ru',
-                  title: strings.russian,
-                  selected: selected == 'ru',
-                ),
-              ],
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxHeight: MediaQuery.sizeOf(context).height * .7,
+              ),
+              child: ListView(
+                shrinkWrap: true,
+                children: [
+                  _LanguageOption(
+                    value: 'system',
+                    title: strings.system,
+                    selected: selected == null,
+                  ),
+                  for (final locale in S.delegate.supportedLocales)
+                    _LanguageOption(
+                      value: locale.languageCode,
+                      title:
+                          _languageNames[locale.languageCode] ??
+                          locale.languageCode,
+                      selected: selected == locale.languageCode,
+                    ),
+                ],
+              ),
             ),
           ),
         ),
@@ -340,6 +341,22 @@ class _LanguageSheet extends StatelessWidget {
     );
   }
 }
+
+const _languageNames = {
+  'en': 'English',
+  'de': 'Deutsch',
+  'es': 'Español',
+  'fr': 'Français',
+  'hi': 'हिन्दी',
+  'it': 'Italiano',
+  'ja': '日本語',
+  'ko': '한국어',
+  'nl': 'Nederlands',
+  'pt': 'Português',
+  'ru': 'Русский',
+  'tr': 'Türkçe',
+  'zh': '简体中文',
+};
 
 class _LanguageOption extends StatelessWidget {
   final String value;

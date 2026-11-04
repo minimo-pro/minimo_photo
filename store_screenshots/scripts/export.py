@@ -138,7 +138,7 @@ if __name__ == '__main__':
     parser.add_argument('--base', default='http://127.0.0.1:3002')
     parser.add_argument('--check', action='store_true')
     parser.add_argument('--devices', nargs='+', choices=[d[0] for d in DECKS])
-    parser.add_argument('--locale', choices=['en', 'ru'])
+    parser.add_argument('--locale')
     args = parser.parse_args()
     BUNDLE_SUFFIX = '-' + '-'.join(args.devices) if args.devices else ''
     if args.devices:
@@ -146,6 +146,8 @@ if __name__ == '__main__':
         BANNERS = []
     state = json.loads((ROOT / 'app-store-screenshots.json').read_text())
     if args.locale:
+        if args.locale not in state['locales']:
+            parser.error(f'unknown locale: {args.locale}')
         state['locales'] = [args.locale]
     if args.check:
         check(state)
