@@ -4,7 +4,7 @@
 
 ### Added
 
-* Remove location from compressed photos while keeping other supported metadata.
+* Add an optional setting to remove location from compressed photos while keeping other supported metadata.
 
 ### Fixed
 

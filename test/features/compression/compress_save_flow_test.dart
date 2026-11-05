@@ -52,15 +52,15 @@ void main() {
     await settings.setPreventScreenSleep(true);
   });
 
-  test('location removal defaults on and persists', () async {
+  test('location removal defaults off and persists', () async {
     SharedPreferences.setMockInitialValues({});
     final settings = AppSettingsService.instance;
     await settings.load();
-    expect(settings.removeLocation, isTrue);
-    await settings.setRemoveLocation(false);
-    await settings.load();
     expect(settings.removeLocation, isFalse);
     await settings.setRemoveLocation(true);
+    await settings.load();
+    expect(settings.removeLocation, isTrue);
+    await settings.setRemoveLocation(false);
   });
 
   test('replacement saves compressed photo before deleting original', () async {

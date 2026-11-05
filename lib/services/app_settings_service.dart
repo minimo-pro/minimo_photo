@@ -19,7 +19,7 @@ class AppSettingsService extends ChangeNotifier {
   bool addMinimoPrefix = true;
   bool savePhotosToAlbum = false;
   bool preventScreenSleep = true;
-  bool removeLocation = true;
+  bool removeLocation = false;
   String? languageCode;
   bool? darkTheme;
 
@@ -38,7 +38,7 @@ class AppSettingsService extends ChangeNotifier {
         _preferences.getBool(_savePhotosToAlbumKey) ?? savePhotosToAlbum;
     preventScreenSleep =
         _preferences.getBool(_preventScreenSleepKey) ?? preventScreenSleep;
-    removeLocation = _preferences.getBool(_removeLocationKey) ?? true;
+    removeLocation = _preferences.getBool(_removeLocationKey) ?? false;
     languageCode = _preferences.getString(_languageCodeKey);
     darkTheme = _preferences.getBool(_darkThemeKey);
   }
