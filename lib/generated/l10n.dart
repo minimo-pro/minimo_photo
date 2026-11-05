@@ -549,6 +549,26 @@ class S {
     );
   }
 
+  /// `remove location`
+  String get removeLocation {
+    return Intl.message(
+      'remove location',
+      name: 'removeLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `remove location from saved photos while keeping other metadata`
+  String get removeLocationDescription {
+    return Intl.message(
+      'remove location from saved photos while keeping other metadata',
+      name: 'removeLocationDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `system`
   String get system {
     return Intl.message('system', name: 'system', desc: '', args: []);

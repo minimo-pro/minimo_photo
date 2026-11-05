@@ -68,6 +68,12 @@ class SettingsScreen extends StatelessWidget {
                         onChanged: settings.setPreventScreenSleep,
                       ),
                       _ToggleRow(
+                        title: strings.removeLocation,
+                        description: strings.removeLocationDescription,
+                        value: settings.removeLocation,
+                        onChanged: settings.setRemoveLocation,
+                      ),
+                      _ToggleRow(
                         title: strings.darkTheme,
                         description: strings.darkThemeDescription,
                         value:
@@ -343,18 +349,18 @@ class _LanguageSheet extends StatelessWidget {
 }
 
 const _languageNames = {
-  'en': 'English',
-  'de': 'Deutsch',
-  'es': 'Español',
-  'fr': 'Français',
+  'en': 'english',
+  'de': 'deutsch',
+  'es': 'español',
+  'fr': 'français',
   'hi': 'हिन्दी',
-  'it': 'Italiano',
+  'it': 'italiano',
   'ja': '日本語',
   'ko': '한국어',
-  'nl': 'Nederlands',
-  'pt': 'Português',
-  'ru': 'Русский',
-  'tr': 'Türkçe',
+  'nl': 'nederlands',
+  'pt': 'português',
+  'ru': 'русский',
+  'tr': 'türkçe',
   'zh': '简体中文',
 };
 

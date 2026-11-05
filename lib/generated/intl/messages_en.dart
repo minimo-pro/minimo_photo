@@ -264,6 +264,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "quality will be reduced to save space",
     ),
     "rateTheApp": MessageLookupByLibrary.simpleMessage("rate the app"),
+    "removeLocation": MessageLookupByLibrary.simpleMessage("remove location"),
+    "removeLocationDescription": MessageLookupByLibrary.simpleMessage(
+      "remove location from saved photos while keeping other metadata",
+    ),
     "replaceOriginal": MessageLookupByLibrary.simpleMessage("replace original"),
     "replaceOriginalDescription": MessageLookupByLibrary.simpleMessage(
       "save with original metadata, then ask to delete the original",

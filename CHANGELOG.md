@@ -1,3 +1,17 @@
+## [Unreleased]
+
+## [1.0.4]
+
+### Added
+
+* Remove location from compressed photos while keeping other supported metadata.
+
+### Fixed
+
+* Let iOS users choose to save a compressed copy, then confirm deletion of the original.
+* Show language names in lowercase in Settings.
+* Keep three-digit photo counts on one line inside the selection badge.
+
 ## [1.0.3]
 
 ### Added

@@ -233,6 +233,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "공간을 절약하기 위해 품질이 저하됩니다.",
     ),
     "rateTheApp": MessageLookupByLibrary.simpleMessage("앱 평가하기"),
+    "removeLocation": MessageLookupByLibrary.simpleMessage("위치 정보 제거"),
+    "removeLocationDescription": MessageLookupByLibrary.simpleMessage(
+      "다른 메타데이터는 유지하고 저장한 사진의 위치 정보를 제거합니다",
+    ),
     "replaceOriginal": MessageLookupByLibrary.simpleMessage("원본 교체"),
     "replaceOriginalDescription": MessageLookupByLibrary.simpleMessage(
       "원본 메타데이터와 함께 저장한 다음 원본 삭제를 요청하세요.",

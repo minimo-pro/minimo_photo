@@ -8,6 +8,7 @@ import 'package:path_provider/path_provider.dart';
 
 import '../domain/photo_pick_source.dart';
 import '../domain/picked_photo.dart';
+import '../../../services/app_settings_service.dart';
 
 class PhotoFileAdapter {
   static const _channel = MethodChannel('minimo_photo/photos');
@@ -151,6 +152,7 @@ class PhotoFileAdapter {
           'captureDate': captureDate,
           'latitude': latitude,
           'longitude': longitude,
+          'removeLocation': AppSettingsService.instance.removeLocation,
         });
     if (result == null || result['saved'] != true) {
       throw StateError('replacement photo was not saved');
@@ -168,6 +170,15 @@ class PhotoFileAdapter {
           sourceIdentifiers.toList(),
         ) ??
         0;
+  }
+
+  Future<void> ensureOriginalsAccessible(
+    Iterable<String> sourceIdentifiers,
+  ) async {
+    await _channel.invokeMethod<void>(
+      'ensureOriginalsAccessible',
+      sourceIdentifiers.toList(),
+    );
   }
 }
 

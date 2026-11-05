@@ -92,6 +92,8 @@
   "languageDescription": "kies de taal van de app",
   "darkTheme": "donker thema",
   "darkThemeDescription": "gebruik de donkere weergave",
+  "removeLocation": "locatie verwijderen",
+  "removeLocationDescription": "verwijder de locatie uit opgeslagen foto's en behoud andere metagegevens",
   "system": "systeem",
   "english": "english",
   "russian": "русский",

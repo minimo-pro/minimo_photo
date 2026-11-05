@@ -34,6 +34,41 @@ enum Language {
 typedef Changelog = Map<String, Map<Language, List<String>>>;
 
 const Changelog _changelog = {
+  '1.0.4': {
+    Language.en: [
+      "remove photo location while keeping other metadata. on ios, save a compressed copy and confirm deleting the original.",
+    ],
+    Language.de: [
+      "entferne den standort aus fotos, behalte andere metadaten und ersetze originale auf ios.",
+    ],
+    Language.es: [
+      "elimina la ubicación de las fotos, conserva otros metadatos y reemplaza originales en ios.",
+    ],
+    Language.fr: [
+      "supprimez la localisation des photos, conservez les autres métadonnées et remplacez les originaux sur ios.",
+    ],
+    Language.hi: [
+      "अन्य मेटाडेटा रखते हुए फ़ोटो की लोकेशन हटाएं और ios पर मूल फ़ोटो बदलें।",
+    ],
+    Language.it: [
+      "rimuovi la posizione dalle foto, conserva gli altri metadati e sostituisci gli originali su ios.",
+    ],
+    Language.ja: ["他のメタデータを残して写真の位置情報を削除し、iosで元の写真を置き換えられます。"],
+    Language.ko: ["다른 메타데이터는 유지하고 사진의 위치 정보를 제거하며 ios에서 원본을 교체할 수 있습니다."],
+    Language.nl: [
+      "verwijder de locatie uit foto's, behoud andere metagegevens en vervang originelen op ios.",
+    ],
+    Language.pt: [
+      "remova a localização das fotos, mantenha os outros metadados e substitua os originais no ios.",
+    ],
+    Language.ru: [
+      "удаляйте геолокацию фото, сохраняя остальные метаданные. на ios сохраняйте сжатую копию и подтверждайте удаление оригинала.",
+    ],
+    Language.tr: [
+      "diğer meta verileri koruyarak fotoğrafların konumunu kaldırın ve ios'ta orijinalleri değiştirin.",
+    ],
+    Language.zh: ["保留其他元数据的同时移除照片位置，并在 ios 上替换原图。"],
+  },
   '1.0.3': {
     Language.en: [
       'minimo now supports 13 languages. choose yours in settings or use your device language.',

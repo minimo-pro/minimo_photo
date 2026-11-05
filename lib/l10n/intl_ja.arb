@@ -92,6 +92,8 @@
   "languageDescription": "アプリの言語を選択",
   "darkTheme": "ダークテーマ",
   "darkThemeDescription": "暗い外観を使用",
+  "removeLocation": "位置情報を削除",
+  "removeLocationDescription": "他のメタデータを残して保存する写真から位置情報を削除",
   "system": "システム",
   "english": "english",
   "russian": "русский",

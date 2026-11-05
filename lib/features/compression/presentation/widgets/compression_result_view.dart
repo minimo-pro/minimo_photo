@@ -228,7 +228,6 @@ class CompressionResultView extends StatelessWidget {
         .whereType<String>()
         .toSet();
     final deletableIdentifiers = state.successResults
-        .where((item) => item.source.canDeleteOriginal)
         .map((item) => item.source.sourceIdentifier)
         .whereType<String>()
         .toSet();
@@ -236,9 +235,7 @@ class CompressionResultView extends StatelessWidget {
     final replaceAvailable =
         state.successResults.isNotEmpty &&
         state.successResults.every(
-          (item) =>
-              item.source.canDeleteOriginal &&
-              item.source.sourceIdentifier != null,
+          (item) => item.source.sourceIdentifier != null,
         );
     var selectedMode = _GallerySaveMode.copy;
     final mode = await showAppSheet<_GallerySaveMode>(
@@ -352,9 +349,11 @@ class CompressionResultView extends StatelessWidget {
     );
 
     if (!context.mounted || mode == null) return;
-    final preserveMetadata = mode == _GallerySaveMode.copy
-        ? const <String>{}
-        : metadataIdentifiers;
+    final preserveMetadata = mode == _GallerySaveMode.replaceOriginal
+        ? deletableIdentifiers
+        : mode == _GallerySaveMode.besideOriginal
+        ? metadataIdentifiers
+        : const <String>{};
     final deleteOriginals = mode == _GallerySaveMode.replaceOriginal
         ? deletableIdentifiers
         : const <String>{};

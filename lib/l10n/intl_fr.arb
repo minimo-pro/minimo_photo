@@ -92,6 +92,8 @@
   "languageDescription": "choisissez la langue de l'app",
   "darkTheme": "thème sombre",
   "darkThemeDescription": "utiliser l'apparence sombre",
+  "removeLocation": "supprimer la localisation",
+  "removeLocationDescription": "supprimer la localisation des photos enregistrées en conservant les autres métadonnées",
   "system": "système",
   "english": "english",
   "russian": "русский",

@@ -92,6 +92,8 @@
   "languageDescription": "scegli la lingua dell'app",
   "darkTheme": "tema scuro",
   "darkThemeDescription": "usa l'aspetto scuro",
+  "removeLocation": "rimuovi posizione",
+  "removeLocationDescription": "rimuovi la posizione dalle foto salvate mantenendo gli altri metadati",
   "system": "sistema",
   "english": "english",
   "russian": "русский",

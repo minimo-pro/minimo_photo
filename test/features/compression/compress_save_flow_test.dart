@@ -52,6 +52,17 @@ void main() {
     await settings.setPreventScreenSleep(true);
   });
 
+  test('location removal defaults on and persists', () async {
+    SharedPreferences.setMockInitialValues({});
+    final settings = AppSettingsService.instance;
+    await settings.load();
+    expect(settings.removeLocation, isTrue);
+    await settings.setRemoveLocation(false);
+    await settings.load();
+    expect(settings.removeLocation, isFalse);
+    await settings.setRemoveLocation(true);
+  });
+
   test('replacement saves compressed photo before deleting original', () async {
     SharedPreferences.setMockInitialValues({});
     final files = _RecordingPhotoFileAdapter();
@@ -86,9 +97,66 @@ void main() {
       (state) => state.isSaved && !state.isSaving,
     );
 
-    expect(files.calls, ['save replacement', 'delete original']);
+    expect(files.calls, [
+      'authorize originals',
+      'save replacement',
+      'delete original',
+    ]);
     expect(saved.savedPhotoCount, 1);
     expect(saved.deletedOriginalCount, 1);
+
+    final settledAfterRepeat = bloc.stream
+        .skipWhile((state) => !state.isSaving)
+        .firstWhere((state) => !state.isSaving);
+    bloc.add(
+      const CompressResultsSaved(
+        preserveMetadataSourceIdentifiers: {'asset-1'},
+        deleteSourceIdentifiers: {'asset-1'},
+      ),
+    );
+    final settled = await settledAfterRepeat;
+    expect(settled.isSaved, isTrue);
+    expect(settled.saveError, isNull);
+    expect(files.calls, [
+      'authorize originals',
+      'save replacement',
+      'delete original',
+    ]);
+  });
+
+  test('denied Photos access leaves original and creates no copy', () async {
+    SharedPreferences.setMockInitialValues({});
+    final files = _RecordingPhotoFileAdapter()..denyAccess = true;
+    final bloc = CompressBloc(
+      initialPhotos: const [
+        PickedPhoto(
+          path: '/tmp/original.jpg',
+          name: 'original.jpg',
+          size: 100,
+          sourceIdentifier: 'asset-1',
+        ),
+      ],
+      photoFileAdapter: files,
+      photoCompressorAdapter: _SuccessfulCompressor(),
+    );
+    addTearDown(bloc.close);
+
+    bloc.add(const CompressStarted());
+    await bloc.stream.firstWhere(
+      (state) => state.status == CompressStatus.done,
+    );
+    bloc.add(
+      const CompressResultsSaved(
+        preserveMetadataSourceIdentifiers: {'asset-1'},
+        deleteSourceIdentifiers: {'asset-1'},
+      ),
+    );
+    final failed = await bloc.stream.firstWhere(
+      (state) => state.saveError != null && !state.isSaving,
+    );
+
+    expect(files.calls, ['authorize originals']);
+    expect(failed.isSaved, isFalse);
   });
 }
 
@@ -123,6 +191,15 @@ class _SuccessfulCompressor extends PhotoCompressorAdapter {
 
 class _RecordingPhotoFileAdapter extends PhotoFileAdapter {
   final calls = <String>[];
+  bool denyAccess = false;
+
+  @override
+  Future<void> ensureOriginalsAccessible(
+    Iterable<String> sourceIdentifiers,
+  ) async {
+    calls.add('authorize originals');
+    if (denyAccess) throw StateError('Photos access denied');
+  }
 
   @override
   Future<GallerySaveResult> saveReplacement(

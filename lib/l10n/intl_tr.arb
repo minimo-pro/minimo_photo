@@ -92,6 +92,8 @@
   "languageDescription": "uygulamanın dilini seç",
   "darkTheme": "koyu tema",
   "darkThemeDescription": "koyu görünümü kullan",
+  "removeLocation": "konumu kaldır",
+  "removeLocationDescription": "diğer meta verileri koruyarak kaydedilen fotoğraflardan konumu kaldır",
   "system": "sistem",
   "english": "english",
   "russian": "русский",

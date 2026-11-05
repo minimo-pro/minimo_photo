@@ -269,6 +269,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "rateTheApp": MessageLookupByLibrary.simpleMessage(
       "uygulamayı değerlendir",
     ),
+    "removeLocation": MessageLookupByLibrary.simpleMessage("konumu kaldır"),
+    "removeLocationDescription": MessageLookupByLibrary.simpleMessage(
+      "diğer meta verileri koruyarak kaydedilen fotoğraflardan konumu kaldır",
+    ),
     "replaceOriginal": MessageLookupByLibrary.simpleMessage(
       "orijinali değiştir",
     ),
