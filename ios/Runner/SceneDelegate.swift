@@ -367,15 +367,30 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
         return
       }
       let assets = PHAsset.fetchAssets(withLocalIdentifiers: identifiers, options: nil)
+      if assets.count == identifiers.count {
+        DispatchQueue.main.async { result(nil) }
+        return
+      }
       DispatchQueue.main.async {
-        if assets.count == identifiers.count {
-          result(nil)
-        } else {
+        guard status == .limited, let controller = self.window?.rootViewController else {
           result(FlutterError(
             code: "delete_unavailable",
             message: "some original photos are unavailable",
             details: nil
           ))
+          return
+        }
+        PHPhotoLibrary.shared().presentLimitedLibraryPicker(from: controller) { _ in
+          let accessible = PHAsset.fetchAssets(
+            withLocalIdentifiers: identifiers, options: nil
+          ).count == identifiers.count
+          DispatchQueue.main.async {
+            result(accessible ? nil : FlutterError(
+              code: "delete_unavailable",
+              message: "some original photos are unavailable",
+              details: nil
+            ))
+          }
         }
       }
     }
@@ -398,11 +413,15 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
               ) else {
           throw NSError(domain: "minimo_photo", code: 2)
         }
-        CGImageDestinationAddImageFromSource(
-          destination, source, 0,
-          [kCGImageMetadataShouldExcludeGPS: true] as CFDictionary
-        )
-        guard CGImageDestinationFinalize(destination) else {
+        guard CGImageDestinationCopyImageSource(
+          destination, source,
+          [
+            // ImageIO requires metadata when merging existing tags.
+            kCGImageDestinationMetadata: CGImageMetadataCreateMutable(),
+            kCGImageMetadataShouldExcludeGPS: true,
+            kCGImageDestinationMergeMetadata: true,
+          ] as CFDictionary, nil
+        ) else {
           throw NSError(domain: "minimo_photo", code: 3)
         }
         _ = try FileManager.default.replaceItemAt(url, withItemAt: temporary)

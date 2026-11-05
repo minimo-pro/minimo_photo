@@ -104,6 +104,24 @@ void main() {
     ]);
     expect(saved.savedPhotoCount, 1);
     expect(saved.deletedOriginalCount, 1);
+
+    final settledAfterRepeat = bloc.stream
+        .skipWhile((state) => !state.isSaving)
+        .firstWhere((state) => !state.isSaving);
+    bloc.add(
+      const CompressResultsSaved(
+        preserveMetadataSourceIdentifiers: {'asset-1'},
+        deleteSourceIdentifiers: {'asset-1'},
+      ),
+    );
+    final settled = await settledAfterRepeat;
+    expect(settled.isSaved, isTrue);
+    expect(settled.saveError, isNull);
+    expect(files.calls, [
+      'authorize originals',
+      'save replacement',
+      'delete original',
+    ]);
   });
 
   test('denied Photos access leaves original and creates no copy', () async {

@@ -428,14 +428,17 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
     try {
       final metadataIdentifiers = event.preserveMetadataSourceIdentifiers;
       final deleteIdentifiers = event.deleteSourceIdentifiers;
+      final pendingIdentifiers = deleteIdentifiers.difference(
+        _deletedSourceIdentifiers,
+      );
       final album = _appSettings.savePhotosToAlbum
           ? AppSettingsService.albumName
           : null;
       final metadataWarnings = <String>[];
       var savedAnyPhoto = false;
 
-      if (deleteIdentifiers.isNotEmpty) {
-        await _photoFileAdapter.ensureOriginalsAccessible(deleteIdentifiers);
+      if (pendingIdentifiers.isNotEmpty) {
+        await _photoFileAdapter.ensureOriginalsAccessible(pendingIdentifiers);
       }
 
       for (final item in successfulResults) {
@@ -491,9 +494,6 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
 
       var deletedOriginalCount = 0;
       try {
-        final pendingIdentifiers = deleteIdentifiers.difference(
-          _deletedSourceIdentifiers,
-        );
         if (pendingIdentifiers.isEmpty) {
           emit(state.copyWith(isSaving: false, clearSaveNotification: true));
           return;
