@@ -92,6 +92,8 @@
   "languageDescription": "ऐप की भाषा चुनें",
   "darkTheme": "डार्क थीम",
   "darkThemeDescription": "गहरा रूप इस्तेमाल करें",
+  "removeLocation": "लोकेशन हटाएं",
+  "removeLocationDescription": "अन्य मेटाडेटा रखते हुए सेव की गई फ़ोटो से लोकेशन हटाएं",
   "system": "सिस्टम",
   "english": "english",
   "russian": "русский",

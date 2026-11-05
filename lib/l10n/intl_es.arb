@@ -92,6 +92,8 @@
   "languageDescription": "elige el idioma de la app",
   "darkTheme": "tema oscuro",
   "darkThemeDescription": "usar apariencia oscura",
+  "removeLocation": "eliminar ubicación",
+  "removeLocationDescription": "eliminar la ubicación de las fotos guardadas y conservar los demás metadatos",
   "system": "sistema",
   "english": "english",
   "russian": "русский",

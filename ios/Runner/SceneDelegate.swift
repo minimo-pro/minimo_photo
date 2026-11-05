@@ -44,10 +44,14 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
         self.cancelPhotoPick(result: result)
       case "deleteOriginals":
         self.deleteOriginals(call.arguments as? [String] ?? [], result: result)
+      case "ensureOriginalsAccessible":
+        self.ensureOriginalsAccessible(call.arguments as? [String] ?? [], result: result)
       case "saveReplacement":
         self.saveReplacement(call.arguments as? [String: Any], result: result)
       case "saveCopy":
         self.saveCopy(call.arguments as? [String: Any], result: result)
+      case "removeLocation":
+        self.removeLocation(call.arguments as? String, result: result)
       default:
         result(FlutterMethodNotImplemented)
       }
@@ -348,6 +352,72 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
     }
   }
 
+  private func ensureOriginalsAccessible(
+    _ identifiers: [String], result: @escaping FlutterResult
+  ) {
+    PHPhotoLibrary.requestAuthorization(for: .readWrite) { status in
+      guard status == .authorized || status == .limited else {
+        DispatchQueue.main.async {
+          result(FlutterError(
+            code: "delete_denied",
+            message: "Photos access was denied",
+            details: nil
+          ))
+        }
+        return
+      }
+      let assets = PHAsset.fetchAssets(withLocalIdentifiers: identifiers, options: nil)
+      DispatchQueue.main.async {
+        if assets.count == identifiers.count {
+          result(nil)
+        } else {
+          result(FlutterError(
+            code: "delete_unavailable",
+            message: "some original photos are unavailable",
+            details: nil
+          ))
+        }
+      }
+    }
+  }
+
+  private func removeLocation(_ path: String?, result: @escaping FlutterResult) {
+    guard let path else {
+      result(FlutterError(code: "metadata_failed", message: "photo path is missing", details: nil))
+      return
+    }
+    DispatchQueue.global(qos: .userInitiated).async {
+      let url = URL(fileURLWithPath: path)
+      let temporary = url.deletingLastPathComponent()
+        .appendingPathComponent(UUID().uuidString)
+      do {
+        guard let source = CGImageSourceCreateWithURL(url as CFURL, nil),
+              let type = CGImageSourceGetType(source),
+              let destination = CGImageDestinationCreateWithURL(
+                temporary as CFURL, type, 1, nil
+              ) else {
+          throw NSError(domain: "minimo_photo", code: 2)
+        }
+        CGImageDestinationAddImageFromSource(
+          destination, source, 0,
+          [kCGImageMetadataShouldExcludeGPS: true] as CFDictionary
+        )
+        guard CGImageDestinationFinalize(destination) else {
+          throw NSError(domain: "minimo_photo", code: 3)
+        }
+        _ = try FileManager.default.replaceItemAt(url, withItemAt: temporary)
+        DispatchQueue.main.async { result(nil) }
+      } catch {
+        try? FileManager.default.removeItem(at: temporary)
+        DispatchQueue.main.async {
+          result(FlutterError(
+            code: "metadata_failed", message: error.localizedDescription, details: nil
+          ))
+        }
+      }
+    }
+  }
+
   private func saveReplacement(
     _ arguments: [String: Any]?,
     result: @escaping FlutterResult
@@ -406,6 +476,9 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
       let requestedAlbum = (arguments?["album"] as? String)?
         .trimmingCharacters(in: .whitespacesAndNewlines)
       self.ensureAlbum(named: requestedAlbum) { album, albumWarning in
+        let metadata = source.map {
+          PickedPhotoMetadata(creationDate: $0.creationDate, location: $0.location)
+        } ?? fallback
         if let album, !albums.contains(where: {
           $0.localIdentifier == album.localIdentifier
         }) {
@@ -413,9 +486,10 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
         }
         self.createReplacement(
           at: URL(fileURLWithPath: path),
-          metadata: source.map {
-            PickedPhotoMetadata(creationDate: $0.creationDate, location: $0.location)
-          } ?? fallback,
+          metadata: PickedPhotoMetadata(
+            creationDate: metadata.creationDate,
+            location: arguments?["removeLocation"] as? Bool == true ? nil : metadata.location
+          ),
           albums: albums,
           favorite: source?.isFavorite ?? false,
           initialWarnings: albumWarning || skippedSourceAlbum

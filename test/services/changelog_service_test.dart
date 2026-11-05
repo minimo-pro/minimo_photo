@@ -17,8 +17,8 @@ void main() {
       expect(Language.fromCode(locale.languageCode).code, locale.languageCode);
       expect(
         unseenChanges(
-          lastSeen: '1.0.2',
-          current: '1.0.3',
+          lastSeen: '1.0.3',
+          current: '1.0.4',
           language: Language.fromCode(locale.languageCode),
         ),
         isNotEmpty,

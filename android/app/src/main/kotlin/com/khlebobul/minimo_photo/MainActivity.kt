@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.provider.OpenableColumns
+import androidx.exifinterface.media.ExifInterface
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
@@ -27,6 +28,7 @@ class MainActivity : FlutterActivity() {
             when (call.method) {
                 "pickPhotos" -> pickPhotos(call.arguments, result)
                 "cancelPhotoPick" -> cancelPhotoPick(result)
+                "removeLocation" -> removeLocation(call.arguments as? String, result)
                 else -> result.notImplemented()
             }
         }
@@ -38,6 +40,40 @@ class MainActivity : FlutterActivity() {
             }
         }
         importExternalIntent(intent)
+    }
+
+    private fun removeLocation(path: String?, result: MethodChannel.Result) {
+        if (path == null) {
+            result.error("metadata_failed", "photo path is missing", null)
+            return
+        }
+        Thread {
+            try {
+                val exif = ExifInterface(path)
+                listOf(
+                    ExifInterface.TAG_GPS_VERSION_ID, ExifInterface.TAG_GPS_LATITUDE,
+                    ExifInterface.TAG_GPS_LATITUDE_REF, ExifInterface.TAG_GPS_LONGITUDE,
+                    ExifInterface.TAG_GPS_LONGITUDE_REF, ExifInterface.TAG_GPS_ALTITUDE,
+                    ExifInterface.TAG_GPS_ALTITUDE_REF, ExifInterface.TAG_GPS_TIMESTAMP,
+                    ExifInterface.TAG_GPS_DATESTAMP, ExifInterface.TAG_GPS_SATELLITES,
+                    ExifInterface.TAG_GPS_STATUS, ExifInterface.TAG_GPS_MEASURE_MODE,
+                    ExifInterface.TAG_GPS_DOP, ExifInterface.TAG_GPS_SPEED,
+                    ExifInterface.TAG_GPS_SPEED_REF, ExifInterface.TAG_GPS_TRACK,
+                    ExifInterface.TAG_GPS_TRACK_REF, ExifInterface.TAG_GPS_IMG_DIRECTION,
+                    ExifInterface.TAG_GPS_IMG_DIRECTION_REF, ExifInterface.TAG_GPS_MAP_DATUM,
+                    ExifInterface.TAG_GPS_DEST_LATITUDE, ExifInterface.TAG_GPS_DEST_LATITUDE_REF,
+                    ExifInterface.TAG_GPS_DEST_LONGITUDE, ExifInterface.TAG_GPS_DEST_LONGITUDE_REF,
+                    ExifInterface.TAG_GPS_DEST_BEARING, ExifInterface.TAG_GPS_DEST_BEARING_REF,
+                    ExifInterface.TAG_GPS_DEST_DISTANCE, ExifInterface.TAG_GPS_DEST_DISTANCE_REF,
+                    ExifInterface.TAG_GPS_PROCESSING_METHOD, ExifInterface.TAG_GPS_AREA_INFORMATION,
+                    ExifInterface.TAG_GPS_DIFFERENTIAL, ExifInterface.TAG_GPS_H_POSITIONING_ERROR,
+                ).forEach { exif.setAttribute(it, null) }
+                exif.saveAttributes()
+                runOnUiThread { result.success(null) }
+            } catch (error: Exception) {
+                runOnUiThread { result.error("metadata_failed", error.message, null) }
+            }
+        }.start()
     }
 
     override fun onNewIntent(intent: Intent) {

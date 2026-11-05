@@ -273,6 +273,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "la qualité sera réduite pour gagner de la place",
     ),
     "rateTheApp": MessageLookupByLibrary.simpleMessage("noter l\'app"),
+    "removeLocation": MessageLookupByLibrary.simpleMessage(
+      "supprimer la localisation",
+    ),
+    "removeLocationDescription": MessageLookupByLibrary.simpleMessage(
+      "supprimer la localisation des photos enregistrées en conservant les autres métadonnées",
+    ),
     "replaceOriginal": MessageLookupByLibrary.simpleMessage(
       "remplacer l\'original",
     ),

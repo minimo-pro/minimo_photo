@@ -1,7 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import 'intl/messages_all.dart';
 
 // **************************************************************************
@@ -545,6 +544,26 @@ class S {
     return Intl.message(
       'use the dark appearance',
       name: 'darkThemeDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `remove location`
+  String get removeLocation {
+    return Intl.message(
+      'remove location',
+      name: 'removeLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `remove location from saved photos while keeping other metadata`
+  String get removeLocationDescription {
+    return Intl.message(
+      'remove location from saved photos while keeping other metadata',
+      name: 'removeLocationDescription',
       desc: '',
       args: [],
     );

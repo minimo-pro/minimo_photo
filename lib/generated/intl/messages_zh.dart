@@ -206,6 +206,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "将降低质量以节省空间",
     ),
     "rateTheApp": MessageLookupByLibrary.simpleMessage("为应用评分"),
+    "removeLocation": MessageLookupByLibrary.simpleMessage("移除位置信息"),
+    "removeLocationDescription": MessageLookupByLibrary.simpleMessage(
+      "保留其他元数据，同时移除已保存照片的位置信息",
+    ),
     "replaceOriginal": MessageLookupByLibrary.simpleMessage("替换原照片"),
     "replaceOriginalDescription": MessageLookupByLibrary.simpleMessage(
       "保留原始元数据并保存，然后询问是否删除原照片",

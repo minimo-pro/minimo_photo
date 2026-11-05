@@ -92,6 +92,8 @@
   "languageDescription": "选择应用语言",
   "darkTheme": "深色主题",
   "darkThemeDescription": "使用深色外观",
+  "removeLocation": "移除位置信息",
+  "removeLocationDescription": "保留其他元数据，同时移除已保存照片的位置信息",
   "system": "跟随系统",
   "english": "english",
   "russian": "русский",

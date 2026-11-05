@@ -92,6 +92,8 @@
   "languageDescription": "выберите язык приложения",
   "darkTheme": "темная тема",
   "darkThemeDescription": "использовать темное оформление",
+  "removeLocation": "удалять геолокацию",
+  "removeLocationDescription": "удалять местоположение из сохранённых фото, сохраняя остальные метаданные",
   "system": "система",
   "english": "english",
   "russian": "русский",

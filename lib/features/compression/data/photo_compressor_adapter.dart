@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:flutter/services.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 
@@ -11,6 +12,7 @@ import '../domain/compression_settings.dart';
 import '../domain/picked_photo.dart';
 
 class PhotoCompressorAdapter {
+  static const _photosChannel = MethodChannel('minimo_photo/photos');
   var _cancelGeneration = 0;
 
   Future<CompressionResult> compress(
@@ -46,6 +48,11 @@ class PhotoCompressorAdapter {
       }
       if (!await outputFile.exists()) {
         throw StateError('Photo compression produced no file');
+      }
+
+      if ((Platform.isIOS || Platform.isAndroid) &&
+          AppSettingsService.instance.removeLocation && settings.keepExif) {
+        await _photosChannel.invokeMethod<void>('removeLocation', outputPath);
       }
 
       onProgress?.call(1);
@@ -90,6 +97,10 @@ class PhotoCompressorAdapter {
         final output = await _encode(photo.path, outputPath, format, settings);
         if (isCancelled?.call() == true) return null;
         if (output == null) return null;
+        if ((Platform.isIOS || Platform.isAndroid) &&
+            AppSettingsService.instance.removeLocation && settings.keepExif) {
+          await _photosChannel.invokeMethod<void>('removeLocation', outputPath);
+        }
         final originalSize = await File(photo.path).length();
         final outputSize = await File(output.path).length();
         total += isUsefulCompression(originalSize, outputSize)

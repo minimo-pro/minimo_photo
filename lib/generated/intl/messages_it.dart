@@ -270,6 +270,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "la qualità verrà ridotta per risparmiare spazio",
     ),
     "rateTheApp": MessageLookupByLibrary.simpleMessage("valuta l\'app"),
+    "removeLocation": MessageLookupByLibrary.simpleMessage("rimuovi posizione"),
+    "removeLocationDescription": MessageLookupByLibrary.simpleMessage(
+      "rimuovi la posizione dalle foto salvate mantenendo gli altri metadati",
+    ),
     "replaceOriginal": MessageLookupByLibrary.simpleMessage(
       "sostituisci l\'originale",
     ),

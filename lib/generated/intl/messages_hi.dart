@@ -263,6 +263,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "जगह बचाने के लिए गुणवत्ता कम की जाएगी",
     ),
     "rateTheApp": MessageLookupByLibrary.simpleMessage("ऐप को रेट करें"),
+    "removeLocation": MessageLookupByLibrary.simpleMessage("लोकेशन हटाएं"),
+    "removeLocationDescription": MessageLookupByLibrary.simpleMessage(
+      "अन्य मेटाडेटा रखते हुए सेव की गई फ़ोटो से लोकेशन हटाएं",
+    ),
     "replaceOriginal": MessageLookupByLibrary.simpleMessage("मूल बदलें"),
     "replaceOriginalDescription": MessageLookupByLibrary.simpleMessage(
       "मूल मेटाडेटा के साथ सहेजें, फिर मूल को हटाने के लिए कहें",

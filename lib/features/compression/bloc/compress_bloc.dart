@@ -434,6 +434,10 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
       final metadataWarnings = <String>[];
       var savedAnyPhoto = false;
 
+      if (deleteIdentifiers.isNotEmpty) {
+        await _photoFileAdapter.ensureOriginalsAccessible(deleteIdentifiers);
+      }
+
       for (final item in successfulResults) {
         final outputPath = item.result.outputPath;
         if (outputPath == null) continue;

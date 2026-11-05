@@ -6,7 +6,7 @@
 - Editable app-info ID: `200ec7ba-199f-4e86-ae7e-e46263ab45ab`.
 - iOS version ID: `c7b224ba-5162-410f-949a-f78dde4cdedf` (`1.0.3`,
   `PREPARE_FOR_SUBMISSION`). Do not use the video app's ID.
-- Local version: `1.0.3+7` (see `pubspec.yaml`).
+- Local version: `1.0.4+8` (see `pubspec.yaml`).
 - UI/export locales: `en`, `de`, `es`, `fr`, `hi`, `it`, `ja`, `ko`, `nl`,
   `pt`, `ru`, `tr`, `zh`. App Store mapping: `en → en-US`, `de → de-DE`,
   `es → es-ES`, `fr → fr-FR`, `nl → nl-NL`, `pt → pt-BR`, `zh → zh-Hans`;
