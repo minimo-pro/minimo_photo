@@ -4,7 +4,7 @@
 - Auth profile: `minimo`, stored in System Keychain. Pass it explicitly.
 - ASC app ID: `6822256099`, resolved on 2026-10-13.
 - Editable app-info ID: `200ec7ba-199f-4e86-ae7e-e46263ab45ab`.
-- iOS version ID: `c7b224ba-5162-410f-949a-f78dde4cdedf` (`1.0.3`,
+- iOS version ID: `29a05d2c-728b-4192-a1bc-a0fbdb4d60f2` (`1.0.4`,
   `PREPARE_FOR_SUBMISSION`). Do not use the video app's ID.
 - Local version: `1.0.4+8` (see `pubspec.yaml`).
 - UI/export locales: `en`, `de`, `es`, `fr`, `hi`, `it`, `ja`, `ko`, `nl`,
@@ -13,11 +13,11 @@
   the others use the same code. `zh-Hant` has separate App Store metadata,
   without a separate UI deck.
 - Canonical local metadata: `metadata/app-info/*.json` and
-  `metadata/version/{1.0.0,1.0.1,1.0.2,1.0.3}/*.json` (14 App Store locales).
+  `metadata/version/{1.0.0,1.0.1,1.0.2,1.0.3,1.0.4}/*.json` (14 App Store locales).
   Google Play listings: `metadata/google-play/store-listing-import.csv`
   (13 locales). All metadata is ignored by Git.
 - User-provided name, subtitle, description, keywords, and URLs are preserved.
-  What's New and promotional text are localized for version 1.0.3.
+  What's New and promotional text are localized for version 1.0.4.
   Metadata validation is not release-readiness validation.
 
 Use installed `asc-cli-usage`, `asc-id-resolver` and `asc-metadata-sync` skills.
@@ -33,7 +33,7 @@ Pull into a separate source folder, preserving local metadata edits:
 ```bash
 rtk proxy asc --profile minimo apps info list --app 6822256099 --output table
 rtk proxy asc --profile minimo versions list --app 6822256099 --output table
-rtk proxy asc --profile minimo metadata pull --app 6822256099 --app-info 200ec7ba-199f-4e86-ae7e-e46263ab45ab --version 1.0.3 --platform IOS --dir .asc/source/metadata
+rtk proxy asc --profile minimo metadata pull --app 6822256099 --app-info 200ec7ba-199f-4e86-ae7e-e46263ab45ab --version 1.0.4 --platform IOS --dir .asc/source/metadata
 ```
 
 Merge existing URLs, localization mappings and What's New into local metadata
@@ -67,10 +67,14 @@ alternating outer slides 1/3/5 and inner slides 2/4/6. Upload receipts for all
 252 show `COMPLETE` in upload results or readbacks; the final full remote
 readback is pending because App Store Connect returned HTTP 429. All 28
 Header/Search Results placements are
-`ACTIVE`. The version is `PREPARE_FOR_SUBMISSION`;
-no build was uploaded or submitted for review. `zh-Hant` storefront graphics
+`ACTIVE`. The version is `READY_FOR_DISTRIBUTION`. `zh-Hant` storefront graphics
 reuse the `zh` (Simplified Chinese) UI captures because the app has no separate
 Traditional Chinese interface.
+
+For 1.0.4, the iOS version was created on 2026-11-05. Promotional text and
+What's New were uploaded and verified in all 14 locales. The remote snapshot
+is in `.asc/source/metadata-1.0.4-verified/`. No build was uploaded or
+submitted for review.
 
 Exports and browser editor: [store_screenshots/README.md](store_screenshots/README.md).
 Apple Header and Search Results use Asset Library placements, separate from

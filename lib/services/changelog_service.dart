@@ -36,38 +36,38 @@ typedef Changelog = Map<String, Map<Language, List<String>>>;
 const Changelog _changelog = {
   '1.0.4': {
     Language.en: [
-      "remove photo location while keeping other metadata. on ios, save a compressed copy and confirm deleting the original.",
+      "remove photo location while keeping other metadata. fixed minor bugs.",
     ],
     Language.de: [
-      "entferne den standort aus fotos, behalte andere metadaten und ersetze originale auf ios.",
+      "entferne den standort aus fotos und behalte andere metadaten. kleinere fehler wurden behoben.",
     ],
     Language.es: [
-      "elimina la ubicación de las fotos, conserva otros metadatos y reemplaza originales en ios.",
+      "elimina la ubicación de las fotos y conserva otros metadatos. se corrigieron errores menores.",
     ],
     Language.fr: [
-      "supprimez la localisation des photos, conservez les autres métadonnées et remplacez les originaux sur ios.",
+      "supprimez la localisation des photos en conservant les autres métadonnées. des erreurs mineures ont été corrigées.",
     ],
     Language.hi: [
-      "अन्य मेटाडेटा रखते हुए फ़ोटो की लोकेशन हटाएं और ios पर मूल फ़ोटो बदलें।",
+      "अन्य मेटाडेटा रखते हुए फ़ोटो की लोकेशन हटाएं। छोटी समस्याएं ठीक की गई हैं।",
     ],
     Language.it: [
-      "rimuovi la posizione dalle foto, conserva gli altri metadati e sostituisci gli originali su ios.",
+      "rimuovi la posizione dalle foto e conserva gli altri metadati. corretti piccoli errori.",
     ],
-    Language.ja: ["他のメタデータを残して写真の位置情報を削除し、iosで元の写真を置き換えられます。"],
-    Language.ko: ["다른 메타데이터는 유지하고 사진의 위치 정보를 제거하며 ios에서 원본을 교체할 수 있습니다."],
+    Language.ja: ["他のメタデータを残して写真の位置情報を削除できます。軽微な不具合を修正しました。"],
+    Language.ko: ["다른 메타데이터는 유지하고 사진의 위치 정보를 제거할 수 있습니다. 사소한 오류를 수정했습니다."],
     Language.nl: [
-      "verwijder de locatie uit foto's, behoud andere metagegevens en vervang originelen op ios.",
+      "verwijder de locatie uit foto's en behoud andere metagegevens. kleine fouten zijn verholpen.",
     ],
     Language.pt: [
-      "remova a localização das fotos, mantenha os outros metadados e substitua os originais no ios.",
+      "remova a localização das fotos e mantenha os outros metadados. pequenos erros foram corrigidos.",
     ],
     Language.ru: [
-      "удаляйте геолокацию фото, сохраняя остальные метаданные. на ios сохраняйте сжатую копию и подтверждайте удаление оригинала.",
+      "удаляйте геолокацию фото, сохраняя остальные метаданные. исправлены небольшие ошибки.",
     ],
     Language.tr: [
-      "diğer meta verileri koruyarak fotoğrafların konumunu kaldırın ve ios'ta orijinalleri değiştirin.",
+      "diğer meta verileri koruyarak fotoğrafların konumunu kaldırın. küçük hatalar düzeltildi.",
     ],
-    Language.zh: ["保留其他元数据的同时移除照片位置，并在 ios 上替换原图。"],
+    Language.zh: ["保留其他元数据的同时移除照片位置。修复了一些小问题。"],
   },
   '1.0.3': {
     Language.en: [
