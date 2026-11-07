@@ -174,6 +174,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "languageDescription": MessageLookupByLibrary.simpleMessage(
       "scegli la lingua dell\'app",
     ),
+    "leave": MessageLookupByLibrary.simpleMessage("esci"),
+    "leaveWithoutSaving": MessageLookupByLibrary.simpleMessage(
+      "esci senza salvare",
+    ),
     "loadingManyPhotosHint": MessageLookupByLibrary.simpleMessage(
       "il download dall\'archivio cloud o la copia di file di grandi dimensioni potrebbe richiedere più tempo",
     ),
@@ -344,6 +348,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "statisticsSinceVersion": MessageLookupByLibrary.simpleMessage(
       "le statistiche vengono archiviate localmente su questo dispositivo.",
     ),
+    "stay": MessageLookupByLibrary.simpleMessage("rimani"),
     "stripMetadata": MessageLookupByLibrary.simpleMessage(
       "eliminare i metadati",
     ),
@@ -358,6 +363,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "videoAppDescription": MessageLookupByLibrary.simpleMessage(
       "rimpicciolisci i video, direttamente sul tuo telefono",
+    ),
+    "videoAppPromptTitle": MessageLookupByLibrary.simpleMessage(
+      "comprimere anche i video?",
     ),
     "waiting": MessageLookupByLibrary.simpleMessage("in attesa"),
     "xTwitter": MessageLookupByLibrary.simpleMessage("x (twitter)"),

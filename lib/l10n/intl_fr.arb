@@ -1,6 +1,9 @@
 {
   "unsavedResultsTitle": "photos non enregistrées",
   "unsavedResultsExit": "laisser et supprimer les photos compressées non enregistrées ?",
+  "stay": "rester",
+  "leaveWithoutSaving": "quitter sans enregistrer",
+  "leave": "quitter",
   "@@locale": "fr",
   "appName": "minimo (photo)",
   "madeByKhlebobul": "par khlebobul",
@@ -44,6 +47,7 @@
   "xTwitter": "x (twitter)",
   "myWebsite": "mon site",
   "myOtherApps": "mes autres apps",
+  "videoAppPromptTitle": "vous compressez aussi des vidéos ?",
   "videoAppDescription": "réduisez la taille des vidéos, directement sur votre téléphone",
   "emailCopied": "e-mail copié",
   "settings": "réglages",

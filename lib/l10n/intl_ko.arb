@@ -1,6 +1,9 @@
 {
   "unsavedResultsTitle": "저장되지 않은 사진",
   "unsavedResultsExit": "저장되지 않은 압축 사진을 두고 삭제하시겠습니까?",
+  "stay": "머무르기",
+  "leaveWithoutSaving": "저장하지 않고 나가기",
+  "leave": "나가기",
   "@@locale": "ko",
   "appName": "minimo (photo)",
   "madeByKhlebobul": "khlebobul 제작",
@@ -44,6 +47,7 @@
   "xTwitter": "x (twitter)",
   "myWebsite": "내 웹사이트",
   "myOtherApps": "내 다른 앱",
+  "videoAppPromptTitle": "동영상도 압축하시나요?",
   "videoAppDescription": "휴대전화에서 바로 동영상을 작게 만드세요.",
   "emailCopied": "이메일 복사됨",
   "settings": "설정",

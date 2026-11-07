@@ -75,6 +75,26 @@ class S {
     );
   }
 
+  /// `stay`
+  String get stay {
+    return Intl.message('stay', name: 'stay', desc: '', args: []);
+  }
+
+  /// `leave without saving`
+  String get leaveWithoutSaving {
+    return Intl.message(
+      'leave without saving',
+      name: 'leaveWithoutSaving',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `leave`
+  String get leave {
+    return Intl.message('leave', name: 'leave', desc: '', args: []);
+  }
+
   /// `minimo (photo)`
   String get appName {
     return Intl.message('minimo (photo)', name: 'appName', desc: '', args: []);
@@ -300,6 +320,16 @@ class S {
     return Intl.message(
       'my other apps',
       name: 'myOtherApps',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `compress videos too?`
+  String get videoAppPromptTitle {
+    return Intl.message(
+      'compress videos too?',
+      name: 'videoAppPromptTitle',
       desc: '',
       args: [],
     );

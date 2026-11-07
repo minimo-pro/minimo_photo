@@ -1,6 +1,9 @@
 {
   "unsavedResultsTitle": "unsaved photos",
   "unsavedResultsExit": "leave and delete unsaved compressed photos?",
+  "stay": "stay",
+  "leaveWithoutSaving": "leave without saving",
+  "leave": "leave",
   "@@locale": "en",
   "appName": "minimo (photo)",
   "madeByKhlebobul": "by khlebobul",
@@ -44,6 +47,7 @@
   "xTwitter": "x (twitter)",
   "myWebsite": "my website",
   "myOtherApps": "my other apps",
+  "videoAppPromptTitle": "compress videos too?",
   "videoAppDescription": "make videos smaller, right on your phone",
   "emailCopied": "email copied",
   "settings": "settings",

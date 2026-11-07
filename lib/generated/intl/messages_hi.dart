@@ -169,6 +169,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "languageDescription": MessageLookupByLibrary.simpleMessage(
       "ऐप की भाषा चुनें",
     ),
+    "leave": MessageLookupByLibrary.simpleMessage("बाहर निकलें"),
+    "leaveWithoutSaving": MessageLookupByLibrary.simpleMessage("बिना सेव जाएँ"),
     "loadingManyPhotosHint": MessageLookupByLibrary.simpleMessage(
       "क्लाउड स्टोरेज से डाउनलोड करने या बड़ी फ़ाइलों की प्रतिलिपि बनाने में अधिक समय लग सकता है",
     ),
@@ -331,6 +333,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "statisticsSinceVersion": MessageLookupByLibrary.simpleMessage(
       "इस उपकरण पर आँकड़े स्थानीय रूप से संग्रहीत किए जाते हैं।",
     ),
+    "stay": MessageLookupByLibrary.simpleMessage("रुकें"),
     "stripMetadata": MessageLookupByLibrary.simpleMessage(
       "मेटाडेटा स्ट्रिप करें",
     ),
@@ -345,6 +348,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "videoAppDescription": MessageLookupByLibrary.simpleMessage(
       "सीधे अपने फ़ोन पर वीडियो छोटे बनाएं",
+    ),
+    "videoAppPromptTitle": MessageLookupByLibrary.simpleMessage(
+      "वीडियो भी संपीड़ित करें?",
     ),
     "waiting": MessageLookupByLibrary.simpleMessage("इंतज़ार"),
     "xTwitter": MessageLookupByLibrary.simpleMessage("x (twitter)"),

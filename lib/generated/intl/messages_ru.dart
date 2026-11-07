@@ -173,6 +173,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "languageDescription": MessageLookupByLibrary.simpleMessage(
       "выберите язык приложения",
     ),
+    "leave": MessageLookupByLibrary.simpleMessage("выйти"),
+    "leaveWithoutSaving": MessageLookupByLibrary.simpleMessage(
+      "выйти без сохранения",
+    ),
     "loadingManyPhotosHint": MessageLookupByLibrary.simpleMessage(
       "загрузка из облака или копирование крупных файлов может занять больше времени",
     ),
@@ -341,6 +345,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "statisticsSinceVersion": MessageLookupByLibrary.simpleMessage(
       "статистика хранится локально на этом устройстве.",
     ),
+    "stay": MessageLookupByLibrary.simpleMessage("остаться"),
     "stripMetadata": MessageLookupByLibrary.simpleMessage("без метаданных"),
     "system": MessageLookupByLibrary.simpleMessage("система"),
     "todo": MessageLookupByLibrary.simpleMessage("в разработке"),
@@ -353,6 +358,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "videoAppDescription": MessageLookupByLibrary.simpleMessage(
       "сжимайте видео прямо на телефоне",
+    ),
+    "videoAppPromptTitle": MessageLookupByLibrary.simpleMessage(
+      "сжимаете и видео?",
     ),
     "waiting": MessageLookupByLibrary.simpleMessage("ожидает"),
     "xTwitter": MessageLookupByLibrary.simpleMessage("x (twitter)"),

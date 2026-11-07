@@ -1,6 +1,9 @@
 {
   "unsavedResultsTitle": "सहेजे न गए फ़ोटो",
   "unsavedResultsExit": "सहेजे न गए संपीड़ित फ़ोटो को छोड़ें और हटाएं?",
+  "stay": "रुकें",
+  "leaveWithoutSaving": "बिना सेव जाएँ",
+  "leave": "बाहर निकलें",
   "@@locale": "hi",
   "appName": "minimo (photo)",
   "madeByKhlebobul": "khlebobul द्वारा",
@@ -44,6 +47,7 @@
   "xTwitter": "x (twitter)",
   "myWebsite": "मेरी वेबसाइट",
   "myOtherApps": "मेरे अन्य ऐप",
+  "videoAppPromptTitle": "वीडियो भी संपीड़ित करें?",
   "videoAppDescription": "सीधे अपने फ़ोन पर वीडियो छोटे बनाएं",
   "emailCopied": "ईमेल कॉपी हुआ",
   "settings": "सेटिंग्स",

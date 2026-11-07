@@ -149,6 +149,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "keepMetadataLegacy": MessageLookupByLibrary.simpleMessage("메타데이터 유지"),
     "language": MessageLookupByLibrary.simpleMessage("언어"),
     "languageDescription": MessageLookupByLibrary.simpleMessage("앱 언어를 선택하세요"),
+    "leave": MessageLookupByLibrary.simpleMessage("나가기"),
+    "leaveWithoutSaving": MessageLookupByLibrary.simpleMessage("저장하지 않고 나가기"),
     "loadingManyPhotosHint": MessageLookupByLibrary.simpleMessage(
       "클라우드 저장소에서 다운로드하거나 대용량 파일을 복사하는 데 시간이 더 오래 걸릴 수 있습니다.",
     ),
@@ -293,6 +295,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "statisticsSinceVersion": MessageLookupByLibrary.simpleMessage(
       "통계는 이 장치에 로컬로 저장됩니다.",
     ),
+    "stay": MessageLookupByLibrary.simpleMessage("머무르기"),
     "stripMetadata": MessageLookupByLibrary.simpleMessage("메타데이터 제거"),
     "system": MessageLookupByLibrary.simpleMessage("시스템"),
     "todo": MessageLookupByLibrary.simpleMessage("할 일"),
@@ -304,6 +307,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "videoAppDescription": MessageLookupByLibrary.simpleMessage(
       "휴대전화에서 바로 동영상을 작게 만드세요.",
     ),
+    "videoAppPromptTitle": MessageLookupByLibrary.simpleMessage("동영상도 압축하시나요?"),
     "waiting": MessageLookupByLibrary.simpleMessage("대기 중"),
     "xTwitter": MessageLookupByLibrary.simpleMessage("x (twitter)"),
     "youSavedSize": m14,

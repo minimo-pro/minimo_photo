@@ -1,6 +1,9 @@
 {
   "unsavedResultsTitle": "foto non salvate",
   "unsavedResultsExit": "lasciare ed eliminare le foto compresse non salvate?",
+  "stay": "rimani",
+  "leaveWithoutSaving": "esci senza salvare",
+  "leave": "esci",
   "@@locale": "it",
   "appName": "minimo (photo)",
   "madeByKhlebobul": "di khlebobul",
@@ -44,6 +47,7 @@
   "xTwitter": "x (twitter)",
   "myWebsite": "il mio sito",
   "myOtherApps": "le mie altre app",
+  "videoAppPromptTitle": "comprimere anche i video?",
   "videoAppDescription": "rimpicciolisci i video, direttamente sul tuo telefono",
   "emailCopied": "e-mail copiata",
   "settings": "impostazioni",

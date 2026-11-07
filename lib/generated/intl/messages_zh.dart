@@ -130,6 +130,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "keepMetadataLegacy": MessageLookupByLibrary.simpleMessage("保留元数据"),
     "language": MessageLookupByLibrary.simpleMessage("语言"),
     "languageDescription": MessageLookupByLibrary.simpleMessage("选择应用语言"),
+    "leave": MessageLookupByLibrary.simpleMessage("退出"),
+    "leaveWithoutSaving": MessageLookupByLibrary.simpleMessage("不保存并离开"),
     "loadingManyPhotosHint": MessageLookupByLibrary.simpleMessage(
       "从云存储下载或复制大文件可能需要更长时间",
     ),
@@ -266,6 +268,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "statisticsSinceVersion": MessageLookupByLibrary.simpleMessage(
       "统计信息存储在该设备本地。",
     ),
+    "stay": MessageLookupByLibrary.simpleMessage("留下"),
     "stripMetadata": MessageLookupByLibrary.simpleMessage("剥离元数据"),
     "system": MessageLookupByLibrary.simpleMessage("跟随系统"),
     "todo": MessageLookupByLibrary.simpleMessage("待办事项"),
@@ -275,6 +278,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "unsavedResultsTitle": MessageLookupByLibrary.simpleMessage("未保存的照片"),
     "videoAppDescription": MessageLookupByLibrary.simpleMessage("直接在手机上缩小视频"),
+    "videoAppPromptTitle": MessageLookupByLibrary.simpleMessage("也想压缩视频？"),
     "waiting": MessageLookupByLibrary.simpleMessage("等待中"),
     "xTwitter": MessageLookupByLibrary.simpleMessage("x (twitter)"),
     "youSavedSize": m14,

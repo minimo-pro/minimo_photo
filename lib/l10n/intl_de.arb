@@ -1,6 +1,9 @@
 {
   "unsavedResultsTitle": "nicht gespeicherte Fotos",
   "unsavedResultsExit": "Nicht gespeicherte komprimierte Fotos belassen und löschen?",
+  "stay": "bleiben",
+  "leaveWithoutSaving": "ohne speichern verlassen",
+  "leave": "verlassen",
   "@@locale": "de",
   "appName": "minimo (photo)",
   "madeByKhlebobul": "von khlebobul",
@@ -44,6 +47,7 @@
   "xTwitter": "x (twitter)",
   "myWebsite": "meine website",
   "myOtherApps": "meine anderen apps",
+  "videoAppPromptTitle": "auch Videos komprimieren?",
   "videoAppDescription": "Verkleinern Sie Videos direkt auf Ihrem Telefon",
   "emailCopied": "e-mail kopiert",
   "settings": "einstellungen",

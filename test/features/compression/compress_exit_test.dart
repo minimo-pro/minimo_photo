@@ -19,7 +19,10 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   for (final saved in [false, true]) {
     testWidgets('exit confirmation for results: saved=$saved', (tester) async {
-      SharedPreferences.setMockInitialValues({});
+      SharedPreferences.setMockInitialValues({
+        'review_last_request_date': '2026-01-01T00:00:00',
+        'video_app_successful_conversions': 3,
+      });
       final root = (await tester.runAsync(
         () => Directory.systemTemp.createTemp('exit_widget_'),
       ))!;
@@ -81,18 +84,21 @@ void main() {
         ),
       );
       await tester.pump();
+      await tester.pump();
+      expect(find.text('compress videos too?'), findsOneWidget);
       final context = tester.element(find.byType(CompressScreen));
       await Navigator.of(context).maybePop();
       await tester.pump();
       if (!saved) {
         expect(find.text('unsaved photos'), findsOneWidget);
-        await tester.tap(find.text('cancel'));
+        expect(find.byType(AlertDialog), findsNothing);
+        await tester.tap(find.text('stay'));
         await tester.pumpAndSettle();
         expect(find.byType(CompressScreen), findsOneWidget);
         expect(bloc.isClosed, isFalse);
         await Navigator.of(context).maybePop();
         await tester.pumpAndSettle();
-        await tester.tap(find.text('Close'));
+        await tester.tap(find.text('leave without saving'));
       } else {
         expect(find.text('unsaved photos'), findsNothing);
       }
@@ -105,6 +111,7 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.text('start'), findsOneWidget);
       expect(find.byType(CompressScreen), findsNothing);
+      expect(tester.takeException(), isNull);
     });
   }
 }
