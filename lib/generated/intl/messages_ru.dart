@@ -354,6 +354,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "videoAppDescription": MessageLookupByLibrary.simpleMessage(
       "сжимайте видео прямо на телефоне",
     ),
+    "videoAppPromptTitle": MessageLookupByLibrary.simpleMessage(
+      "сжимаете и видео?",
+    ),
     "waiting": MessageLookupByLibrary.simpleMessage("ожидает"),
     "xTwitter": MessageLookupByLibrary.simpleMessage("x (twitter)"),
     "youSavedSize": m14,

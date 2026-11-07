@@ -304,6 +304,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "videoAppDescription": MessageLookupByLibrary.simpleMessage(
       "휴대전화에서 바로 동영상을 작게 만드세요.",
     ),
+    "videoAppPromptTitle": MessageLookupByLibrary.simpleMessage("동영상도 압축하시나요?"),
     "waiting": MessageLookupByLibrary.simpleMessage("대기 중"),
     "xTwitter": MessageLookupByLibrary.simpleMessage("x (twitter)"),
     "youSavedSize": m14,

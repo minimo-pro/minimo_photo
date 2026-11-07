@@ -358,6 +358,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "videoAppDescription": MessageLookupByLibrary.simpleMessage(
       "Verkleinern Sie Videos direkt auf Ihrem Telefon",
     ),
+    "videoAppPromptTitle": MessageLookupByLibrary.simpleMessage(
+      "auch Videos komprimieren?",
+    ),
     "waiting": MessageLookupByLibrary.simpleMessage("wartet"),
     "xTwitter": MessageLookupByLibrary.simpleMessage("x (twitter)"),
     "youSavedSize": m14,

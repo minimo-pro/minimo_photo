@@ -275,6 +275,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "unsavedResultsTitle": MessageLookupByLibrary.simpleMessage("未保存的照片"),
     "videoAppDescription": MessageLookupByLibrary.simpleMessage("直接在手机上缩小视频"),
+    "videoAppPromptTitle": MessageLookupByLibrary.simpleMessage("也想压缩视频？"),
     "waiting": MessageLookupByLibrary.simpleMessage("等待中"),
     "xTwitter": MessageLookupByLibrary.simpleMessage("x (twitter)"),
     "youSavedSize": m14,

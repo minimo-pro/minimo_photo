@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -11,9 +10,11 @@ import '../../../router/app_router.gr.dart';
 import '../../../services/app_settings_service.dart';
 import '../../../services/review_service.dart';
 import '../../../services/screen_awake_service.dart';
+import '../../../theme/app_theme.dart';
 import '../../../widgets/app_action_button.dart';
 import '../../../widgets/app_snack_bar.dart';
 import '../../../widgets/minimo_loader.dart';
+import '../../../widgets/video_app_card.dart';
 import '../bloc/compress_bloc.dart';
 import '../bloc/compress_event.dart';
 import '../bloc/compress_state.dart';
@@ -95,7 +96,9 @@ class _CompressViewState extends State<_CompressView> {
   (int, int)? _loadingProgress;
   bool _initialSelectionConfirmed = false;
   bool _leavingDuringImport = false;
-  int? _reviewedRun;
+  int? _promptRequestedForRunId;
+  final _videoPrompt = OverlayPortalController();
+  Timer? _videoPromptTimer;
   bool _confirmingExit = false;
   bool _exitAllowed = false;
 
@@ -112,6 +115,7 @@ class _CompressViewState extends State<_CompressView> {
 
   @override
   void dispose() {
+    _videoPromptTimer?.cancel();
     if (_loading) unawaited(_fileAdapter.cancelPhotoPick());
     unawaited(_setScreenAwake(false));
     super.dispose();
@@ -119,6 +123,14 @@ class _CompressViewState extends State<_CompressView> {
 
   @override
   Widget build(BuildContext context) {
+    return OverlayPortal(
+      controller: _videoPrompt,
+      overlayChildBuilder: _buildVideoPrompt,
+      child: _buildContent(context),
+    );
+  }
+
+  Widget _buildContent(BuildContext context) {
     return BlocConsumer<CompressBloc, CompressState>(
       listener: (context, state) {
         final strings = S.of(context);
@@ -153,16 +165,7 @@ class _CompressViewState extends State<_CompressView> {
           );
           context.read<CompressBloc>().add(const CompressMessagesCleared());
         }
-        if (Platform.isIOS &&
-            state.status == CompressStatus.done &&
-            _reviewedRun != state.compressionRunId) {
-          _reviewedRun = state.compressionRunId;
-          unawaited(
-            ReviewService.instance.onSuccessfulConversions(
-              state.successfulOutputPaths.length,
-            ),
-          );
-        }
+        unawaited(_promptAfterSuccessfulCompression(state));
       },
       builder: (context, state) => PopScope(
         canPop: _exitAllowed,
@@ -220,6 +223,96 @@ class _CompressViewState extends State<_CompressView> {
         ),
       ),
     );
+  }
+
+  Widget _buildVideoPrompt(BuildContext context) {
+    return Positioned(
+      left: 18,
+      right: 18,
+      top: MediaQuery.paddingOf(context).top + 14,
+      child: TweenAnimationBuilder<double>(
+        tween: Tween(begin: 0, end: 1),
+        duration: MediaQuery.disableAnimationsOf(context)
+            ? Duration.zero
+            : const Duration(milliseconds: 280),
+        curve: Curves.easeOutCubic,
+        builder: (context, value, child) => Opacity(
+          opacity: value,
+          child: Transform.translate(
+            offset: Offset(0, -24 * (1 - value)),
+            child: child,
+          ),
+        ),
+        child: Semantics(
+          container: true,
+          liveRegion: true,
+          child: Material(
+            color: AppTheme.of(context).frameBackgroundColor,
+            borderRadius: BorderRadius.circular(15),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(8, 6, 8, 8),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            S.of(context).videoAppPromptTitle,
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
+                        ),
+                        Tooltip(
+                          message: MaterialLocalizations.of(
+                            context,
+                          ).closeButtonTooltip,
+                          child: AppActionButton(
+                            width: 40,
+                            height: 40,
+                            icon: AppIcons.close,
+                            variant: AppActionButtonVariant.text,
+                            onPressed: _dismissVideoPrompt,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const VideoAppCard(),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _dismissVideoPrompt() {
+    _videoPromptTimer?.cancel();
+    _videoPrompt.hide();
+  }
+
+  Future<void> _promptAfterSuccessfulCompression(CompressState state) async {
+    if (state.status != CompressStatus.done ||
+        _promptRequestedForRunId == state.compressionRunId) {
+      return;
+    }
+
+    _promptRequestedForRunId = state.compressionRunId;
+    final prompt = await ReviewService.instance.onSuccessfulConversions(
+      state.successfulOutputPaths.length,
+    );
+    if (prompt != CompressionPrompt.videoApp ||
+        !mounted ||
+        context.read<CompressBloc>().state.compressionRunId !=
+            state.compressionRunId) {
+      return;
+    }
+    _videoPrompt.show();
+    _videoPromptTimer?.cancel();
+    _videoPromptTimer = Timer(const Duration(seconds: 10), _dismissVideoPrompt);
   }
 
   Future<void> _pickMore() async {

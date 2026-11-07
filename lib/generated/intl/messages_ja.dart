@@ -301,6 +301,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "videoAppDescription": MessageLookupByLibrary.simpleMessage(
       "携帯電話で直接ビデオを小さくする",
     ),
+    "videoAppPromptTitle": MessageLookupByLibrary.simpleMessage("動画も圧縮しますか？"),
     "waiting": MessageLookupByLibrary.simpleMessage("待機中"),
     "xTwitter": MessageLookupByLibrary.simpleMessage("x (twitter)"),
     "youSavedSize": m14,

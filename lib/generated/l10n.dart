@@ -305,6 +305,16 @@ class S {
     );
   }
 
+  /// `compress videos too?`
+  String get videoAppPromptTitle {
+    return Intl.message(
+      'compress videos too?',
+      name: 'videoAppPromptTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `make videos smaller, right on your phone`
   String get videoAppDescription {
     return Intl.message(

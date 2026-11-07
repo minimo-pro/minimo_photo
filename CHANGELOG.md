@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+### Added
+
+* Suggest minimo (video) after successful photo compressions in a dismissible top card, with its own prompt counter and three-month cooldown.
+
 ## [1.0.4]
 
 ### Added
