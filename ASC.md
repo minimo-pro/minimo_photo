@@ -3,8 +3,8 @@
 - Bundle ID: `com.khlebobul.minimoPhoto`.
 - Auth profile: `minimo`, stored in System Keychain. Pass it explicitly.
 - ASC app ID: `6822256099`, resolved on 2026-10-13.
-- Editable app-info ID: `200ec7ba-199f-4e86-ae7e-e46263ab45ab`.
-- iOS version ID: `29a05d2c-728b-4192-a1bc-a0fbdb4d60f2` (`1.0.4`,
+- Current app-info ID: `cc311dee-57bc-4714-9d32-0a7e91e8b62b`.
+- iOS version ID: `85171ed3-f60b-474b-9453-d3542f0dfdf3` (`1.0.5`,
   `PREPARE_FOR_SUBMISSION`). Do not use the video app's ID.
 - Local version: `1.0.5+10` (see `pubspec.yaml`).
 - UI/export locales: `en`, `de`, `es`, `fr`, `hi`, `it`, `ja`, `ko`, `nl`,
@@ -13,11 +13,12 @@
   the others use the same code. `zh-Hant` has separate App Store metadata,
   without a separate UI deck.
 - Canonical local metadata: `metadata/app-info/*.json` and
-  `metadata/version/{1.0.0,1.0.1,1.0.2,1.0.3,1.0.4}/*.json` (14 App Store locales).
+  `metadata/version/{1.0.0,1.0.1,1.0.2,1.0.3,1.0.4,1.0.5}/*.json` (14 App Store locales).
   Google Play listings: `metadata/google-play/store-listing-import.csv`
   (13 locales). All metadata is ignored by Git.
-- User-provided name, subtitle, description, keywords, and URLs are preserved.
-  What's New and promotional text are localized for version 1.0.4.
+- User-provided name, subtitle, description, and URLs are preserved.
+  Keywords and What's New are localized for version 1.0.5; promotional text
+  carries over from 1.0.4.
   Metadata validation is not release-readiness validation.
 
 Use installed `asc-cli-usage`, `asc-id-resolver` and `asc-metadata-sync` skills.
@@ -33,7 +34,7 @@ Pull into a separate source folder, preserving local metadata edits:
 ```bash
 rtk proxy asc --profile minimo apps info list --app 6822256099 --output table
 rtk proxy asc --profile minimo versions list --app 6822256099 --output table
-rtk proxy asc --profile minimo metadata pull --app 6822256099 --app-info 200ec7ba-199f-4e86-ae7e-e46263ab45ab --version 1.0.4 --platform IOS --dir .asc/source/metadata
+rtk proxy asc --profile minimo metadata pull --app 6822256099 --app-info cc311dee-57bc-4714-9d32-0a7e91e8b62b --version 1.0.5 --platform IOS --dir .asc/source/metadata
 ```
 
 Merge existing URLs, localization mappings and What's New into local metadata
@@ -75,6 +76,12 @@ For 1.0.4, the iOS version was created on 2026-11-05. Promotional text and
 What's New were uploaded and verified in all 14 locales. The remote snapshot
 is in `.asc/source/metadata-1.0.4-verified/`. No build was uploaded or
 submitted for review.
+
+For 1.0.5, the iOS version was created on 2026-11-07 as
+`PREPARE_FOR_SUBMISSION`. Metadata was copied from 1.0.4, then ASO keyword
+fixes and localized What's New were uploaded for all 14 locales. The exact
+remote readback is in `.asc/source/metadata-1.0.5-aso-verified/`. No build was
+attached or review submission created in this workflow.
 
 Exports and browser editor: [store_screenshots/README.md](store_screenshots/README.md).
 Apple Header and Search Results use Asset Library placements, separate from

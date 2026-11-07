@@ -301,9 +301,14 @@ class _CompressViewState extends State<_CompressView> {
     }
 
     _promptRequestedForRunId = state.compressionRunId;
-    final prompt = await ReviewService.instance.onSuccessfulConversions(
-      state.successfulOutputPaths.length,
-    );
+    late final CompressionPrompt prompt;
+    try {
+      prompt = await ReviewService.instance.onSuccessfulConversions(
+        state.successfulOutputPaths.length,
+      );
+    } catch (_) {
+      return;
+    }
     if (prompt != CompressionPrompt.videoApp ||
         !mounted ||
         context.read<CompressBloc>().state.compressionRunId !=

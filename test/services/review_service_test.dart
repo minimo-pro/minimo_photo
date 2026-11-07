@@ -68,4 +68,30 @@ void main() {
     );
     expect(requests, 2);
   });
+
+  test('video prompt can repeat without a newer rating', () async {
+    SharedPreferences.setMockInitialValues({
+      'video_app_successful_conversions': 2,
+      'review_last_request_date': '2026-01-01T00:00:00',
+      'video_app_last_prompt_date': '2026-02-01T00:00:00',
+    });
+    final service = ReviewService(
+      isAvailable: () async => false,
+      now: () => DateTime(2026, 5, 5),
+    );
+
+    expect(
+      await service.onSuccessfulConversions(1),
+      CompressionPrompt.videoApp,
+    );
+  });
+
+  test('first video prompt still waits for a rating', () async {
+    SharedPreferences.setMockInitialValues({
+      'video_app_successful_conversions': 2,
+    });
+    final service = ReviewService(isAvailable: () async => false);
+
+    expect(await service.onSuccessfulConversions(1), CompressionPrompt.none);
+  });
 }

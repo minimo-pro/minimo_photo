@@ -51,7 +51,6 @@ class ReviewService {
       prefs.getString(_lastVideoPromptDateKey) ?? '',
     );
     if (lastReview != null &&
-        (lastVideo == null || lastReview.isAfter(lastVideo)) &&
         (prefs.getInt(_videoConversionsKey) ?? 0) >=
             _successfulConversionsToShowVideoApp &&
         (lastVideo == null ||
