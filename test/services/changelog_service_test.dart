@@ -15,14 +15,19 @@ void main() {
   test('release notes cover every app language', () {
     for (final locale in S.delegate.supportedLocales) {
       expect(Language.fromCode(locale.languageCode).code, locale.languageCode);
-      expect(
-        unseenChanges(
-          lastSeen: '1.0.3',
-          current: '1.0.4',
-          language: Language.fromCode(locale.languageCode),
-        ),
-        isNotEmpty,
-      );
+      for (final (lastSeen, current, count) in [
+        ('1.0.3', '1.0.4', 1),
+        ('1.0.4', '1.0.5', 2),
+      ]) {
+        expect(
+          unseenChanges(
+            lastSeen: lastSeen,
+            current: current,
+            language: Language.fromCode(locale.languageCode),
+          ),
+          hasLength(count),
+        );
+      }
     }
   });
 
