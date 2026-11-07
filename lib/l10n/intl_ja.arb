@@ -1,6 +1,9 @@
 {
   "unsavedResultsTitle": "保存されていない写真",
   "unsavedResultsExit": "終了して、未保存の圧縮写真を破棄しますか？",
+  "stay": "戻る",
+  "leaveWithoutSaving": "保存せずに終了",
+  "leave": "終了",
   "@@locale": "ja",
   "appName": "minimo (photo)",
   "madeByKhlebobul": "khlebobul 作",

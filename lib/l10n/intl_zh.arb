@@ -1,6 +1,9 @@
 {
   "unsavedResultsTitle": "未保存的照片",
   "unsavedResultsExit": "离开并丢弃未保存的压缩照片？",
+  "stay": "留下",
+  "leaveWithoutSaving": "不保存并离开",
+  "leave": "退出",
   "@@locale": "zh",
   "appName": "minimo (photo)",
   "madeByKhlebobul": "khlebobul 制作",

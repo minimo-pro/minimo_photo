@@ -1,6 +1,9 @@
 {
   "unsavedResultsTitle": "सहेजे न गए फ़ोटो",
   "unsavedResultsExit": "सहेजे न गए संपीड़ित फ़ोटो को छोड़ें और हटाएं?",
+  "stay": "रुकें",
+  "leaveWithoutSaving": "बिना सेव जाएँ",
+  "leave": "बाहर निकलें",
   "@@locale": "hi",
   "appName": "minimo (photo)",
   "madeByKhlebobul": "khlebobul द्वारा",

@@ -173,6 +173,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "languageDescription": MessageLookupByLibrary.simpleMessage(
       "uygulamanın dilini seç",
     ),
+    "leave": MessageLookupByLibrary.simpleMessage("çık"),
+    "leaveWithoutSaving": MessageLookupByLibrary.simpleMessage(
+      "kaydetmeden çık",
+    ),
     "loadingManyPhotosHint": MessageLookupByLibrary.simpleMessage(
       "bulut depolama alanından indirme veya büyük dosyaları kopyalama daha uzun sürebilir",
     ),
@@ -343,6 +347,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "statisticsSinceVersion": MessageLookupByLibrary.simpleMessage(
       "istatistikler bu cihazda yerel olarak depolanır.",
     ),
+    "stay": MessageLookupByLibrary.simpleMessage("kal"),
     "stripMetadata": MessageLookupByLibrary.simpleMessage(
       "meta verileri şeritle",
     ),

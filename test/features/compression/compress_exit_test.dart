@@ -91,13 +91,14 @@ void main() {
       await tester.pump();
       if (!saved) {
         expect(find.text('unsaved photos'), findsOneWidget);
-        await tester.tap(find.text('cancel'));
+        expect(find.byType(AlertDialog), findsNothing);
+        await tester.tap(find.text('stay'));
         await tester.pumpAndSettle();
         expect(find.byType(CompressScreen), findsOneWidget);
         expect(bloc.isClosed, isFalse);
         await Navigator.of(context).maybePop();
         await tester.pumpAndSettle();
-        await tester.tap(find.text('Close'));
+        await tester.tap(find.text('leave without saving'));
       } else {
         expect(find.text('unsaved photos'), findsNothing);
       }

@@ -1,6 +1,9 @@
 {
   "unsavedResultsTitle": "несохранённые фото",
   "unsavedResultsExit": "выйти и удалить несохранённые сжатые фото?",
+  "stay": "остаться",
+  "leaveWithoutSaving": "выйти без сохранения",
+  "leave": "выйти",
   "@@locale": "ru",
   "appName": "minimo (photo)",
   "madeByKhlebobul": "by khlebobul",

@@ -1,6 +1,9 @@
 {
   "unsavedResultsTitle": "foto non salvate",
   "unsavedResultsExit": "lasciare ed eliminare le foto compresse non salvate?",
+  "stay": "rimani",
+  "leaveWithoutSaving": "esci senza salvare",
+  "leave": "esci",
   "@@locale": "it",
   "appName": "minimo (photo)",
   "madeByKhlebobul": "di khlebobul",

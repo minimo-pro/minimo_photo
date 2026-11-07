@@ -1,6 +1,9 @@
 {
   "unsavedResultsTitle": "kaydedilmemiş fotoğraflar",
   "unsavedResultsExit": "kaydedilmemiş sıkıştırılmış fotoğrafları bırakıp silmek mi istiyorsunuz?",
+  "stay": "kal",
+  "leaveWithoutSaving": "kaydetmeden çık",
+  "leave": "çık",
   "@@locale": "tr",
   "appName": "minimo (photo)",
   "madeByKhlebobul": "khlebobul tarafından",

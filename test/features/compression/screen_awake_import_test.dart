@@ -15,6 +15,57 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   const channel = MethodChannel('minimo_photo/photos');
 
+  testWidgets('loading exit uses app confirmation dialog', (tester) async {
+    final picked = Completer<List<dynamic>>();
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(channel, (call) {
+          if (call.method == 'pickPhotos') return picked.future;
+          return null;
+        });
+    addTearDown(() {
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMethodCallHandler(channel, null);
+    });
+
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: AppTheme.light,
+        localizationsDelegates: const [
+          S.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: S.delegate.supportedLocales,
+        initialRoute: '/compress',
+        routes: {
+          '/': (_) => const Scaffold(body: Text('start')),
+          '/compress': (_) =>
+              const CompressScreen(initialPickSource: PhotoPickSource.gallery),
+        },
+      ),
+    );
+    await tester.pump();
+    await Navigator.of(tester.element(find.byType(CompressScreen))).maybePop();
+    await tester.pump();
+
+    expect(find.byType(AlertDialog), findsNothing);
+    expect(
+      find.descendant(
+        of: find.byType(Dialog),
+        matching: find.text('loading photos...'),
+      ),
+      findsOneWidget,
+    );
+    expect(find.text('stay'), findsOneWidget);
+    expect(find.text('leave'), findsOneWidget);
+
+    await tester.tap(find.text('stay'));
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(find.byType(CompressScreen), findsOneWidget);
+    picked.complete([]);
+    await tester.pumpAndSettle();
+  });
+
   for (final enabled in [true, false]) {
     testWidgets('screen awake during import: $enabled', (tester) async {
       final settings = AppSettingsService.instance;

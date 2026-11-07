@@ -4,6 +4,10 @@
 
 * Suggest minimo (video) after successful photo compressions in a dismissible top card, with its own prompt counter and three-month cooldown.
 
+### Changed
+
+* Match the video app's confirmation dialog when leaving with unsaved compressed photos or photos still loading.
+
 ## [1.0.4]
 
 ### Added

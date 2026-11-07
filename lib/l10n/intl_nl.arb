@@ -1,6 +1,9 @@
 {
   "unsavedResultsTitle": "niet-opgeslagen foto's",
   "unsavedResultsExit": "niet-opgeslagen gecomprimeerde foto's achterlaten en verwijderen?",
+  "stay": "blijven",
+  "leaveWithoutSaving": "verlaten zonder op te slaan",
+  "leave": "verlaten",
   "@@locale": "nl",
   "appName": "minimo (photo)",
   "madeByKhlebobul": "door khlebobul",

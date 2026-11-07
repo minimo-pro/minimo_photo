@@ -1,6 +1,9 @@
 {
   "unsavedResultsTitle": "저장되지 않은 사진",
   "unsavedResultsExit": "저장되지 않은 압축 사진을 두고 삭제하시겠습니까?",
+  "stay": "머무르기",
+  "leaveWithoutSaving": "저장하지 않고 나가기",
+  "leave": "나가기",
   "@@locale": "ko",
   "appName": "minimo (photo)",
   "madeByKhlebobul": "khlebobul 제작",

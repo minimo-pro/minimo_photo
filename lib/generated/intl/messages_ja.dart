@@ -148,6 +148,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "keepMetadataLegacy": MessageLookupByLibrary.simpleMessage("メタデータを保持する"),
     "language": MessageLookupByLibrary.simpleMessage("言語"),
     "languageDescription": MessageLookupByLibrary.simpleMessage("アプリの言語を選択"),
+    "leave": MessageLookupByLibrary.simpleMessage("終了"),
+    "leaveWithoutSaving": MessageLookupByLibrary.simpleMessage("保存せずに終了"),
     "loadingManyPhotosHint": MessageLookupByLibrary.simpleMessage(
       "クラウド ストレージからのダウンロードや大きなファイルのコピーには時間がかかる場合があります",
     ),
@@ -290,6 +292,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "statisticsSinceVersion": MessageLookupByLibrary.simpleMessage(
       "統計情報はこのデバイスにローカルに保存されます。",
     ),
+    "stay": MessageLookupByLibrary.simpleMessage("戻る"),
     "stripMetadata": MessageLookupByLibrary.simpleMessage("メタデータを削除する"),
     "system": MessageLookupByLibrary.simpleMessage("システム"),
     "todo": MessageLookupByLibrary.simpleMessage("やるべきこと"),

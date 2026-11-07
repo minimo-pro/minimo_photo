@@ -1,6 +1,9 @@
 {
   "unsavedResultsTitle": "photos non enregistrées",
   "unsavedResultsExit": "laisser et supprimer les photos compressées non enregistrées ?",
+  "stay": "rester",
+  "leaveWithoutSaving": "quitter sans enregistrer",
+  "leave": "quitter",
   "@@locale": "fr",
   "appName": "minimo (photo)",
   "madeByKhlebobul": "par khlebobul",

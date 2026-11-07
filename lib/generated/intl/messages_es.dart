@@ -172,6 +172,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "languageDescription": MessageLookupByLibrary.simpleMessage(
       "elige el idioma de la app",
     ),
+    "leave": MessageLookupByLibrary.simpleMessage("salir"),
+    "leaveWithoutSaving": MessageLookupByLibrary.simpleMessage(
+      "salir sin guardar",
+    ),
     "loadingManyPhotosHint": MessageLookupByLibrary.simpleMessage(
       "descargar desde el almacenamiento en la nube o copiar archivos grandes puede tardar más",
     ),
@@ -342,6 +346,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "statisticsSinceVersion": MessageLookupByLibrary.simpleMessage(
       "Las estadísticas se almacenan localmente en este dispositivo.",
     ),
+    "stay": MessageLookupByLibrary.simpleMessage("quedarse"),
     "stripMetadata": MessageLookupByLibrary.simpleMessage("eliminar metadatos"),
     "system": MessageLookupByLibrary.simpleMessage("sistema"),
     "todo": MessageLookupByLibrary.simpleMessage("todo"),

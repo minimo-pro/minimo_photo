@@ -392,27 +392,14 @@ class _CompressViewState extends State<_CompressView> {
         final strings = S.of(context);
         final leave = await showDialog<bool>(
           context: context,
-          builder: (dialogContext) => AlertDialog(
-            title: Text(
-              _loading ? strings.loadingPhotos : strings.unsavedResultsTitle,
-            ),
-            content: Text(
-              _loading
-                  ? strings.loadingManyPhotosHint
-                  : strings.unsavedResultsExit,
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(dialogContext).pop(false),
-                child: Text(strings.cancel),
-              ),
-              TextButton(
-                onPressed: () => Navigator.of(dialogContext).pop(true),
-                child: Text(
-                  MaterialLocalizations.of(dialogContext).closeButtonLabel,
-                ),
-              ),
-            ],
+          builder: (_) => _ExitConfirmationDialog(
+            title: _loading
+                ? strings.loadingPhotos
+                : strings.unsavedResultsTitle,
+            message: _loading
+                ? strings.loadingManyPhotosHint
+                : strings.unsavedResultsExit,
+            leaveLabel: _loading ? strings.leave : strings.leaveWithoutSaving,
           ),
         );
         if (leave != true || !mounted) return;
@@ -437,5 +424,89 @@ class _CompressViewState extends State<_CompressView> {
     } finally {
       _confirmingExit = false;
     }
+  }
+}
+
+class _ExitConfirmationDialog extends StatelessWidget {
+  final String title;
+  final String message;
+  final String leaveLabel;
+
+  const _ExitConfirmationDialog({
+    required this.title,
+    required this.message,
+    required this.leaveLabel,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final strings = S.of(context);
+    final colors = Theme.of(context).colorScheme;
+
+    return Dialog(
+      backgroundColor: Colors.transparent,
+      insetPadding: const EdgeInsets.symmetric(horizontal: 26),
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 390),
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            color: colors.surface,
+            borderRadius: BorderRadius.circular(26),
+            border: Border.all(color: colors.outline),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.18),
+                blurRadius: 32,
+                offset: const Offset(0, 14),
+              ),
+            ],
+          ),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(26, 26, 26, 24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    color: colors.onSurface,
+                    fontSize: 30,
+                    height: 1.05,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  message,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: colors.onSurfaceVariant,
+                    fontSize: 17,
+                    height: 1.3,
+                  ),
+                ),
+                const SizedBox(height: 24),
+                AppActionButton(
+                  width: double.infinity,
+                  height: 54,
+                  label: strings.stay,
+                  fontSize: 22,
+                  variant: AppActionButtonVariant.filled,
+                  onPressed: () => Navigator.of(context).pop(false),
+                ),
+                const SizedBox(height: 10),
+                AppActionButton(
+                  width: double.infinity,
+                  height: 54,
+                  label: leaveLabel,
+                  fontSize: 18,
+                  onPressed: () => Navigator.of(context).pop(true),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

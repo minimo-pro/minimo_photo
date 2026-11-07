@@ -28,6 +28,10 @@ video suggestion slides in at the top without a border or shadow, closes
 automatically after ten seconds or with its close button, and disappears
 when the compression screen closes.
 
+Leaving with unsaved compressed photos or while photos are loading uses the
+same confirmation dialog as `minimo_video`, with a primary Stay action and an
+explicit leave action.
+
 The compare sheet shows one uncropped frame: the original fills the frame and
 the compressed photo is revealed to the right of a draggable divider (starts
 at 50%). Pinch-zoom and pan share one transform, so both sides stay aligned.

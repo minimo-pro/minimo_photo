@@ -75,6 +75,26 @@ class S {
     );
   }
 
+  /// `stay`
+  String get stay {
+    return Intl.message('stay', name: 'stay', desc: '', args: []);
+  }
+
+  /// `leave without saving`
+  String get leaveWithoutSaving {
+    return Intl.message(
+      'leave without saving',
+      name: 'leaveWithoutSaving',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `leave`
+  String get leave {
+    return Intl.message('leave', name: 'leave', desc: '', args: []);
+  }
+
   /// `minimo (photo)`
   String get appName {
     return Intl.message('minimo (photo)', name: 'appName', desc: '', args: []);

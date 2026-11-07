@@ -1,6 +1,9 @@
 {
   "unsavedResultsTitle": "fotos não salvas",
   "unsavedResultsExit": "sair e excluir fotos compactadas não salvas?",
+  "stay": "ficar",
+  "leaveWithoutSaving": "sair sem salvar",
+  "leave": "sair",
   "@@locale": "pt",
   "appName": "minimo (photo)",
   "madeByKhlebobul": "por khlebobul",

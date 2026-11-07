@@ -1,6 +1,9 @@
 {
   "unsavedResultsTitle": "fotos no guardadas",
   "unsavedResultsExit": "¿Dejar y eliminar fotos comprimidas no guardadas?",
+  "stay": "quedarse",
+  "leaveWithoutSaving": "salir sin guardar",
+  "leave": "salir",
   "@@locale": "es",
   "appName": "minimo (photo)",
   "madeByKhlebobul": "por khlebobul",
