@@ -2,7 +2,7 @@
 
 ### Fixed
 
-* Save compressed photos when replacing originals on iOS even if some originals are unavailable; only the deletion failure is reported.
+* Save compressed photos when replacing originals on iOS even if some originals are unavailable; report deletion and metadata warnings when both occur.
 
 ### Improved
 
