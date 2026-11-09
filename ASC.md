@@ -6,7 +6,7 @@
 - Current app-info ID: `cc311dee-57bc-4714-9d32-0a7e91e8b62b`.
 - iOS version ID: `85171ed3-f60b-474b-9453-d3542f0dfdf3` (`1.0.5`,
   `PREPARE_FOR_SUBMISSION`). Do not use the video app's ID.
-- Local version: `1.0.5+10` (see `pubspec.yaml`).
+- Local version: `1.0.6+11` (see `pubspec.yaml`).
 - UI/export locales: `en`, `de`, `es`, `fr`, `hi`, `it`, `ja`, `ko`, `nl`,
   `pt`, `ru`, `tr`, `zh`. App Store mapping: `en → en-US`, `de → de-DE`,
   `es → es-ES`, `fr → fr-FR`, `nl → nl-NL`, `pt → pt-BR`, `zh → zh-Hans`;
