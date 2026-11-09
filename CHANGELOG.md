@@ -1,3 +1,9 @@
+## [1.0.6]
+
+### Fixed
+
+* Save compressed photos when replacing originals on iOS even if some originals are unavailable; only the deletion failure is reported.
+
 ## [1.0.5]
 
 ### Added

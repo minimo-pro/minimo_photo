@@ -97,11 +97,7 @@ void main() {
       (state) => state.isSaved && !state.isSaving,
     );
 
-    expect(files.calls, [
-      'authorize originals',
-      'save replacement',
-      'delete original',
-    ]);
+    expect(files.calls, ['save replacement', 'delete original']);
     expect(saved.savedPhotoCount, 1);
     expect(saved.deletedOriginalCount, 1);
 
@@ -117,14 +113,10 @@ void main() {
     final settled = await settledAfterRepeat;
     expect(settled.isSaved, isTrue);
     expect(settled.saveError, isNull);
-    expect(files.calls, [
-      'authorize originals',
-      'save replacement',
-      'delete original',
-    ]);
+    expect(files.calls, ['save replacement', 'delete original']);
   });
 
-  test('denied Photos access leaves original and creates no copy', () async {
+  test('unavailable original keeps saved copy and reports deletion', () async {
     SharedPreferences.setMockInitialValues({});
     final files = _RecordingPhotoFileAdapter()..denyAccess = true;
     final bloc = CompressBloc(
@@ -151,12 +143,14 @@ void main() {
         deleteSourceIdentifiers: {'asset-1'},
       ),
     );
-    final failed = await bloc.stream.firstWhere(
-      (state) => state.saveError != null && !state.isSaving,
+    final saved = await bloc.stream.firstWhere(
+      (state) => state.isSaved && !state.isSaving,
     );
 
-    expect(files.calls, ['authorize originals']);
-    expect(failed.isSaved, isFalse);
+    expect(files.calls, ['save replacement', 'delete original']);
+    expect(saved.saveError, isNull);
+    expect(saved.deleteError, isNotNull);
+    expect(saved.deletedOriginalCount, 0);
   });
 }
 
@@ -194,14 +188,6 @@ class _RecordingPhotoFileAdapter extends PhotoFileAdapter {
   bool denyAccess = false;
 
   @override
-  Future<void> ensureOriginalsAccessible(
-    Iterable<String> sourceIdentifiers,
-  ) async {
-    calls.add('authorize originals');
-    if (denyAccess) throw StateError('Photos access denied');
-  }
-
-  @override
   Future<GallerySaveResult> saveReplacement(
     String filePath,
     String sourceIdentifier, {
@@ -217,6 +203,7 @@ class _RecordingPhotoFileAdapter extends PhotoFileAdapter {
   @override
   Future<int> deleteOriginals(Iterable<String> sourceIdentifiers) async {
     calls.add('delete original');
+    if (denyAccess) throw StateError('original unavailable');
     return sourceIdentifiers.length;
   }
 }

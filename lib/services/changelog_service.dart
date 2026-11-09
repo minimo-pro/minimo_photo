@@ -38,54 +38,67 @@ const Changelog _changelog = {
     Language.en: [
       'discover minimo for videos after compressing photos.',
       'clearer confirmation before leaving while photos are loading or results are unsaved.',
+      'replacing originals no longer fails the whole save when some originals are unavailable.',
     ],
     Language.de: [
       'entdecke minimo für videos nach dem komprimieren von fotos.',
       'klarere bestätigung beim verlassen, während fotos laden oder ergebnisse ungespeichert sind.',
+      'beim ersetzen von originalen schlägt das speichern nicht mehr komplett fehl, wenn einige originale nicht verfügbar sind.',
     ],
     Language.es: [
       'descubre minimo para vídeos después de comprimir fotos.',
       'confirmación más clara al salir mientras se cargan fotos o hay resultados sin guardar.',
+      'al reemplazar originales, el guardado ya no falla por completo si algunos originales no están disponibles.',
     ],
     Language.fr: [
       'découvrez minimo pour les vidéos après la compression de photos.',
       'confirmation plus claire avant de quitter pendant le chargement ou avec des résultats non enregistrés.',
+      "le remplacement des originaux n'échoue plus entièrement si certains originaux sont indisponibles.",
     ],
     Language.hi: [
       'फ़ोटो संपीड़ित करने के बाद वीडियो के लिए minimo खोजें।',
       'फ़ोटो लोड होते समय या परिणाम सहेजे बिना बाहर निकलने से पहले स्पष्ट पुष्टि।',
+      'मूल बदलते समय कुछ मूल उपलब्ध न होने पर भी अब पूरी सेविंग विफल नहीं होती।',
     ],
     Language.it: [
       'scopri minimo per i video dopo aver compresso le foto.',
       'conferma più chiara prima di uscire mentre le foto si caricano o i risultati non sono salvati.',
+      'sostituendo gli originali, il salvataggio non fallisce più del tutto se alcuni originali non sono disponibili.',
     ],
     Language.ja: [
       '写真の圧縮後に動画用のminimoを見つけられます。',
       '写真の読み込み中や結果の未保存時に、終了の確認がより分かりやすくなりました。',
+      '一部の元の写真が利用できない場合でも、置き換え時の保存全体が失敗しなくなりました。',
     ],
     Language.ko: [
       '사진 압축 후 동영상용 minimo를 만나보세요.',
       '사진을 불러오는 중이거나 결과를 저장하지 않았을 때 종료 확인이 더 명확해졌습니다.',
+      '일부 원본을 사용할 수 없어도 원본 교체 시 전체 저장이 실패하지 않습니다.',
     ],
     Language.nl: [
       'ontdek minimo voor video’s na het comprimeren van foto’s.',
       'duidelijkere bevestiging bij afsluiten terwijl foto’s laden of resultaten niet zijn opgeslagen.',
+      'bij het vervangen van originelen mislukt opslaan niet meer volledig als sommige originelen niet beschikbaar zijn.',
     ],
     Language.pt: [
       'conheça o minimo para vídeos após comprimir fotos.',
       'confirmação mais clara ao sair enquanto as fotos carregam ou há resultados não salvos.',
+      'ao substituir originais, o salvamento não falha mais por completo se alguns originais estiverem indisponíveis.',
     ],
     Language.ru: [
       'после сжатия фото узнайте о minimo для видео.',
       'подтверждение выхода стало понятнее, когда фото загружаются или результат не сохранён.',
+      'замена оригиналов больше не срывает всё сохранение, если часть оригиналов недоступна.',
     ],
     Language.tr: [
       'fotoğrafları sıkıştırdıktan sonra videolar için minimo’yu keşfedin.',
       'fotoğraflar yüklenirken veya sonuçlar kaydedilmemişken çıkış onayı daha anlaşılır.',
+      'orijinalleri değiştirirken bazı orijinaller kullanılamasa da kaydetme artık tamamen başarısız olmuyor.',
     ],
     Language.zh: [
       '压缩照片后，了解视频版 minimo。',
       '照片加载中或结果尚未保存时，退出确认更加清晰。',
+      '替换原照片时，即使部分原照片不可用，也不会导致整体保存失败。',
     ],
   },
   '1.0.4': {

@@ -26,6 +26,8 @@ share.
 - When all items are skipped, the result says there was no useful saving; it
   does not imply the app previously compressed the originals.
 - Save/share errors show a snackbar. Replacement deletes originals only after
-  every compressed photo has been saved successfully.
+  every compressed photo has been saved successfully; originals are not checked
+  before saving. If deletion fails, saved copies stay and the snackbar reports
+  only the deletion failure.
 - Holding cancel waits for the current encoder, removes generated outputs and
   keeps imported photos for another attempt.

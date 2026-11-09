@@ -44,8 +44,6 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
         self.cancelPhotoPick(result: result)
       case "deleteOriginals":
         self.deleteOriginals(call.arguments as? [String] ?? [], result: result)
-      case "ensureOriginalsAccessible":
-        self.ensureOriginalsAccessible(call.arguments as? [String] ?? [], result: result)
       case "saveReplacement":
         self.saveReplacement(call.arguments as? [String: Any], result: result)
       case "saveCopy":
@@ -344,50 +342,6 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
             result(FlutterError(
               code: "delete_failed",
               message: error?.localizedDescription ?? "original photos were not deleted",
-              details: nil
-            ))
-          }
-        }
-      }
-    }
-  }
-
-  private func ensureOriginalsAccessible(
-    _ identifiers: [String], result: @escaping FlutterResult
-  ) {
-    PHPhotoLibrary.requestAuthorization(for: .readWrite) { status in
-      guard status == .authorized || status == .limited else {
-        DispatchQueue.main.async {
-          result(FlutterError(
-            code: "delete_denied",
-            message: "Photos access was denied",
-            details: nil
-          ))
-        }
-        return
-      }
-      let assets = PHAsset.fetchAssets(withLocalIdentifiers: identifiers, options: nil)
-      if assets.count == identifiers.count {
-        DispatchQueue.main.async { result(nil) }
-        return
-      }
-      DispatchQueue.main.async {
-        guard status == .limited, let controller = self.window?.rootViewController else {
-          result(FlutterError(
-            code: "delete_unavailable",
-            message: "some original photos are unavailable",
-            details: nil
-          ))
-          return
-        }
-        PHPhotoLibrary.shared().presentLimitedLibraryPicker(from: controller) { _ in
-          let accessible = PHAsset.fetchAssets(
-            withLocalIdentifiers: identifiers, options: nil
-          ).count == identifiers.count
-          DispatchQueue.main.async {
-            result(accessible ? nil : FlutterError(
-              code: "delete_unavailable",
-              message: "some original photos are unavailable",
               details: nil
             ))
           }
