@@ -3,9 +3,9 @@
 - Bundle ID: `com.khlebobul.minimoPhoto`.
 - Auth profile: `minimo`, stored in System Keychain. Pass it explicitly.
 - ASC app ID: `6822256099`, resolved on 2026-10-13.
-- Current app-info ID: `cc311dee-57bc-4714-9d32-0a7e91e8b62b`.
+- Current app-info ID: `fe777da5-0154-482a-91a3-d90cb54e9015`.
 - iOS version ID: `85171ed3-f60b-474b-9453-d3542f0dfdf3` (`1.0.5`,
-  `PREPARE_FOR_SUBMISSION`). Do not use the video app's ID.
+  `READY_FOR_DISTRIBUTION`). Do not use the video app's ID.
 - Local version: `1.0.6+11` (see `pubspec.yaml`).
 - UI/export locales: `en`, `de`, `es`, `fr`, `hi`, `it`, `ja`, `ko`, `nl`,
   `pt`, `ru`, `tr`, `zh`. App Store mapping: `en → en-US`, `de → de-DE`,
@@ -13,7 +13,7 @@
   the others use the same code. `zh-Hant` has separate App Store metadata,
   without a separate UI deck.
 - Canonical local metadata: `metadata/app-info/*.json` and
-  `metadata/version/{1.0.0,1.0.1,1.0.2,1.0.3,1.0.4,1.0.5}/*.json` (14 App Store locales).
+  `metadata/version/{1.0.0,1.0.1,1.0.2,1.0.3,1.0.4,1.0.5,1.0.6}/*.json` (14 App Store locales).
   Google Play listings: `metadata/google-play/store-listing-import.csv`
   (13 locales). All metadata is ignored by Git.
 - User-provided name, subtitle, description, and URLs are preserved.
@@ -34,7 +34,7 @@ Pull into a separate source folder, preserving local metadata edits:
 ```bash
 rtk proxy asc --profile minimo apps info list --app 6822256099 --output table
 rtk proxy asc --profile minimo versions list --app 6822256099 --output table
-rtk proxy asc --profile minimo metadata pull --app 6822256099 --app-info cc311dee-57bc-4714-9d32-0a7e91e8b62b --version 1.0.5 --platform IOS --dir .asc/source/metadata
+rtk proxy asc --profile minimo metadata pull --app 6822256099 --app-info fe777da5-0154-482a-91a3-d90cb54e9015 --version 1.0.5 --platform IOS --dir .asc/source/metadata
 ```
 
 Merge existing URLs, localization mappings and What's New into local metadata
@@ -82,6 +82,10 @@ For 1.0.5, the iOS version was created on 2026-11-07 as
 fixes and localized What's New were uploaded for all 14 locales. The exact
 remote readback is in `.asc/source/metadata-1.0.5-aso-verified/`. No build was
 attached or review submission created in this workflow.
+
+For 1.0.6, What's New and promotional text are prepared locally for all 14
+locales in `metadata/version/1.0.6/`. Other metadata fields are copied from
+1.0.5. No 1.0.6 version or metadata has been created in App Store Connect.
 
 Exports and browser editor: [store_screenshots/README.md](store_screenshots/README.md).
 Apple Header and Search Results use Asset Library placements, separate from

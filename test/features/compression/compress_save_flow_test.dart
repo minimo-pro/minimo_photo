@@ -116,9 +116,11 @@ void main() {
     expect(files.calls, ['save replacement', 'delete original']);
   });
 
-  test('unavailable original keeps saved copy and reports deletion', () async {
+  test('unavailable original reports both warnings', () async {
     SharedPreferences.setMockInitialValues({});
-    final files = _RecordingPhotoFileAdapter()..denyAccess = true;
+    final files = _RecordingPhotoFileAdapter()
+      ..denyAccess = true
+      ..warnings = ['album_unavailable'];
     final bloc = CompressBloc(
       initialPhotos: const [
         PickedPhoto(
@@ -149,6 +151,7 @@ void main() {
 
     expect(files.calls, ['save replacement', 'delete original']);
     expect(saved.saveError, isNull);
+    expect(saved.metadataError, isNotNull);
     expect(saved.deleteError, isNotNull);
     expect(saved.deletedOriginalCount, 0);
   });
@@ -186,6 +189,7 @@ class _SuccessfulCompressor extends PhotoCompressorAdapter {
 class _RecordingPhotoFileAdapter extends PhotoFileAdapter {
   final calls = <String>[];
   bool denyAccess = false;
+  List<String> warnings = const [];
 
   @override
   Future<GallerySaveResult> saveReplacement(
@@ -197,7 +201,7 @@ class _RecordingPhotoFileAdapter extends PhotoFileAdapter {
     double? longitude,
   }) async {
     calls.add('save replacement');
-    return const GallerySaveResult();
+    return GallerySaveResult(warnings: warnings);
   }
 
   @override

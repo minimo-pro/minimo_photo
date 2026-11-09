@@ -6,7 +6,7 @@ import PhotosUI
 import UIKit
 import UniformTypeIdentifiers
 
-private struct PickedPhotoMetadata {
+struct PickedPhotoMetadata {
   let creationDate: Date?
   let location: CLLocation?
 
@@ -21,6 +21,11 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
   private var copyingPhotos = false
   private var photosChannel: FlutterMethodChannel?
   private var externalPhotosChannel: FlutterMethodChannel?
+  var requestReplacementAuthorization:
+    (PHAccessLevel, @escaping (PHAuthorizationStatus) -> Void) -> Void = {
+      level, completion in PHPhotoLibrary.requestAuthorization(for: level, handler: completion)
+    }
+  var replacementWriterForTesting: ((PickedPhotoMetadata, @escaping FlutterResult) -> Void)?
 
   override func scene(
     _ scene: UIScene,
@@ -391,7 +396,7 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
     }
   }
 
-  private func saveReplacement(
+  func saveReplacement(
     _ arguments: [String: Any]?,
     result: @escaping FlutterResult
   ) {
@@ -411,7 +416,7 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
     let fallback = pickedMetadata(from: arguments)
     let source = photosAssetIfAccessible(identifier: sourceIdentifier)
     let accessLevel: PHAccessLevel = source == nil ? .addOnly : .readWrite
-    PHPhotoLibrary.requestAuthorization(for: accessLevel) { status in
+    requestReplacementAuthorization(accessLevel) { status in
       guard status == .authorized || status == .limited else {
         DispatchQueue.main.async {
           result(FlutterError(
@@ -435,15 +440,6 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
           if collection.canPerform(.addContent) { albums.append(collection) }
         }
         skippedSourceAlbum = albums.count < sourceAlbums.count
-      } else if !fallback.isAvailable {
-        DispatchQueue.main.async {
-          result(FlutterError(
-            code: "save_failed",
-            message: "source metadata is unavailable",
-            details: nil
-          ))
-        }
-        return
       }
 
       let requestedAlbum = (arguments?["album"] as? String)?
@@ -457,12 +453,17 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
         }) {
           albums.append(album)
         }
+        let replacementMetadata = PickedPhotoMetadata(
+          creationDate: metadata.creationDate,
+          location: arguments?["removeLocation"] as? Bool == true ? nil : metadata.location
+        )
+        if let replacementWriterForTesting = self.replacementWriterForTesting {
+          replacementWriterForTesting(replacementMetadata, result)
+          return
+        }
         self.createReplacement(
           at: URL(fileURLWithPath: path),
-          metadata: PickedPhotoMetadata(
-            creationDate: metadata.creationDate,
-            location: arguments?["removeLocation"] as? Bool == true ? nil : metadata.location
-          ),
+          metadata: replacementMetadata,
           albums: albums,
           favorite: source?.isFavorite ?? false,
           initialWarnings: albumWarning || skippedSourceAlbum
