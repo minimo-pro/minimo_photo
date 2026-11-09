@@ -6,7 +6,7 @@ import PhotosUI
 import UIKit
 import UniformTypeIdentifiers
 
-private struct PickedPhotoMetadata {
+struct PickedPhotoMetadata {
   let creationDate: Date?
   let location: CLLocation?
 
@@ -21,6 +21,11 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
   private var copyingPhotos = false
   private var photosChannel: FlutterMethodChannel?
   private var externalPhotosChannel: FlutterMethodChannel?
+  var requestReplacementAuthorization:
+    (PHAccessLevel, @escaping (PHAuthorizationStatus) -> Void) -> Void = {
+      level, completion in PHPhotoLibrary.requestAuthorization(for: level, handler: completion)
+    }
+  var replacementWriterForTesting: ((PickedPhotoMetadata, @escaping FlutterResult) -> Void)?
 
   override func scene(
     _ scene: UIScene,
@@ -44,8 +49,6 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
         self.cancelPhotoPick(result: result)
       case "deleteOriginals":
         self.deleteOriginals(call.arguments as? [String] ?? [], result: result)
-      case "ensureOriginalsAccessible":
-        self.ensureOriginalsAccessible(call.arguments as? [String] ?? [], result: result)
       case "saveReplacement":
         self.saveReplacement(call.arguments as? [String: Any], result: result)
       case "saveCopy":
@@ -352,50 +355,6 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
     }
   }
 
-  private func ensureOriginalsAccessible(
-    _ identifiers: [String], result: @escaping FlutterResult
-  ) {
-    PHPhotoLibrary.requestAuthorization(for: .readWrite) { status in
-      guard status == .authorized || status == .limited else {
-        DispatchQueue.main.async {
-          result(FlutterError(
-            code: "delete_denied",
-            message: "Photos access was denied",
-            details: nil
-          ))
-        }
-        return
-      }
-      let assets = PHAsset.fetchAssets(withLocalIdentifiers: identifiers, options: nil)
-      if assets.count == identifiers.count {
-        DispatchQueue.main.async { result(nil) }
-        return
-      }
-      DispatchQueue.main.async {
-        guard status == .limited, let controller = self.window?.rootViewController else {
-          result(FlutterError(
-            code: "delete_unavailable",
-            message: "some original photos are unavailable",
-            details: nil
-          ))
-          return
-        }
-        PHPhotoLibrary.shared().presentLimitedLibraryPicker(from: controller) { _ in
-          let accessible = PHAsset.fetchAssets(
-            withLocalIdentifiers: identifiers, options: nil
-          ).count == identifiers.count
-          DispatchQueue.main.async {
-            result(accessible ? nil : FlutterError(
-              code: "delete_unavailable",
-              message: "some original photos are unavailable",
-              details: nil
-            ))
-          }
-        }
-      }
-    }
-  }
-
   private func removeLocation(_ path: String?, result: @escaping FlutterResult) {
     guard let path else {
       result(FlutterError(code: "metadata_failed", message: "photo path is missing", details: nil))
@@ -437,7 +396,7 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
     }
   }
 
-  private func saveReplacement(
+  func saveReplacement(
     _ arguments: [String: Any]?,
     result: @escaping FlutterResult
   ) {
@@ -457,7 +416,7 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
     let fallback = pickedMetadata(from: arguments)
     let source = photosAssetIfAccessible(identifier: sourceIdentifier)
     let accessLevel: PHAccessLevel = source == nil ? .addOnly : .readWrite
-    PHPhotoLibrary.requestAuthorization(for: accessLevel) { status in
+    requestReplacementAuthorization(accessLevel) { status in
       guard status == .authorized || status == .limited else {
         DispatchQueue.main.async {
           result(FlutterError(
@@ -481,15 +440,6 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
           if collection.canPerform(.addContent) { albums.append(collection) }
         }
         skippedSourceAlbum = albums.count < sourceAlbums.count
-      } else if !fallback.isAvailable {
-        DispatchQueue.main.async {
-          result(FlutterError(
-            code: "save_failed",
-            message: "source metadata is unavailable",
-            details: nil
-          ))
-        }
-        return
       }
 
       let requestedAlbum = (arguments?["album"] as? String)?
@@ -503,12 +453,17 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
         }) {
           albums.append(album)
         }
+        let replacementMetadata = PickedPhotoMetadata(
+          creationDate: metadata.creationDate,
+          location: arguments?["removeLocation"] as? Bool == true ? nil : metadata.location
+        )
+        if let replacementWriterForTesting = self.replacementWriterForTesting {
+          replacementWriterForTesting(replacementMetadata, result)
+          return
+        }
         self.createReplacement(
           at: URL(fileURLWithPath: path),
-          metadata: PickedPhotoMetadata(
-            creationDate: metadata.creationDate,
-            location: arguments?["removeLocation"] as? Bool == true ? nil : metadata.location
-          ),
+          metadata: replacementMetadata,
           albums: albums,
           favorite: source?.isFavorite ?? false,
           initialWarnings: albumWarning || skippedSourceAlbum

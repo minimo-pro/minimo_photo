@@ -34,6 +34,57 @@ enum Language {
 typedef Changelog = Map<String, Map<Language, List<String>>>;
 
 const Changelog _changelog = {
+  '1.0.6': {
+    Language.en: [
+      'save compressed photos even when some originals cannot be deleted.',
+      'secondary text is easier to read in the light theme.',
+    ],
+    Language.de: [
+      'komprimierte fotos speichern, auch wenn einige originale nicht gelöscht werden können.',
+      'zweitrangiger text ist im hellen design besser lesbar.',
+    ],
+    Language.es: [
+      'guarda las fotos comprimidas aunque no se puedan eliminar algunos originales.',
+      'el texto secundario se lee mejor en el tema claro.',
+    ],
+    Language.fr: [
+      'enregistrez les photos compressées même si certains originaux ne peuvent pas être supprimés.',
+      'le texte secondaire est plus lisible en mode clair.',
+    ],
+    Language.hi: [
+      'कुछ मूल फ़ोटो न हटने पर भी संपीड़ित फ़ोटो सहेजें।',
+      'हल्की थीम में सहायक पाठ पढ़ना आसान है।',
+    ],
+    Language.it: [
+      'salva le foto compresse anche se alcuni originali non possono essere eliminati.',
+      'il testo secondario è più leggibile nel tema chiaro.',
+    ],
+    Language.ja: [
+      '一部の元の写真を削除できない場合も、圧縮した写真を保存します。',
+      'ライトテーマの補助テキストが読みやすくなりました。',
+    ],
+    Language.ko: [
+      '일부 원본을 삭제할 수 없어도 압축한 사진을 저장합니다.',
+      '라이트 테마에서 보조 텍스트를 더 쉽게 읽을 수 있습니다.',
+    ],
+    Language.nl: [
+      'sla gecomprimeerde foto’s op, ook als sommige originelen niet kunnen worden verwijderd.',
+      'secundaire tekst is beter leesbaar in het lichte thema.',
+    ],
+    Language.pt: [
+      'salve as fotos comprimidas mesmo que alguns originais não possam ser excluídos.',
+      'o texto secundário está mais legível no tema claro.',
+    ],
+    Language.ru: [
+      'сжатые фото сохраняются, даже если некоторые оригиналы не удалось удалить.',
+      'в светлой теме вспомогательный текст стал читабельнее.',
+    ],
+    Language.tr: [
+      'bazı orijinaller silinemese bile sıkıştırılmış fotoğrafları kaydet.',
+      'açık temada ikincil metin daha kolay okunuyor.',
+    ],
+    Language.zh: ['即使部分原照片无法删除，也会保存压缩后的照片。', '浅色模式中的辅助文字更易阅读。'],
+  },
   '1.0.5': {
     Language.en: [
       'discover minimo for videos after compressing photos.',
@@ -83,10 +134,7 @@ const Changelog _changelog = {
       'fotoğrafları sıkıştırdıktan sonra videolar için minimo’yu keşfedin.',
       'fotoğraflar yüklenirken veya sonuçlar kaydedilmemişken çıkış onayı daha anlaşılır.',
     ],
-    Language.zh: [
-      '压缩照片后，了解视频版 minimo。',
-      '照片加载中或结果尚未保存时，退出确认更加清晰。',
-    ],
+    Language.zh: ['压缩照片后，了解视频版 minimo。', '照片加载中或结果尚未保存时，退出确认更加清晰。'],
   },
   '1.0.4': {
     Language.en: [

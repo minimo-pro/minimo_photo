@@ -97,11 +97,7 @@ void main() {
       (state) => state.isSaved && !state.isSaving,
     );
 
-    expect(files.calls, [
-      'authorize originals',
-      'save replacement',
-      'delete original',
-    ]);
+    expect(files.calls, ['save replacement', 'delete original']);
     expect(saved.savedPhotoCount, 1);
     expect(saved.deletedOriginalCount, 1);
 
@@ -117,16 +113,14 @@ void main() {
     final settled = await settledAfterRepeat;
     expect(settled.isSaved, isTrue);
     expect(settled.saveError, isNull);
-    expect(files.calls, [
-      'authorize originals',
-      'save replacement',
-      'delete original',
-    ]);
+    expect(files.calls, ['save replacement', 'delete original']);
   });
 
-  test('denied Photos access leaves original and creates no copy', () async {
+  test('unavailable original reports both warnings', () async {
     SharedPreferences.setMockInitialValues({});
-    final files = _RecordingPhotoFileAdapter()..denyAccess = true;
+    final files = _RecordingPhotoFileAdapter()
+      ..denyAccess = true
+      ..warnings = ['album_unavailable'];
     final bloc = CompressBloc(
       initialPhotos: const [
         PickedPhoto(
@@ -151,12 +145,15 @@ void main() {
         deleteSourceIdentifiers: {'asset-1'},
       ),
     );
-    final failed = await bloc.stream.firstWhere(
-      (state) => state.saveError != null && !state.isSaving,
+    final saved = await bloc.stream.firstWhere(
+      (state) => state.isSaved && !state.isSaving,
     );
 
-    expect(files.calls, ['authorize originals']);
-    expect(failed.isSaved, isFalse);
+    expect(files.calls, ['save replacement', 'delete original']);
+    expect(saved.saveError, isNull);
+    expect(saved.metadataError, isNotNull);
+    expect(saved.deleteError, isNotNull);
+    expect(saved.deletedOriginalCount, 0);
   });
 }
 
@@ -192,14 +189,7 @@ class _SuccessfulCompressor extends PhotoCompressorAdapter {
 class _RecordingPhotoFileAdapter extends PhotoFileAdapter {
   final calls = <String>[];
   bool denyAccess = false;
-
-  @override
-  Future<void> ensureOriginalsAccessible(
-    Iterable<String> sourceIdentifiers,
-  ) async {
-    calls.add('authorize originals');
-    if (denyAccess) throw StateError('Photos access denied');
-  }
+  List<String> warnings = const [];
 
   @override
   Future<GallerySaveResult> saveReplacement(
@@ -211,12 +201,13 @@ class _RecordingPhotoFileAdapter extends PhotoFileAdapter {
     double? longitude,
   }) async {
     calls.add('save replacement');
-    return const GallerySaveResult();
+    return GallerySaveResult(warnings: warnings);
   }
 
   @override
   Future<int> deleteOriginals(Iterable<String> sourceIdentifiers) async {
     calls.add('delete original');
+    if (denyAccess) throw StateError('original unavailable');
     return sourceIdentifiers.length;
   }
 }

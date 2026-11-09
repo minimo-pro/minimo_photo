@@ -171,15 +171,6 @@ class PhotoFileAdapter {
         ) ??
         0;
   }
-
-  Future<void> ensureOriginalsAccessible(
-    Iterable<String> sourceIdentifiers,
-  ) async {
-    await _channel.invokeMethod<void>(
-      'ensureOriginalsAccessible',
-      sourceIdentifiers.toList(),
-    );
-  }
 }
 
 class GallerySaveResult {
