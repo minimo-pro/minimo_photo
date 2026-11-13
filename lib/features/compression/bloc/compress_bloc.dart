@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../services/app_settings_service.dart';
@@ -424,6 +425,16 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
         event.preserveMetadataSourceIdentifiers.isEmpty &&
         event.deleteSourceIdentifiers.isEmpty;
 
+    final trace =
+        '[photo-save][batch ${DateTime.now().microsecondsSinceEpoch}]';
+    final timer = Stopwatch()..start();
+    var completed = 0;
+    debugPrint(
+      '$trace start count=${successfulResults.length} '
+      'metadata=${event.preserveMetadataSourceIdentifiers.length} '
+      'delete=${event.deleteSourceIdentifiers.length} '
+      'album=${_appSettings.savePhotosToAlbum} additionalCopy=$allowAdditionalCopy',
+    );
     emit(state.copyWith(isSaving: true, clearSaveNotification: true));
     try {
       final metadataIdentifiers = event.preserveMetadataSourceIdentifiers;
@@ -434,13 +445,19 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
       final metadataWarnings = <String>[];
       var savedAnyPhoto = false;
 
-      for (final item in successfulResults) {
+      for (final (index, item) in successfulResults.indexed) {
         final outputPath = item.result.outputPath;
         if (outputPath == null) continue;
         final sourceIdentifier = item.source.sourceIdentifier;
+        debugPrint(
+          '$trace item=${index + 1} '
+          'bytes=${item.result.outputSize} '
+          'replacement=${metadataIdentifiers.contains(sourceIdentifier)}',
+        );
         if (sourceIdentifier != null &&
             metadataIdentifiers.contains(sourceIdentifier)) {
           if (_replacementSourceIdentifiers.contains(sourceIdentifier)) {
+            debugPrint('$trace skip previously saved replacement');
             continue;
           }
           final save = await _photoFileAdapter.saveReplacement(
@@ -455,14 +472,18 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
           _savedOutputPaths.add(outputPath);
           savedAnyPhoto = true;
           metadataWarnings.addAll(save.warnings);
+          debugPrint('$trace replacement saved warnings=${save.warnings}');
         } else {
           if (_savedOutputPaths.contains(outputPath) && !allowAdditionalCopy) {
+            debugPrint('$trace skip previously saved copy');
             continue;
           }
           await _photoFileAdapter.saveToGallery(outputPath, album: album);
           _savedOutputPaths.add(outputPath);
           savedAnyPhoto = true;
         }
+        completed++;
+        debugPrint('$trace item saved completed=$completed');
       }
 
       if (deleteIdentifiers.isEmpty) {
@@ -512,7 +533,8 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
             clearSaveNotification: true,
           ),
         );
-      } catch (error) {
+      } catch (error, stackTrace) {
+        debugPrint('$trace delete failed: $error\n$stackTrace');
         emit(
           state.copyWith(
             isSaving: false,
@@ -527,13 +549,22 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
           ),
         );
       }
-    } catch (error) {
+    } catch (error, stackTrace) {
+      debugPrint(
+        '$trace save failed completed=$completed: $error\n$stackTrace',
+      );
       emit(
         state.copyWith(
           isSaving: false,
           saveError: error,
           clearSaveNotification: true,
         ),
+      );
+    } finally {
+      debugPrint(
+        '$trace end completed=$completed elapsedMs=${timer.elapsedMilliseconds} '
+        'isSaved=${state.isSaved} saveError=${state.saveError} '
+        'deleteError=${state.deleteError}',
       );
     }
   }

@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:minimo_photo/features/compression/bloc/compress_bloc.dart';
 import 'package:minimo_photo/features/compression/bloc/compress_event.dart';
@@ -155,6 +157,59 @@ void main() {
     expect(saved.deleteError, isNotNull);
     expect(saved.deletedOriginalCount, 0);
   });
+
+  test(
+    'save failure logs native details and keeps originals for retry',
+    () async {
+      SharedPreferences.setMockInitialValues({});
+      final logs = <String>[];
+      final previousPrint = debugPrint;
+      debugPrint = (message, {wrapWidth}) => logs.add(message ?? '');
+      addTearDown(() => debugPrint = previousPrint);
+      final failure = PlatformException(
+        code: 'save_failed',
+        message: 'Photos failed',
+        details: {'domain': 'PHPhotosErrorDomain', 'code': 3302},
+      );
+      final files = _RecordingPhotoFileAdapter()..saveFailure = failure;
+      final bloc = CompressBloc(
+        initialPhotos: const [
+          PickedPhoto(
+            path: '/tmp/original.jpg',
+            name: 'original.jpg',
+            size: 100,
+            sourceIdentifier: 'asset-1',
+          ),
+        ],
+        photoFileAdapter: files,
+        photoCompressorAdapter: _SuccessfulCompressor(),
+      );
+      addTearDown(bloc.close);
+      bloc.add(const CompressStarted());
+      await bloc.stream.firstWhere((s) => s.status == CompressStatus.done);
+      const save = CompressResultsSaved(
+        preserveMetadataSourceIdentifiers: {'asset-1'},
+        deleteSourceIdentifiers: {'asset-1'},
+      );
+      bloc.add(save);
+      final failed = await bloc.stream.firstWhere((s) => s.saveError != null);
+      expect(failed.saveError, same(failure));
+      expect(failed.isSaving, isFalse);
+      expect(failed.hasUnsavedResults, isTrue);
+      expect(files.calls, ['save replacement']);
+      expect(logs.join('\n'), contains('save failed completed=0'));
+      expect(logs.join('\n'), contains('PHPhotosErrorDomain'));
+      expect(logs.join('\n'), contains('3302'));
+      files.saveFailure = null;
+      bloc.add(save);
+      await bloc.stream.firstWhere((s) => s.isSaved && !s.isSaving);
+      expect(files.calls, [
+        'save replacement',
+        'save replacement',
+        'delete original',
+      ]);
+    },
+  );
 }
 
 class _SuccessfulCompressor extends PhotoCompressorAdapter {
@@ -190,6 +245,7 @@ class _RecordingPhotoFileAdapter extends PhotoFileAdapter {
   final calls = <String>[];
   bool denyAccess = false;
   List<String> warnings = const [];
+  Object? saveFailure;
 
   @override
   Future<GallerySaveResult> saveReplacement(
@@ -201,6 +257,7 @@ class _RecordingPhotoFileAdapter extends PhotoFileAdapter {
     double? longitude,
   }) async {
     calls.add('save replacement');
+    if (saveFailure case final error?) throw error;
     return GallerySaveResult(warnings: warnings);
   }
 
