@@ -35,35 +35,19 @@ typedef Changelog = Map<String, Map<Language, List<String>>>;
 
 const Changelog _changelog = {
   '1.0.7': {
-    Language.en: ['fixed photo saving when replacing originals on ios.'],
-    Language.de: [
-      'speichern von fotos beim ersetzen der originale unter ios korrigiert.',
-    ],
-    Language.es: [
-      'corregido el guardado de fotos al reemplazar los originales en ios.',
-    ],
-    Language.fr: [
-      'correction de l’enregistrement des photos lors du remplacement des originaux sur ios.',
-    ],
-    Language.hi: [
-      'ios पर मूल फ़ोटो बदलते समय फ़ोटो सहेजने की समस्या ठीक की गई।',
-    ],
-    Language.it: [
-      'corretto il salvataggio delle foto durante la sostituzione degli originali su ios.',
-    ],
-    Language.ja: ['iosで元の写真を置き換える際に写真を保存できない問題を修正しました。'],
-    Language.ko: ['ios에서 원본 사진을 교체할 때 사진이 저장되지 않는 문제를 수정했습니다.'],
-    Language.nl: [
-      'probleem met het opslaan van foto’s bij het vervangen van originelen op ios opgelost.',
-    ],
-    Language.pt: [
-      'corrigido o salvamento de fotos ao substituir os originais no ios.',
-    ],
-    Language.ru: ['исправлено сохранение фото при замене оригиналов на ios.'],
-    Language.tr: [
-      'ios’ta orijinalleri değiştirirken fotoğraf kaydetme sorunu düzeltildi.',
-    ],
-    Language.zh: ['修复了在ios上替换原照片时无法保存照片的问题。'],
+    Language.en: ['fixed bugs when saving photos.'],
+    Language.de: ['fehler beim speichern von fotos behoben.'],
+    Language.es: ['corregidos errores al guardar fotos.'],
+    Language.fr: ['correction de bugs lors de l’enregistrement des photos.'],
+    Language.hi: ['फ़ोटो सहेजते समय होने वाली समस्याएँ ठीक की गईं।'],
+    Language.it: ['corretti errori nel salvataggio delle foto.'],
+    Language.ja: ['写真の保存時に発生する不具合を修正しました。'],
+    Language.ko: ['사진 저장 시 발생하는 오류를 수정했습니다.'],
+    Language.nl: ['fouten bij het opslaan van foto’s opgelost.'],
+    Language.pt: ['corrigidos erros ao salvar fotos.'],
+    Language.ru: ['исправлены ошибки при сохранении фото.'],
+    Language.tr: ['fotoğraf kaydederken oluşan hatalar düzeltildi.'],
+    Language.zh: ['修复了保存照片时出现的问题。'],
   },
   '1.0.6': {
     Language.en: [
