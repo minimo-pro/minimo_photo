@@ -3,17 +3,18 @@
 - Bundle ID: `com.khlebobul.minimoPhoto`.
 - Auth profile: `minimo`, stored in System Keychain. Pass it explicitly.
 - ASC app ID: `6822256099`, resolved on 2026-10-13.
-- Current app-info ID: `fe777da5-0154-482a-91a3-d90cb54e9015`.
-- iOS version ID: `85171ed3-f60b-474b-9453-d3542f0dfdf3` (`1.0.5`,
-  `READY_FOR_DISTRIBUTION`). Do not use the video app's ID.
-- Local version: `1.0.6+11` (see `pubspec.yaml`).
+- App-info ID used for the latest verified pull: `da4c4c77-e58b-4335-9ad3-31179a1bcd76`.
+- iOS version ID: `390680fd-71a0-48ca-93d9-3185d9b3b2b1` (`1.0.7`,
+  `PREPARE_FOR_SUBMISSION`). Live version: `1.0.6`, ID
+  `5d068855-7ede-41e0-870a-0200709f752c`. Do not use the video app's ID.
+- Local version: `1.0.7+12` (see `pubspec.yaml`).
 - UI/export locales: `en`, `de`, `es`, `fr`, `hi`, `it`, `ja`, `ko`, `nl`,
   `pt`, `ru`, `tr`, `zh`. App Store mapping: `en → en-US`, `de → de-DE`,
   `es → es-ES`, `fr → fr-FR`, `nl → nl-NL`, `pt → pt-BR`, `zh → zh-Hans`;
   the others use the same code. `zh-Hant` has separate App Store metadata,
   without a separate UI deck.
 - Canonical local metadata: `metadata/app-info/*.json` and
-  `metadata/version/{1.0.0,1.0.1,1.0.2,1.0.3,1.0.4,1.0.5,1.0.6}/*.json` (14 App Store locales).
+  `metadata/version/{1.0.0,1.0.1,1.0.2,1.0.3,1.0.4,1.0.5,1.0.6,1.0.7}/*.json` (14 App Store locales).
   Google Play listings: `metadata/google-play/store-listing-import.csv`
   (13 locales). All metadata is ignored by Git.
 - User-provided name, subtitle, description, and URLs are preserved.
@@ -83,9 +84,17 @@ fixes and localized What's New were uploaded for all 14 locales. The exact
 remote readback is in `.asc/source/metadata-1.0.5-aso-verified/`. No build was
 attached or review submission created in this workflow.
 
-For 1.0.6, What's New and promotional text are prepared locally for all 14
-locales in `metadata/version/1.0.6/`. Other metadata fields are copied from
-1.0.5. No 1.0.6 version or metadata has been created in App Store Connect.
+Version 1.0.6 is live. Its metadata was pulled before preparing 1.0.7 into
+`.asc/source/metadata-1.0.6-before-1.0.7/`.
+
+For 1.0.7, the iOS version was created on 2026-11-13 as
+`PREPARE_FOR_SUBMISSION`. Existing metadata and promotional text were copied
+from 1.0.6 for all 14 locales. What's New describes photo-saving bug fixes
+without platform-specific wording. Both text fields were verified against
+`metadata/version/1.0.7/`; the remote readback is in
+`.asc/source/metadata-1.0.7-verified/` and the upload receipt is
+`.asc/upload/metadata-1.0.7-text-result.json`. Descriptions, keywords and URLs
+match the previous version. No build was attached or review submission created.
 
 Exports and browser editor: [store_screenshots/README.md](store_screenshots/README.md).
 Apple Header and Search Results use Asset Library placements, separate from
