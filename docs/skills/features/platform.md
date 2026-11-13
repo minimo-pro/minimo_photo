@@ -33,6 +33,23 @@ successful save, request deletion of selected originals. Android declares
 legacy write permission only through API 29; modern Android and iOS use system
 photo-library authorization. iOS usage strings live in `Runner/Info.plist`.
 
+### Save diagnostics
+
+Run `rtk proxy flutter run -d <device-id>` with a physical device attached and
+repeat the failed save. Filter console output by `[photo-save]`.
+`CompressBloc` logs batch options, item progress, retries, elapsed time and
+errors with stack traces. iOS logs each save with its own UUID: input extension,
+readability/size, free storage, Photos authorization before/after the request,
+album creation and Photos commit (including the favorite flag).
+Authorization values: 0 = not determined, 1 = restricted, 2 = denied,
+3 = authorized, 4 = limited; access level 1 = add only, 2 = read/write.
+Photos commit failures include NSError domain/code and underlying error details
+in the Flutter exception. A successful commit confirms saving without fetching
+the newly created asset again. Diagnostics do not
+explicitly print image contents, source identifiers or location coordinates;
+system error descriptions may contain local paths. Logs stay in the local
+device/development console; there is no upload or in-app log storage.
+
 ## External photo imports
 
 - Android accepts `ACTION_SEND` and `ACTION_SEND_MULTIPLE` for images, copies up to 50 URIs into app cache, then opens `CompressRoute`.

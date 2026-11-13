@@ -26,6 +26,11 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
       level, completion in PHPhotoLibrary.requestAuthorization(for: level, handler: completion)
     }
   var replacementWriterForTesting: ((PickedPhotoMetadata, @escaping FlutterResult) -> Void)?
+  var performPhotoCreation:
+    (@escaping () -> Void, @escaping (Bool, Error?) -> Void) -> Void = {
+      changes, completion in
+      PHPhotoLibrary.shared().performChanges(changes, completionHandler: completion)
+    }
 
   override func scene(
     _ scene: UIScene,
@@ -400,6 +405,8 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
     _ arguments: [String: Any]?,
     result: @escaping FlutterResult
   ) {
+    let trace = "[photo-save][\(UUID().uuidString)]"
+    let result = tracedSaveResult("replacement", arguments: arguments, trace: trace, result: result)
     guard
       let path = arguments?["path"] as? String,
       let sourceIdentifier = arguments?["sourceIdentifier"] as? String,
@@ -416,7 +423,9 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
     let fallback = pickedMetadata(from: arguments)
     let source = photosAssetIfAccessible(identifier: sourceIdentifier)
     let accessLevel: PHAccessLevel = source == nil ? .addOnly : .readWrite
+    NSLog("%@ sourceAccessible=%@ authorization requested=%ld", trace, String(source != nil), accessLevel.rawValue)
     requestReplacementAuthorization(accessLevel) { status in
+      NSLog("%@ authorization returned=%ld", trace, status.rawValue)
       guard status == .authorized || status == .limited else {
         DispatchQueue.main.async {
           result(FlutterError(
@@ -444,7 +453,7 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
 
       let requestedAlbum = (arguments?["album"] as? String)?
         .trimmingCharacters(in: .whitespacesAndNewlines)
-      self.ensureAlbum(named: requestedAlbum) { album, albumWarning in
+      self.ensureAlbum(named: requestedAlbum, trace: trace) { album, albumWarning in
         let metadata = source.map {
           PickedPhotoMetadata(creationDate: $0.creationDate, location: $0.location)
         } ?? fallback
@@ -469,6 +478,7 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
           initialWarnings: albumWarning || skippedSourceAlbum
             ? ["album_unavailable"]
             : [],
+          trace: trace,
           result: result
         )
       }
@@ -481,6 +491,8 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
     _ arguments: [String: Any]?,
     result: @escaping FlutterResult
   ) {
+    let trace = "[photo-save][\(UUID().uuidString)]"
+    let result = tracedSaveResult("copy", arguments: arguments, trace: trace, result: result)
     guard
       let path = arguments?["path"] as? String,
       FileManager.default.fileExists(atPath: path)
@@ -497,7 +509,9 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
       .trimmingCharacters(in: .whitespacesAndNewlines)
     let accessLevel: PHAccessLevel =
       requestedAlbum?.isEmpty == false ? .readWrite : .addOnly
+    NSLog("%@ authorization requested=%ld", trace, accessLevel.rawValue)
     PHPhotoLibrary.requestAuthorization(for: accessLevel) { status in
+      NSLog("%@ authorization returned=%ld", trace, status.rawValue)
       guard status == .authorized || status == .limited else {
         DispatchQueue.main.async {
           result(FlutterError(
@@ -509,84 +523,67 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
         return
       }
 
-      self.ensureAlbum(named: requestedAlbum) { album, albumWarning in
+      self.ensureAlbum(named: requestedAlbum, trace: trace) { album, albumWarning in
         self.createReplacement(
           at: URL(fileURLWithPath: path),
           metadata: PickedPhotoMetadata(creationDate: Date(), location: nil),
           albums: album.map { [$0] } ?? [],
           favorite: false,
           initialWarnings: albumWarning ? ["album_unavailable"] : [],
+          trace: trace,
           result: result
         )
       }
     }
   }
 
-  private func createReplacement(
+  func createReplacement(
     at url: URL,
     metadata: PickedPhotoMetadata,
     albums: [PHAssetCollection],
     favorite: Bool,
     initialWarnings: [String],
+    trace: String,
     result: @escaping FlutterResult
   ) {
-    var identifier: String?
-    PHPhotoLibrary.shared().performChanges({
+    NSLog("%@ Photos commit start albums=%ld date=%@ location=%@ favorite=%@", trace,
+          albums.count, String(metadata.creationDate != nil), String(metadata.location != nil), String(favorite))
+    performPhotoCreation({
       let request = PHAssetCreationRequest.forAsset()
       request.addResource(with: .photo, fileURL: url, options: nil)
       request.creationDate = metadata.creationDate
       if let location = metadata.location { request.location = location }
+      request.isFavorite = favorite
       let placeholder = request.placeholderForCreatedAsset
-      identifier = placeholder?.localIdentifier
       if let placeholder {
         for album in albums {
           PHAssetCollectionChangeRequest(for: album)?.addAssets([placeholder] as NSArray)
         }
       }
     }) { success, error in
-      guard success, let identifier else {
+      NSLog("%@ Photos commit completed success=%@ error=%@", trace,
+            String(success), String(describing: error.map { $0 as NSError }))
+      guard success else {
         DispatchQueue.main.async {
           result(FlutterError(
             code: "save_failed",
             message: error?.localizedDescription ?? "replacement photo was not saved",
-            details: nil
+            details: error.map { self.photoErrorDetails($0 as NSError) }
           ))
         }
         return
       }
 
-      let created = PHAsset.fetchAssets(withLocalIdentifiers: [identifier], options: nil)
-      guard let replacement = created.firstObject else {
-        DispatchQueue.main.async {
-          result(FlutterError(
-            code: "save_failed",
-            message: "replacement photo could not be verified",
-            details: nil
-          ))
-        }
-        return
-      }
-
-      guard favorite else {
-        DispatchQueue.main.async {
-          result(["saved": true, "warnings": initialWarnings])
-        }
-        return
-      }
-      PHPhotoLibrary.shared().performChanges({
-        PHAssetChangeRequest(for: replacement).isFavorite = true
-      }) { favoriteSaved, _ in
-        var warnings = initialWarnings
-        if !favoriteSaved { warnings.append("favorite_unavailable") }
-        DispatchQueue.main.async {
-          result(["saved": true, "warnings": warnings])
-        }
+      // A successful commit confirms the save; readback can omit a new asset.
+      DispatchQueue.main.async {
+        result(["saved": true, "warnings": initialWarnings])
       }
     }
   }
 
   private func ensureAlbum(
     named name: String?,
+    trace: String,
     completion: @escaping (PHAssetCollection?, Bool) -> Void
   ) {
     guard let name, !name.isEmpty else {
@@ -606,17 +603,21 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
       }
     }
     if let existing {
+      NSLog("%@ album found", trace)
       completion(existing, false)
       return
     }
 
     var identifier: String?
+    NSLog("%@ album creation start", trace)
     PHPhotoLibrary.shared().performChanges({
       identifier = PHAssetCollectionChangeRequest
         .creationRequestForAssetCollection(withTitle: name)
         .placeholderForCreatedAssetCollection
         .localIdentifier
-    }) { success, _ in
+    }) { success, error in
+      NSLog("%@ album creation completed success=%@ error=%@", trace,
+            String(success), String(describing: error.map { $0 as NSError }))
       guard success, let identifier else {
         completion(nil, true)
         return
@@ -629,6 +630,47 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
         false
       )
     }
+  }
+
+  private func tracedSaveResult(
+    _ mode: String,
+    arguments: [String: Any]?,
+    trace: String,
+    result: @escaping FlutterResult
+  ) -> FlutterResult {
+    let started = ProcessInfo.processInfo.systemUptime
+    let path = arguments?["path"] as? String ?? ""
+    let attributes = try? FileManager.default.attributesOfItem(atPath: path)
+    let storage = try? FileManager.default.attributesOfFileSystem(forPath: NSHomeDirectory())
+    NSLog("%@ start mode=%@ os=%@ extension=%@ readable=%@ bytes=%@ freeBytes=%@ album=%@ readWrite=%ld addOnly=%ld", trace,
+          mode, UIDevice.current.systemVersion, URL(fileURLWithPath: path).pathExtension,
+          String(FileManager.default.isReadableFile(atPath: path)),
+          String(describing: attributes?[.size]), String(describing: storage?[.systemFreeSize]),
+          String(arguments?["album"] is String),
+          PHPhotoLibrary.authorizationStatus(for: .readWrite).rawValue,
+          PHPhotoLibrary.authorizationStatus(for: .addOnly).rawValue)
+    return { value in
+      let elapsed = Int((ProcessInfo.processInfo.systemUptime - started) * 1000)
+      if let error = value as? FlutterError {
+        NSLog("%@ failed elapsedMs=%ld code=%@ message=%@ details=%@", trace, elapsed,
+              error.code, error.message ?? "", String(describing: error.details))
+      } else {
+        NSLog("%@ completed elapsedMs=%ld result=%@", trace, elapsed, String(describing: value))
+      }
+      result(value)
+    }
+  }
+
+  private func photoErrorDetails(_ error: NSError) -> [String: Any] {
+    var details: [String: Any] = [
+      "domain": error.domain,
+      "code": error.code,
+      "description": error.localizedDescription,
+    ]
+    if let underlying = error.userInfo[NSUnderlyingErrorKey] as? NSError {
+      details["underlying"] = photoErrorDetails(underlying)
+    }
+    return details
   }
 
   private func imageMetadata(at url: URL) -> PickedPhotoMetadata {

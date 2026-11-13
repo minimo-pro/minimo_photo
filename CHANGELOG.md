@@ -1,3 +1,9 @@
+## [1.0.7]
+
+### Fixed
+
+* Fix interrupted batch saving when replacing original photos on iOS: trust the successful Photos transaction instead of fetching the newly created photo again, and preserve its favorite status in the same transaction.
+
 ## [1.0.6]
 
 ### Fixed

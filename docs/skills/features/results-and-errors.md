@@ -27,7 +27,9 @@ share.
   does not imply the app previously compressed the originals.
 - Save/share errors show a snackbar. Replacement deletes originals only after
   every compressed photo has been saved successfully; originals are not checked
-  before saving. If deletion fails, saved copies stay. When metadata
+  before saving. On iOS, a successful Photos transaction confirms the save;
+  the new asset does not need to be fetched again. Date, location and favorite
+  are set in the creation transaction. If deletion fails, saved copies stay. When metadata
   preservation also fails, the snackbar reports both the metadata warning and
   deletion failure.
 - Holding cancel waits for the current encoder, removes generated outputs and
