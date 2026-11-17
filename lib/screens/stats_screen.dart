@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../constants/app_icons.dart';
 import '../generated/l10n.dart';
 import '../services/app_stats_service.dart';
 import '../services/utils.dart';
 import '../theme/app_theme.dart';
+import '../widgets/app_action_button.dart';
+import '../widgets/app_snack_bar.dart';
 import '../widgets/minimo_loader.dart';
 import '../widgets/pressable.dart';
 import '../widgets/rolling_counter_text.dart';
@@ -77,10 +80,45 @@ class _Header extends StatelessWidget {
   }
 }
 
-class _StatsContent extends StatelessWidget {
+class _StatsContent extends StatefulWidget {
   final AppStats stats;
 
   const _StatsContent({required this.stats});
+
+  @override
+  State<_StatsContent> createState() => _StatsContentState();
+}
+
+class _StatsContentState extends State<_StatsContent> {
+  bool _sharing = false;
+
+  Future<void> _share(BuildContext buttonContext) async {
+    if (_sharing) return;
+    setState(() => _sharing = true);
+    try {
+      final box = buttonContext.findRenderObject() as RenderBox;
+      await SharePlus.instance.share(
+        ShareParams(
+          text: S
+              .of(context)
+              .shareStatisticsText(
+                widget.stats.compressedPhotos,
+                Utils.formatSize(widget.stats.savedBytes),
+              ),
+          sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size,
+        ),
+      );
+    } catch (_) {
+      if (!mounted) return;
+      AppSnackBar.show(
+        context,
+        message: S.of(context).failedToShareStatistics,
+        type: AppSnackBarType.error,
+      );
+    } finally {
+      if (mounted) setState(() => _sharing = false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +133,7 @@ class _StatsContent extends StatelessWidget {
               children: [
                 Expanded(
                   child: _StatCard(
-                    value: stats.compressedPhotos,
+                    value: widget.stats.compressedPhotos,
                     formatter: (value) => value.toInt().toString(),
                     label: strings.photosCompressedStat,
                   ),
@@ -103,7 +141,7 @@ class _StatsContent extends StatelessWidget {
                 const SizedBox(width: 12),
                 Expanded(
                   child: _StatCard(
-                    value: stats.savedBytes,
+                    value: widget.stats.savedBytes,
                     formatter: (value) =>
                         Utils.formatSize(value.toInt()).toLowerCase(),
                     label: strings.spaceSavedStat,
@@ -119,6 +157,17 @@ class _StatsContent extends StatelessWidget {
                 color: Theme.of(context).colorScheme.onSurfaceVariant,
                 fontSize: 12,
                 height: 1.1,
+              ),
+            ),
+            const SizedBox(height: 16),
+            Builder(
+              builder: (buttonContext) => AppActionButton(
+                label: strings.share,
+                icon: AppIcons.share,
+                variant: AppActionButtonVariant.filled,
+                width: double.infinity,
+                loading: _sharing,
+                onPressed: _sharing ? null : () => _share(buttonContext),
               ),
             ),
           ],

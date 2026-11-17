@@ -267,5 +267,17 @@
   "statistics": "statistiques",
   "photosCompressedStat": "photos compressées",
   "spaceSavedStat": "espace économisé",
-  "statisticsSinceVersion": "les statistiques sont stockées localement sur cet appareil."
+  "statisticsSinceVersion": "les statistiques sont stockées localement sur cet appareil.",
+  "shareStatisticsText": "Mes résultats avec minimo (photo) : photos compressées — {count}, espace économisé — {size}. Plus de place pour de nouveaux souvenirs !\n\nEssaie minimo (photo) et libère de la place sur ton téléphone : https://minimo-photo.vercel.app",
+  "@shareStatisticsText": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "failedToShareStatistics": "impossible de partager les statistiques. réessaie"
 }

@@ -1,3 +1,14 @@
+## [1.0.8]
+
+### Added
+
+* Share your compressed-photo count and space saved as text from the statistics screen through the system share sheet.
+
+### Changed
+
+* Replace `in_app_review` with `rate_my_app` for app rating prompts.
+* Enable Android Gradle Plugin's built-in Kotlin support (`android.builtInKotlin=true`).
+
 ## [1.0.7]
 
 ### Fixed

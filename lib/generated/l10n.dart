@@ -1,7 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import 'intl/messages_all.dart';
 
 // **************************************************************************
@@ -1363,6 +1362,26 @@ class S {
     return Intl.message(
       'statistics are stored locally on this device.',
       name: 'statisticsSinceVersion',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `My results in minimo (photo): photos compressed — {count}, space saved — {size}. More room for new memories!\n\nTry minimo (photo) and free up space on your phone: https://minimo-photo.vercel.app`
+  String shareStatisticsText(int count, String size) {
+    return Intl.message(
+      'My results in minimo (photo): photos compressed — $count, space saved — $size. More room for new memories!\n\nTry minimo (photo) and free up space on your phone: https://minimo-photo.vercel.app',
+      name: 'shareStatisticsText',
+      desc: '',
+      args: [count, size],
+    );
+  }
+
+  /// `couldn't share statistics. try again`
+  String get failedToShareStatistics {
+    return Intl.message(
+      'couldn\'t share statistics. try again',
+      name: 'failedToShareStatistics',
       desc: '',
       args: [],
     );

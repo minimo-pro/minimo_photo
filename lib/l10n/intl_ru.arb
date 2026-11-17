@@ -267,5 +267,17 @@
   "photosCompressedStat": "фото сжато",
   "spaceSavedStat": "места сэкономлено",
   "statisticsSinceVersion": "статистика хранится локально на этом устройстве.",
-  "keepMetadataLegacy": "сохранять метаданные"
+  "keepMetadataLegacy": "сохранять метаданные",
+  "shareStatisticsText": "Мой результат в minimo (photo): сжато фото — {count}, сэкономлено места — {size}. Больше места для новых воспоминаний!\n\nПопробуй minimo (photo) и освободи место на телефоне: https://minimo-photo.vercel.app",
+  "@shareStatisticsText": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "failedToShareStatistics": "не удалось поделиться статистикой. попробуйте ещё раз"
 }

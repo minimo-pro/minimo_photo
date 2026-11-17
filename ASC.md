@@ -3,18 +3,18 @@
 - Bundle ID: `com.khlebobul.minimoPhoto`.
 - Auth profile: `minimo`, stored in System Keychain. Pass it explicitly.
 - ASC app ID: `6822256099`, resolved on 2026-10-13.
-- App-info ID used for the latest verified pull: `da4c4c77-e58b-4335-9ad3-31179a1bcd76`.
-- iOS version ID: `390680fd-71a0-48ca-93d9-3185d9b3b2b1` (`1.0.7`,
-  `PREPARE_FOR_SUBMISSION`). Live version: `1.0.6`, ID
-  `5d068855-7ede-41e0-870a-0200709f752c`. Do not use the video app's ID.
-- Local version: `1.0.7+12` (see `pubspec.yaml`).
+- App-info ID used for the latest verified pull: `93db8cf3-ed42-4d2e-983c-7cb92d595d38`.
+- iOS version ID: `40012224-3a84-4b5d-9c3d-5c90ffe315e3` (`1.0.8`,
+  `PREPARE_FOR_SUBMISSION`). Live version: `1.0.7`, ID
+  `390680fd-71a0-48ca-93d9-3185d9b3b2b1`. Do not use the video app's ID.
+- Local version: `1.0.8+13` (see `pubspec.yaml`).
 - UI/export locales: `en`, `de`, `es`, `fr`, `hi`, `it`, `ja`, `ko`, `nl`,
   `pt`, `ru`, `tr`, `zh`. App Store mapping: `en → en-US`, `de → de-DE`,
   `es → es-ES`, `fr → fr-FR`, `nl → nl-NL`, `pt → pt-BR`, `zh → zh-Hans`;
   the others use the same code. `zh-Hant` has separate App Store metadata,
   without a separate UI deck.
 - Canonical local metadata: `metadata/app-info/*.json` and
-  `metadata/version/{1.0.0,1.0.1,1.0.2,1.0.3,1.0.4,1.0.5,1.0.6,1.0.7}/*.json` (14 App Store locales).
+  `metadata/version/{1.0.0,1.0.1,1.0.2,1.0.3,1.0.4,1.0.5,1.0.6,1.0.7,1.0.8}/*.json` (14 App Store locales).
   Google Play listings: `metadata/google-play/store-listing-import.csv`
   (13 locales). All metadata is ignored by Git.
 - User-provided name, subtitle, description, and URLs are preserved.
@@ -109,3 +109,13 @@ order, MD5 and `COMPLETE` status. Snapshot:
 `.asc/upload/1.0.7-pricing-fix/`. Local export validation passed for 429 RGB
 PNGs and 14 ZIPs. Text metadata and creative assignments were not changed.
 No review reply, resubmission or publication was performed.
+
+On 2026-11-16, version 1.0.8 was created as `PREPARE_FOR_SUBMISSION`,
+copying metadata from live version 1.0.7. What's New describes sharing
+photo-compression statistics; promotional text highlights making room for
+memories and sharing the compressed-photo count and space saved. Both fields
+were uploaded and verified for all 14 App Store locales. All version fields
+match `metadata/version/1.0.8/`; descriptions, keywords, and URLs are preserved.
+Readback: `.asc/source/metadata-1.0.8-verified/`. Upload receipt:
+`.asc/upload/metadata-1.0.8-text-result.json`. No build was uploaded or attached,
+and no review submission or publication was performed.

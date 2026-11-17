@@ -267,5 +267,17 @@
   "statistics": "statistieken",
   "photosCompressedStat": "foto's gecomprimeerd",
   "spaceSavedStat": "ruimte bespaard",
-  "statisticsSinceVersion": "statistieken worden lokaal op dit apparaat opgeslagen."
+  "statisticsSinceVersion": "statistieken worden lokaal op dit apparaat opgeslagen.",
+  "shareStatisticsText": "Mijn resultaat met minimo (photo): gecomprimeerde foto’s — {count}, bespaarde ruimte — {size}. Meer ruimte voor nieuwe herinneringen!\n\nProbeer minimo (photo) en maak ruimte vrij op je telefoon: https://minimo-photo.vercel.app",
+  "@shareStatisticsText": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "failedToShareStatistics": "statistieken konden niet worden gedeeld. probeer het opnieuw"
 }

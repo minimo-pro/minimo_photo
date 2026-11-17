@@ -53,7 +53,10 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m13(url) =>
       "minimo(photo)를 사용해 보세요 — 휴대폰에서 사진을 더 작게 만들 수 있는 간단한 앱: ${url}";
 
-  static String m14(size) => "${size} 절약";
+  static String m14(count, size) =>
+      "minimo (photo)에서 얻은 결과: 압축한 사진 — ${count}장, 절약한 공간 — ${size}. 새로운 추억을 위한 공간이 늘었어요!\n\nminimo (photo)를 사용해 휴대폰 공간을 확보해 보세요: https://minimo-photo.vercel.app";
+
+  static String m15(size) => "${size} 절약";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -118,6 +121,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "failedToShare": MessageLookupByLibrary.simpleMessage(
       "사진을 공유할 수 없습니다. 다시 시도",
+    ),
+    "failedToShareStatistics": MessageLookupByLibrary.simpleMessage(
+      "통계를 공유하지 못했어요. 다시 시도해 주세요",
     ),
     "formatFallbackNotice": MessageLookupByLibrary.simpleMessage(
       "heic을 사용할 수 없어서 이 사진은 jpeg로 저장되었습니다.",
@@ -281,6 +287,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "share": MessageLookupByLibrary.simpleMessage("공유"),
     "shareAppText": m13,
     "shareOrSave": MessageLookupByLibrary.simpleMessage("공유 또는 저장…"),
+    "shareStatisticsText": m14,
     "shareWithFriends": MessageLookupByLibrary.simpleMessage("친구와 공유"),
     "showOverheatWarning": MessageLookupByLibrary.simpleMessage("과열 경고 표시"),
     "showOverheatWarningDescription": MessageLookupByLibrary.simpleMessage(
@@ -310,6 +317,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "videoAppPromptTitle": MessageLookupByLibrary.simpleMessage("동영상도 압축하시나요?"),
     "waiting": MessageLookupByLibrary.simpleMessage("대기 중"),
     "xTwitter": MessageLookupByLibrary.simpleMessage("x (twitter)"),
-    "youSavedSize": m14,
+    "youSavedSize": m15,
   };
 }

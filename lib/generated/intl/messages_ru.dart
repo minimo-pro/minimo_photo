@@ -57,7 +57,10 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m13(url) =>
       "попробуй minimo (photo) — простое приложение, чтобы сжимать фото прямо на телефоне: ${url}";
 
-  static String m14(size) => "экономия ${size}";
+  static String m14(count, size) =>
+      "Мой результат в minimo (photo): сжато фото — ${count}, сэкономлено места — ${size}. Больше места для новых воспоминаний!\n\nПопробуй minimo (photo) и освободи место на телефоне: https://minimo-photo.vercel.app";
+
+  static String m15(size) => "экономия ${size}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -136,6 +139,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "failedToShare": MessageLookupByLibrary.simpleMessage(
       "не удалось поделиться фото. попробуйте ещё раз",
+    ),
+    "failedToShareStatistics": MessageLookupByLibrary.simpleMessage(
+      "не удалось поделиться статистикой. попробуйте ещё раз",
     ),
     "formatFallbackNotice": MessageLookupByLibrary.simpleMessage(
       "heic недоступен — фото сохранено в jpeg",
@@ -327,6 +333,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "shareOrSave": MessageLookupByLibrary.simpleMessage(
       "поделиться или сохранить в…",
     ),
+    "shareStatisticsText": m14,
     "shareWithFriends": MessageLookupByLibrary.simpleMessage(
       "поделиться с друзьями",
     ),
@@ -364,6 +371,6 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "waiting": MessageLookupByLibrary.simpleMessage("ожидает"),
     "xTwitter": MessageLookupByLibrary.simpleMessage("x (twitter)"),
-    "youSavedSize": m14,
+    "youSavedSize": m15,
   };
 }

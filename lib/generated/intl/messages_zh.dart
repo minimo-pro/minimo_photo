@@ -50,7 +50,10 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m13(url) => "尝试 minimo（照片）——一款用于在手机上缩小照片的简单应用程序：${url}";
 
-  static String m14(size) => "已节省 ${size}";
+  static String m14(count, size) =>
+      "我在 minimo (photo) 的成果：已压缩照片 — ${count} 张，已节省空间 — ${size}。为新的回忆腾出更多空间！\n\n试试 minimo (photo)，释放手机空间：https://minimo-photo.vercel.app";
+
+  static String m15(size) => "已节省 ${size}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -108,6 +111,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "failedToPickPhotos": MessageLookupByLibrary.simpleMessage("选择照片文件"),
     "failedToSave": MessageLookupByLibrary.simpleMessage("无法保存照片。再试一次"),
     "failedToShare": MessageLookupByLibrary.simpleMessage("无法分享照片。再试一次"),
+    "failedToShareStatistics": MessageLookupByLibrary.simpleMessage(
+      "无法分享统计数据，请重试",
+    ),
     "formatFallbackNotice": MessageLookupByLibrary.simpleMessage(
       "heic 不可用，因此这张照片保存为 jpeg",
     ),
@@ -254,6 +260,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "share": MessageLookupByLibrary.simpleMessage("分享"),
     "shareAppText": m13,
     "shareOrSave": MessageLookupByLibrary.simpleMessage("分享或保存到…"),
+    "shareStatisticsText": m14,
     "shareWithFriends": MessageLookupByLibrary.simpleMessage("分享给朋友"),
     "showOverheatWarning": MessageLookupByLibrary.simpleMessage("显示过热警告"),
     "showOverheatWarningDescription": MessageLookupByLibrary.simpleMessage(
@@ -281,6 +288,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "videoAppPromptTitle": MessageLookupByLibrary.simpleMessage("也想压缩视频？"),
     "waiting": MessageLookupByLibrary.simpleMessage("等待中"),
     "xTwitter": MessageLookupByLibrary.simpleMessage("x (twitter)"),
-    "youSavedSize": m14,
+    "youSavedSize": m15,
   };
 }
