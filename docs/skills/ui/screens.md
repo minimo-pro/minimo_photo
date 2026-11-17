@@ -7,8 +7,12 @@
 | `StartRoute` | Pick photos from gallery or files |
 | `CompressRoute` | Import photos, configure during import, process, compare, save, and share |
 | `SettingsRoute` | Filename, album, theme, locale, and cache settings |
-| `StatsScreen` | Local compressed-photo count and total space saved |
+| `StatsScreen` | Local compressed-photo count, total space saved, and text sharing |
 | `InfoRoute` | Project and author links |
+
+The statistics screen shares a localized text summary of both counters through
+the system share sheet. It includes the app name, a call to try the app, and
+the project website link, with no photo attachments.
 
 `CompressRoute` has three BLoC-driven views:
 

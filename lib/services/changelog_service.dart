@@ -34,6 +34,35 @@ enum Language {
 typedef Changelog = Map<String, Map<Language, List<String>>>;
 
 const Changelog _changelog = {
+  '1.0.8': {
+    Language.en: ['share your photo compression statistics and space saved.'],
+    Language.de: [
+      'teile deine fotokomprimierungsstatistik und den gesparten speicherplatz.',
+    ],
+    Language.es: [
+      'comparte tus estadísticas de compresión de fotos y el espacio ahorrado.',
+    ],
+    Language.fr: [
+      'partagez vos statistiques de compression de photos et l’espace économisé.',
+    ],
+    Language.hi: ['फ़ोटो संपीड़न के आँकड़े और बचाई गई जगह साझा करें।'],
+    Language.it: [
+      'condividi le statistiche di compressione delle foto e lo spazio risparmiato.',
+    ],
+    Language.ja: ['写真の圧縮枚数と節約した容量を共有できるようになりました。'],
+    Language.ko: ['사진 압축 통계와 절약한 공간을 공유하세요.'],
+    Language.nl: [
+      'deel je fotocompressiestatistieken en bespaarde opslagruimte.',
+    ],
+    Language.pt: [
+      'compartilhe suas estatísticas de compressão de fotos e o espaço economizado.',
+    ],
+    Language.ru: ['делитесь статистикой сжатия фото и сэкономленного места.'],
+    Language.tr: [
+      'fotoğraf sıkıştırma istatistiklerini ve kazanılan alanı paylaş.',
+    ],
+    Language.zh: ['分享照片压缩数量和节省的空间。'],
+  },
   '1.0.7': {
     Language.en: ['fixed bugs when saving photos.'],
     Language.de: ['fehler beim speichern von fotos behoben.'],

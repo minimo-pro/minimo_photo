@@ -267,5 +267,17 @@
   "statistics": "統計",
   "photosCompressedStat": "圧縮された写真",
   "spaceSavedStat": "節約した容量",
-  "statisticsSinceVersion": "統計情報はこのデバイスにローカルに保存されます。"
+  "statisticsSinceVersion": "統計情報はこのデバイスにローカルに保存されます。",
+  "shareStatisticsText": "minimo (photo) での私の成果：圧縮した写真 — {count}枚、節約した容量 — {size}。新しい思い出のために、もっと空き容量を！\n\nminimo (photo) を試して、スマートフォンの空き容量を増やそう：https://minimo-photo.vercel.app",
+  "@shareStatisticsText": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "failedToShareStatistics": "統計を共有できませんでした。もう一度お試しください"
 }

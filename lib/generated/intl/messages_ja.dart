@@ -52,7 +52,10 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m13(url) =>
       "minimo (写真) を試してください — 携帯電話で写真を小さくするためのシンプルなアプリ: ${url}";
 
-  static String m14(size) => "${size}節約しました";
+  static String m14(count, size) =>
+      "minimo (photo) での私の成果：圧縮した写真 — ${count}枚、節約した容量 — ${size}。新しい思い出のために、もっと空き容量を！\n\nminimo (photo) を試して、スマートフォンの空き容量を増やそう：https://minimo-photo.vercel.app";
+
+  static String m15(size) => "${size}節約しました";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -117,6 +120,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "failedToShare": MessageLookupByLibrary.simpleMessage(
       "写真を共有できませんでした。もう一度試してください",
+    ),
+    "failedToShareStatistics": MessageLookupByLibrary.simpleMessage(
+      "統計を共有できませんでした。もう一度お試しください",
     ),
     "formatFallbackNotice": MessageLookupByLibrary.simpleMessage(
       "heic が利用できなかったので、この写真は jpeg で保存されました",
@@ -278,6 +284,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "share": MessageLookupByLibrary.simpleMessage("共有"),
     "shareAppText": m13,
     "shareOrSave": MessageLookupByLibrary.simpleMessage("共有または保存先…"),
+    "shareStatisticsText": m14,
     "shareWithFriends": MessageLookupByLibrary.simpleMessage("友達と共有"),
     "showOverheatWarning": MessageLookupByLibrary.simpleMessage("過熱警告を表示"),
     "showOverheatWarningDescription": MessageLookupByLibrary.simpleMessage(
@@ -307,6 +314,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "videoAppPromptTitle": MessageLookupByLibrary.simpleMessage("動画も圧縮しますか？"),
     "waiting": MessageLookupByLibrary.simpleMessage("待機中"),
     "xTwitter": MessageLookupByLibrary.simpleMessage("x (twitter)"),
-    "youSavedSize": m14,
+    "youSavedSize": m15,
   };
 }

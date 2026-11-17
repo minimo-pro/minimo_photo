@@ -267,5 +267,17 @@
   "statistics": "आँकड़े",
   "photosCompressedStat": "तस्वीरें संपीड़ित",
   "spaceSavedStat": "बचाया गया स्थान",
-  "statisticsSinceVersion": "इस उपकरण पर आँकड़े स्थानीय रूप से संग्रहीत किए जाते हैं।"
+  "statisticsSinceVersion": "इस उपकरण पर आँकड़े स्थानीय रूप से संग्रहीत किए जाते हैं।",
+  "shareStatisticsText": "minimo (photo) में मेरे नतीजे: संपीड़ित फ़ोटो — {count}, बचाई गई जगह — {size}। नई यादों के लिए ज़्यादा जगह!\n\nminimo (photo) आज़माएँ और अपने फ़ोन में जगह खाली करें: https://minimo-photo.vercel.app",
+  "@shareStatisticsText": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "failedToShareStatistics": "आँकड़े साझा नहीं किए जा सके। फिर से कोशिश करें"
 }

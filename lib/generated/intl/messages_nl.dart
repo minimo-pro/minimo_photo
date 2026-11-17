@@ -57,7 +57,10 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m13(url) =>
       "probeer minimo (foto) — een eenvoudige app om foto\'s kleiner te maken op je telefoon: ${url}";
 
-  static String m14(size) => "je hebt ${size} bespaard";
+  static String m14(count, size) =>
+      "Mijn resultaat met minimo (photo): gecomprimeerde foto’s — ${count}, bespaarde ruimte — ${size}. Meer ruimte voor nieuwe herinneringen!\n\nProbeer minimo (photo) en maak ruimte vrij op je telefoon: https://minimo-photo.vercel.app";
+
+  static String m15(size) => "je hebt ${size} bespaard";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -138,6 +141,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "failedToShare": MessageLookupByLibrary.simpleMessage(
       "kon de foto\'s niet delen. probeer het opnieuw",
+    ),
+    "failedToShareStatistics": MessageLookupByLibrary.simpleMessage(
+      "statistieken konden niet worden gedeeld. probeer het opnieuw",
     ),
     "formatFallbackNotice": MessageLookupByLibrary.simpleMessage(
       "heic was niet beschikbaar, dus deze foto is opgeslagen als jpeg",
@@ -331,6 +337,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "share": MessageLookupByLibrary.simpleMessage("delen"),
     "shareAppText": m13,
     "shareOrSave": MessageLookupByLibrary.simpleMessage("delen of opslaan in…"),
+    "shareStatisticsText": m14,
     "shareWithFriends": MessageLookupByLibrary.simpleMessage(
       "delen met vrienden",
     ),
@@ -370,6 +377,6 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "waiting": MessageLookupByLibrary.simpleMessage("wachten"),
     "xTwitter": MessageLookupByLibrary.simpleMessage("x (twitter)"),
-    "youSavedSize": m14,
+    "youSavedSize": m15,
   };
 }

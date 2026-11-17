@@ -57,7 +57,10 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m13(url) =>
       "Probieren Sie Minimo (Foto) aus – eine einfache App zum Verkleinern von Fotos auf Ihrem Telefon: ${url}";
 
-  static String m14(size) => "du hast ${size} gespart";
+  static String m14(count, size) =>
+      "Mein Ergebnis mit minimo (photo): komprimierte Fotos — ${count}, gesparter Speicherplatz — ${size}. Mehr Platz für neue Erinnerungen!\n\nProbiere minimo (photo) aus und schaffe Platz auf deinem Handy: https://minimo-photo.vercel.app";
+
+  static String m15(size) => "du hast ${size} gespart";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -136,6 +139,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "failedToShare": MessageLookupByLibrary.simpleMessage(
       "konnte die Fotos nicht teilen. Versuchen Sie es noch einmal",
+    ),
+    "failedToShareStatistics": MessageLookupByLibrary.simpleMessage(
+      "statistik konnte nicht geteilt werden. versuche es erneut",
     ),
     "formatFallbackNotice": MessageLookupByLibrary.simpleMessage(
       "heic war nicht verfügbar, daher wurde dieses Foto als JPEG gespeichert",
@@ -329,6 +335,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "shareOrSave": MessageLookupByLibrary.simpleMessage(
       "teilen oder speichern unter…",
     ),
+    "shareStatisticsText": m14,
     "shareWithFriends": MessageLookupByLibrary.simpleMessage(
       "mit freunden teilen",
     ),
@@ -368,6 +375,6 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "waiting": MessageLookupByLibrary.simpleMessage("wartet"),
     "xTwitter": MessageLookupByLibrary.simpleMessage("x (twitter)"),
-    "youSavedSize": m14,
+    "youSavedSize": m15,
   };
 }

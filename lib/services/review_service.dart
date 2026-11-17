@@ -1,5 +1,5 @@
-import 'package:in_app_review/in_app_review.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/services.dart';
+import 'package:rate_my_app/rate_my_app.dart';
 
 enum CompressionPrompt { none, review, videoApp }
 
@@ -13,6 +13,10 @@ class ReviewService {
   static const _monthsBetweenReviews = 3;
 
   static final instance = ReviewService();
+  static final _rateMyApp = RateMyApp(
+    appStoreIdentifier: '6822256099',
+    googlePlayIdentifier: 'com.khlebobul.minimo_photo',
+  );
 
   final Future<bool> Function() _isAvailable;
   final Future<void> Function() _requestReview;
@@ -22,8 +26,23 @@ class ReviewService {
     Future<bool> Function()? isAvailable,
     Future<void> Function()? requestReview,
     DateTime Function()? now,
-  }) : _isAvailable = isAvailable ?? InAppReview.instance.isAvailable,
-       _requestReview = requestReview ?? InAppReview.instance.requestReview,
+  }) : _isAvailable =
+           isAvailable ??
+           (() => _rateMyApp.isNativeReviewDialogSupported.then(
+             (supported) => supported ?? false,
+             onError: (_) => false,
+           )),
+       _requestReview =
+           requestReview ??
+           (() async {
+             // The package's Future<void> adapter discards native false results.
+             final result = await const MethodChannel(
+               'rate_my_app',
+             ).invokeMethod<bool>('launchNativeReviewDialog');
+             if (result == false) {
+               throw StateError('Native review request failed');
+             }
+           }),
        _now = now ?? DateTime.now;
 
   Future<CompressionPrompt> onSuccessfulConversions(int count) async {

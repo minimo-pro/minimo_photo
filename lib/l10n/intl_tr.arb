@@ -267,5 +267,17 @@
   "statistics": "istatistikler",
   "photosCompressedStat": "fotoğraflar sıkıştırılmış",
   "spaceSavedStat": "kazanılan alan",
-  "statisticsSinceVersion": "istatistikler bu cihazda yerel olarak depolanır."
+  "statisticsSinceVersion": "istatistikler bu cihazda yerel olarak depolanır.",
+  "shareStatisticsText": "minimo (photo) ile sonuçlarım: sıkıştırılan fotoğraf — {count}, kazanılan alan — {size}. Yeni anılar için daha fazla yer!\n\nminimo (photo) uygulamasını dene ve telefonunda yer aç: https://minimo-photo.vercel.app",
+  "@shareStatisticsText": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "failedToShareStatistics": "istatistikler paylaşılamadı. tekrar dene"
 }

@@ -267,5 +267,17 @@
   "statistics": "统计",
   "photosCompressedStat": "照片压缩",
   "spaceSavedStat": "已节省空间",
-  "statisticsSinceVersion": "统计信息存储在该设备本地。"
+  "statisticsSinceVersion": "统计信息存储在该设备本地。",
+  "shareStatisticsText": "我在 minimo (photo) 的成果：已压缩照片 — {count} 张，已节省空间 — {size}。为新的回忆腾出更多空间！\n\n试试 minimo (photo)，释放手机空间：https://minimo-photo.vercel.app",
+  "@shareStatisticsText": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "failedToShareStatistics": "无法分享统计数据，请重试"
 }
