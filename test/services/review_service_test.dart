@@ -1,8 +1,107 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:minimo_photo/services/review_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+
+  group('native review integration', () {
+    const channel = MethodChannel('rate_my_app');
+    final calls = <String>[];
+    bool? supported;
+    var failAvailability = false;
+    var failRequest = false;
+
+    setUp(() {
+      SharedPreferences.setMockInitialValues({
+        'review_successful_conversions': 1,
+      });
+      calls.clear();
+      supported = true;
+      failAvailability = false;
+      failRequest = false;
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMethodCallHandler(channel, (call) async {
+            calls.add(call.method);
+            if (call.method == 'isNativeDialogSupported') {
+              if (failAvailability) {
+                throw PlatformException(code: 'unavailable');
+              }
+              return supported;
+            }
+            if (call.method == 'launchNativeReviewDialog') {
+              if (failRequest) throw PlatformException(code: 'unavailable');
+              return null;
+            }
+            fail('Unexpected method: ${call.method}');
+          });
+    });
+
+    tearDown(() {
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMethodCallHandler(channel, null);
+    });
+
+    test('uses native dialog and preserves existing preference keys', () async {
+      final now = DateTime(2026, 11, 15);
+      final service = ReviewService(now: () => now);
+
+      expect(
+        await service.onSuccessfulConversions(1),
+        CompressionPrompt.review,
+      );
+      expect(calls, ['isNativeDialogSupported', 'launchNativeReviewDialog']);
+      final prefs = await SharedPreferences.getInstance();
+      expect(prefs.getInt('review_successful_conversions'), 0);
+      expect(
+        prefs.getString('review_last_request_date'),
+        now.toIso8601String(),
+      );
+      expect(
+        prefs.getKeys().any((key) => key.startsWith('rateMyApp_')),
+        isFalse,
+      );
+    });
+
+    test('unsupported native dialog keeps progress', () async {
+      for (final value in [false, null]) {
+        supported = value;
+        expect(
+          await ReviewService().onSuccessfulConversions(1),
+          CompressionPrompt.none,
+        );
+      }
+      expect(calls, ['isNativeDialogSupported', 'isNativeDialogSupported']);
+      final prefs = await SharedPreferences.getInstance();
+      expect(prefs.getInt('review_successful_conversions'), 3);
+      expect(prefs.containsKey('review_last_request_date'), isFalse);
+    });
+
+    test('failed native request keeps progress', () async {
+      failRequest = true;
+      expect(
+        await ReviewService().onSuccessfulConversions(1),
+        CompressionPrompt.none,
+      );
+      final prefs = await SharedPreferences.getInstance();
+      expect(prefs.getInt('review_successful_conversions'), 2);
+      expect(prefs.containsKey('review_last_request_date'), isFalse);
+    });
+
+    test('availability error keeps progress without requesting', () async {
+      failAvailability = true;
+      expect(
+        await ReviewService().onSuccessfulConversions(1),
+        CompressionPrompt.none,
+      );
+      expect(calls, ['isNativeDialogSupported']);
+      final prefs = await SharedPreferences.getInstance();
+      expect(prefs.getInt('review_successful_conversions'), 2);
+      expect(prefs.containsKey('review_last_request_date'), isFalse);
+    });
+  });
+
   test('rating shown today does not block an eligible video prompt', () async {
     SharedPreferences.setMockInitialValues({
       'review_successful_conversions': 8,

@@ -99,3 +99,13 @@ match the previous version. No build was attached or review submission created.
 Exports and browser editor: [store_screenshots/README.md](store_screenshots/README.md).
 Apple Header and Search Results use Asset Library placements, separate from
 the screenshot decks. Google Play needs separate tooling and credentials.
+
+On 2026-11-14, after the Guideline 2.3.7 rejection of 1.0.7 (12), pricing
+references were removed from local screenshot copy in all 13 UI languages.
+All 14 App Store localizations had their iPhone, iPad and Duo screenshot sets
+replaced for version 1.0.7. The full readback verified all 252 screenshots by
+order, MD5 and `COMPLETE` status. Snapshot:
+`.asc/source/1.0.7-pricing-fix/screenshots-verified.json`; staging and receipts:
+`.asc/upload/1.0.7-pricing-fix/`. Local export validation passed for 429 RGB
+PNGs and 14 ZIPs. Text metadata and creative assignments were not changed.
+No review reply, resubmission or publication was performed.
