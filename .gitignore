@@ -44,7 +44,7 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-# Store sources and exports stay local. The clean README overview is public.
+# Store metadata, generated assets, and exports stay local; editor source is tracked.
 /metadata/
 /.asc/
 /store_screenshots/node_modules/
@@ -56,7 +56,6 @@ app.*.map.json
 /store_screenshots/*.tmp
 /store_screenshots/.env*
 /store_screenshots/**/__pycache__/
-/store_screenshots/src/
 
 /screenshots/
 /promo/

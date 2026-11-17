@@ -12,6 +12,7 @@ void main() {
     bool? supported;
     var failAvailability = false;
     var failRequest = false;
+    bool? requestResult;
 
     setUp(() {
       SharedPreferences.setMockInitialValues({
@@ -21,6 +22,7 @@ void main() {
       supported = true;
       failAvailability = false;
       failRequest = false;
+      requestResult = null;
       TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
           .setMockMethodCallHandler(channel, (call) async {
             calls.add(call.method);
@@ -32,7 +34,7 @@ void main() {
             }
             if (call.method == 'launchNativeReviewDialog') {
               if (failRequest) throw PlatformException(code: 'unavailable');
-              return null;
+              return requestResult;
             }
             fail('Unexpected method: ${call.method}');
           });
@@ -88,6 +90,21 @@ void main() {
       expect(prefs.getInt('review_successful_conversions'), 2);
       expect(prefs.containsKey('review_last_request_date'), isFalse);
     });
+
+    test(
+      'native false response keeps progress without recording a date',
+      () async {
+        requestResult = false;
+        expect(
+          await ReviewService().onSuccessfulConversions(1),
+          CompressionPrompt.none,
+        );
+        expect(calls, ['isNativeDialogSupported', 'launchNativeReviewDialog']);
+        final prefs = await SharedPreferences.getInstance();
+        expect(prefs.getInt('review_successful_conversions'), 2);
+        expect(prefs.containsKey('review_last_request_date'), isFalse);
+      },
+    );
 
     test('availability error keeps progress without requesting', () async {
       failAvailability = true;

@@ -124,7 +124,7 @@ class _StatsContentState extends State<_StatsContent> {
   Widget build(BuildContext context) {
     final strings = S.of(context);
     return Center(
-      child: Padding(
+      child: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           mainAxisSize: MainAxisSize.min,

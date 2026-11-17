@@ -16,8 +16,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() {
   const channel = MethodChannel('dev.fluttercommunity.plus/share');
 
-  Future<void> openStats(WidgetTester tester, String locale, int count) async {
-    tester.view.physicalSize = const Size(390, 844);
+  Future<void> openStats(
+    WidgetTester tester,
+    String locale,
+    int count, {
+    Size size = const Size(390, 844),
+  }) async {
+    tester.view.physicalSize = size;
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
@@ -73,6 +78,22 @@ void main() {
     final messages =
         jsonDecode(File('lib/l10n/intl_$locale.arb').readAsStringSync())
             as Map<String, dynamic>;
+    testWidgets('share stays accessible at 320x480: $locale', (tester) async {
+      var shared = false;
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMethodCallHandler(channel, (_) async {
+            shared = true;
+            return 'dev.fluttercommunity.plus/share/dismissed';
+          });
+      await openStats(tester, locale, 42, size: const Size(320, 480));
+      expect(tester.takeException(), isNull);
+      await tester.ensureVisible(find.byType(AppActionButton));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byType(AppActionButton));
+      await tester.pumpAndSettle();
+      expect(shared, isTrue);
+      expect(tester.takeException(), isNull);
+    });
     for (final count in [0, 42]) {
       testWidgets('shares localized stats: $locale, $count photos', (
         tester,
