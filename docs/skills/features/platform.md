@@ -59,3 +59,21 @@ device/development console; there is no upload or in-app log storage.
 ## Screen awake
 
 When `prevent_screen_sleep` is enabled, `wakelock_plus` keeps the display awake while photos import through the picker and while a batch compresses. The app releases it on completion, cancellation, or leaving the import screen.
+
+## Background picker imports
+
+Gallery and Files imports acquire background runtime after selection, for both
+initial selection and add-more. iOS 26+ requests CPU-only continued processing
+with a unique `.import.*` identifier and system progress/cancellation. Older iOS,
+inactive submission, or denied admission falls back to a finite UIKit background
+task; expiration cancels the import. Gallery provider loads are cancelled and
+remaining document copies are skipped; completed copies are removed when the
+in-flight callbacks/copy finish.
+
+Android uses `PhotoImportService`, a `dataSync` foreground service with a partial
+wake lock, progress notification and Cancel action. Cancellation and system
+timeout stop copying between buffer reads and remove that batch's cached files.
+If foreground service startup is denied, the selection fails safely.
+
+Runtime is released on completion or cancellation. Force quit does not resume
+imports. External Share/Shortcut inbox consumption and compression are unchanged.

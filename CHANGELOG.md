@@ -1,3 +1,9 @@
+## [1.1.0]
+
+### Added
+
+* Continue gallery and Files imports in the background after selection, including add-more: iOS 26+ uses CPU-only continued processing with system progress and cancellation; older iOS or denied admission uses finite background runtime. Android uses a dataSync foreground service with progress, cancellation and a wake lock. Cancelled imports clean up their cache copies; force quit does not resume imports.
+
 ## [1.0.8]
 
 ### Added

@@ -34,6 +34,45 @@ enum Language {
 typedef Changelog = Map<String, Map<Language, List<String>>>;
 
 const Changelog _changelog = {
+  '1.1.0': {
+    Language.en: [
+      'on supported devices, photos selected from the gallery or files can continue importing in the background with system progress and cancellation.',
+    ],
+    Language.de: [
+      'auf unterstützten geräten können fotos aus der galerie oder aus dateien im hintergrund weiter importiert werden, mit systemfortschritt und abbruchmöglichkeit.',
+    ],
+    Language.es: [
+      'en dispositivos compatibles, las fotos seleccionadas de la galería o de archivos pueden seguir importándose en segundo plano, con progreso del sistema y opción de cancelar.',
+    ],
+    Language.fr: [
+      'sur les appareils compatibles, les photos sélectionnées dans la galerie ou les fichiers peuvent continuer à être importées en arrière-plan, avec progression système et annulation.',
+    ],
+    Language.hi: [
+      'समर्थित डिवाइस पर गैलरी या फ़ाइलों से चुनी गई फ़ोटो का आयात पृष्ठभूमि में जारी रह सकता है, जिसमें सिस्टम की प्रगति और रद्द करने का विकल्प मिलता है।',
+    ],
+    Language.it: [
+      'sui dispositivi compatibili, le foto selezionate dalla galleria o dai file possono continuare a essere importate in background, con avanzamento di sistema e possibilità di annullamento.',
+    ],
+    Language.ja: [
+      '対応デバイスでは、ギャラリーやファイルから選択した写真の読み込みをバックグラウンドで続行でき、システムの進行状況表示やキャンセルに対応しています。',
+    ],
+    Language.ko: [
+      '지원되는 기기에서는 갤러리나 파일에서 선택한 사진을 백그라운드에서 계속 가져올 수 있으며, 시스템 진행 상황 표시와 취소 기능을 제공합니다.',
+    ],
+    Language.nl: [
+      'op ondersteunde apparaten kunnen foto’s uit de galerij of bestanden op de achtergrond verder worden geïmporteerd, met systeemvoortgang en de mogelijkheid om te annuleren.',
+    ],
+    Language.pt: [
+      'em dispositivos compatíveis, as fotos selecionadas da galeria ou dos arquivos podem continuar sendo importadas em segundo plano, com progresso do sistema e opção de cancelar.',
+    ],
+    Language.ru: [
+      'на поддерживаемых устройствах импорт фото из галереи и файлов продолжается в фоне, с системным прогрессом и возможностью отмены.',
+    ],
+    Language.tr: [
+      'desteklenen cihazlarda galeriden veya dosyalardan seçilen fotoğraflar, sistem ilerleme göstergesi ve iptal seçeneğiyle arka planda içe aktarılmaya devam edebilir.',
+    ],
+    Language.zh: ['在支持的设备上，从图库或文件中选择的照片可继续在后台导入，并支持系统进度显示和取消操作。'],
+  },
   '1.0.8': {
     Language.en: ['share your photo compression statistics and space saved.'],
     Language.de: [

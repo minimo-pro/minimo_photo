@@ -22,4 +22,8 @@ Before release, verify on physical Android and iOS devices:
 - exit during import/save/share waits, then removes only that batch’s cache
 - gallery save and share sheet
 - screen stays awake during picker import and compression when enabled, then sleeps normally afterward
+- gallery/files import continues after backgrounding/locking the screen, for initial selection and add-more
+- system import progress/cancel on iOS 26+ and Android; cancellation removes only the current import's cache
+- denied iOS continued-processing admission/older iOS uses finite runtime and cancels on expiration
+- Android notification cancellation and dataSync timeout release the service and wake lock
 - low-storage and permission-denied errors
