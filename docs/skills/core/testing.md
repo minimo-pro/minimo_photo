@@ -39,3 +39,16 @@ system cancellation with late outputs, cancellation during admission, and exit
 while waiting for resume. On physical iOS/Android devices also verify compression
 with the screen locked, notification/system cancellation, denied runtime,
 foreground-service timeout, and retry after cancellation.
+
+Android import/service regression checks:
+
+```bash
+cd android
+./gradlew :app:testDebugUnitTest
+```
+
+These JVM tests cover blocked provider reads/close/open, cache ownership after
+cancellation, single picker completion, stale picker callbacks, and queued
+commands for finished services without stopping newer operations. Flutter
+`upgrade_alert_test.dart` exercises Material and Cupertino update dialogs with
+the same localization delegates used by `MainApp`.

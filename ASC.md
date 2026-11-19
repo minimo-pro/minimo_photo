@@ -4,22 +4,23 @@
 - Auth profile: `minimo`, stored in System Keychain. Pass it explicitly.
 - ASC app ID: `6822256099`, resolved on 2026-10-13.
 - App-info ID used for the latest verified pull: `93db8cf3-ed42-4d2e-983c-7cb92d595d38`.
-- iOS version ID: `40012224-3a84-4b5d-9c3d-5c90ffe315e3` (`1.0.8`,
-  `PREPARE_FOR_SUBMISSION`). Live version: `1.0.7`, ID
-  `390680fd-71a0-48ca-93d9-3185d9b3b2b1`. Do not use the video app's ID.
-- Local version: `1.0.8+13` (see `pubspec.yaml`).
+- iOS version ID: `14689dc3-7ce1-4000-b04a-fa549f7abca7` (`1.1.0`,
+  `PREPARE_FOR_SUBMISSION`). Live version: `1.0.8`, ID
+  `40012224-3a84-4b5d-9c3d-5c90ffe315e3`.
+- Local version: `1.1.0+13` (see `pubspec.yaml`).
+- ASC CLI: `7.0.0`, updated with Homebrew and verified on 2026-11-19.
 - UI/export locales: `en`, `de`, `es`, `fr`, `hi`, `it`, `ja`, `ko`, `nl`,
   `pt`, `ru`, `tr`, `zh`. App Store mapping: `en → en-US`, `de → de-DE`,
   `es → es-ES`, `fr → fr-FR`, `nl → nl-NL`, `pt → pt-BR`, `zh → zh-Hans`;
   the others use the same code. `zh-Hant` has separate App Store metadata,
   without a separate UI deck.
 - Canonical local metadata: `metadata/app-info/*.json` and
-  `metadata/version/{1.0.0,1.0.1,1.0.2,1.0.3,1.0.4,1.0.5,1.0.6,1.0.7,1.0.8}/*.json` (14 App Store locales).
+  `metadata/version/{1.0.0,1.0.1,1.0.2,1.0.3,1.0.4,1.0.5,1.0.6,1.0.7,1.0.8,1.1.0}/*.json` (14 App Store locales).
   Google Play listings: `metadata/google-play/store-listing-import.csv`
   (13 locales). All metadata is ignored by Git.
 - User-provided name, subtitle, description, and URLs are preserved.
-  Keywords and What's New are localized for version 1.0.5; promotional text
-  carries over from 1.0.4.
+  What's New and promotional text for version 1.1.0 are localized in all 14
+  App Store locales; descriptions, keywords and URLs are preserved from 1.0.8.
   Metadata validation is not release-readiness validation.
 
 Use installed `asc-cli-usage`, `asc-id-resolver` and `asc-metadata-sync` skills.
@@ -119,3 +120,14 @@ match `metadata/version/1.0.8/`; descriptions, keywords, and URLs are preserved.
 Readback: `.asc/source/metadata-1.0.8-verified/`. Upload receipt:
 `.asc/upload/metadata-1.0.8-text-result.json`. No build was uploaded or attached,
 and no review submission or publication was performed.
+
+On 2026-11-19, ASC CLI was upgraded from 5.13.0 to 7.0.0. Version 1.1.0 was
+created as `PREPARE_FOR_SUBMISSION`, preserving descriptions, keywords and URLs
+from live 1.0.8. What's New covers background import/compression on supported
+devices and the refreshed introduction; promotional text highlights making room
+for memories with on-device background processing. Both fields were uploaded
+and verified for all 14 App Store locales. The complete version metadata matches
+`metadata/version/1.1.0/`; app-info was unchanged. Readback:
+`.asc/source/metadata-1.1.0-verified/`. Drafts, dry run, receipts and version state:
+`.asc/upload/1.1.0-text/`. No build was uploaded or attached; no review submission
+or publication was performed.

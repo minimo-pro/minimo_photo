@@ -17,6 +17,7 @@ class PhotoProcessingService : Service() {
     companion object {
         @Volatile var expiredToken: Long? = null
         var compressionChannel: MethodChannel? = null
+        var onImportCancelled: ((Long) -> Unit)? = null
     }
     private var token = -1L
     private var compressing = false
@@ -56,7 +57,11 @@ class PhotoProcessingService : Service() {
                 .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "minimo:processing").apply {
                     acquire(6 * 60 * 60 * 1000L)
                 }
-        } else if (id == token && !finished) {
+        } else if (id == token) {
+            if (finished) {
+                stopSelf(startId)
+                return START_NOT_STICKY
+            }
             when (intent?.action) {
                 "update" -> getSystemService(NotificationManager::class.java).notify(
                     4208, notification(intent.getIntExtra("processed", 0), intent.getIntExtra("total", 0),
@@ -75,8 +80,10 @@ class PhotoProcessingService : Service() {
 
     private fun cancel() {
         expiredToken = token
-        if (compressing && !finished) compressionChannel?.invokeMethod("cancel", token.toString())
+        if (finished) return
         finished = true
+        if (compressing) compressionChannel?.invokeMethod("cancel", token.toString())
+        else onImportCancelled?.invoke(token)
     }
 
     private fun notification(processed: Int, total: Int, progress: Int = -1): Notification {

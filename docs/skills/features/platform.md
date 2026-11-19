@@ -72,7 +72,11 @@ in-flight callbacks/copy finish.
 
 Android uses `PhotoProcessingService`, a `dataSync` foreground service with a partial
 wake lock, progress notification and Cancel action. Cancellation and system
-timeout stop copying between buffer reads and remove that batch's cached files.
+timeout settle the pending picker immediately. `PhotoImportSession` closes the
+local writer and removes its owned copies under the same lock used by writes;
+provider reads stay outside that lock. Closing a provider stream is best effort
+on a daemon thread: an uncooperative reader is retired and cannot write after
+cleanup, recreate deleted files, or settle a newer pick.
 If foreground service startup is denied, the selection fails safely.
 
 Runtime is released on completion or cancellation. Force quit does not resume

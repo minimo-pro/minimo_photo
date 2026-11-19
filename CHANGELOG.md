@@ -12,6 +12,11 @@ Background runtime depends on the OS. Recovery after relaunch and Android 13+ no
 
 * Refresh onboarding with animated video cards, staggered fade-and-rise transitions, swipe-linked progress segments, and trailing icons on Next and Get started. Reduced motion keeps components static.
 
+### Fixed
+
+* Settle Android import cancellation even when a provider blocks file reads, and finish queued commands for stopped background operations.
+* Keep update dialogs compatible with the app’s current Flutter localization setup.
+
 ## [1.0.8]
 
 ### Added
