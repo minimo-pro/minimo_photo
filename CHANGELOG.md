@@ -2,11 +2,12 @@
 
 ### Added
 
+* Show Android import/compression progress with a percentage, photo count and Cancel action in system notifications; request notification permission on Android 13+. Related: [#11](https://github.com/minimo-pro/minimo_photo/issues/11), [#17](https://github.com/minimo-pro/minimo_photo/issues/17).
 * Background photo compression on supported iOS and Android devices. Related: [#10](https://github.com/minimo-pro/minimo_photo/issues/10), [#11](https://github.com/minimo-pro/minimo_photo/issues/11).
 * Add a hand-drawn Threads icon linking to [@khlebobul](https://www.threads.com/@khlebobul) from About.
 * Background imports from the gallery and Files, with progress and cancellation. [#17](https://github.com/minimo-pro/minimo_photo/issues/17).
 
-Background runtime depends on the OS. Recovery after relaunch and Android 13+ notification permission prompts are not included.
+Background runtime depends on the OS. Recovery after relaunch is not included.
 
 ### Changed
 
@@ -14,6 +15,7 @@ Background runtime depends on the OS. Recovery after relaunch and Android 13+ no
 
 ### Fixed
 
+* Mark portrait screen hardware as optional so Google Play does not exclude devices without portrait support.
 * Settle Android import cancellation even when a provider blocks file reads, and finish queued commands for stopped background operations.
 * Keep update dialogs compatible with the app’s current Flutter localization setup.
 

@@ -1,6 +1,8 @@
 package com.khlebobul.minimo_photo
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
@@ -19,9 +21,12 @@ class MainActivity : FlutterActivity() {
     private var pendingPickResult: MethodChannel.Result? = null
     @Volatile private var activePickId: Long? = null
     private var pickImport: PhotoImportSession? = null
+    private var notificationPermissionAction: (() -> Unit)? = null
+    private var engineDetached = false
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
+        engineDetached = false
         photosChannel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "minimo_photo/photos")
         photosChannel.setMethodCallHandler { call, result ->
             when (call.method) {
@@ -54,8 +59,15 @@ class MainActivity : FlutterActivity() {
                 when (call.method) {
                     "start" -> {
                         service.putExtra("compression", true)
-                        if (Build.VERSION.SDK_INT >= 26) startForegroundService(service) else startService(service)
-                        result.success(true)
+                        withNotificationPermission {
+                            if (engineDetached) result.success(false)
+                            else try {
+                                if (Build.VERSION.SDK_INT >= 26) startForegroundService(service) else startService(service)
+                                result.success(true)
+                            } catch (error: Exception) {
+                                result.error("background_failed", error.message, null)
+                            }
+                        }
                     }
                     "update" -> {
                         val progress = (args["progress"] as? Number)?.toDouble() ?: 0.0
@@ -80,7 +92,11 @@ class MainActivity : FlutterActivity() {
     }
 
     override fun cleanUpFlutterEngine(flutterEngine: FlutterEngine) {
+        engineDetached = true
         cancelPick()
+        val waiting = notificationPermissionAction
+        notificationPermissionAction = null
+        waiting?.invoke()
         PhotoProcessingService.onImportCancelled = null
         PhotoProcessingService.compressionChannel = null
         super.cleanUpFlutterEngine(flutterEngine)
@@ -166,7 +182,8 @@ class MainActivity : FlutterActivity() {
             return
         }
         pendingPickResult = result
-        activePickId = System.nanoTime()
+        val pickId = System.nanoTime()
+        activePickId = pickId
         val source = (arguments as? Map<*, *>)?.get("source") as? String ?: "gallery"
         val intent = if (source == "files") {
             Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
@@ -187,7 +204,42 @@ class MainActivity : FlutterActivity() {
                 putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
             }
         }
-        startActivityForResult(intent, PICK_PHOTOS_REQUEST)
+        withNotificationPermission {
+            if (activePickId == pickId && pendingPickResult === result) {
+                try {
+                    startActivityForResult(intent, PICK_PHOTOS_REQUEST)
+                } catch (error: Exception) {
+                    pendingPickResult = null
+                    activePickId = null
+                    result.error("pick_failed", error.message, null)
+                }
+            }
+        }
+    }
+
+    private fun withNotificationPermission(action: () -> Unit) {
+        val preferences = getPreferences(MODE_PRIVATE)
+        if (Build.VERSION.SDK_INT >= 33 &&
+            checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED &&
+            !preferences.getBoolean("processing_notification_permission_requested", false)
+        ) {
+            preferences.edit().putBoolean("processing_notification_permission_requested", true).apply()
+            notificationPermissionAction = action
+            try {
+                requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), NOTIFICATION_REQUEST)
+            } catch (_: Exception) {
+                notificationPermissionAction = null
+                action()
+            }
+        } else action()
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode != NOTIFICATION_REQUEST) return
+        val action = notificationPermissionAction
+        notificationPermissionAction = null
+        action?.invoke()
     }
 
     private fun cancelPhotoPick(result: MethodChannel.Result) {
@@ -310,5 +362,6 @@ class MainActivity : FlutterActivity() {
 
     companion object {
         private const val PICK_PHOTOS_REQUEST = 7134
+        private const val NOTIFICATION_REQUEST = 7135
     }
 }

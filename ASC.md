@@ -7,7 +7,7 @@
 - iOS version ID: `14689dc3-7ce1-4000-b04a-fa549f7abca7` (`1.1.0`,
   `PREPARE_FOR_SUBMISSION`). Live version: `1.0.8`, ID
   `40012224-3a84-4b5d-9c3d-5c90ffe315e3`.
-- Local version: `1.1.0+13` (see `pubspec.yaml`).
+- Local version: `1.1.0+15` (see `pubspec.yaml`).
 - ASC CLI: `7.0.0`, updated with Homebrew and verified on 2026-11-19.
 - UI/export locales: `en`, `de`, `es`, `fr`, `hi`, `it`, `ja`, `ko`, `nl`,
   `pt`, `ru`, `tr`, `zh`. App Store mapping: `en → en-US`, `de → de-DE`,
