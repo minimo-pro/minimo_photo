@@ -38,7 +38,47 @@ class MainActivity : FlutterActivity() {
                 else -> result.notImplemented()
             }
         }
+        val compressionChannel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger,
+            "minimo_photo/background_compression")
+        PhotoProcessingService.compressionChannel = compressionChannel
+        compressionChannel.setMethodCallHandler { call, result ->
+            val args = call.arguments as? Map<*, *> ?: emptyMap<Any, Any>()
+            val token = (args["token"] as? String)?.toLongOrNull()
+            if (token == null) {
+                result.error("invalid_args", "Missing task token", null)
+                return@setMethodCallHandler
+            }
+            val service = Intent(this, PhotoProcessingService::class.java)
+                .setAction(call.method).putExtra("token", token)
+            try {
+                when (call.method) {
+                    "start" -> {
+                        service.putExtra("compression", true)
+                        if (Build.VERSION.SDK_INT >= 26) startForegroundService(service) else startService(service)
+                        result.success(true)
+                    }
+                    "update" -> {
+                        val progress = (args["progress"] as? Number)?.toDouble() ?: 0.0
+                        require(progress.isFinite()) { "Invalid progress" }
+                        service.putExtra("progress", (progress.coerceIn(0.0, 1.0) * 1000).toInt())
+                            .putExtra("processed", (args["index"] as? Number)?.toInt() ?: 0)
+                            .putExtra("total", (args["count"] as? Number)?.toInt() ?: 0)
+                        startService(service)
+                        result.success(null)
+                    }
+                    "finish" -> { startService(service); result.success(null) }
+                    else -> result.notImplemented()
+                }
+            } catch (error: Exception) {
+                result.error("background_failed", error.message, null)
+            }
+        }
         importExternalIntent(intent)
+    }
+
+    override fun cleanUpFlutterEngine(flutterEngine: FlutterEngine) {
+        PhotoProcessingService.compressionChannel = null
+        super.cleanUpFlutterEngine(flutterEngine)
     }
 
     private fun removeLocation(path: String?, result: MethodChannel.Result) {
@@ -182,7 +222,7 @@ class MainActivity : FlutterActivity() {
             return
         }
         try {
-            val service = Intent(this, PhotoImportService::class.java).setAction("start")
+            val service = Intent(this, PhotoProcessingService::class.java).setAction("start")
                 .putExtra("token", pickId)
             if (Build.VERSION.SDK_INT >= 26) startForegroundService(service) else startService(service)
         } catch (error: Exception) {
@@ -221,7 +261,7 @@ class MainActivity : FlutterActivity() {
     private fun sendPickProgress(processed: Int, total: Int, pickId: Long) = runOnUiThread {
         if (isImportActive(pickId)) {
             runCatching {
-                startService(Intent(this, PhotoImportService::class.java).setAction("update")
+                startService(Intent(this, PhotoProcessingService::class.java).setAction("update")
                     .putExtra("token", pickId).putExtra("processed", processed).putExtra("total", total))
             }
             photosChannel.invokeMethod("pickProgress", mapOf("processed" to processed, "total" to total))
@@ -229,11 +269,11 @@ class MainActivity : FlutterActivity() {
     }
 
     private fun isImportActive(pickId: Long) =
-        activePickId == pickId && PhotoImportService.expiredToken != pickId
+        activePickId == pickId && PhotoProcessingService.expiredToken != pickId
 
     private fun finishImportService(pickId: Long) {
         runCatching {
-            startService(Intent(this, PhotoImportService::class.java).setAction("finish")
+            startService(Intent(this, PhotoProcessingService::class.java).setAction("finish")
                 .putExtra("token", pickId))
         }
     }

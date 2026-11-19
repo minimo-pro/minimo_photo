@@ -8,7 +8,7 @@ import BackgroundTasks
 class RunnerTests: XCTestCase {
   func testBackgroundImportRequestUsesUniqueCPUOnlyIdentifiers() throws {
     guard #available(iOS 26.0, *) else { throw XCTSkip("Requires iOS 26") }
-    let runtime = BackgroundPhotoImport()
+    let runtime = BackgroundPhotoTask(operation: "import")
     let first = runtime.makeRequest(token: "first")
     let second = runtime.makeRequest(token: "second")
     XCTAssertEqual(first.identifier, Bundle.main.bundleIdentifier! + ".import.first")
@@ -20,6 +20,18 @@ class RunnerTests: XCTestCase {
       Bundle.main.object(forInfoDictionaryKey: "BGTaskSchedulerPermittedIdentifiers") as? [String]
     )
     XCTAssertTrue(permitted.contains(Bundle.main.bundleIdentifier! + ".import.*"))
+  }
+
+  func testBackgroundCompressionHasSeparateCPUOnlyIdentifier() throws {
+    guard #available(iOS 26.0, *) else { throw XCTSkip("Requires iOS 26") }
+    let request = BackgroundPhotoTask(operation: "compression").makeRequest(token: "batch")
+    XCTAssertEqual(request.identifier, Bundle.main.bundleIdentifier! + ".compression.batch")
+    XCTAssertEqual(request.strategy, .fail)
+    XCTAssertTrue(request.requiredResources.isEmpty)
+    let permitted = try XCTUnwrap(
+      Bundle.main.object(forInfoDictionaryKey: "BGTaskSchedulerPermittedIdentifiers") as? [String]
+    )
+    XCTAssertTrue(permitted.contains(Bundle.main.bundleIdentifier! + ".compression.*"))
   }
 
   func testCommittedPhotoDoesNotRequireReadback() {

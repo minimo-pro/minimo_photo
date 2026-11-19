@@ -19,11 +19,16 @@ Also available: [minimo (video)](https://github.com/minimo-pro/minimo_video), fo
 
 ## Features
 
-- Simple quality presets: high, medium, low
-- Advanced controls: quality, maximum dimensions, and EXIF metadata
-- Batch compression with progress and cancellation
-- Before-and-after comparison
-- Save and share compressed photos
+- Batch import and compression, including background processing on supported devices
+- Quality presets and advanced controls with size estimates
+- EXIF preservation and optional location removal
+- Before-and-after comparison, gallery saving, and sharing
+- Share Extension and Shortcuts on iOS; sharing from other Android apps
+- Compression statistics, 13 languages, and light/dark themes
+
+Background runtime depends on the OS; force quit does not resume work.
+Android 13+ notification permission prompts are not yet implemented.
+See [CHANGELOG.md](CHANGELOG.md) for details.
 
 ## Native compression pipeline
 

@@ -22,7 +22,8 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
   private var pickLoads: [Progress] = []
   private var importBackgroundTask: UIBackgroundTaskIdentifier = .invalid
   @available(iOS 26.0, *)
-  private var backgroundImport: BackgroundPhotoImport { .shared }
+  private var backgroundImport: BackgroundPhotoTask { .importRuntime }
+  private var compressionToken: String?
   private var photosChannel: FlutterMethodChannel?
   private var externalPhotosChannel: FlutterMethodChannel?
   var requestReplacementAuthorization:
@@ -66,6 +67,39 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
         self.removeLocation(call.arguments as? String, result: result)
       default:
         result(FlutterMethodNotImplemented)
+      }
+    }
+    let compressionChannel = FlutterMethodChannel(
+      name: "minimo_photo/background_compression",
+      binaryMessenger: controller.binaryMessenger
+    )
+    compressionChannel.setMethodCallHandler { [weak self] call, result in
+      guard let self else { result(false); return }
+      guard #available(iOS 26.0, *) else { result(false); return }
+      guard let args = call.arguments as? [String: Any], let token = args["token"] as? String else {
+        result(FlutterError(code: "invalid_args", message: "Missing task token", details: nil))
+        return
+      }
+      let runtime = BackgroundPhotoTask.compressionRuntime
+      switch call.method {
+      case "start":
+        self.compressionToken = token
+        runtime.onCancel = { compressionChannel.invokeMethod("cancel", arguments: token) }
+        runtime.start(token: token) { granted in result(granted) }
+      case "update":
+        if self.compressionToken == token,
+           let progress = args["progress"] as? Double,
+           let index = args["index"] as? Int, let count = args["count"] as? Int {
+          runtime.update(progress: progress, index: index, count: count)
+        }
+        result(nil)
+      case "finish":
+        if self.compressionToken == token {
+          self.compressionToken = nil
+          runtime.finish(success: args["success"] as? Bool ?? false)
+        }
+        result(nil)
+      default: result(FlutterMethodNotImplemented)
       }
     }
     let externalChannel = FlutterMethodChannel(
@@ -349,7 +383,9 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
   }
 
   private func updateImportRuntime(processed: Int, total: Int) {
-    if #available(iOS 26.0, *) { backgroundImport.update(processed: processed, total: total) }
+    if #available(iOS 26.0, *), total > 0 {
+      backgroundImport.update(progress: Double(processed) / Double(total), index: processed, count: total)
+    }
   }
 
   private func finishImportRuntime(success: Bool = false) {

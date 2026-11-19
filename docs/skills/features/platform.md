@@ -70,10 +70,28 @@ task; expiration cancels the import. Gallery provider loads are cancelled and
 remaining document copies are skipped; completed copies are removed when the
 in-flight callbacks/copy finish.
 
-Android uses `PhotoImportService`, a `dataSync` foreground service with a partial
+Android uses `PhotoProcessingService`, a `dataSync` foreground service with a partial
 wake lock, progress notification and Cancel action. Cancellation and system
 timeout stop copying between buffer reads and remove that batch's cached files.
 If foreground service startup is denied, the selection fails safely.
 
 Runtime is released on completion or cancellation. Force quit does not resume
-imports. External Share/Shortcut inbox consumption and compression are unchanged.
+imports. External Share/Shortcut inbox consumption is unchanged.
+
+## Background compression
+
+`BackgroundCompressionService` requests native runtime before `CompressBloc`
+starts the sequential batch. iOS 26+ reuses `BackgroundPhotoTask` with a separate
+CPU-only `.compression.*` identifier. Android reuses `PhotoProcessingService`
+with the `mediaProcessing` foreground type on API 35+, and `dataSync` on older
+Android. Both platforms expose system progress and cancellation; Android holds
+a partial wake lock independently of the screen-awake setting.
+
+The warning to keep the app open appears only without a runtime grant. If runtime
+is unavailable, the current photo can finish or be suspended by the OS, and the
+batch waits before starting another photo until the app resumes. No completed
+results are discarded or recompressed during this fallback. System cancellation
+or expiration uses the normal batch-cancel path: wait for the active encoder,
+remove completed and late output files, preserve selected sources for retry.
+Runtime is released after finalization, on cancel, and on exit. Force quit does
+not resume compression. Gallery saving remains a separate user action.

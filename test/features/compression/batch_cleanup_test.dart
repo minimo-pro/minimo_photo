@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter/foundation.dart';
+import 'package:minimo_photo/services/background_compression_service.dart';
 import 'package:minimo_photo/features/compression/bloc/compress_bloc.dart';
 import 'package:minimo_photo/features/compression/bloc/compress_event.dart';
 import 'package:minimo_photo/features/compression/bloc/compress_state.dart';
@@ -19,6 +21,7 @@ void main() {
   late File source;
   late _Compressor codec;
   late CompressBloc bloc;
+  late _Background background;
 
   setUp(() async {
     SharedPreferences.setMockInitialValues({});
@@ -29,6 +32,7 @@ void main() {
       '${root.path}/picked_photos/source.jpg',
     ).writeAsBytes([1, 2]);
     codec = _Compressor(root);
+    background = _Background();
   });
   tearDown(() async {
     await bloc.close();
@@ -44,6 +48,7 @@ void main() {
       ),
       photoCompressorAdapter: codec,
       photoFileAdapter: files,
+      backgroundCompression: background,
     );
   }
 
@@ -88,6 +93,98 @@ void main() {
       expect(bloc.state.results, isEmpty);
       await compress();
       expect(await codec.output(3).exists(), isTrue);
+    },
+  );
+
+  test('granted runtime keeps the batch running while backgrounded', () async {
+    background.granted = true;
+    codec.blockAt = 1;
+    createBloc(count: 2);
+    bloc.add(const CompressStarted());
+    await codec.blocked.future;
+    expect(bloc.state.canCompressInBackground, isTrue);
+    bloc.add(const CompressBackgrounded());
+    await Future<void>.delayed(Duration.zero);
+    codec.resume.complete();
+    await bloc.stream.firstWhere((s) => s.status == CompressStatus.done);
+    expect(codec.calls, 2);
+    expect(background.finished, [true]);
+    expect(background.indices, containsAllInOrder([1, 2]));
+  });
+
+  test(
+    'denied runtime waits between photos and resumes without losing results',
+    () async {
+      codec.blockAt = 1;
+      createBloc(count: 2);
+      bloc.add(const CompressStarted());
+      await codec.blocked.future;
+      expect(bloc.state.canCompressInBackground, isFalse);
+      bloc.add(const CompressBackgrounded());
+      await Future<void>.delayed(Duration.zero);
+      final firstPhoto = bloc.stream.firstWhere((s) => s.results.length == 1);
+      codec.resume.complete();
+      await firstPhoto;
+      await Future<void>.delayed(Duration.zero);
+      expect(codec.calls, 1);
+      expect(await codec.output(1).exists(), isTrue);
+      bloc.add(const CompressForegroundResumed());
+      await bloc.stream.firstWhere((s) => s.status == CompressStatus.done);
+      expect(codec.calls, 2);
+      expect(bloc.state.results, hasLength(2));
+    },
+  );
+
+  test(
+    'system cancellation waits for the encoder and cleans late outputs',
+    () async {
+      background.granted = true;
+      codec.blockAt = 2;
+      createBloc(count: 2);
+      bloc.add(const CompressStarted());
+      await codec.blocked.future;
+      background.cancel!();
+      await Future<void>.delayed(Duration.zero);
+      expect(bloc.state.status, CompressStatus.processing);
+      codec.resume.complete();
+      await bloc.stream.firstWhere((s) => s.status == CompressStatus.ready);
+      expect(background.finished, [false]);
+      expect(await codec.output(1).exists(), isFalse);
+      expect(await codec.output(2).exists(), isFalse);
+      expect(await source.exists(), isTrue);
+      expect(bloc.state.canCompressInBackground, isFalse);
+    },
+  );
+
+  test('cancellation during admission releases a late runtime grant', () async {
+    background.admission = Completer<bool>();
+    createBloc();
+    bloc.add(const CompressStarted());
+    await background.started.future;
+    bloc.add(const CompressCancelled());
+    await Future<void>.delayed(Duration.zero);
+    background.admission!.complete(true);
+    await bloc.stream.firstWhere((s) => s.status == CompressStatus.ready);
+    expect(codec.calls, 0);
+    expect(background.finished, [false]);
+  });
+
+  test(
+    'closing a foreground-only batch waiting for resume does not hang',
+    () async {
+      codec.blockAt = 1;
+      createBloc(count: 2);
+      bloc.add(const CompressStarted());
+      await codec.blocked.future;
+      bloc.add(const CompressBackgrounded());
+      await Future<void>.delayed(Duration.zero);
+      final firstPhoto = bloc.stream.firstWhere((s) => s.results.length == 1);
+      codec.resume.complete();
+      await firstPhoto;
+      await bloc.close();
+      expect(codec.calls, 1);
+      expect(await codec.output(1).exists(), isFalse);
+      expect(background.finished, [false]);
     },
   );
 
@@ -230,5 +327,31 @@ class _Gallery extends PhotoFileAdapter {
     started.complete();
     await gate?.future;
     await gallery.writeAsBytes(await File(filePath).readAsBytes());
+  }
+}
+
+class _Background extends BackgroundCompressionService {
+  bool granted = false;
+  VoidCallback? cancel;
+  Completer<bool>? admission;
+  final started = Completer<void>();
+  final finished = <bool>[];
+  final indices = <int>[];
+
+  @override
+  Future<bool> start({required VoidCallback onCancel}) async {
+    cancel = onCancel;
+    if (!started.isCompleted) started.complete();
+    return admission?.future ?? granted;
+  }
+
+  @override
+  Future<void> update(double progress, int index, int count) async {
+    indices.add(index);
+  }
+
+  @override
+  Future<void> finish({required bool success}) async {
+    finished.add(success);
   }
 }

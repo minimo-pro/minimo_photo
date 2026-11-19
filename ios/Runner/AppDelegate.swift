@@ -17,8 +17,12 @@ import BackgroundTasks
 }
 
 @available(iOS 26.0, *)
-final class BackgroundPhotoImport {
-  static let shared = BackgroundPhotoImport()
+final class BackgroundPhotoTask {
+  static let importRuntime = BackgroundPhotoTask(operation: "import")
+  static let compressionRuntime = BackgroundPhotoTask(operation: "compression")
+  private let operation: String
+
+  init(operation: String) { self.operation = operation }
   private var task: BGContinuedProcessingTask?
   private var identifier: String?
   private var admission: ((Bool) -> Void)?
@@ -26,7 +30,7 @@ final class BackgroundPhotoImport {
 
   func makeRequest(token: String) -> BGContinuedProcessingTaskRequest {
     let request = BGContinuedProcessingTaskRequest(
-      identifier: Bundle.main.bundleIdentifier! + ".import." + token,
+      identifier: Bundle.main.bundleIdentifier! + "." + operation + "." + token,
       title: "minimo", subtitle: "0%"
     )
     request.strategy = .fail
@@ -72,10 +76,10 @@ final class BackgroundPhotoImport {
     }
   }
 
-  func update(processed: Int, total: Int) {
-    guard let task, total > 0 else { return }
-    task.progress.completedUnitCount = min(999, Int64(Double(processed) / Double(total) * 1000))
-    task.updateTitle(task.title, subtitle: "\(processed) / \(total)")
+  func update(progress: Double, index: Int, count: Int) {
+    guard let task, progress.isFinite else { return }
+    task.progress.completedUnitCount = Int64(min(999, max(0, progress * 1000)))
+    task.updateTitle(task.title, subtitle: "\(index) / \(count) · \(Int(progress * 100))%")
   }
 
   func finish(success: Bool) {

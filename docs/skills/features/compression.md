@@ -42,7 +42,11 @@ may be skipped even when other photos in the batch compress successfully.
    calculations stop after the current photo and cannot overwrite a newer
    result. Compression is disabled while the estimate refreshes. This adds an
    encoding pass before compression.
-5. `PhotoCompressorAdapter` processes photos sequentially.
+5. `PhotoCompressorAdapter` processes photos sequentially. Native background
+   runtime covers the full batch on supported iOS/Android devices, with system
+   progress and cancellation. Without a grant, the batch waits between photos
+   while backgrounded and resumes when the app returns. The keep-open warning
+   is hidden only after runtime is granted.
 6. Each item becomes compressed, skipped, or failed.
 7. Cancellation invalidates the active run, waits for the current encoder and
    removes completed, partial and late outputs. Imported sources and previews

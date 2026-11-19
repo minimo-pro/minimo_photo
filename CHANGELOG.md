@@ -2,17 +2,20 @@
 
 ### Added
 
-* Continue gallery and Files imports in the background after selection, including add-more: iOS 26+ uses CPU-only continued processing with system progress and cancellation; older iOS or denied admission uses finite background runtime. Android uses a dataSync foreground service with progress, cancellation and a wake lock. Cancelled imports clean up their cache copies; force quit does not resume imports.
+* Background photo compression on supported iOS and Android devices. Related: [#10](https://github.com/minimo-pro/minimo_photo/issues/10), [#11](https://github.com/minimo-pro/minimo_photo/issues/11).
+* Background imports from the gallery and Files, with progress and cancellation. [#17](https://github.com/minimo-pro/minimo_photo/issues/17).
+
+Background runtime depends on the OS. Recovery after relaunch and Android 13+ notification permission prompts are not included.
 
 ## [1.0.8]
 
 ### Added
 
-* Share your compressed-photo count and space saved as text from the statistics screen through the system share sheet.
+* Share your compressed-photo count and space saved as text from the statistics screen through the system share sheet. [#14](https://github.com/minimo-pro/minimo_photo/issues/14).
 
 ### Changed
 
-* Replace `in_app_review` with `rate_my_app` for app rating prompts.
+* Replace `in_app_review` with `rate_my_app` for app rating prompts. [#16](https://github.com/minimo-pro/minimo_photo/issues/16).
 * Enable Android Gradle Plugin's built-in Kotlin support (`android.builtInKotlin=true`).
 
 ## [1.0.7]
@@ -45,7 +48,7 @@
 
 ### Added
 
-* Add an optional setting to remove location from compressed photos while keeping other supported metadata.
+* Add an optional setting to remove location from compressed photos while keeping other supported metadata. [#5](https://github.com/minimo-pro/minimo_photo/issues/5).
 
 ### Fixed
 

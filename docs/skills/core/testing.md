@@ -27,3 +27,10 @@ Before release, verify on physical Android and iOS devices:
 - denied iOS continued-processing admission/older iOS uses finite runtime and cancels on expiration
 - Android notification cancellation and dataSync timeout release the service and wake lock
 - low-storage and permission-denied errors
+
+Background compression tests cover native channel token filtering, progress
+coalescing, denied admission, completion in the background, foreground fallback,
+system cancellation with late outputs, cancellation during admission, and exit
+while waiting for resume. On physical iOS/Android devices also verify compression
+with the screen locked, notification/system cancellation, denied runtime,
+foreground-service timeout, and retry after cancellation.

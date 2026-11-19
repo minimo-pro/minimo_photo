@@ -14,6 +14,7 @@ import 'package:minimo_photo/services/screen_awake_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
   for (final enabled in [true, false]) {
     test('screen awake during compression: $enabled', () async {
       SharedPreferences.setMockInitialValues({});
