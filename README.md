@@ -27,7 +27,7 @@ Also available: [minimo (video)](https://github.com/minimo-pro/minimo_video), fo
 - Compression statistics, 13 languages, and light/dark themes
 
 Background runtime depends on the OS; force quit does not resume work.
-Android 13+ notification permission prompts are not yet implemented.
+Android notifications show background progress and let you cancel; notification permission is requested on Android 13+.
 See [CHANGELOG.md](CHANGELOG.md) for details.
 
 ## Native compression pipeline

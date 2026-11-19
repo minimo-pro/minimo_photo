@@ -52,3 +52,9 @@ cancellation, single picker completion, stale picker callbacks, and queued
 commands for finished services without stopping newer operations. Flutter
 `upgrade_alert_test.dart` exercises Material and Cupertino update dialogs with
 the same localization delegates used by `MainApp`.
+
+Android notification tests cover permission grant/denial, existing permission,
+pre-Android-13 behavior, cancellation while the permission dialog is pending,
+notification progress for import/compression, stale Cancel actions and removal
+on service shutdown. Verify the release manifest declares portrait hardware as
+optional and requests `POST_NOTIFICATIONS`.

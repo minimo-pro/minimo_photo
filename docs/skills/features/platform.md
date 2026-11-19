@@ -99,3 +99,19 @@ or expiration uses the normal batch-cancel path: wait for the active encoder,
 remove completed and late output files, preserve selected sources for retry.
 Runtime is released after finalization, on cancel, and on exit. Force quit does
 not resume compression. Gallery saving remains a separate user action.
+
+## Android notifications and screen compatibility
+
+Android 13+ asks for `POST_NOTIFICATIONS` once, when the user first starts the
+picker or compression (including externally shared photos). Both grant and
+denial continue the operation. Denial hides drawer notifications; in-app progress
+and cancellation keep working. A cancelled picker cannot reopen after a late
+permission response. Engine teardown resolves any waiting compression start
+without starting a service.
+
+The ongoing notification shows a progress bar, photo count and percentage.
+Cancel actions carry a unique operation URI so an older notification cannot
+cancel a newer batch; tapping the notification returns to the app.
+
+`android.hardware.screen.portrait` is optional: the preferred activity orientation
+does not require portrait-capable hardware for installation through Google Play.

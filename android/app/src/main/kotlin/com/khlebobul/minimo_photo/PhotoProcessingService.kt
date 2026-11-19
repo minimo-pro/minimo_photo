@@ -7,6 +7,7 @@ import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
 import android.content.pm.ServiceInfo
+import android.net.Uri
 import io.flutter.plugin.common.MethodChannel
 import android.os.Build
 import android.os.IBinder
@@ -92,12 +93,14 @@ class PhotoProcessingService : Service() {
         val open = PendingIntent.getActivity(this, 0, Intent(this, MainActivity::class.java),
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
         val cancel = PendingIntent.getService(this, 0,
-            Intent(this, PhotoProcessingService::class.java).setAction("cancel").putExtra("token", token),
+            Intent(this, PhotoProcessingService::class.java).setAction("cancel")
+                .setData(Uri.parse("minimo-photo://processing/$token")).putExtra("token", token),
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+        val percent = if (progress >= 0) progress / 10 else if (total > 0) processed * 100 / total else 0
         return builder.addAction(Notification.Action.Builder(null,
             getString(android.R.string.cancel), cancel).build()).setSmallIcon(android.R.drawable.stat_sys_download)
             .setContentTitle("minimo")
-            .setContentText(if (total > 0) "$processed / $total" else "…")
+            .setContentText(if (total > 0) "$processed / $total · $percent%" else "…")
             .setContentIntent(open).setOngoing(true).setOnlyAlertOnce(true)
             .setProgress(if (progress >= 0) 1000 else total,
                 if (progress >= 0) progress else processed, total == 0).build()
