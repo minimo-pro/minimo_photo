@@ -32,7 +32,7 @@ dependencies:
   motor: ^1.1.0
   package_info_plus: ^10.2.2
   rate_my_app: ^2.4.2
-  upgrader: ^13.8.0
+  upgrader: ^14.0.0
   pub_semver: ^2.2.1
   stupid_simple_sheet: ^0.9.1+1
 

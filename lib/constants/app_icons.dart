@@ -15,6 +15,7 @@ abstract final class AppIcons {
   static const stats = 'assets/icons/stats.svg';
   static const photo = 'assets/icons/photo.svg';
   static const x = 'assets/icons/x.svg';
+  static const threads = 'assets/icons/threads.svg';
   static const website = 'assets/icons/website.svg';
   static const mail = 'assets/icons/mail.svg';
   static const code = 'assets/icons/code.svg';

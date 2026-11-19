@@ -17,6 +17,7 @@ class AppActionButton extends StatelessWidget {
   final double fontSize;
   final double iconWidth;
   final double iconHeight;
+  final IconAlignment iconAlignment;
   final EdgeInsetsGeometry padding;
   final Color? backgroundColor;
   final Color? foregroundColor;
@@ -35,6 +36,7 @@ class AppActionButton extends StatelessWidget {
     this.fontSize = 25,
     this.iconWidth = 22,
     this.iconHeight = 28,
+    this.iconAlignment = IconAlignment.start,
     this.padding = const EdgeInsets.symmetric(horizontal: 18),
     this.backgroundColor,
     this.foregroundColor,
@@ -86,34 +88,36 @@ class AppActionButton extends StatelessWidget {
           : null,
     );
 
+    final content = <Widget>[
+      if (loading)
+        MinimoLoader(size: 20, semanticsLabel: label)
+      else if (icon != null)
+        SizedBox(
+          width: iconWidth,
+          height: iconHeight,
+          child: SvgPicture.asset(
+            icon!,
+            fit: BoxFit.contain,
+            colorFilter: ColorFilter.mode(foreground, BlendMode.srcIn),
+          ),
+        ),
+      if ((loading || icon != null) && label != null) const SizedBox(width: 10),
+      if (label != null)
+        Flexible(
+          child: Text(
+            label!,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontSize: fontSize, height: 1),
+          ),
+        ),
+    ];
     final child = Row(
       mainAxisAlignment: MainAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
-      children: [
-        if (loading)
-          MinimoLoader(size: 20, semanticsLabel: label)
-        else if (icon != null)
-          SizedBox(
-            width: iconWidth,
-            height: iconHeight,
-            child: SvgPicture.asset(
-              icon!,
-              fit: BoxFit.contain,
-              colorFilter: ColorFilter.mode(foreground, BlendMode.srcIn),
-            ),
-          ),
-        if ((loading || icon != null) && label != null)
-          const SizedBox(width: 10),
-        if (label != null)
-          Flexible(
-            child: Text(
-              label!,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(fontSize: fontSize, height: 1),
-            ),
-          ),
-      ],
+      children: iconAlignment == IconAlignment.end
+          ? content.reversed.toList()
+          : content,
     );
 
     final button = switch (variant) {

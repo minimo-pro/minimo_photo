@@ -11,6 +11,11 @@ Unit tests cover preset/estimate behavior, minimum useful savings, cache
 cleanup (ownership, symlinks, reused paths, delayed operations), local statistics, shared controls, result statuses, and picker sheet
 behavior including duplicate-request protection.
 
+Widget tests cover onboarding swipes, animation, progress, skip and completion
+persistence, reduced motion, and all supported locales in both themes at
+320×568 with enlarged text. The About screen test verifies the external Threads
+link on the same compact viewport.
+
 Before release, verify on physical Android and iOS devices:
 
 - gallery and files selection, including cancellation
