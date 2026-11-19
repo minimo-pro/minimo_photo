@@ -18,8 +18,7 @@ class MainActivity : FlutterActivity() {
     private val pendingExternalUris = mutableListOf<Uri>()
     private var pendingPickResult: MethodChannel.Result? = null
     @Volatile private var activePickId: Long? = null
-    private var nextPickId = 0L
-    private var copyingPhotos = false
+    private var pickImport: PhotoImportSession? = null
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
@@ -39,7 +38,52 @@ class MainActivity : FlutterActivity() {
                 else -> result.notImplemented()
             }
         }
+        val compressionChannel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger,
+            "minimo_photo/background_compression")
+        PhotoProcessingService.compressionChannel = compressionChannel
+        compressionChannel.setMethodCallHandler { call, result ->
+            val args = call.arguments as? Map<*, *> ?: emptyMap<Any, Any>()
+            val token = (args["token"] as? String)?.toLongOrNull()
+            if (token == null) {
+                result.error("invalid_args", "Missing task token", null)
+                return@setMethodCallHandler
+            }
+            val service = Intent(this, PhotoProcessingService::class.java)
+                .setAction(call.method).putExtra("token", token)
+            try {
+                when (call.method) {
+                    "start" -> {
+                        service.putExtra("compression", true)
+                        if (Build.VERSION.SDK_INT >= 26) startForegroundService(service) else startService(service)
+                        result.success(true)
+                    }
+                    "update" -> {
+                        val progress = (args["progress"] as? Number)?.toDouble() ?: 0.0
+                        require(progress.isFinite()) { "Invalid progress" }
+                        service.putExtra("progress", (progress.coerceIn(0.0, 1.0) * 1000).toInt())
+                            .putExtra("processed", (args["index"] as? Number)?.toInt() ?: 0)
+                            .putExtra("total", (args["count"] as? Number)?.toInt() ?: 0)
+                        startService(service)
+                        result.success(null)
+                    }
+                    "finish" -> { startService(service); result.success(null) }
+                    else -> result.notImplemented()
+                }
+            } catch (error: Exception) {
+                result.error("background_failed", error.message, null)
+            }
+        }
+        PhotoProcessingService.onImportCancelled = { token ->
+            if (activePickId == token) cancelPick()
+        }
         importExternalIntent(intent)
+    }
+
+    override fun cleanUpFlutterEngine(flutterEngine: FlutterEngine) {
+        cancelPick()
+        PhotoProcessingService.onImportCancelled = null
+        PhotoProcessingService.compressionChannel = null
+        super.cleanUpFlutterEngine(flutterEngine)
     }
 
     private fun removeLocation(path: String?, result: MethodChannel.Result) {
@@ -122,7 +166,7 @@ class MainActivity : FlutterActivity() {
             return
         }
         pendingPickResult = result
-        activePickId = ++nextPickId
+        activePickId = System.nanoTime()
         val source = (arguments as? Map<*, *>)?.get("source") as? String ?: "gallery"
         val intent = if (source == "files") {
             Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
@@ -147,13 +191,21 @@ class MainActivity : FlutterActivity() {
     }
 
     private fun cancelPhotoPick(result: MethodChannel.Result) {
-        val cancelledResult = pendingPickResult
-        val wasPicking = activePickId != null
-        if (!copyingPhotos) pendingPickResult = null
-        activePickId = null
-        if (wasPicking) finishActivity(PICK_PHOTOS_REQUEST)
-        if (!copyingPhotos) cancelledResult?.success(emptyList<Map<String, Any>>())
+        cancelPick()
         result.success(null)
+    }
+
+    private fun cancelPick() {
+        val cancelledResult = pendingPickResult
+        val token = activePickId
+        val cancelledImport = pickImport
+        pendingPickResult = null
+        activePickId = null
+        pickImport = null
+        cancelledImport?.cancel()
+        token?.let(::finishImportService)
+        if (token != null) finishActivity(PICK_PHOTOS_REQUEST)
+        cancelledResult?.success(emptyList<Map<String, Any>>())
     }
 
     @Deprecated("Deprecated in Java")
@@ -175,37 +227,72 @@ class MainActivity : FlutterActivity() {
             }
             data.data?.let(::add)
         }.distinct()
-        copyingPhotos = true
+        if (uris.isEmpty()) {
+            pendingPickResult = null
+            activePickId = null
+            result.success(emptyList<Map<String, Any>>())
+            return
+        }
+        try {
+            val service = Intent(this, PhotoProcessingService::class.java).setAction("start")
+                .putExtra("token", pickId)
+            if (Build.VERSION.SDK_INT >= 26) startForegroundService(service) else startService(service)
+        } catch (error: Exception) {
+            pendingPickResult = null
+            activePickId = null
+            result.error("pick_failed", error.message, null)
+            return
+        }
+        val session = PhotoImportSession()
+        pickImport = session
         sendPickProgress(0, uris.size, pickId)
         Thread {
             val photos = mutableListOf<Map<String, Any>>()
             for ((index, uri) in uris.withIndex()) {
-                if (activePickId != pickId) break
-                runCatching { copyPickedPhoto(uri) }.onSuccess(photos::add)
+                if (!isImportActive(pickId)) break
+                runCatching { copyPickedPhoto(uri, session) }.onSuccess(photos::add)
                 sendPickProgress(index + 1, uris.size, pickId)
             }
-            runOnUiThread {
-                copyingPhotos = false
-                if (activePickId != pickId) {
-                    photos.forEach { (it["path"] as? String)?.let(::File)?.delete() }
-                    pendingPickResult = null
-                    result.success(emptyList<Map<String, Any>>())
-                    return@runOnUiThread
-                }
-                pendingPickResult = null
-                activePickId = null
-                result.success(photos)
-            }
-        }.start()
+            runOnUiThread { finishPhotoPick(pickId, session, photos) }
+        }.apply { isDaemon = true; start() }
+    }
+
+    private fun finishPhotoPick(pickId: Long, session: PhotoImportSession, photos: List<Map<String, Any>>) {
+        if (activePickId != pickId || pickImport !== session) return
+        val result = pendingPickResult ?: return
+        if (!isImportActive(pickId)) {
+            cancelPick()
+            return
+        }
+        session.complete()
+        finishImportService(pickId)
+        pendingPickResult = null
+        activePickId = null
+        pickImport = null
+        result.success(photos)
     }
 
     private fun sendPickProgress(processed: Int, total: Int, pickId: Long) = runOnUiThread {
-        if (activePickId == pickId) {
+        if (isImportActive(pickId)) {
+            runCatching {
+                startService(Intent(this, PhotoProcessingService::class.java).setAction("update")
+                    .putExtra("token", pickId).putExtra("processed", processed).putExtra("total", total))
+            }
             photosChannel.invokeMethod("pickProgress", mapOf("processed" to processed, "total" to total))
         }
     }
 
-    private fun copyPickedPhoto(uri: Uri): Map<String, Any> {
+    private fun isImportActive(pickId: Long) =
+        activePickId == pickId && PhotoProcessingService.expiredToken != pickId
+
+    private fun finishImportService(pickId: Long) {
+        runCatching {
+            startService(Intent(this, PhotoProcessingService::class.java).setAction("finish")
+                .putExtra("token", pickId))
+        }
+    }
+
+    private fun copyPickedPhoto(uri: Uri, session: PhotoImportSession? = null): Map<String, Any> {
         val name = contentResolver.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)
             ?.use { cursor ->
                 if (cursor.moveToFirst()) cursor.getString(0) else null
@@ -213,15 +300,11 @@ class MainActivity : FlutterActivity() {
         val directory = File(cacheDir, "picked_photos").apply { mkdirs() }
         val safeName = name.replace(Regex("[\\\\/:*?\"<>|\\p{Cntrl}]"), "_")
         val output = File(directory, "photo_${UUID.randomUUID()}_${safeName}")
-        try {
-            contentResolver.openInputStream(uri).use { input ->
-                requireNotNull(input) { "unable to open selected photo" }
-                output.outputStream().use { input.copyTo(it) }
-            }
-        } catch (error: Exception) {
-            output.delete()
-            throw error
+        val copy = session ?: PhotoImportSession()
+        copy.copy(output) {
+            requireNotNull(contentResolver.openInputStream(uri)) { "unable to open selected photo" }
         }
+        if (session == null) copy.complete()
         return mapOf("path" to output.absolutePath, "name" to name, "size" to output.length())
     }
 

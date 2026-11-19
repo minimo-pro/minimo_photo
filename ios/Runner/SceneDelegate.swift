@@ -19,6 +19,11 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
   private var pendingPickResult: FlutterResult?
   private var activePickID: UUID?
   private var copyingPhotos = false
+  private var pickLoads: [Progress] = []
+  private var importBackgroundTask: UIBackgroundTaskIdentifier = .invalid
+  @available(iOS 26.0, *)
+  private var backgroundImport: BackgroundPhotoTask { .importRuntime }
+  private var compressionToken: String?
   private var photosChannel: FlutterMethodChannel?
   private var externalPhotosChannel: FlutterMethodChannel?
   var requestReplacementAuthorization:
@@ -62,6 +67,39 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
         self.removeLocation(call.arguments as? String, result: result)
       default:
         result(FlutterMethodNotImplemented)
+      }
+    }
+    let compressionChannel = FlutterMethodChannel(
+      name: "minimo_photo/background_compression",
+      binaryMessenger: controller.binaryMessenger
+    )
+    compressionChannel.setMethodCallHandler { [weak self] call, result in
+      guard let self else { result(false); return }
+      guard #available(iOS 26.0, *) else { result(false); return }
+      guard let args = call.arguments as? [String: Any], let token = args["token"] as? String else {
+        result(FlutterError(code: "invalid_args", message: "Missing task token", details: nil))
+        return
+      }
+      let runtime = BackgroundPhotoTask.compressionRuntime
+      switch call.method {
+      case "start":
+        self.compressionToken = token
+        runtime.onCancel = { compressionChannel.invokeMethod("cancel", arguments: token) }
+        runtime.start(token: token) { granted in result(granted) }
+      case "update":
+        if self.compressionToken == token,
+           let progress = args["progress"] as? Double,
+           let index = args["index"] as? Int, let count = args["count"] as? Int {
+          runtime.update(progress: progress, index: index, count: count)
+        }
+        result(nil)
+      case "finish":
+        if self.compressionToken == token {
+          self.compressionToken = nil
+          runtime.finish(success: args["success"] as? Bool ?? false)
+        }
+        result(nil)
+      default: result(FlutterMethodNotImplemented)
       }
     }
     let externalChannel = FlutterMethodChannel(
@@ -138,6 +176,9 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
     let cancelledResult = pendingPickResult
     if !copyingPhotos { pendingPickResult = nil }
     activePickID = nil
+    pickLoads.forEach { $0.cancel() }
+    pickLoads.removeAll()
+    finishImportRuntime()
     window?.rootViewController?.presentedViewController?.dismiss(animated: true)
     if !copyingPhotos { cancelledResult?([]) }
     result(nil)
@@ -180,6 +221,7 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
     )
 
     copyingPhotos = true
+    startImportRuntime(pickID: pickID)
     let group = DispatchGroup()
     let lock = NSLock()
     var photos: [(Int, [String: Any])] = []
@@ -188,7 +230,7 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
     for (index, item) in results.enumerated() {
       group.enter()
       let filename = originalFilename(for: item) ?? suggestedFilename(for: item)
-      item.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.image.identifier) {
+      let load = item.itemProvider.loadFileRepresentation(forTypeIdentifier: UTType.image.identifier) {
         [weak self] url, error in
         defer {
           lock.lock()
@@ -197,13 +239,15 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
           lock.unlock()
           DispatchQueue.main.async {
             guard self?.activePickID == pickID else { return }
+            self?.updateImportRuntime(processed: completed, total: results.count)
             self?.photosChannel?.invokeMethod(
               "pickProgress", arguments: ["processed": completed, "total": results.count]
             )
           }
           group.leave()
         }
-        guard let self, error == nil, let url else { return }
+        guard let self, error == nil, let url,
+              self.isImportActive(pickID) else { return }
 
         do {
           let source = item.assetIdentifier.flatMap {
@@ -237,10 +281,13 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
           lock.unlock()
         } catch {}
       }
+      pickLoads.append(load)
     }
 
     group.notify(queue: .main) {
       self.copyingPhotos = false
+      self.pickLoads.removeAll()
+      self.finishImportRuntime(success: self.activePickID == pickID && photos.count == results.count)
       guard self.activePickID == pickID else {
         for (_, photo) in photos {
           if let path = photo["path"] as? String {
@@ -268,9 +315,11 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
     )
 
     copyingPhotos = true
+    startImportRuntime(pickID: pickID)
     DispatchQueue.global(qos: .userInitiated).async {
       var photos: [[String: Any]] = []
       for (index, url) in urls.enumerated() {
+        guard self.isImportActive(pickID) else { break }
         do {
           let name = url.lastPathComponent.isEmpty ? "photo.jpg" : url.lastPathComponent
           let output = try self.copyPickedPhoto(from: url, filename: name)
@@ -279,6 +328,7 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
         } catch {}
         DispatchQueue.main.async {
           guard self.activePickID == pickID else { return }
+          self.updateImportRuntime(processed: index + 1, total: urls.count)
           self.photosChannel?.invokeMethod(
             "pickProgress", arguments: ["processed": index + 1, "total": urls.count]
           )
@@ -286,6 +336,7 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
       }
       DispatchQueue.main.async {
         self.copyingPhotos = false
+        self.finishImportRuntime(success: self.activePickID == pickID && photos.count == urls.count)
         guard self.activePickID == pickID else {
           for photo in photos {
             if let path = photo["path"] as? String {
@@ -308,6 +359,41 @@ class SceneDelegate: FlutterSceneDelegate, PHPickerViewControllerDelegate, UIDoc
     self.pendingPickResult = nil
     activePickID = nil
     pendingPickResult([])
+  }
+
+  private func startImportRuntime(pickID: UUID) {
+    // shortcut: older iOS or denied admission gets finite runtime; long imports need iOS 26 admission.
+    importBackgroundTask = UIApplication.shared.beginBackgroundTask(withName: "Photo import") { [weak self] in
+      self?.cancelPhotoPick(result: { _ in })
+    }
+    guard #available(iOS 26.0, *) else { return }
+    backgroundImport.onCancel = { [weak self] in self?.cancelPhotoPick(result: { _ in }) }
+    backgroundImport.start(token: pickID.uuidString) { [weak self] granted in
+      guard let self, self.activePickID == pickID else { return }
+      if granted, self.importBackgroundTask != .invalid {
+        UIApplication.shared.endBackgroundTask(self.importBackgroundTask)
+        self.importBackgroundTask = .invalid
+      }
+    }
+  }
+
+  private func isImportActive(_ pickID: UUID) -> Bool {
+    if Thread.isMainThread { return activePickID == pickID }
+    return DispatchQueue.main.sync { activePickID == pickID }
+  }
+
+  private func updateImportRuntime(processed: Int, total: Int) {
+    if #available(iOS 26.0, *), total > 0 {
+      backgroundImport.update(progress: Double(processed) / Double(total), index: processed, count: total)
+    }
+  }
+
+  private func finishImportRuntime(success: Bool = false) {
+    if #available(iOS 26.0, *) { backgroundImport.finish(success: success) }
+    if importBackgroundTask != .invalid {
+      UIApplication.shared.endBackgroundTask(importBackgroundTask)
+      importBackgroundTask = .invalid
+    }
   }
 
   private func deleteOriginals(_ identifiers: [String], result: @escaping FlutterResult) {

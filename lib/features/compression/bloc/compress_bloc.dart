@@ -7,6 +7,7 @@ import '../../../services/app_settings_service.dart';
 import '../../../services/app_cache_service.dart';
 import '../../../services/app_stats_service.dart';
 import '../../../services/screen_awake_service.dart';
+import '../../../services/background_compression_service.dart';
 import '../data/photo_compressor_adapter.dart';
 import '../data/photo_file_adapter.dart';
 import '../domain/compression_result.dart';
@@ -21,6 +22,10 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
   final AppSettingsService _appSettings;
   final ScreenAwakeService _screenAwakeService;
   final BatchCache _cache;
+  final BackgroundCompressionService _backgroundCompression;
+  bool _backgroundActive = false;
+  bool _isBackgrounded = false;
+  Completer<void>? _foregroundGate;
   final _operations = <Future<void>>{};
   Future<void>? _closingFuture;
   bool _closing = false;
@@ -42,12 +47,15 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
     PhotoCompressorAdapter? photoCompressorAdapter,
     AppSettingsService? appSettings,
     ScreenAwakeService? screenAwakeService,
+    BackgroundCompressionService? backgroundCompression,
   }) : _cache = batchCache ?? BatchCache(),
        _photoFileAdapter = photoFileAdapter ?? PhotoFileAdapter(),
        _photoCompressorAdapter =
            photoCompressorAdapter ?? PhotoCompressorAdapter(),
        _appSettings = appSettings ?? AppSettingsService.instance,
        _screenAwakeService = screenAwakeService ?? ScreenAwakeService.instance,
+       _backgroundCompression =
+           backgroundCompression ?? BackgroundCompressionService(),
        super(CompressState.initial(initialPhotos, settings: initialSettings)) {
     _handle<CompressThumbnailsRequested>(_onThumbnailsRequested);
     _handle<CompressEstimateRequested>(_onEstimateRequested);
@@ -57,8 +65,11 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
     _handle<CompressStarted>(_onStarted);
     _handle<CompressProgressChanged>(_onProgressChanged);
     _handle<CompressCancelled>(_onCancelled);
-    on<CompressBackgrounded>((_, _) {});
-    on<CompressForegroundResumed>((_, _) {});
+    on<CompressBackgrounded>((_, _) => _isBackgrounded = true);
+    on<CompressForegroundResumed>((_, _) {
+      _isBackgrounded = false;
+      _releaseForegroundWait();
+    });
     _handle<CompressResultsSaved>(_onResultsSaved);
     _handle<CompressMessagesCleared>(_onMessagesCleared);
     unawaited(useFiles(() => _cache.retain(initialPhotos.map((p) => p.path))));
@@ -120,6 +131,7 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
     _compressionRunId++;
     _estimateRunId++;
     _estimateDebounce?.cancel();
+    _releaseForegroundWait();
     await _photoCompressorAdapter.cancelCompression();
     await Future.wait(_operations.toList());
     await _setScreenAwake(false);
@@ -272,12 +284,30 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
         elapsed: Duration.zero,
         clearSaveNotification: true,
         clearCompressionError: true,
+        canCompressInBackground: false,
       ),
     );
 
-    await _setScreenAwake(_appSettings.preventScreenSleep);
     try {
+      final backgroundStart = _backgroundCompression.start(
+        onCancel: () {
+          if (!_closing && !isClosed && runId == _compressionRunId) {
+            add(const CompressCancelled());
+          }
+        },
+      );
+      await _setScreenAwake(_appSettings.preventScreenSleep);
+      _backgroundActive = await backgroundStart;
+      if (_cancelRequested || runId != _compressionRunId) return;
+      emit(state.copyWith(canCompressInBackground: _backgroundActive));
       for (var index = 0; index < state.photos.length; index++) {
+        while (_isBackgrounded &&
+            !_backgroundActive &&
+            !_cancelRequested &&
+            !_closing) {
+          _foregroundGate ??= Completer<void>();
+          await _foregroundGate!.future;
+        }
         if (_cancelRequested || runId != _compressionRunId) return;
         final photo = state.photos[index];
         statuses[index] = PhotoCompressionStatus.processing;
@@ -287,6 +317,13 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
             photoStatuses: List.of(statuses),
             currentPhotoProgress: 0,
             elapsed: stopwatch.elapsed,
+          ),
+        );
+        unawaited(
+          _backgroundCompression.update(
+            state.progress,
+            index + 1,
+            state.photos.length,
           ),
         );
         try {
@@ -355,12 +392,25 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
           savedBytes: originalSize - compressedSize,
         ).onError((_, _) {});
       }
-      if (!_closing && runId == _compressionRunId) {
-        emit(state.copyWith(status: CompressStatus.done, progress: 1));
-      }
     } finally {
       stopwatch.stop();
       await _setScreenAwake(false);
+      await _backgroundCompression.finish(
+        success:
+            !_cancelRequested &&
+            runId == _compressionRunId &&
+            !statuses.contains(PhotoCompressionStatus.failed),
+      );
+      _backgroundActive = false;
+    }
+    if (!_closing && !_cancelRequested && runId == _compressionRunId) {
+      emit(
+        state.copyWith(
+          status: CompressStatus.done,
+          progress: 1,
+          canCompressInBackground: false,
+        ),
+      );
     }
   }
 
@@ -368,8 +418,19 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
     CompressProgressChanged event,
     Emitter<CompressState> emit,
   ) {
-    if (event.runId != _compressionRunId || _cancelRequested) return;
+    if (event.runId != _compressionRunId ||
+        _cancelRequested ||
+        state.status != CompressStatus.processing) {
+      return;
+    }
     if (event.progress < state.progress) return;
+    unawaited(
+      _backgroundCompression.update(
+        event.progress,
+        state.processingIndex + 1,
+        state.photos.length,
+      ),
+    );
     emit(
       state.copyWith(
         progress: event.progress,
@@ -386,6 +447,7 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
     if (state.status != CompressStatus.processing || _cancelRequested) return;
     _cancelRequested = true;
     _compressionRunId++;
+    _releaseForegroundWait();
     await _photoCompressorAdapter.cancelCompression();
     await _setScreenAwake(false);
     await _compressionOperation;
@@ -407,6 +469,7 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
         currentPhotoProgress: 0,
         elapsed: Duration.zero,
         clearCompressionError: true,
+        canCompressInBackground: false,
       ),
     );
   }
@@ -582,5 +645,10 @@ class CompressBloc extends Bloc<CompressEvent, CompressState> {
     } catch (_) {
       _screenAwakeEnabled = !enabled;
     }
+  }
+
+  void _releaseForegroundWait() {
+    _foregroundGate?.complete();
+    _foregroundGate = null;
   }
 }

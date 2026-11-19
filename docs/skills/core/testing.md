@@ -11,6 +11,11 @@ Unit tests cover preset/estimate behavior, minimum useful savings, cache
 cleanup (ownership, symlinks, reused paths, delayed operations), local statistics, shared controls, result statuses, and picker sheet
 behavior including duplicate-request protection.
 
+Widget tests cover onboarding swipes, animation, progress, skip and completion
+persistence, reduced motion, and all supported locales in both themes at
+320×568 with enlarged text. The About screen test verifies the external Threads
+link on the same compact viewport.
+
 Before release, verify on physical Android and iOS devices:
 
 - gallery and files selection, including cancellation
@@ -22,4 +27,28 @@ Before release, verify on physical Android and iOS devices:
 - exit during import/save/share waits, then removes only that batch’s cache
 - gallery save and share sheet
 - screen stays awake during picker import and compression when enabled, then sleeps normally afterward
+- gallery/files import continues after backgrounding/locking the screen, for initial selection and add-more
+- system import progress/cancel on iOS 26+ and Android; cancellation removes only the current import's cache
+- denied iOS continued-processing admission/older iOS uses finite runtime and cancels on expiration
+- Android notification cancellation and dataSync timeout release the service and wake lock
 - low-storage and permission-denied errors
+
+Background compression tests cover native channel token filtering, progress
+coalescing, denied admission, completion in the background, foreground fallback,
+system cancellation with late outputs, cancellation during admission, and exit
+while waiting for resume. On physical iOS/Android devices also verify compression
+with the screen locked, notification/system cancellation, denied runtime,
+foreground-service timeout, and retry after cancellation.
+
+Android import/service regression checks:
+
+```bash
+cd android
+./gradlew :app:testDebugUnitTest
+```
+
+These JVM tests cover blocked provider reads/close/open, cache ownership after
+cancellation, single picker completion, stale picker callbacks, and queued
+commands for finished services without stopping newer operations. Flutter
+`upgrade_alert_test.dart` exercises Material and Cupertino update dialogs with
+the same localization delegates used by `MainApp`.

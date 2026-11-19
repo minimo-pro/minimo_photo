@@ -35,6 +35,7 @@ class CompressState {
   final Object? deleteError;
   final Object? metadataError;
   final Object? compressionError;
+  final bool canCompressInBackground;
 
   const CompressState({
     required this.status,
@@ -58,6 +59,7 @@ class CompressState {
     this.deleteError,
     this.metadataError,
     this.compressionError,
+    this.canCompressInBackground = false,
   });
 
   factory CompressState.initial(
@@ -124,6 +126,7 @@ class CompressState {
     Object? deleteError,
     Object? metadataError,
     Object? compressionError,
+    bool? canCompressInBackground,
     bool clearSaveNotification = false,
     bool clearCompressionError = false,
     bool clearEstimatedSize = false,
@@ -161,5 +164,7 @@ class CompressState {
     compressionError: clearCompressionError
         ? compressionError
         : compressionError ?? this.compressionError,
+    canCompressInBackground:
+        canCompressInBackground ?? this.canCompressInBackground,
   );
 }

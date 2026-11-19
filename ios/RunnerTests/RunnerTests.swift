@@ -2,9 +2,38 @@ import Flutter
 import Photos
 import UIKit
 import XCTest
+import BackgroundTasks
 @testable import Runner
 
 class RunnerTests: XCTestCase {
+  func testBackgroundImportRequestUsesUniqueCPUOnlyIdentifiers() throws {
+    guard #available(iOS 26.0, *) else { throw XCTSkip("Requires iOS 26") }
+    let runtime = BackgroundPhotoTask(operation: "import")
+    let first = runtime.makeRequest(token: "first")
+    let second = runtime.makeRequest(token: "second")
+    XCTAssertEqual(first.identifier, Bundle.main.bundleIdentifier! + ".import.first")
+    XCTAssertNotEqual(first.identifier, second.identifier)
+    XCTAssertFalse(first.identifier.contains("*"))
+    XCTAssertEqual(first.strategy, .fail)
+    XCTAssertTrue(first.requiredResources.isEmpty)
+    let permitted = try XCTUnwrap(
+      Bundle.main.object(forInfoDictionaryKey: "BGTaskSchedulerPermittedIdentifiers") as? [String]
+    )
+    XCTAssertTrue(permitted.contains(Bundle.main.bundleIdentifier! + ".import.*"))
+  }
+
+  func testBackgroundCompressionHasSeparateCPUOnlyIdentifier() throws {
+    guard #available(iOS 26.0, *) else { throw XCTSkip("Requires iOS 26") }
+    let request = BackgroundPhotoTask(operation: "compression").makeRequest(token: "batch")
+    XCTAssertEqual(request.identifier, Bundle.main.bundleIdentifier! + ".compression.batch")
+    XCTAssertEqual(request.strategy, .fail)
+    XCTAssertTrue(request.requiredResources.isEmpty)
+    let permitted = try XCTUnwrap(
+      Bundle.main.object(forInfoDictionaryKey: "BGTaskSchedulerPermittedIdentifiers") as? [String]
+    )
+    XCTAssertTrue(permitted.contains(Bundle.main.bundleIdentifier! + ".compression.*"))
+  }
+
   func testCommittedPhotoDoesNotRequireReadback() {
     let delegate = SceneDelegate()
     delegate.performPhotoCreation = { _, completion in

@@ -89,7 +89,8 @@ class _CompressView extends StatefulWidget {
   State<_CompressView> createState() => _CompressViewState();
 }
 
-class _CompressViewState extends State<_CompressView> {
+class _CompressViewState extends State<_CompressView>
+    with WidgetsBindingObserver {
   final _fileAdapter = PhotoFileAdapter();
   bool _loading = false;
   bool _screenAwakeEnabled = false;
@@ -105,6 +106,7 @@ class _CompressViewState extends State<_CompressView> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _loading = widget.initialPickSource != null;
     if (widget.initialPickSource case final source?) {
       WidgetsBinding.instance.addPostFrameCallback(
@@ -115,10 +117,20 @@ class _CompressViewState extends State<_CompressView> {
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _videoPromptTimer?.cancel();
     if (_loading) unawaited(_fileAdapter.cancelPhotoPick());
     unawaited(_setScreenAwake(false));
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      context.read<CompressBloc>().add(const CompressBackgrounded());
+    } else if (state == AppLifecycleState.resumed) {
+      context.read<CompressBloc>().add(const CompressForegroundResumed());
+    }
   }
 
   @override

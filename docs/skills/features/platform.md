@@ -59,3 +59,43 @@ device/development console; there is no upload or in-app log storage.
 ## Screen awake
 
 When `prevent_screen_sleep` is enabled, `wakelock_plus` keeps the display awake while photos import through the picker and while a batch compresses. The app releases it on completion, cancellation, or leaving the import screen.
+
+## Background picker imports
+
+Gallery and Files imports acquire background runtime after selection, for both
+initial selection and add-more. iOS 26+ requests CPU-only continued processing
+with a unique `.import.*` identifier and system progress/cancellation. Older iOS,
+inactive submission, or denied admission falls back to a finite UIKit background
+task; expiration cancels the import. Gallery provider loads are cancelled and
+remaining document copies are skipped; completed copies are removed when the
+in-flight callbacks/copy finish.
+
+Android uses `PhotoProcessingService`, a `dataSync` foreground service with a partial
+wake lock, progress notification and Cancel action. Cancellation and system
+timeout settle the pending picker immediately. `PhotoImportSession` closes the
+local writer and removes its owned copies under the same lock used by writes;
+provider reads stay outside that lock. Closing a provider stream is best effort
+on a daemon thread: an uncooperative reader is retired and cannot write after
+cleanup, recreate deleted files, or settle a newer pick.
+If foreground service startup is denied, the selection fails safely.
+
+Runtime is released on completion or cancellation. Force quit does not resume
+imports. External Share/Shortcut inbox consumption is unchanged.
+
+## Background compression
+
+`BackgroundCompressionService` requests native runtime before `CompressBloc`
+starts the sequential batch. iOS 26+ reuses `BackgroundPhotoTask` with a separate
+CPU-only `.compression.*` identifier. Android reuses `PhotoProcessingService`
+with the `mediaProcessing` foreground type on API 35+, and `dataSync` on older
+Android. Both platforms expose system progress and cancellation; Android holds
+a partial wake lock independently of the screen-awake setting.
+
+The warning to keep the app open appears only without a runtime grant. If runtime
+is unavailable, the current photo can finish or be suspended by the OS, and the
+batch waits before starting another photo until the app resumes. No completed
+results are discarded or recompressed during this fallback. System cancellation
+or expiration uses the normal batch-cancel path: wait for the active encoder,
+remove completed and late output files, preserve selected sources for retry.
+Runtime is released after finalization, on cancel, and on exit. Force quit does
+not resume compression. Gallery saving remains a separate user action.

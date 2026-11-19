@@ -17,3 +17,5 @@
 `flutter_image_compress` is preferred over a custom codec bridge: it provides
 native Android/iOS implementations, resize, orientation correction, JPEG/PNG/HEIC,
 and EXIF control behind one small API.
+
+`upgrader` stays on `^13.8.0`: version 14 requires migrated Material/Cupertino widget imports and localization delegates. `MainApp` and `StartPage` currently use Flutter’s built-in widgets.

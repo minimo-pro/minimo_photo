@@ -10,6 +10,17 @@
 | `StatsScreen` | Local compressed-photo count, total space saved, and text sharing |
 | `InfoRoute` | Project and author links |
 
+Onboarding illustrates selecting photos, choosing a quality preset, and saving
+a private local copy. Photo cards, captions, and text fade and rise with swipe
+progress. Three progress segments fill as the user advances. The primary button
+stays below the scrollable content on small screens and with enlarged text.
+Reduced motion makes the illustrations static and Next switch pages immediately.
+Skip and Get started save onboarding completion and the current changelog
+version before opening `StartRoute`.
+
+The About screen opens the Threads profile `@khlebobul` through the external
+URL launcher. The hand-drawn `AppIcons.threads` button has a profile tooltip.
+
 The statistics screen shares a localized text summary of both counters through
 the system share sheet. It includes the app name, a call to try the app, and
 the project website link, with no photo attachments.
