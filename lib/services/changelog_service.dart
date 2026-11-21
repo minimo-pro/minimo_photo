@@ -34,6 +34,57 @@ enum Language {
 typedef Changelog = Map<String, Map<Language, List<String>>>;
 
 const Changelog _changelog = {
+  '1.1.1': {
+    Language.en: [
+      'the update dialog follows your app theme and language.',
+      'website and contact links are easier to find on the about screen.',
+    ],
+    Language.de: [
+      'der aktualisierungsdialog verwendet das design und die sprache der app.',
+      'website und kontaktlinks sind im infobereich leichter zu finden.',
+    ],
+    Language.es: [
+      'el aviso de actualización usa el tema y el idioma de la app.',
+      'el sitio web y los enlaces de contacto son más fáciles de encontrar en la pantalla de información.',
+    ],
+    Language.fr: [
+      'la fenêtre de mise à jour utilise le thème et la langue de l’application.',
+      'le site web et les liens de contact sont plus faciles à trouver dans l’écran à propos.',
+    ],
+    Language.hi: [
+      'अपडेट का संदेश ऐप की थीम और भाषा में दिखता है।',
+      'ऐप के बारे में बताने वाली स्क्रीन पर वेबसाइट और संपर्क लिंक ढूँढना आसान है।',
+    ],
+    Language.it: [
+      'l’avviso di aggiornamento usa il tema e la lingua dell’app.',
+      'il sito web e i link di contatto sono più facili da trovare nella schermata delle informazioni.',
+    ],
+    Language.ja: [
+      'アップデートの案内にアプリのテーマと言語が反映されます。',
+      'アプリ情報画面でウェブサイトや連絡先のリンクを見つけやすくなりました。',
+    ],
+    Language.ko: [
+      '업데이트 안내에 앱의 테마와 언어가 적용됩니다.',
+      '앱 정보 화면에서 웹사이트와 연락처 링크를 더 쉽게 찾을 수 있습니다.',
+    ],
+    Language.nl: [
+      'het updatevenster gebruikt het thema en de taal van de app.',
+      'de website en contactlinks zijn makkelijker te vinden op het infoscherm.',
+    ],
+    Language.pt: [
+      'o aviso de atualização usa o tema e o idioma do app.',
+      'o site e os links de contato estão mais fáceis de encontrar na tela sobre o app.',
+    ],
+    Language.ru: [
+      'окно обновления учитывает тему и язык приложения.',
+      'вебсайт и ссылки для связи проще найти на экране «о приложении».',
+    ],
+    Language.tr: [
+      'güncelleme penceresi uygulamanın temasını ve dilini kullanır.',
+      'web sitesi ve iletişim bağlantılarını hakkında ekranında bulmak artık daha kolay.',
+    ],
+    Language.zh: ['更新提示会使用应用的主题和语言。', '在关于页面更容易找到网站和联系链接。'],
+  },
   '1.1.0': {
     Language.en: [
       'on supported devices, photos selected from the gallery or files can continue importing in the background with system progress and cancellation.',
