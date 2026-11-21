@@ -8,7 +8,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
-  testWidgets('About opens the Threads profile externally on a small screen', (
+  testWidgets('About opens Threads and the website on a small screen', (
     tester,
   ) async {
     tester.view.physicalSize = const Size(320, 568);
@@ -49,7 +49,7 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    final threads = find.byTooltip('Threads · @khlebobul');
+    final threads = find.text('threads');
     await tester.ensureVisible(threads);
     await tester.pumpAndSettle();
     await tester.tap(threads);
@@ -59,5 +59,15 @@ void main() {
     expect(arguments['url'], 'https://www.threads.com/@khlebobul');
     expect(arguments['useSafariVC'], isFalse);
     expect(arguments['useWebView'], isFalse);
+
+    final website = find.text('вебсайт');
+    await tester.ensureVisible(website);
+    await tester.pumpAndSettle();
+    await tester.tap(website);
+    await tester.pumpAndSettle();
+    expect(
+      (launched!.arguments as Map)['url'],
+      'https://minimo-photo.vercel.app',
+    );
   });
 }

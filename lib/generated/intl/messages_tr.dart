@@ -125,6 +125,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "detailLevelDescription": MessageLookupByLibrary.simpleMessage(
       "bir hedef kalite belirleyin veya kalite ön ayarının bunu seçmesine izin verin",
     ),
+    "email": MessageLookupByLibrary.simpleMessage("e-posta"),
     "emailCopied": MessageLookupByLibrary.simpleMessage("e-posta kopyalandı"),
     "english": MessageLookupByLibrary.simpleMessage("english"),
     "estimatingTimeRemaining": MessageLookupByLibrary.simpleMessage(
@@ -374,6 +375,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "videoları da sıkıştırın mı?",
     ),
     "waiting": MessageLookupByLibrary.simpleMessage("bekliyor"),
+    "website": MessageLookupByLibrary.simpleMessage("web sitesi"),
     "xTwitter": MessageLookupByLibrary.simpleMessage("x (twitter)"),
     "youSavedSize": m15,
   };

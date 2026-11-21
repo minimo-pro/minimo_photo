@@ -102,6 +102,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "detailLevelDescription": MessageLookupByLibrary.simpleMessage(
       "设置目标质量或让质量预设选择它",
     ),
+    "email": MessageLookupByLibrary.simpleMessage("电子邮件"),
     "emailCopied": MessageLookupByLibrary.simpleMessage("邮箱已复制"),
     "english": MessageLookupByLibrary.simpleMessage("english"),
     "estimatingTimeRemaining": MessageLookupByLibrary.simpleMessage(
@@ -287,6 +288,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "videoAppDescription": MessageLookupByLibrary.simpleMessage("直接在手机上缩小视频"),
     "videoAppPromptTitle": MessageLookupByLibrary.simpleMessage("也想压缩视频？"),
     "waiting": MessageLookupByLibrary.simpleMessage("等待中"),
+    "website": MessageLookupByLibrary.simpleMessage("网站"),
     "xTwitter": MessageLookupByLibrary.simpleMessage("x (twitter)"),
     "youSavedSize": m15,
   };

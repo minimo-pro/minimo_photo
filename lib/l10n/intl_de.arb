@@ -49,6 +49,8 @@
   "myOtherApps": "meine anderen apps",
   "videoAppPromptTitle": "auch Videos komprimieren?",
   "videoAppDescription": "Verkleinern Sie Videos direkt auf Ihrem Telefon",
+  "website": "webseite",
+  "email": "e-mail",
   "emailCopied": "e-mail kopiert",
   "settings": "einstellungen",
   "addPrefix": "präfix \"{prefix}\" hinzufügen",

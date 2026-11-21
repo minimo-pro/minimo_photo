@@ -125,6 +125,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "detailLevelDescription": MessageLookupByLibrary.simpleMessage(
       "задайте целевой качество или доверьте выбор профилю качества",
     ),
+    "email": MessageLookupByLibrary.simpleMessage("почта"),
     "emailCopied": MessageLookupByLibrary.simpleMessage("почта скопирована"),
     "english": MessageLookupByLibrary.simpleMessage("english"),
     "estimatingTimeRemaining": MessageLookupByLibrary.simpleMessage(
@@ -370,6 +371,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "сжимаете и видео?",
     ),
     "waiting": MessageLookupByLibrary.simpleMessage("ожидает"),
+    "website": MessageLookupByLibrary.simpleMessage("вебсайт"),
     "xTwitter": MessageLookupByLibrary.simpleMessage("x (twitter)"),
     "youSavedSize": m15,
   };

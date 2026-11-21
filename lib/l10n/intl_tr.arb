@@ -49,6 +49,8 @@
   "myOtherApps": "diğer uygulamalarım",
   "videoAppPromptTitle": "videoları da sıkıştırın mı?",
   "videoAppDescription": "videoları doğrudan telefonunuzda küçültün",
+  "website": "web sitesi",
+  "email": "e-posta",
   "emailCopied": "e-posta kopyalandı",
   "settings": "ayarlar",
   "addPrefix": "\"{prefix}\" önekini ekle",

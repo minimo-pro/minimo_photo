@@ -106,6 +106,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "detailLevelDescription": MessageLookupByLibrary.simpleMessage(
       "目標品質を設定するか、品質プリセットで選択させます",
     ),
+    "email": MessageLookupByLibrary.simpleMessage("メール"),
     "emailCopied": MessageLookupByLibrary.simpleMessage("メールアドレスをコピーしました"),
     "english": MessageLookupByLibrary.simpleMessage("english"),
     "estimatingTimeRemaining": MessageLookupByLibrary.simpleMessage(
@@ -313,6 +314,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "videoAppPromptTitle": MessageLookupByLibrary.simpleMessage("動画も圧縮しますか？"),
     "waiting": MessageLookupByLibrary.simpleMessage("待機中"),
+    "website": MessageLookupByLibrary.simpleMessage("ウェブサイト"),
     "xTwitter": MessageLookupByLibrary.simpleMessage("x (twitter)"),
     "youSavedSize": m15,
   };

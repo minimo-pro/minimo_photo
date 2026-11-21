@@ -18,8 +18,8 @@ Reduced motion makes the illustrations static and Next switch pages immediately.
 Skip and Get started save onboarding completion and the current changelog
 version before opening `StartRoute`.
 
-The About screen opens the Threads profile `@khlebobul` through the external
-URL launcher. The hand-drawn `AppIcons.threads` button has a profile tooltip.
+The About screen uses labeled buttons with arrows for project and author links.
+The Threads button opens the profile `@khlebobul` through the external URL launcher.
 
 The statistics screen shares a localized text summary of both counters through
 the system share sheet. It includes the app name, a call to try the app, and

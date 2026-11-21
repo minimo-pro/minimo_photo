@@ -124,6 +124,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "detailLevelDescription": MessageLookupByLibrary.simpleMessage(
       "impostare una qualità target o lasciare che sia la preimpostazione della qualità a sceglierla",
     ),
+    "email": MessageLookupByLibrary.simpleMessage("e-mail"),
     "emailCopied": MessageLookupByLibrary.simpleMessage("e-mail copiata"),
     "english": MessageLookupByLibrary.simpleMessage("english"),
     "estimatingTimeRemaining": MessageLookupByLibrary.simpleMessage(
@@ -375,6 +376,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "comprimere anche i video?",
     ),
     "waiting": MessageLookupByLibrary.simpleMessage("in attesa"),
+    "website": MessageLookupByLibrary.simpleMessage("sito web"),
     "xTwitter": MessageLookupByLibrary.simpleMessage("x (twitter)"),
     "youSavedSize": m15,
   };

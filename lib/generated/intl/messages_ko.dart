@@ -109,6 +109,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "detailLevelDescription": MessageLookupByLibrary.simpleMessage(
       "목표 품질을 설정하거나 품질 사전 설정에서 선택하도록 합니다.",
     ),
+    "email": MessageLookupByLibrary.simpleMessage("이메일"),
     "emailCopied": MessageLookupByLibrary.simpleMessage("이메일 복사됨"),
     "english": MessageLookupByLibrary.simpleMessage("english"),
     "estimatingTimeRemaining": MessageLookupByLibrary.simpleMessage(
@@ -316,6 +317,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "videoAppPromptTitle": MessageLookupByLibrary.simpleMessage("동영상도 압축하시나요?"),
     "waiting": MessageLookupByLibrary.simpleMessage("대기 중"),
+    "website": MessageLookupByLibrary.simpleMessage("웹사이트"),
     "xTwitter": MessageLookupByLibrary.simpleMessage("x (twitter)"),
     "youSavedSize": m15,
   };

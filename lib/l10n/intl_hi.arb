@@ -49,6 +49,8 @@
   "myOtherApps": "मेरे अन्य ऐप",
   "videoAppPromptTitle": "वीडियो भी संपीड़ित करें?",
   "videoAppDescription": "सीधे अपने फ़ोन पर वीडियो छोटे बनाएं",
+  "website": "वेबसाइट",
+  "email": "ईमेल",
   "emailCopied": "ईमेल कॉपी हुआ",
   "settings": "सेटिंग्स",
   "addPrefix": "\"{prefix}\" प्रीफ़िक्स जोड़ें",

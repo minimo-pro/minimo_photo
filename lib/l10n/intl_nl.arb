@@ -49,6 +49,8 @@
   "myOtherApps": "mijn andere apps",
   "videoAppPromptTitle": "ook video's comprimeren?",
   "videoAppDescription": "maak video's kleiner, rechtstreeks op je telefoon",
+  "website": "website",
+  "email": "e-mail",
   "emailCopied": "e-mailadres gekopieerd",
   "settings": "instellingen",
   "addPrefix": "voorvoegsel \"{prefix}\" toevoegen",
