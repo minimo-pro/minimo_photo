@@ -49,6 +49,8 @@
   "myOtherApps": "meus outros apps",
   "videoAppPromptTitle": "também comprime vídeos?",
   "videoAppDescription": "diminua o tamanho dos vídeos diretamente no seu telefone",
+  "website": "site",
+  "email": "e-mail",
   "emailCopied": "e-mail copiado",
   "settings": "configurações",
   "addPrefix": "adicionar o prefixo \"{prefix}\"",

@@ -18,4 +18,4 @@
 native Android/iOS implementations, resize, orientation correction, JPEG/PNG/HEIC,
 and EXIF control behind one small API.
 
-`upgrader` stays on `^13.8.0`: version 14 requires migrated Material/Cupertino widget imports and localization delegates. `MainApp` and `StartPage` currently use Flutter’s built-in widgets.
+`upgrader` 14 builds its dialogs with `material_ui` and `cupertino_ui`. App and test widgets import `package:material_ui/material_ui.dart`, and `MaterialApp` uses `GlobalMaterialLocalizations.delegates` from that package. `MaterialUiCompatibilityBridge` keeps `rate_my_app` and `stupid_simple_sheet` working while those packages still import `package:flutter/material.dart`.

@@ -123,6 +123,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "detailLevelDescription": MessageLookupByLibrary.simpleMessage(
       "एक लक्ष्य गुणवत्ता निर्धारित करें या गुणवत्ता पूर्व निर्धारित को इसे चुनने दें",
     ),
+    "email": MessageLookupByLibrary.simpleMessage("ईमेल"),
     "emailCopied": MessageLookupByLibrary.simpleMessage("ईमेल कॉपी हुआ"),
     "english": MessageLookupByLibrary.simpleMessage("english"),
     "estimatingTimeRemaining": MessageLookupByLibrary.simpleMessage(
@@ -360,6 +361,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "वीडियो भी संपीड़ित करें?",
     ),
     "waiting": MessageLookupByLibrary.simpleMessage("इंतज़ार"),
+    "website": MessageLookupByLibrary.simpleMessage("वेबसाइट"),
     "xTwitter": MessageLookupByLibrary.simpleMessage("x (twitter)"),
     "youSavedSize": m15,
   };

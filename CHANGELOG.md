@@ -1,3 +1,10 @@
+## [1.1.1]
+
+### Changed
+
+* Move the update dialog to upgrader 14 and the standalone Material and Cupertino libraries, so it uses the app theme and localization.
+* Show website and contact links as labeled buttons on the About screen.
+
 ## [1.1.0]
 
 ### Added

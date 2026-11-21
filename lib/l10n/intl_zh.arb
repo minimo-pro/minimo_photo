@@ -49,6 +49,8 @@
   "myOtherApps": "我的其他应用",
   "videoAppPromptTitle": "也想压缩视频？",
   "videoAppDescription": "直接在手机上缩小视频",
+  "website": "网站",
+  "email": "电子邮件",
   "emailCopied": "邮箱已复制",
   "settings": "设置",
   "addPrefix": "添加 \"{prefix}\" 前缀",

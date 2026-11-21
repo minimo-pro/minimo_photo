@@ -49,6 +49,8 @@
   "myOtherApps": "le mie altre app",
   "videoAppPromptTitle": "comprimere anche i video?",
   "videoAppDescription": "rimpicciolisci i video, direttamente sul tuo telefono",
+  "website": "sito web",
+  "email": "e-mail",
   "emailCopied": "e-mail copiata",
   "settings": "impostazioni",
   "addPrefix": "aggiungi il prefisso \"{prefix}\"",

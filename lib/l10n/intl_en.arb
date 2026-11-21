@@ -49,6 +49,8 @@
   "myOtherApps": "my other apps",
   "videoAppPromptTitle": "compress videos too?",
   "videoAppDescription": "make videos smaller, right on your phone",
+  "website": "website",
+  "email": "email",
   "emailCopied": "email copied",
   "settings": "settings",
   "addPrefix": "add \"{prefix}\" prefix",

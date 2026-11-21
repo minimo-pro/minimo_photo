@@ -49,6 +49,8 @@
   "myOtherApps": "その他のアプリ",
   "videoAppPromptTitle": "動画も圧縮しますか？",
   "videoAppDescription": "携帯電話で直接ビデオを小さくする",
+  "website": "ウェブサイト",
+  "email": "メール",
   "emailCopied": "メールアドレスをコピーしました",
   "settings": "設定",
   "addPrefix": "\"{prefix}\"接頭辞を追加",
