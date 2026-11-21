@@ -399,7 +399,7 @@ packages:
     source: hosted
     version: "6.0.0"
   flutter_localizations:
-    dependency: "direct main"
+    dependency: transitive
     description: flutter
     source: sdk
     version: "0.0.0"
@@ -449,10 +449,10 @@ packages:
     dependency: "direct main"
     description:
       name: gal
-      sha256: "883aeeeb24662190b18ec588732d9e94fea4e5ca2af6ac26404c3843daae48c6"
+      sha256: "5bd6542d6a387b76b50a803ad87573f3f505baea7c7153054f6d8fac7fc46d98"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.0"
+    version: "3.0.1"
   glob:
     dependency: transitive
     description:
@@ -710,13 +710,13 @@ packages:
     source: hosted
     version: "0.13.0"
   material_ui:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: material_ui
-      sha256: fbfb53cab6c4629438feeade5f3d305f72944bc9d9f25786b19106d32b80ec45
+      sha256: a6b19012df437a356cbc01f8ea22a105e07194c47c9a6009da0032a0ce35c4ab
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.0"
+    version: "1.11.1"
   meta:
     dependency: transitive
     description:
@@ -1118,10 +1118,10 @@ packages:
     dependency: "direct main"
     description:
       name: upgrader
-      sha256: "5e87c86daf6543c4165c20df53b44ef68c4cf35ab05af459a9601c83f07a7f24"
+      sha256: efff6df6aee6790984426a581a4c7be37063df0e47223aa7e01fdb2a0e0f1157
       url: "https://pub.dev"
     source: hosted
-    version: "13.8.0"
+    version: "14.0.0"
   url_launcher:
     dependency: "direct main"
     description:
@@ -1331,5 +1331,5 @@ packages:
     source: hosted
     version: "3.1.4"
 sdks:
-  dart: ">=3.12.0 <4.0.0"
-  flutter: ">=3.44.0"
+  dart: ">=3.13.0 <4.0.0"
+  flutter: ">=3.47.0"

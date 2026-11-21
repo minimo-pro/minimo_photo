@@ -1,8 +1,7 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:minimo_photo/features/compression/domain/photo_pick_source.dart';
 import 'package:minimo_photo/features/compression/presentation/compress_screen.dart';
@@ -32,8 +31,7 @@ void main() {
         theme: AppTheme.light,
         localizationsDelegates: const [
           S.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
+          ...GlobalMaterialLocalizations.delegates,
         ],
         supportedLocales: S.delegate.supportedLocales,
         initialRoute: '/compress',
@@ -93,8 +91,7 @@ void main() {
           theme: AppTheme.light,
           localizationsDelegates: const [
             S.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
+            ...GlobalMaterialLocalizations.delegates,
           ],
           supportedLocales: S.delegate.supportedLocales,
           initialRoute: '/compress',
