@@ -77,6 +77,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "압축이 끝날 때까지 minimo를 열어 두십시오. 다른 곳으로 전환하면 휴대전화에서 앱이 일시중지될 수 있습니다.",
     ),
     "better": MessageLookupByLibrary.simpleMessage("더 좋게"),
+    "bugReportBody": MessageLookupByLibrary.simpleMessage(
+      "어떤 문제가 발생했고 어떻게 재현할 수 있는지 알려 주세요.",
+    ),
     "cacheClearFailed": MessageLookupByLibrary.simpleMessage("캐시를 지울 수 없습니다"),
     "cacheCleared": MessageLookupByLibrary.simpleMessage("캐시 지워짐"),
     "cancel": MessageLookupByLibrary.simpleMessage("취소"),
@@ -250,6 +253,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "replaceOriginalDescription": MessageLookupByLibrary.simpleMessage(
       "원본 메타데이터와 함께 저장한 다음 원본 삭제를 요청하세요.",
     ),
+    "reportBug": MessageLookupByLibrary.simpleMessage("버그 신고"),
     "resize": MessageLookupByLibrary.simpleMessage("이미지 크기"),
     "resizeDescription": MessageLookupByLibrary.simpleMessage(
       "가장 긴 이미지 면을 제한합니다. 더 작은 크기로 더 많은 공간을 절약",

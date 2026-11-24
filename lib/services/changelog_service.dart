@@ -34,6 +34,23 @@ enum Language {
 typedef Changelog = Map<String, Map<Language, List<String>>>;
 
 const Changelog _changelog = {
+  '1.1.2': {
+    Language.en: ['report a bug from the about screen.'],
+    Language.de: ['fehler lassen sich über den infobereich melden.'],
+    Language.es: ['informa de un error desde la pantalla de información.'],
+    Language.fr: ['signalez un bug depuis l’écran à propos.'],
+    Language.hi: [
+      'ऐप के बारे में बताने वाली स्क्रीन से समस्या की रिपोर्ट करें।',
+    ],
+    Language.it: ['segnala un problema dalla schermata delle informazioni.'],
+    Language.ja: ['アプリ情報画面から不具合を報告できます。'],
+    Language.ko: ['앱 정보 화면에서 버그를 신고할 수 있습니다.'],
+    Language.nl: ['meld een fout via het infoscherm.'],
+    Language.pt: ['relate um erro na tela sobre o app.'],
+    Language.ru: ['сообщить об ошибке можно с экрана «о приложении».'],
+    Language.tr: ['hakkında ekranından hata bildirin.'],
+    Language.zh: ['可以在关于页面报告问题。'],
+  },
   '1.1.1': {
     Language.en: [
       'the update dialog follows your app theme and language.',

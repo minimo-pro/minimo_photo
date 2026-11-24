@@ -3,11 +3,11 @@
 - Bundle ID: `com.khlebobul.minimoPhoto`.
 - Auth profile: `minimo`, stored in System Keychain. Pass it explicitly.
 - ASC app ID: `6822256099`, resolved on 2026-10-13.
-- App-info ID used for the latest verified pull: `93db8cf3-ed42-4d2e-983c-7cb92d595d38`.
-- iOS version ID: `14689dc3-7ce1-4000-b04a-fa549f7abca7` (`1.1.0`,
-  `PREPARE_FOR_SUBMISSION`). Live version: `1.0.8`, ID
-  `40012224-3a84-4b5d-9c3d-5c90ffe315e3`.
-- Local version: `1.1.0+15` (see `pubspec.yaml`).
+- App-info ID used for the latest verified pull: `44f44985-0404-46c1-9e12-f95d113b0771`.
+- iOS version ID: `b359c141-74e8-4fc7-8c09-e5fe42ef320d` (`1.1.2`,
+  `PREPARE_FOR_SUBMISSION`). Live version: `1.1.0`, ID
+  `14689dc3-7ce1-4000-b04a-fa549f7abca7`.
+- Local version: `1.1.2+17` (see `pubspec.yaml`).
 - ASC CLI: `7.0.0`, updated with Homebrew and verified on 2026-11-19.
 - UI/export locales: `en`, `de`, `es`, `fr`, `hi`, `it`, `ja`, `ko`, `nl`,
   `pt`, `ru`, `tr`, `zh`. App Store mapping: `en → en-US`, `de → de-DE`,
@@ -15,13 +15,13 @@
   the others use the same code. `zh-Hant` has separate App Store metadata,
   without a separate UI deck.
 - Canonical local metadata: `metadata/app-info/*.json` and
-  `metadata/version/{1.0.0,1.0.1,1.0.2,1.0.3,1.0.4,1.0.5,1.0.6,1.0.7,1.0.8,1.1.0}/*.json` (14 App Store locales).
+  `metadata/version/{1.0.0,1.0.1,1.0.2,1.0.3,1.0.4,1.0.5,1.0.6,1.0.7,1.0.8,1.1.0,1.1.2}/*.json` (14 App Store locales).
   Google Play listings: `metadata/google-play/store-listing-import.csv`
   (13 locales). All metadata is ignored by Git.
 - User-provided name, subtitle, description, and URLs are preserved.
-  What's New and promotional text for version 1.1.0 are localized in all 14
-  App Store locales; descriptions, keywords and URLs are preserved from 1.0.8.
-  Metadata validation is not release-readiness validation.
+  What's New and promotional text for version 1.1.2 are localized in all 14
+  App Store locales; descriptions, keywords and URLs are preserved from live
+  1.1.0. Metadata validation is not release-readiness validation.
 
 Use installed `asc-cli-usage`, `asc-id-resolver` and `asc-metadata-sync` skills.
 Discover current flags with `asc <command> --help` before running commands.
@@ -131,3 +131,14 @@ and verified for all 14 App Store locales. The complete version metadata matches
 `.asc/source/metadata-1.1.0-verified/`. Drafts, dry run, receipts and version state:
 `.asc/upload/1.1.0-text/`. No build was uploaded or attached; no review submission
 or publication was performed.
+
+On 2026-11-23, version 1.1.2 was created as `PREPARE_FOR_SUBMISSION`, copying
+metadata from live 1.1.0. What's New covers reporting a photo problem from the
+About screen, easier website and contact links, and an update dialog that
+follows the app theme and language. Promotional text keeps the memory-space
+theme and adds the About-screen report. Both fields were uploaded and verified
+for all 14 App Store locales. Descriptions, keywords, and URLs match 1.1.0.
+The complete version metadata matches `metadata/version/1.1.2/`; app-info was
+unchanged. Readback: `.asc/source/metadata-1.1.2-verified/`. Drafts, dry run,
+receipts and version state: `.asc/upload/1.1.2-text/`. No build was uploaded or
+attached, and no review submission or publication was performed.

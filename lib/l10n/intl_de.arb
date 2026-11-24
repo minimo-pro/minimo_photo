@@ -24,6 +24,8 @@
   "openSourceNote": "minimo (Foto) ist Open Source. Entdecken Sie den Code, verfolgen Sie das Projekt oder nehmen Sie Kontakt mit uns auf",
   "rateTheApp": "app bewerten",
   "shareWithFriends": "mit freunden teilen",
+  "reportBug": "fehler melden",
+  "bugReportBody": "Beschreibe, was passiert ist und wie sich der Fehler reproduzieren lässt.",
   "shareAppText": "Probieren Sie Minimo (Foto) aus – eine einfache App zum Verkleinern von Fotos auf Ihrem Telefon: {url}",
   "@shareAppText": {
     "placeholders": {

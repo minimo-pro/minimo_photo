@@ -24,6 +24,8 @@
   "openSourceNote": "minimo（照片）是开源的。探索代码、关注项目或取得联系",
   "rateTheApp": "为应用评分",
   "shareWithFriends": "分享给朋友",
+  "reportBug": "报告问题",
+  "bugReportBody": "请描述发生了什么，以及如何重现问题。",
   "shareAppText": "尝试 minimo（照片）——一款用于在手机上缩小照片的简单应用程序：{url}",
   "@shareAppText": {
     "placeholders": {

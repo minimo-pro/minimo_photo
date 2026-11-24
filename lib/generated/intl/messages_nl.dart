@@ -83,6 +83,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "houd minimo open totdat de compressie is voltooid. uw telefoon kan de app pauzeren als u wegschakelt",
     ),
     "better": MessageLookupByLibrary.simpleMessage("beter"),
+    "bugReportBody": MessageLookupByLibrary.simpleMessage(
+      "Beschrijf wat er is gebeurd en hoe de fout kan worden gereproduceerd.",
+    ),
     "cacheClearFailed": MessageLookupByLibrary.simpleMessage(
       "cache kon niet worden gewist",
     ),
@@ -292,6 +295,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "replaceOriginalDescription": MessageLookupByLibrary.simpleMessage(
       "sla op met de originele metagegevens en vraag vervolgens om het origineel te verwijderen",
     ),
+    "reportBug": MessageLookupByLibrary.simpleMessage("een fout melden"),
     "resize": MessageLookupByLibrary.simpleMessage(
       "afmetingen van afbeeldingen",
     ),

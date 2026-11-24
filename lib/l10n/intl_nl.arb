@@ -24,6 +24,8 @@
   "openSourceNote": "minimo (foto) is open source. verken de code, volg het project of neem contact op",
   "rateTheApp": "beoordeel de app",
   "shareWithFriends": "delen met vrienden",
+  "reportBug": "een fout melden",
+  "bugReportBody": "Beschrijf wat er is gebeurd en hoe de fout kan worden gereproduceerd.",
   "shareAppText": "probeer minimo (foto) — een eenvoudige app om foto's kleiner te maken op je telefoon: {url}",
   "@shareAppText": {
     "placeholders": {

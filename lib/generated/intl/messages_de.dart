@@ -83,6 +83,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Halten Sie Minimo offen, bis die Komprimierung abgeschlossen ist. Ihr Telefon pausiert möglicherweise die App, wenn Sie wegschalten",
     ),
     "better": MessageLookupByLibrary.simpleMessage("besser"),
+    "bugReportBody": MessageLookupByLibrary.simpleMessage(
+      "Beschreibe, was passiert ist und wie sich der Fehler reproduzieren lässt.",
+    ),
     "cacheClearFailed": MessageLookupByLibrary.simpleMessage(
       "cache konnte nicht geleert werden",
     ),
@@ -292,6 +295,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "replaceOriginalDescription": MessageLookupByLibrary.simpleMessage(
       "Speichern Sie mit den ursprünglichen Metadaten und bitten Sie dann um die Löschung des Originals",
     ),
+    "reportBug": MessageLookupByLibrary.simpleMessage("fehler melden"),
     "resize": MessageLookupByLibrary.simpleMessage("Bildabmessungen"),
     "resizeDescription": MessageLookupByLibrary.simpleMessage(
       "Begrenzen Sie die längste Bildseite. kleinere Abmessungen sparen mehr Platz",

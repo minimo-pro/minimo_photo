@@ -84,6 +84,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "keep minimo open until compression finishes. your phone may pause the app if you switch away",
     ),
     "better": MessageLookupByLibrary.simpleMessage("better"),
+    "bugReportBody": MessageLookupByLibrary.simpleMessage(
+      "Please describe what happened and how to reproduce it.",
+    ),
     "cacheClearFailed": MessageLookupByLibrary.simpleMessage(
       "failed to clear cache",
     ),
@@ -283,6 +286,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "replaceOriginalDescription": MessageLookupByLibrary.simpleMessage(
       "save with original metadata, then ask to delete the original",
     ),
+    "reportBug": MessageLookupByLibrary.simpleMessage("report a bug"),
     "resize": MessageLookupByLibrary.simpleMessage("image dimensions"),
     "resizeDescription": MessageLookupByLibrary.simpleMessage(
       "limit the longest image side; smaller dimensions save more space",

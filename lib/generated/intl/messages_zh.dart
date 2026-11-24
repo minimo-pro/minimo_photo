@@ -74,6 +74,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "保持 minimo 打开直到压缩完成。如果您离开，您的手机可能会暂停该应用程序",
     ),
     "better": MessageLookupByLibrary.simpleMessage("更好"),
+    "bugReportBody": MessageLookupByLibrary.simpleMessage("请描述发生了什么，以及如何重现问题。"),
     "cacheClearFailed": MessageLookupByLibrary.simpleMessage("无法清除缓存"),
     "cacheCleared": MessageLookupByLibrary.simpleMessage("缓存已清除"),
     "cancel": MessageLookupByLibrary.simpleMessage("取消"),
@@ -223,6 +224,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "replaceOriginalDescription": MessageLookupByLibrary.simpleMessage(
       "保留原始元数据并保存，然后询问是否删除原照片",
     ),
+    "reportBug": MessageLookupByLibrary.simpleMessage("报告问题"),
     "resize": MessageLookupByLibrary.simpleMessage("图像尺寸"),
     "resizeDescription": MessageLookupByLibrary.simpleMessage(
       "限制最长图像边；尺寸更小，节省更多空间",

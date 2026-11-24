@@ -24,6 +24,8 @@
   "openSourceNote": "minimo (foto) è open source. esplora il codice, segui il progetto o contattaci",
   "rateTheApp": "valuta l'app",
   "shareWithFriends": "condividi con gli amici",
+  "reportBug": "segnala un problema",
+  "bugReportBody": "Descrivi cosa è successo e come riprodurre il problema.",
   "shareAppText": "prova minimo (foto) — una semplice app per rimpicciolire le foto sul tuo telefono: {url}",
   "@shareAppText": {
     "placeholders": {

@@ -24,6 +24,8 @@
   "openSourceNote": "minimo (foto) é de código aberto. explore o código, acompanhe o projeto ou entre em contato",
   "rateTheApp": "avaliar o app",
   "shareWithFriends": "compartilhar com amigos",
+  "reportBug": "relatar um erro",
+  "bugReportBody": "Descreva o que aconteceu e como reproduzir o erro.",
   "shareAppText": "experimente o minimo (foto) – um aplicativo simples para diminuir o tamanho das fotos no seu telefone: {url}",
   "@shareAppText": {
     "placeholders": {

@@ -83,6 +83,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Sıkıştırma bitene kadar minimo\'yu açık tutun. geçiş yaparsanız telefonunuz uygulamayı duraklatabilir",
     ),
     "better": MessageLookupByLibrary.simpleMessage("daha iyi"),
+    "bugReportBody": MessageLookupByLibrary.simpleMessage(
+      "Ne olduğunu ve hatanın nasıl yeniden oluşturulabileceğini açıklayın.",
+    ),
     "cacheClearFailed": MessageLookupByLibrary.simpleMessage(
       "önbellek temizlenemedi",
     ),
@@ -290,6 +293,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "replaceOriginalDescription": MessageLookupByLibrary.simpleMessage(
       "orijinal meta verilerle kaydedin, ardından orijinalin silinmesini isteyin",
     ),
+    "reportBug": MessageLookupByLibrary.simpleMessage("hata bildir"),
     "resize": MessageLookupByLibrary.simpleMessage("görüntü boyutları"),
     "resizeDescription": MessageLookupByLibrary.simpleMessage(
       "en uzun görüntü tarafını sınırlayın; daha küçük boyutlar daha fazla yerden tasarruf sağlar",

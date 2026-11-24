@@ -24,6 +24,8 @@
   "openSourceNote": "minimo (foto) es de código abierto. explora el código, sigue el proyecto o ponte en contacto",
   "rateTheApp": "valorar la app",
   "shareWithFriends": "compartir con amigos",
+  "reportBug": "informar de un error",
+  "bugReportBody": "Describe qué ocurrió y cómo reproducir el error.",
   "shareAppText": "prueba minimo (foto): una aplicación sencilla para hacer fotos más pequeñas en tu teléfono: {url}",
   "@shareAppText": {
     "placeholders": {

@@ -24,6 +24,8 @@
   "openSourceNote": "minimo (fotoğraf) açık kaynaktır. Kodu inceleyin, projeyi takip edin veya iletişime geçin",
   "rateTheApp": "uygulamayı değerlendir",
   "shareWithFriends": "arkadaşlarla paylaş",
+  "reportBug": "hata bildir",
+  "bugReportBody": "Ne olduğunu ve hatanın nasıl yeniden oluşturulabileceğini açıklayın.",
   "shareAppText": "telefonunuzda fotoğrafları küçültmek için basit bir uygulama olan minimo'yu (photo) deneyin: {url}",
   "@shareAppText": {
     "placeholders": {

@@ -82,6 +82,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "mantenere il minimo aperto fino al termine della compressione. il tuo telefono potrebbe mettere in pausa l\'app se passi dall\'altra parte",
     ),
     "better": MessageLookupByLibrary.simpleMessage("migliore"),
+    "bugReportBody": MessageLookupByLibrary.simpleMessage(
+      "Descrivi cosa è successo e come riprodurre il problema.",
+    ),
     "cacheClearFailed": MessageLookupByLibrary.simpleMessage(
       "impossibile svuotare la cache",
     ),
@@ -291,6 +294,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "replaceOriginalDescription": MessageLookupByLibrary.simpleMessage(
       "salva con i metadati originali, quindi chiedi di eliminare l\'originale",
     ),
+    "reportBug": MessageLookupByLibrary.simpleMessage("segnala un problema"),
     "resize": MessageLookupByLibrary.simpleMessage("dimensioni dell\'immagine"),
     "resizeDescription": MessageLookupByLibrary.simpleMessage(
       "limitare il lato più lungo dell\'immagine; le dimensioni più piccole consentono di risparmiare più spazio",
