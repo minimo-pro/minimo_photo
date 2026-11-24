@@ -82,6 +82,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "mantenha o mínimo aberto até que a compressão termine. seu telefone pode pausar o aplicativo se você sair",
     ),
     "better": MessageLookupByLibrary.simpleMessage("melhor"),
+    "bugReportBody": MessageLookupByLibrary.simpleMessage(
+      "Descreva o que aconteceu e como reproduzir o erro.",
+    ),
     "cacheClearFailed": MessageLookupByLibrary.simpleMessage(
       "não foi possível limpar o cache",
     ),
@@ -289,6 +292,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "replaceOriginalDescription": MessageLookupByLibrary.simpleMessage(
       "salve com os metadados originais e peça para excluir o original",
     ),
+    "reportBug": MessageLookupByLibrary.simpleMessage("relatar um erro"),
     "resize": MessageLookupByLibrary.simpleMessage("dimensões da imagem"),
     "resizeDescription": MessageLookupByLibrary.simpleMessage(
       "limite o lado mais longo da imagem; dimensões menores economizam mais espaço",

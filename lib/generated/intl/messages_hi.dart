@@ -83,6 +83,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "संपीड़न पूरा होने तक minimo खुला रखें। दूसरे ऐप पर जाने से आपका फ़ोन minimo को रोक सकता है",
     ),
     "better": MessageLookupByLibrary.simpleMessage("बेहतर"),
+    "bugReportBody": MessageLookupByLibrary.simpleMessage(
+      "बताएँ कि क्या हुआ और समस्या को दोबारा कैसे देखा जा सकता है।",
+    ),
     "cacheClearFailed": MessageLookupByLibrary.simpleMessage(
       "कैश साफ़ नहीं हुआ",
     ),
@@ -280,6 +283,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "replaceOriginalDescription": MessageLookupByLibrary.simpleMessage(
       "मूल मेटाडेटा के साथ सहेजें, फिर मूल को हटाने के लिए कहें",
     ),
+    "reportBug": MessageLookupByLibrary.simpleMessage("समस्या की रिपोर्ट करें"),
     "resize": MessageLookupByLibrary.simpleMessage("छवि आयाम"),
     "resizeDescription": MessageLookupByLibrary.simpleMessage(
       "छवि के सबसे लंबे पक्ष को सीमित करें; छोटे आयाम अधिक स्थान बचाते हैं",

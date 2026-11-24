@@ -1,3 +1,9 @@
+## [1.1.2]
+
+### Added
+
+* Add a report-a-bug button on the About screen that opens a prefilled email.
+
 ## [1.1.1]
 
 ### Changed

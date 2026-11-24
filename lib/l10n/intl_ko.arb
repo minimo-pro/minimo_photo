@@ -24,6 +24,8 @@
   "openSourceNote": "minimo(사진)는 오픈소스입니다. 코드를 탐색하고, 프로젝트를 팔로우하고, 연락하세요.",
   "rateTheApp": "앱 평가하기",
   "shareWithFriends": "친구와 공유",
+  "reportBug": "버그 신고",
+  "bugReportBody": "어떤 문제가 발생했고 어떻게 재현할 수 있는지 알려 주세요.",
   "shareAppText": "minimo(photo)를 사용해 보세요 — 휴대폰에서 사진을 더 작게 만들 수 있는 간단한 앱: {url}",
   "@shareAppText": {
     "placeholders": {

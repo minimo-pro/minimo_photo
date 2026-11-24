@@ -83,6 +83,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "не сворачивайте minimo до завершения сжатия. телефон может приостановить приложение",
     ),
     "better": MessageLookupByLibrary.simpleMessage("лучше"),
+    "bugReportBody": MessageLookupByLibrary.simpleMessage(
+      "Опишите, что произошло и как повторить ошибку.",
+    ),
     "cacheClearFailed": MessageLookupByLibrary.simpleMessage(
       "не удалось очистить кеш",
     ),
@@ -290,6 +293,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "replaceOriginalDescription": MessageLookupByLibrary.simpleMessage(
       "сохранить с метаданными, затем запросить удаление оригинала",
     ),
+    "reportBug": MessageLookupByLibrary.simpleMessage("сообщить об ошибке"),
     "resize": MessageLookupByLibrary.simpleMessage("размер изображения"),
     "resizeDescription": MessageLookupByLibrary.simpleMessage(
       "ограничьте длинную сторону изображения; меньший размер экономит место",

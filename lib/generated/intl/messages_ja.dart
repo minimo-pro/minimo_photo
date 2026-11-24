@@ -76,6 +76,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "圧縮が完了するまで minimo を開いたままにしてください。切り替えると携帯電話がアプリを一時停止する可能性があります",
     ),
     "better": MessageLookupByLibrary.simpleMessage("高品質"),
+    "bugReportBody": MessageLookupByLibrary.simpleMessage(
+      "発生した内容と再現手順を教えてください。",
+    ),
     "cacheClearFailed": MessageLookupByLibrary.simpleMessage("キャッシュを消去できません"),
     "cacheCleared": MessageLookupByLibrary.simpleMessage("キャッシュを消去しました"),
     "cancel": MessageLookupByLibrary.simpleMessage("キャンセル"),
@@ -247,6 +250,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "replaceOriginalDescription": MessageLookupByLibrary.simpleMessage(
       "元のメタデータを引き継いで保存し、元の写真を削除するか確認します",
     ),
+    "reportBug": MessageLookupByLibrary.simpleMessage("不具合を報告"),
     "resize": MessageLookupByLibrary.simpleMessage("画像の寸法"),
     "resizeDescription": MessageLookupByLibrary.simpleMessage(
       "画像の最長辺を制限します。より小さな寸法でより多くのスペースを節約",
