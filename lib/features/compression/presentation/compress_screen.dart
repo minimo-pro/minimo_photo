@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:url_launcher/url_launcher.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -98,8 +99,9 @@ class _CompressViewState extends State<_CompressView>
   bool _initialSelectionConfirmed = false;
   bool _leavingDuringImport = false;
   int? _promptRequestedForRunId;
-  final _videoPrompt = OverlayPortalController();
-  Timer? _videoPromptTimer;
+  bool _showGithub = false;
+  final _resultPrompt = OverlayPortalController();
+  Timer? _resultPromptTimer;
   bool _confirmingExit = false;
   bool _exitAllowed = false;
 
@@ -118,7 +120,7 @@ class _CompressViewState extends State<_CompressView>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    _videoPromptTimer?.cancel();
+    _resultPromptTimer?.cancel();
     if (_loading) unawaited(_fileAdapter.cancelPhotoPick());
     unawaited(_setScreenAwake(false));
     super.dispose();
@@ -136,8 +138,8 @@ class _CompressViewState extends State<_CompressView>
   @override
   Widget build(BuildContext context) {
     return OverlayPortal(
-      controller: _videoPrompt,
-      overlayChildBuilder: _buildVideoPrompt,
+      controller: _resultPrompt,
+      overlayChildBuilder: _buildResultPrompt,
       child: _buildContent(context),
     );
   }
@@ -237,7 +239,7 @@ class _CompressViewState extends State<_CompressView>
     );
   }
 
-  Widget _buildVideoPrompt(BuildContext context) {
+  Widget _buildResultPrompt(BuildContext context) {
     return Positioned(
       left: 18,
       right: 18,
@@ -262,36 +264,52 @@ class _CompressViewState extends State<_CompressView>
             color: AppTheme.of(context).frameBackgroundColor,
             borderRadius: BorderRadius.circular(15),
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(8, 6, 8, 8),
+              padding: const EdgeInsets.fromLTRB(8, 10, 8, 8),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            S.of(context).videoAppPromptTitle,
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                        ),
-                        Tooltip(
-                          message: MaterialLocalizations.of(
-                            context,
-                          ).closeButtonTooltip,
-                          child: AppActionButton(
-                            width: 40,
-                            height: 40,
-                            icon: AppIcons.close,
-                            variant: AppActionButtonVariant.text,
-                            onPressed: _dismissVideoPrompt,
-                          ),
-                        ),
-                      ],
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Tooltip(
+                      message: MaterialLocalizations.of(context)
+                          .closeButtonTooltip,
+                      child: AppActionButton(
+                        width: 44,
+                        height: 44,
+                        icon: AppIcons.close,
+                        variant: AppActionButtonVariant.text,
+                        onPressed: _dismissResultPrompt,
+                      ),
                     ),
                   ),
-                  const VideoAppCard(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Text(
+                      _showGithub
+                          ? S.of(context).githubStarPrompt
+                          : S.of(context).videoAppPromptTitle,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  if (_showGithub)
+                    AppActionButton(
+                      width: double.infinity,
+                      label: S.of(context).githubRepository,
+                      fontSize: 18,
+                      onPressed: () {
+                        _dismissResultPrompt();
+                        launchUrl(
+                          Uri.parse(
+                            'https://github.com/minimo-pro/minimo_photo',
+                          ),
+                          mode: LaunchMode.externalApplication,
+                        );
+                      },
+                    )
+                  else
+                    const VideoAppCard(),
                 ],
               ),
             ),
@@ -301,9 +319,9 @@ class _CompressViewState extends State<_CompressView>
     );
   }
 
-  void _dismissVideoPrompt() {
-    _videoPromptTimer?.cancel();
-    _videoPrompt.hide();
+  void _dismissResultPrompt() {
+    _resultPromptTimer?.cancel();
+    _resultPrompt.hide();
   }
 
   Future<void> _promptAfterSuccessfulCompression(CompressState state) async {
@@ -321,15 +339,20 @@ class _CompressViewState extends State<_CompressView>
     } catch (_) {
       return;
     }
-    if (prompt != CompressionPrompt.videoApp ||
+    if ((prompt != CompressionPrompt.videoApp &&
+            prompt != CompressionPrompt.githubStar) ||
         !mounted ||
         context.read<CompressBloc>().state.compressionRunId !=
             state.compressionRunId) {
       return;
     }
-    _videoPrompt.show();
-    _videoPromptTimer?.cancel();
-    _videoPromptTimer = Timer(const Duration(seconds: 10), _dismissVideoPrompt);
+    _showGithub = prompt == CompressionPrompt.githubStar;
+    _resultPrompt.show();
+    _resultPromptTimer?.cancel();
+    _resultPromptTimer = Timer(
+      const Duration(seconds: 10),
+      _dismissResultPrompt,
+    );
   }
 
   Future<void> _pickMore() async {

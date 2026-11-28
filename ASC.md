@@ -3,11 +3,11 @@
 - Bundle ID: `com.khlebobul.minimoPhoto`.
 - Auth profile: `minimo`, stored in System Keychain. Pass it explicitly.
 - ASC app ID: `6822256099`, resolved on 2026-10-13.
-- App-info ID used for the latest verified pull: `44f44985-0404-46c1-9e12-f95d113b0771`.
-- iOS version ID: `b359c141-74e8-4fc7-8c09-e5fe42ef320d` (`1.1.2`,
-  `PREPARE_FOR_SUBMISSION`). Live version: `1.1.0`, ID
-  `14689dc3-7ce1-4000-b04a-fa549f7abca7`.
-- Local version: `1.1.2+17` (see `pubspec.yaml`).
+- App-info ID used for the latest verified pull: `8b1599cd-b75c-467d-ac74-e408f7e95154`.
+- iOS version ID: `d63fc125-446f-4787-8b35-76994a54853e` (`1.1.3`,
+  `PREPARE_FOR_SUBMISSION`). Live version: `1.1.2`, ID
+  `b359c141-74e8-4fc7-8c09-e5fe42ef320d`.
+- Local version: `1.1.3+18` (see `pubspec.yaml`).
 - ASC CLI: `7.0.0`, updated with Homebrew and verified on 2026-11-19.
 - UI/export locales: `en`, `de`, `es`, `fr`, `hi`, `it`, `ja`, `ko`, `nl`,
   `pt`, `ru`, `tr`, `zh`. App Store mapping: `en → en-US`, `de → de-DE`,
@@ -15,13 +15,13 @@
   the others use the same code. `zh-Hant` has separate App Store metadata,
   without a separate UI deck.
 - Canonical local metadata: `metadata/app-info/*.json` and
-  `metadata/version/{1.0.0,1.0.1,1.0.2,1.0.3,1.0.4,1.0.5,1.0.6,1.0.7,1.0.8,1.1.0,1.1.2}/*.json` (14 App Store locales).
+  `metadata/version/{1.0.0,1.0.1,1.0.2,1.0.3,1.0.4,1.0.5,1.0.6,1.0.7,1.0.8,1.1.0,1.1.2,1.1.3}/*.json` (14 App Store locales).
   Google Play listings: `metadata/google-play/store-listing-import.csv`
   (13 locales). All metadata is ignored by Git.
 - User-provided name, subtitle, description, and URLs are preserved.
-  What's New and promotional text for version 1.1.2 are localized in all 14
+  What's New and promotional text for version 1.1.3 are localized in all 14
   App Store locales; descriptions, keywords and URLs are preserved from live
-  1.1.0. Metadata validation is not release-readiness validation.
+  1.1.2. Metadata validation is not release-readiness validation.
 
 Use installed `asc-cli-usage`, `asc-id-resolver` and `asc-metadata-sync` skills.
 Discover current flags with `asc <command> --help` before running commands.

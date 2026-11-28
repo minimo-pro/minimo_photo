@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:rate_my_app/rate_my_app.dart';
 
-enum CompressionPrompt { none, review, videoApp }
+enum CompressionPrompt { none, review, videoApp, githubStar }
 
 class ReviewService {
   static const _successfulConversionsKey = 'review_successful_conversions';
@@ -11,6 +11,10 @@ class ReviewService {
   static const _successfulConversionsToShowReview = 2;
   static const _successfulConversionsToShowVideoApp = 3;
   static const _monthsBetweenReviews = 3;
+
+  static const _githubRunsKey = 'github_star_successful_runs';
+  static const _githubShownKey = 'github_star_prompt_shown';
+  static const _runsToShowGithub = 7;
 
   static final instance = ReviewService();
   static final _rateMyApp = RateMyApp(
@@ -36,9 +40,8 @@ class ReviewService {
            requestReview ??
            (() async {
              // The package's Future<void> adapter discards native false results.
-             final result = await const MethodChannel(
-               'rate_my_app',
-             ).invokeMethod<bool>('launchNativeReviewDialog');
+             final result = await const MethodChannel('rate_my_app')
+                 .invokeMethod<bool>('launchNativeReviewDialog');
              if (result == false) {
                throw StateError('Native review request failed');
              }
@@ -57,7 +60,19 @@ class ReviewService {
       _videoConversionsKey,
       (prefs.getInt(_videoConversionsKey) ?? 0) + count,
     );
-    return _showPromptIfAllowed(prefs);
+    final githubShown = prefs.getBool(_githubShownKey) ?? false;
+    final runs = (prefs.getInt(_githubRunsKey) ?? 0) + 1;
+    if (!githubShown && runs <= _runsToShowGithub) {
+      await prefs.setInt(_githubRunsKey, runs);
+    }
+    final prompt = await _showPromptIfAllowed(prefs);
+    if (prompt == CompressionPrompt.none &&
+        !githubShown &&
+        runs >= _runsToShowGithub) {
+      await prefs.setBool(_githubShownKey, true);
+      return CompressionPrompt.githubStar;
+    }
+    return prompt;
   }
 
   Future<CompressionPrompt> _showPromptIfAllowed(

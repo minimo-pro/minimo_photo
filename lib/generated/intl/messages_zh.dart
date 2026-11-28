@@ -121,6 +121,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "getStarted": MessageLookupByLibrary.simpleMessage("开始"),
     "githubRepository": MessageLookupByLibrary.simpleMessage("github 仓库"),
+    "githubStarPrompt": MessageLookupByLibrary.simpleMessage(
+      "在 GitHub 上给 minimo 点颗星，支持项目开发",
+    ),
     "good": MessageLookupByLibrary.simpleMessage("较好"),
     "high": MessageLookupByLibrary.simpleMessage("高"),
     "holdToCancelCompression": MessageLookupByLibrary.simpleMessage("长按按钮取消压缩"),

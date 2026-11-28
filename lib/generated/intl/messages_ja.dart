@@ -133,6 +133,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "getStarted": MessageLookupByLibrary.simpleMessage("始める"),
     "githubRepository": MessageLookupByLibrary.simpleMessage("githubリポジトリ"),
+    "githubStarPrompt": MessageLookupByLibrary.simpleMessage(
+      "GitHub のスターで minimo の開発を応援しませんか？",
+    ),
     "good": MessageLookupByLibrary.simpleMessage("良好"),
     "high": MessageLookupByLibrary.simpleMessage("高"),
     "holdToCancelCompression": MessageLookupByLibrary.simpleMessage(

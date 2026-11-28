@@ -202,6 +202,32 @@ void main() {
     );
   });
 
+  test('GitHub counts runs, defers to video, and appears once', () async {
+    SharedPreferences.setMockInitialValues({});
+    final service = ReviewService(isAvailable: () async => false);
+    for (var i = 0; i < 6; i++) {
+      expect(
+        await service.onSuccessfulConversions(100),
+        CompressionPrompt.none,
+      );
+    }
+    expect(await service.onSuccessfulConversions(0), CompressionPrompt.none);
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(
+      'review_last_request_date',
+      DateTime.now().toIso8601String(),
+    );
+    expect(
+      await service.onSuccessfulConversions(1),
+      CompressionPrompt.videoApp,
+    );
+    expect(
+      await service.onSuccessfulConversions(1),
+      CompressionPrompt.githubStar,
+    );
+    expect(await service.onSuccessfulConversions(1), CompressionPrompt.none);
+  });
+
   test('first video prompt still waits for a rating', () async {
     SharedPreferences.setMockInitialValues({
       'video_app_successful_conversions': 2,
