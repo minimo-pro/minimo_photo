@@ -1,3 +1,9 @@
+## [1.1.3]
+
+### Added
+
+* After seven successful compression runs, the results screen can show a one-time invitation to star minimo on GitHub.
+
 ## [1.1.2]
 
 ### Added

@@ -340,6 +340,16 @@ class S {
     );
   }
 
+  /// `Support minimo with a star on GitHub?`
+  String get githubStarPrompt {
+    return Intl.message(
+      'Support minimo with a star on GitHub?',
+      name: 'githubStarPrompt',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `compress videos too?`
   String get videoAppPromptTitle {
     return Intl.message(

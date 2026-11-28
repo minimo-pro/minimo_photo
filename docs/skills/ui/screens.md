@@ -43,7 +43,9 @@ same card as Settings and About. Each prompt has its own conversion counter
 and three-month cooldown. Only one prompt appears per compression run. The
 video suggestion slides in at the top without a border or shadow, closes
 automatically after ten seconds or with its close button, and disappears
-when the compression screen closes.
+when the compression screen closes. After seven compression runs with at
+least one successful photo each, the same banner can ask for a GitHub star.
+It appears once, on a run when neither earlier prompt takes priority.
 
 Leaving with unsaved compressed photos or while photos are loading uses the
 same confirmation dialog as `minimo_video`, with a primary Stay action and an

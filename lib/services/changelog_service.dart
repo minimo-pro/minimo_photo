@@ -34,6 +34,41 @@ enum Language {
 typedef Changelog = Map<String, Map<Language, List<String>>>;
 
 const Changelog _changelog = {
+  '1.1.3': {
+    Language.en: [
+      'after several compressions, you can open github from the results screen to star minimo.',
+    ],
+    Language.de: [
+      'nach mehreren komprimierungen kannst du vom ergebnisbildschirm aus minimo auf github einen stern geben.',
+    ],
+    Language.es: [
+      'tras varias compresiones, puedes abrir github desde los resultados para darle una estrella a minimo.',
+    ],
+    Language.fr: [
+      'après plusieurs compressions, vous pouvez ouvrir github depuis les résultats pour donner une étoile à minimo.',
+    ],
+    Language.hi: [
+      'कई बार फ़ोटो कंप्रेस करने के बाद आप नतीजों की स्क्रीन से github खोलकर minimo को स्टार दे सकते हैं।',
+    ],
+    Language.it: [
+      'dopo alcune compressioni puoi aprire github dalla schermata dei risultati per dare una stella a minimo.',
+    ],
+    Language.ja: ['何度か圧縮すると、結果画面から github を開いて minimo にスターを付けられます。'],
+    Language.ko: ['사진을 여러 번 압축하면 결과 화면에서 github를 열어 minimo에 스타를 줄 수 있어요.'],
+    Language.nl: [
+      'na een paar compressies kun je vanuit het resultatenscherm github openen om minimo een ster te geven.',
+    ],
+    Language.pt: [
+      'depois de algumas compressões, você pode abrir o github pela tela de resultados e dar uma estrela ao minimo.',
+    ],
+    Language.ru: [
+      'после нескольких сжатий на экране результатов появится предложение поддержать minimo звездой на github.',
+    ],
+    Language.tr: [
+      'birkaç sıkıştırmadan sonra sonuç ekranından github’a gidip minimo’ya yıldız verebilirsiniz.',
+    ],
+    Language.zh: ['完成几次压缩后，可以从结果页打开 github，为 minimo 点颗星。'],
+  },
   '1.1.2': {
     Language.en: ['report a bug from the about screen.'],
     Language.de: ['fehler lassen sich über den infobereich melden.'],

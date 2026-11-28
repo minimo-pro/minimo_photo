@@ -152,6 +152,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "githubRepository": MessageLookupByLibrary.simpleMessage(
       "github रिपॉज़िटरी",
     ),
+    "githubStarPrompt": MessageLookupByLibrary.simpleMessage(
+      "GitHub पर स्टार देकर minimo का समर्थन करें",
+    ),
     "good": MessageLookupByLibrary.simpleMessage("अच्छी"),
     "high": MessageLookupByLibrary.simpleMessage("उच्च"),
     "holdToCancelCompression": MessageLookupByLibrary.simpleMessage(
