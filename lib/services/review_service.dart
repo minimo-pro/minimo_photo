@@ -69,10 +69,14 @@ class ReviewService {
     if (prompt == CompressionPrompt.none &&
         !githubShown &&
         runs >= _runsToShowGithub) {
-      await prefs.setBool(_githubShownKey, true);
       return CompressionPrompt.githubStar;
     }
     return prompt;
+  }
+
+  Future<void> markGithubPromptShown() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_githubShownKey, true);
   }
 
   Future<CompressionPrompt> _showPromptIfAllowed(

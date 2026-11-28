@@ -225,6 +225,13 @@ void main() {
       await service.onSuccessfulConversions(1),
       CompressionPrompt.githubStar,
     );
+    expect(prefs.getBool('github_star_prompt_shown'), isNot(true));
+    expect(
+      await service.onSuccessfulConversions(1),
+      CompressionPrompt.githubStar,
+    );
+    await service.markGithubPromptShown();
+    expect(prefs.getBool('github_star_prompt_shown'), isTrue);
     expect(await service.onSuccessfulConversions(1), CompressionPrompt.none);
   });
 

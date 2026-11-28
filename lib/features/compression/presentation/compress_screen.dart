@@ -353,6 +353,13 @@ class _CompressViewState extends State<_CompressView>
       const Duration(seconds: 10),
       _dismissResultPrompt,
     );
+    if (_showGithub) {
+      try {
+        await ReviewService.instance.markGithubPromptShown();
+      } catch (_) {
+        return;
+      }
+    }
   }
 
   Future<void> _pickMore() async {
